@@ -10,6 +10,7 @@
 **PARSER**
 - Vérifie la validité syntaxique
 - Construit l’AST (arbre de commandes)
+  
 **HEREDOC HANDLING (étape intermédiaire)**
 - Identifie les heredocs dans l’AST
 - Demande à l’utilisateur le contenu
