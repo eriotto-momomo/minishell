@@ -1,2 +1,2 @@
 # minishell
-Collaboration of makurek and emonacho for `minishell` project.
+Collaboration of timmi and emonacho for `minishell` project.
