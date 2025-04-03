@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:18 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/18 18:46:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:19:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ typedef struct s_minitalk
 int		check_pid(char *str_pid);
 int		reset_struct(t_s *s, int reset);
 void	free_and_respond(t_s *s, int signal);
-void	w_kill(pid_t pid, int signal);
 
 #endif
