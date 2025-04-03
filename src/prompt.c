@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/03 12:40:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/03 14:46:44 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*join_prompt(char *usr, char *hostname)
 	char	*full_prompt;
 
 	usr = ft_strjoin(usr, "@");
-	hostname = ft_strjoin(hostname, ":");
+	hostname = ft_strjoin(hostname, ": ");
 	full_prompt = ft_strjoin(usr, hostname);
 	free(usr);
 	free(hostname);
@@ -72,19 +72,20 @@ char	*create_prompt(char **envp)
 {
 	char	*usr;
 	char	*host_name;
-	char	*old_host;
+	char	*temp;
 	char	*full_prompt;
 
 	usr = get_variable("USER", envp);
 	host_name = get_variable("HOSTNAME", envp);
-	old_host = host_name;
+	temp = NULL;
 	if (!host_name)
 	{
 		host_name = get_variable("SESSION_MANAGER", envp);
 		host_name = str_trim(host_name);
+		temp = host_name;
 	}
 	full_prompt = join_prompt(usr, host_name);
-	if (old_host != host_name)
-		free(host_name);
+	if (temp)
+		free(temp);
 	return (full_prompt);
 }
