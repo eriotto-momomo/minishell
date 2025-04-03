@@ -9,7 +9,7 @@ void	prompt_loop(char *prompt)
 	while (loop)
 	{
 		line_read = readline(prompt);
-		if (line_read && *line_read)
+		if (line_read && *line_read) //need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
 			printf("%s\n", line_read);
@@ -27,6 +27,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			prompt = create_prompt(envp);
 			prompt_loop(prompt);
+			free(prompt);
 		}
 	}
 }
