@@ -1,8 +1,13 @@
 #include "../include/minishell.h"
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
-	write(1, "Hello World!", 12);
-	write(1, "\n", 1);
-	return (0);
+	char	*prompt;
+	if (argc > 1)
+	{
+		printf("%s\n", argv[1]);
+		prompt = create_prompt(envp);
+		printf("%s\n", prompt);
+		free(prompt);
+	}
 }
