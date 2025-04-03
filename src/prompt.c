@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/03 14:46:44 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/03 17:20:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_variable(char *target, char **envp)
 	return (NULL);
 }
 
-static char	*str_trim(char *str)
+static char	*trim_prompt(char *str)
 {
 	char	*new_str;
 	int		i;
@@ -81,7 +81,7 @@ char	*create_prompt(char **envp)
 	if (!host_name)
 	{
 		host_name = get_variable("SESSION_MANAGER", envp);
-		host_name = str_trim(host_name);
+		host_name = trim_prompt(host_name);
 		temp = host_name;
 	}
 	full_prompt = join_prompt(usr, host_name);
