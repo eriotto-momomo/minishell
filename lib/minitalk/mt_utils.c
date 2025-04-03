@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 16:18:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/18 18:53:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/03 17:19:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,4 @@ int	check_pid(char *str_pid)
 		i++;
 	}
 	return (pid);
-}
-
-void	w_kill(pid_t pid, int signal)
-{
-	if (kill(pid, signal) < 0)
-	{
-		ft_putstr_fd("Error! Function 'kill' failed.\n", 2);
-		exit(1);
-	}
 }
