@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/03 11:44:56 by timmi            ###   ########.fr        #
+#    Updated: 2025/04/03 11:50:00 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) -Llibft -o $(NAME)
+	$(CC) $(OBJ) -Llibft -lreadline -o $(NAME)
 
 $(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c
 	@mkdir -p $(BUILD_PATH)
