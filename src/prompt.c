@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/04 15:21:08 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/04 15:31:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ char	*create_prompt(void)
 	char	*host_name;
 	char	*full_prompt;
 
-	usr = getenv("USER");
-	host_name = getenv("HOSTNAME");
+	usr = NULL;//getenv("USER");
+	host_name = NULL;//getenv("HOSTNAME");
 	if (!host_name)
 	{
 		host_name = getenv("SESSION_MANAGER");
@@ -68,6 +68,6 @@ char	*create_prompt(void)
 	if (usr && host_name)
 		full_prompt = join_prompt(usr, host_name);
 	else
-		full_prompt = ft_strdup("minishell-1.0");
+		full_prompt = ft_strdup(DEFAULT_PROMPT);
 	return (full_prompt);
 }
