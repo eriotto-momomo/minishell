@@ -18,14 +18,14 @@ void	prompt_loop(char *prompt)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **argv)
 {
 	char	*prompt;
 	if (argc > 1)
 	{
 		if (argv[1])
 		{
-			prompt = create_prompt(envp);
+			prompt = create_prompt();
 			prompt_loop(prompt);
 			free(prompt);
 		}
