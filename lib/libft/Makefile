@@ -23,6 +23,7 @@ ft_printf/printf_put_ptr.c \
 ft_printf/printf_utils.c \
 ft_putchar_fd.c \
 ft_putendl_fd.c \
+ft_puterror.c \
 ft_putnbr_fd.c \
 ft_putstr_fd.c \
 ft_split.c \
@@ -41,6 +42,8 @@ ft_strtrim.c \
 ft_substr.c \
 ft_tolower.c \
 ft_toupper.c \
+w_kill.c \
+wft_calloc.c
 
 OBJS	= $(SRCS:.c=.o)
 

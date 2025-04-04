@@ -6,23 +6,41 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/04 13:43:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/04 17:41:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <errno.h>
 # include <limits.h>
+# include <signal.h>
 # include <stddef.h>
+# include <stdint.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 # include "ft_printf/ft_printf.h"
+
+/*
+`R` - Red
+`G` - Green
+`Y` - Yellow
+`C` - Cyan
+`RST` - Reset to default color
+*/
+# define R "\033[1;31m"
+# define G "\033[1;32m"
+# define Y "\033[1;33m"
+# define C "\033[1;36m"
+# define RST "\033[0m"
 
 // libft vanilla
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t count, size_t size);
+void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
@@ -58,8 +76,10 @@ int		ft_toupper(int c);
 
 // libft custom
 int		ft_atoi_safe(const char *str, int *error);
+void	ft_puterror(char *error_location, char *error_msg);
 
 // wrappers
+void	*wft_calloc(size_t nmemb, size_t size);
 void	w_kill(pid_t pid, int signal);
 
 #endif
