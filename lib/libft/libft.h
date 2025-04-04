@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/03 12:38:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/04 13:43:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,8 @@ int		ft_toupper(int c);
 
 // libft custom
 int		ft_atoi_safe(const char *str, int *error);
+
+// wrappers
+void	w_kill(pid_t pid, int signal);
 
 #endif
