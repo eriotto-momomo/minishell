@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/04 15:31:40 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/04 15:32:48 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ char	*create_prompt(void)
 	char	*host_name;
 	char	*full_prompt;
 
-	usr = NULL;//getenv("USER");
-	host_name = NULL;//getenv("HOSTNAME");
+	usr = getenv("USER");
+	host_name = getenv("HOSTNAME");
 	if (!host_name)
 	{
 		host_name = getenv("SESSION_MANAGER");
