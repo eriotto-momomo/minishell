@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   w_kill.c                                           :+:      :+:    :+:   */
+/*   ft_puterror.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/03 17:17:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/04 17:41:04 by emonacho         ###   ########.fr       */
+/*   Created: 2025/04/04 15:32:53 by emonacho          #+#    #+#             */
+/*   Updated: 2025/04/04 17:41:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	w_kill(pid_t pid, int signal)
+void	ft_puterror(char *error_location, char *error_msg)
 {
-	if (kill(pid, signal) < 0)
-		ft_puterror("w_kill failed", strerror(errno));
+	ft_putstr_fd(error_location, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd(R, 2);
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(error_msg, 2);
+	ft_putstr_fd(RST, 2);
+	ft_putstr_fd("\n", 2);
 }
