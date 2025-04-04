@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/03/18 16:46:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:39:29 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include "ft_printf/ft_printf.h"
 
 // libft vanilla
@@ -57,5 +58,6 @@ int		ft_toupper(int c);
 
 // libft custom
 int		ft_atoi_safe(const char *str, int *error);
+static int	get_fd(char *path, int writable, int append);
 
 #endif
