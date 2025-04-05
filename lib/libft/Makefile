@@ -42,8 +42,11 @@ ft_strtrim.c \
 ft_substr.c \
 ft_tolower.c \
 ft_toupper.c \
+w_calloc.c \
+w_free.c \
 w_kill.c \
-wft_calloc.c
+w_malloc.c
+
 
 OBJS	= $(SRCS:.c=.o)
 

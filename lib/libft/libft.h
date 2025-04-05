@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/04 17:41:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/04 20:49:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ int		ft_atoi_safe(const char *str, int *error);
 void	ft_puterror(char *error_location, char *error_msg);
 
 // wrappers
-void	*wft_calloc(size_t nmemb, size_t size);
+void	w_free(void **ptr);
 void	w_kill(pid_t pid, int signal);
+void	w_malloc(void **ptr, size_t size);
+void	*w_calloc(size_t nmemb, size_t size);
 
 #endif
