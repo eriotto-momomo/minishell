@@ -1,7 +1,15 @@
-HEADER	=	libft.h
-NAME	= libft.a
+MAKEFLAGS += --no-print-directory
 
-SRCS	= ft_atoi.c \
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
+NAME = libft.a
+HEADER = libft.h
+
+BUILD_PATH = build
+
+SRCS = \
+ft_atoi.c \
 ft_atoi_safe.c \
 ft_bzero.c \
 ft_calloc.c \
@@ -47,23 +55,24 @@ w_free.c \
 w_kill.c \
 w_malloc.c
 
-
-OBJS	= $(SRCS:.c=.o)
-
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+OBJS = $(SRCS:%.c=$(BUILD_PATH)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
-	@echo "Successfully COMPILED $(NAME)$(RESET)"
+	@echo "Archiving $(NAME)...\n"
+	@ar rc $(NAME) $(OBJS)
+	@echo "Successfully COMPILED $(NAME)\n"
+
+$(BUILD_PATH)/%.o: %.c $(HEADER)
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	@rm -rf $(BUILD_PATH)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
