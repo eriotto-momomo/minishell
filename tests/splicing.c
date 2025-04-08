@@ -12,17 +12,12 @@ int	is_sep(char c)
 	int i;
 	
 	i = 0;
-	printf("Evaluating : %c\n", c);
 	while (SEPARATORS[i])
 	{
 		if (c == SEPARATORS[i])
-		{
-			printf("%c is a sep\n", c);
 			return (1);
-		}
 		i++;
 	}
-	printf("%c is not a sep\n", c);
 	return (0);
 }
 
@@ -50,41 +45,86 @@ size_t	ft_tokencount(char *cmd)
 		}
 		i++;
 	}
+	printf("%ld token(s) found !\n", count);
 	return (count);
 }
 
-char **ft_slipcing(char *cmd)
+
+// static char *push_sep(char *cmd)
+// {
+// 	char *new
+// }
+// Duplique la string passe en parametre jusqu'au prochain SEPARATORS, bouge la pointeur a cette position
+static char	*push_word(char **cmd)
 {
+	char	*new_str;
 	int		i;
+
+	i = 0;
+	while (!(is_sep((*cmd)[i]) || is_space((*cmd)[i])))
+		i++;
+	new_str = malloc((sizeof(char) * i) + 1);
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	while (**cmd && !(is_sep(**cmd) || is_space(**cmd)))
+	{
+		new_str[i++] = **cmd;
+		(*cmd)++;
+	}
+	new_str[i] = '\0';
+	return (new_str);
+}
+
+char **cmd_splicing(char *cmd)
+{
 	char	**spliced;
+	int		i;
 
 	if (!cmd)
 		return (NULL);
-	i = 0;
+	spliced = malloc((ft_tokencount(cmd) * sizeof(char *)) + 1);
+	if (!spliced)
+		return (NULL);
 	while (*cmd)
 	{
-
+		if (is_sep(*cmd))
+		{
+			spliced[i] = malloc(sizeof(char) * 2);
+			spliced[i][0] = *cmd;
+			spliced[i][1] = '\0';
+			i++;
+			cmd++;
+		}
+		else
+			spliced[i++] = push_word(&cmd);
+		while (is_space(*cmd))
+			cmd++;
 	}
-}	
-
-t_list *ft_tokenize(char *cmd)
-{
-	t_list	*head;
-	int		i;
-	char	**spliced_cmd;
-
-	head = NULL;
-	i = 0;
-	spliced_cmd = ft_slipcing(cmd);
-
+	spliced[i] = NULL;
+	return(spliced);
 }
 
 int	main(int argc, char **argv)
 {
 	if (argc > 1)
 	{
-		printf("%ld\n", ft_tokencount(argv[1]));
+		char **spliced;
+		spliced = cmd_splicing(argv[1]);
+		for (size_t i = 0; spliced[i]; i++)
+			printf("%s\n", spliced[i]);
+		
 	}
-	else
-		printf("No arguments\n");
 }
+
+// t_list *ft_tokenize(char *cmd)
+// {
+// 	t_list	*head;
+// 	int		i;
+// 	char	**spliced_cmd;
+
+// 	head = NULL;
+// 	i = 0;
+// 	spliced_cmd = ft_slipcing(cmd);
+
+// }
