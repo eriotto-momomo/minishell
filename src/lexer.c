@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/09 12:24:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/09 14:42:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	is_space(char c)
 {
-	printf("Space evaluating :%c\n", c);
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);
 	return(0);
@@ -52,7 +51,7 @@ static char	*push_word(char **cmd)
 	int		i;
 
 	i = 0;
-	while (!(is_sep((*cmd)[i]) || is_space((*cmd)[i])))
+	while ((*cmd)[i] && !(is_sep((*cmd)[i]) || is_space((*cmd)[i])))
 		i++;
 	new_str = malloc((sizeof(char) * i) + 1);
 	if (!new_str)
@@ -86,14 +85,7 @@ t_list *cmd_splicing(char *cmd)
 		else
 			add_back(&head, push_word(&temp));
 		while (is_space(*temp))
-		temp++;
-	}
-	// Just to see linked list
-	t_list *temp_head = head;
-	while (temp_head)
-	{
-		printf("%s\n", temp_head->data);
-		temp_head = temp_head->next;
+			temp++;
 	}
 	return(head);
 }
