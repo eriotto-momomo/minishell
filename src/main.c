@@ -25,7 +25,7 @@ void	prompt_loop(char *prompt)
 		if (line_read && *line_read) //need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
-			head = cmd_splicing(line_read);
+			head = tokenize(line_read);
 			print_list(head);
 			free_list(head);
 		}

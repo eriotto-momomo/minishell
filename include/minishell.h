@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/09 10:36:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/09 16:06:08 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	add_front(t_list **head, char *data);
 void	free_list(t_list *head);
 
 /*			Lexer			*/
-t_list *cmd_splicing(char *cmd);
+t_list *tokenize(char *cmd);
 
 #endif

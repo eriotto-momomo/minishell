@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/09 14:42:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/09 16:19:13 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,59 +33,68 @@ int	is_sep(char c)
 	return (0);
 }
 
-static char *push_sep(char sep)
+static char	*get_word(char *cmd, int i)
 {
-	char *new_str;
+	int		len;
+	char	*word;
 
-	new_str = malloc(sizeof(char) * 2);
-	if (!new_str)
+	len = 0;
+	while(cmd[i + len] && !(is_sep(cmd[i + len]) || is_space(cmd[i + len])))
+		len++;
+	word = malloc((sizeof(char) * len) + 1);
+	if (!word)
 		return (NULL);
-	new_str[0] = sep;
-	new_str[1] = '\0';
-	return (new_str);
+	len = 0;
+	while(cmd[i] && !(is_sep(cmd[i]) || is_space(cmd[i])))
+		word[len++] = cmd[i++];
+	word[len] = '\0';
+	return (word);
 }
 
-static char	*push_word(char **cmd)
+static char	*get_sep(char *cmd, int i)
 {
-	char	*new_str;
+	char	*sep;
+
+	sep = malloc(sizeof(char) * 2);
+	if (!sep)
+		return (NULL);
+	sep[0] = cmd[i];
+	sep[1] = '\0';
+	return (sep);
+}
+
+static char	*get_el(char *cmd, int i)
+{
+	char *to_push;
+	if (is_sep(cmd[i]))
+		to_push = get_sep(cmd, i);
+	else
+		to_push = get_word(cmd, i);
+	return (to_push);
+}
+
+t_list *tokenize(char *cmd)
+{
 	int		i;
-
-	i = 0;
-	while ((*cmd)[i] && !(is_sep((*cmd)[i]) || is_space((*cmd)[i])))
-		i++;
-	new_str = malloc((sizeof(char) * i) + 1);
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (**cmd && !(is_sep(**cmd) || is_space(**cmd)))
-	{
-		new_str[i++] = **cmd;
-		(*cmd)++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
-t_list *cmd_splicing(char *cmd)
-{
-	char *temp;
+	char	*el;
 	t_list	*head;
 
 	if (!cmd)
 		return (NULL);
-	temp = cmd;
+	i = 0;
 	head = NULL;
-	while (*temp)
+	while (cmd[i])
 	{
-		if (is_sep(*temp))
-		{ 
-			add_back(&head, push_sep(*temp));
-			temp++;
+		while (cmd[i] && is_space(cmd[i]))
+			i++;
+		el = get_el(cmd, i);
+		if (!el)
+		{
+			free_list(head);
+			return (NULL);
 		}
-		else
-			add_back(&head, push_word(&temp));
-		while (is_space(*temp))
-			temp++;
+		add_back(&head, el);
+		i += ft_strlen(el);
 	}
 	return(head);
 }
