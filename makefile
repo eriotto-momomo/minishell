@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
+#    By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/05 19:50:38 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/04/09 00:03:59 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,14 @@ LIBFT = $(LIBFT_PATH)/libft.a
 CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/prompt.c\
+			$(CFILES_PATH)/parsing.c
+
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
 NAME = minishell
 
-all: 
+all:
 	@echo "Building $(NAME)...\n"
 	@$(MAKE) $(LIBFT)
 	@$(MAKE) $(NAME)
