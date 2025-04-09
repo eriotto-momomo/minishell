@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/04 20:49:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/08 21:56:07 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		ft_toupper(int c);
 
 // libft custom
 int		ft_atoi_safe(const char *str, int *error);
+int		ft_isspace(char c);
 void	ft_puterror(char *error_location, char *error_msg);
 
 // wrappers
