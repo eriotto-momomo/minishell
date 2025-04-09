@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
+#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/05 19:50:38 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/04/09 10:14:37 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ LIBFT = $(LIBFT_PATH)/libft.a
 CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/prompt.c\
+			$(CFILES_PATH)/lexer.c\
+			$(CFILES_PATH)/list.c
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
@@ -42,7 +44,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	@echo "Linking $(NAME)...\n"
 	@$(CC) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
-$(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c
+$(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c 
 	@mkdir -p $(BUILD_PATH)
 	@$(CC) $(CFLAGS) -I$(LIBFT_PATH) -c $< -o $@
 
