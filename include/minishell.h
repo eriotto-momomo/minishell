@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/08 17:07:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/09 10:36:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@
 
 // Prompt par default utiliser si le custom prompt fail
 # define DEFAULT_PROMPT "minishell-1.0$ "
+
 // Char set de caractere qui peuvent separer des token dans une commande
 # define SEPARATORS "|\"\'<>"
+
 /*
  Attribution d'une valeur constante pour chaque token
  - WORD =	0
@@ -38,9 +40,14 @@ typedef enum e_types
 	REDIR
 }	t_types;
 
+/*Structure pour les token :
+- data - La string que contien le noeud
+- type - le type du token (word, pipe, redirecton, etc...)
+- next - pointeur vers le prochain noeud
+*/
 typedef struct s_list
 {
-	char			*value;
+	char			*data;
 	t_types			type;
 	struct s_list	*next;
 }					t_list;
@@ -48,5 +55,14 @@ typedef struct s_list
 /*			PROMPT			*/
 void	prompt_loop(char *prompt);
 char	*create_prompt(void);
+
+/*		Linked list			*/
+t_list	*create_node(char *data);
+void	add_back(t_list	**head, char *data);
+void	add_front(t_list **head, char *data);
+void	free_list(t_list *head);
+
+/*			Lexer			*/
+t_list *cmd_splicing(char *cmd);
 
 #endif
