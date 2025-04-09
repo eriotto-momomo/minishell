@@ -1,5 +1,17 @@
 #include "../include/minishell.h"
 
+void	print_list(t_list *head)
+{
+	t_list *temp;
+
+	temp = head;
+	while (temp)
+	{
+		printf("%s\n", temp->data);
+		temp = temp->next;
+	}
+}
+
 void	prompt_loop(char *prompt)
 {
 	char	*line_read;
@@ -14,6 +26,7 @@ void	prompt_loop(char *prompt)
 		{
 			add_history(line_read);
 			head = cmd_splicing(line_read);
+			print_list(head);
 			free_list(head);
 		}
 		free(line_read);
