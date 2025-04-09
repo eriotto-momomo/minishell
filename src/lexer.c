@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/09 10:40:06 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/09 12:24:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	is_space(char c)
 {
+	printf("Space evaluating :%c\n", c);
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);
 	return(0);
@@ -68,29 +69,31 @@ static char	*push_word(char **cmd)
 
 t_list *cmd_splicing(char *cmd)
 {
+	char *temp;
 	t_list	*head;
 
 	if (!cmd)
 		return (NULL);
+	temp = cmd;
 	head = NULL;
-	while (*cmd)
+	while (*temp)
 	{
-		if (is_sep(*cmd))
+		if (is_sep(*temp))
 		{ 
-			add_back(&head, push_sep(*cmd));
-			cmd++;
+			add_back(&head, push_sep(*temp));
+			temp++;
 		}
 		else
-			add_back(&head, push_word(&cmd));
-		while (is_space(*cmd))
-			cmd++;
+			add_back(&head, push_word(&temp));
+		while (is_space(*temp))
+		temp++;
 	}
 	// Just to see linked list
-	t_list *temp = head;
-	while (temp)
+	t_list *temp_head = head;
+	while (temp_head)
 	{
-		printf("%s\n", temp->data);
-		temp = temp->next;
+		printf("%s\n", temp_head->data);
+		temp_head = temp_head->next;
 	}
 	return(head);
 }

@@ -6,14 +6,14 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/09 10:14:37 by timmi            ###   ########.fr        #
+#    Updated: 2025/04/09 12:21:18 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MAKEFLAGS += --no-print-directory
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 
 BUILD_PATH = build
 
@@ -47,6 +47,9 @@ $(NAME): $(OBJ) $(LIBFT)
 $(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c 
 	@mkdir -p $(BUILD_PATH)
 	@$(CC) $(CFLAGS) -I$(LIBFT_PATH) -c $< -o $@
+
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=resources/a.supp --log-file="resources/leaks.log" ./minishell
 
 clean:
 	@echo "Cleaning object files...\n"
