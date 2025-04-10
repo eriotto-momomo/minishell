@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 10:03:44 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 10:48:24 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_list	*tokenize(char *cmd)
 	head = NULL;
 	while (cmd[i])
 	{
-		while (cmd[i] && is_space(cmd[i]))
+		while (cmd[i] && ft_isspace(cmd[i]))
 			i++;
 		el = get_el(cmd, i);
 		if (!el)
