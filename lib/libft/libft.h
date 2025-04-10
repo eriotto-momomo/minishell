@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/08 21:56:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:04:57 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 # define Y "\033[1;33m"
 # define C "\033[1;36m"
 # define RST "\033[0m"
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 // libft vanilla
 int		ft_atoi(const char *str);
@@ -81,8 +85,14 @@ void	ft_puterror(char *error_location, char *error_msg);
 
 // wrappers
 void	w_free(void **ptr);
-void	w_kill(pid_t pid, int signal);
+// void	w_kill(pid_t pid, int signal);
 void	w_malloc(void **ptr, size_t size);
 void	*w_calloc(size_t nmemb, size_t size);
+
+// GNL
+char	*dupnewline(char *str);
+char	*conc(char *stach, char *buffer);
+char	*get_next_line(int fd);
+
 
 #endif
