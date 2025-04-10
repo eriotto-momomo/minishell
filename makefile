@@ -3,13 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-<<<<<<< HEAD
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/10 09:55:27 by timmi            ###   ########.fr        #
-=======
->>>>>>> main
+#    Updated: 2025/04/10 10:46:11 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +23,10 @@ LIBFT = $(LIBFT_PATH)/libft.a
 CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/prompt.c\
-<<<<<<< HEAD
 			$(CFILES_PATH)/lexer.c\
 			$(CFILES_PATH)/list.c\
-			$(CFILES_PATH)/utils.c
-=======
->>>>>>> main
+			$(CFILES_PATH)/utils.c\
+			&(CFILES_PATH)/parsing.c\
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
