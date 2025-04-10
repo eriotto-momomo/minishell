@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 13:41:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:09:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ void	prompt_loop(char *prompt, t_shell *s)
 	char	*line_read;
 	int		loop;
 	t_list	*head;
+	(void) s;
 
 	loop = 1;
 	while (loop)
 	{
 		line_read = readline(prompt);
-		simple_token_interpreter(s, line_read);
+		// simple_token_interpreter(s, line_read);
 		if (line_read && *line_read)
 		// need to add a check to not print strings containing only spaces
 		{
