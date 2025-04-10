@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 10:48:41 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 10:56:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct	s_shell
 }				t_shell;
 
 /*			PROMPT			*/
-void	prompt_loop(char *prompt);
+void	prompt_loop(char *prompt, t_shell *s);
 /**
  * @brief	Create a shell prompt using the user's name and the host/session name.
  *
