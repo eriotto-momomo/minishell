@@ -13,6 +13,7 @@ ft_atoi.c \
 ft_atoi_safe.c \
 ft_bzero.c \
 ft_calloc.c \
+ft_isspace.c \
 ft_isalnum.c \
 ft_isalpha.c \
 ft_isascii.c \

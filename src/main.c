@@ -12,6 +12,7 @@
 
 #include "../include/minishell.h"
 
+<<<<<<< HEAD
 void	print_list(t_list *head)
 {
 	t_list *temp;
@@ -25,6 +26,16 @@ void	print_list(t_list *head)
 }
 
 void	prompt_loop(char *prompt)
+=======
+void	initialize_struct(t_shell *s)
+{
+	w_malloc((void **)&s->builtins->func_list, 40);
+	s->builtins->func_list[40 - 1] = '\0';
+	s->builtins->func_list = "cd echo env exit export pwd unset";
+}
+
+void	prompt_loop(char *prompt, t_shell *s)
+>>>>>>> main
 {
 	char	*line_read;
 	int		loop;
@@ -34,6 +45,7 @@ void	prompt_loop(char *prompt)
 	while (loop)
 	{
 		line_read = readline(prompt);
+		simple_token_interpreter(s, line_read);
 		if (line_read && *line_read) //need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
@@ -47,10 +59,26 @@ void	prompt_loop(char *prompt)
 
 int main(int argc, char **argv)
 {
+	t_shell		s;
 	char	*prompt;
+<<<<<<< HEAD
 	(void) argv;
 	(void) argc;
 	prompt = create_prompt();
 	prompt_loop(prompt);
 	free(prompt);
+=======
+
+	initialize_struct(&s);
+	if (argc > 1)
+	{
+		if (argv[1])
+		{
+			prompt = create_prompt();
+			prompt_loop(prompt, &s);
+			//free(s.builtins.func_list);
+			free(prompt);
+		}
+	}
+>>>>>>> main
 }

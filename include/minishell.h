@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 10:05:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 10:24:44 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,17 @@ typedef struct s_list
 /*			GENERAL			*/
 int	is_sep(char c);
 int	is_space(char c);
+
+typedef struct	s_builtin
+{
+	char		*func_list;
+}				t_builtin;
+
+typedef struct	s_shell
+{
+	t_builtin	*builtins;
+	char		**env;
+}				t_shell;
 
 /*			PROMPT			*/
 void	prompt_loop(char *prompt);
