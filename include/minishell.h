@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 11:00:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 13:41:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 // Char set de caractere qui peuvent separer des token dans une commande
 # define SEPARATORS "|\"\'<>"
+# define BUILTINS "cd echo env exit export pwd unset"
 
 /*
  Attribution d'une valeur constante pour chaque token
