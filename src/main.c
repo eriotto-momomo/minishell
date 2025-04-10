@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 10:33:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 13:41:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_list(t_list *head)
 {
-	t_list *temp;
+	t_list	*temp;
 
 	temp = head;
 	while (temp)
@@ -26,9 +26,7 @@ void	print_list(t_list *head)
 
 void	initialize_struct(t_shell *s)
 {
-	w_malloc((void **)&s->builtins->func_list, 40);
-	s->builtins->func_list[40 - 1] = '\0';
-	s->builtins->func_list = "cd echo env exit export pwd unset";
+	(void)s;
 }
 
 void	prompt_loop(char *prompt, t_shell *s)
@@ -42,7 +40,8 @@ void	prompt_loop(char *prompt, t_shell *s)
 	{
 		line_read = readline(prompt);
 		simple_token_interpreter(s, line_read);
-		if (line_read && *line_read) //need to add a check to not print strings containing only spaces
+		if (line_read && *line_read)
+		// need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
 			head = tokenize(line_read);
@@ -53,12 +52,13 @@ void	prompt_loop(char *prompt, t_shell *s)
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_shell		s;
+	t_shell	s;
 	char	*prompt;
-	(void) argv;
-	(void) argc;
+
+	(void)argv;
+	(void)argc;
 	prompt = create_prompt();
 	prompt_loop(prompt, &s);
 	free(prompt);
