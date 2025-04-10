@@ -6,23 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 14:09:45 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 16:07:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	print_list(t_list *head)
-{
-	t_list	*temp;
-
-	temp = head;
-	while (temp)
-	{
-		printf("%s\n", temp->data);
-		temp = temp->next;
-	}
-}
 
 void	initialize_struct(t_shell *s)
 {
@@ -57,10 +45,15 @@ int	main(int argc, char **argv)
 {
 	t_shell	s;
 	char	*prompt;
-
-	(void)argv;
-	(void)argc;
-	prompt = create_prompt();
-	prompt_loop(prompt, &s);
-	free(prompt);
+	if (argc > 1)
+	{
+		printf("\nEntering Debug mode !\n\n");
+		debug(argv[1]);
+	}
+	else
+	{
+		prompt = create_prompt();
+		prompt_loop(prompt, &s);
+		free(prompt);	
+	}
 }

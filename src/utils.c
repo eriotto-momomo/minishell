@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 09:53:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 16:05:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,43 @@ char	*get_word(char *cmd, int i)
 		word[len++] = cmd[i++];
 	word[len] = '\0';
 	return (word);
+}
+
+int	debug(char *path)
+{
+	t_list	*head;
+	int 	fd;
+	char	*line;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("Failed to open file\n");
+		return (1);
+	}
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		printf("=================================");
+		printf("\nCmd to tokenize : %s %s %s\n", C, line, RST);
+		head = tokenize(line);
+		print_list(head);
+	}
+	return (0);
+}
+
+void	print_list(t_list *head)
+{
+	int		i;
+	t_list	*temp;
+
+	i = 0;
+	temp = head;
+	while (temp)
+	{
+		printf("Node n. %d : %s %s %s\n", i++, G, temp->data, RST);
+		temp = temp->next;
+	}
 }

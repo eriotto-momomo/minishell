@@ -51,6 +51,8 @@ ft_strtrim.c \
 ft_substr.c \
 ft_tolower.c \
 ft_toupper.c \
+get_next_line.c \
+get_next_line_utils.c \
 w_calloc.c \
 w_free.c \
 w_kill.c \
