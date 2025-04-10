@@ -1,0 +1,65 @@
+ls -la
+echo hello world
+cd ..
+pwd
+
+echo test > out.txt
+cat < in.txt
+grep "main" < in.txt > out.txt
+ls >> log.txt
+
+ls -l | grep ".c"
+cat file.txt | sort | uniq
+ps aux | grep bash | wc -l
+
+echo "hello world"
+echo 'simple quotes'
+echo "un mot avec un espace: 'quoted space'"
+
+cat "my file.txt" | grep "hello" > result.txt
+echo "un test" | tee file.txt | wc -c
+find . -name "*.c" | xargs grep "main" >> results.log
+
+echo $HOME
+echo "$USER is using $SHELL"
+
+echo $(ls -1)
+echo `whoami`
+
+    ls     -l      
+echo     "     spaced     "
+
+echo>out.txt
+echo>>log.txt
+cat<in.txt
+
+ls|grep ".c"
+echo hello|wc -c|cat
+
+echo "Ceci est un 'test' entre guillemets"
+echo 'Et celui-ci contient "des doubles quotes"'
+
+          echo            "salut"           >     file.txt
+
+echo hello\ world
+echo "une ligne\navec saut"
+echo "quote \"dans\" une quote"
+
+echo ${USER}
+echo "Chemin: $PATH"
+VAR=test && echo "$VAR"
+
+[ -f file.txt ] && echo "fichier présent"
+[[ "$USER" == "root" ]] || echo "pas root"
+(test -f file.txt && echo ok) || echo "pas ok"
+
+grep "erreur" log.txt > err.log 2>&1
+
+cd /tmp && mkdir testdir && cd testdir && touch a b c && ls -l
+
+echo "Fichier courant: `basename \`pwd\``"
+
+echo 'un'"deux"trois" "quatre"'cinq'"six"
+
+echo $((5 + 3))
+echo $(( (2 + 3) * 4 ))
