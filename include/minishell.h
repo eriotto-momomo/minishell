@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 10:56:45 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 11:00:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ void	prompt_loop(char *prompt, t_shell *s);
  *			The caller is responsible for freeing it.
  */
 char	*create_prompt(void);
+
+/*			PARSER			*/
+int	simple_token_interpreter(t_shell *s, char *line_read);
 
 /*		Linked list			*/
 t_list	*create_node(char *data);
