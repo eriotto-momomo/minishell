@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/09 12:21:18 by timmi            ###   ########.fr        #
+#    Updated: 2025/04/10 09:55:27 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/prompt.c\
 			$(CFILES_PATH)/lexer.c\
-			$(CFILES_PATH)/list.c
+			$(CFILES_PATH)/list.c\
+			$(CFILES_PATH)/utils.c
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
