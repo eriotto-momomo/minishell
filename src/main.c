@@ -6,13 +6,12 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 09:49:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 10:33:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-<<<<<<< HEAD
 void	print_list(t_list *head)
 {
 	t_list *temp;
@@ -25,8 +24,6 @@ void	print_list(t_list *head)
 	}
 }
 
-void	prompt_loop(char *prompt)
-=======
 void	initialize_struct(t_shell *s)
 {
 	w_malloc((void **)&s->builtins->func_list, 40);
@@ -35,7 +32,6 @@ void	initialize_struct(t_shell *s)
 }
 
 void	prompt_loop(char *prompt, t_shell *s)
->>>>>>> main
 {
 	char	*line_read;
 	int		loop;
@@ -61,24 +57,9 @@ int main(int argc, char **argv)
 {
 	t_shell		s;
 	char	*prompt;
-<<<<<<< HEAD
 	(void) argv;
 	(void) argc;
 	prompt = create_prompt();
-	prompt_loop(prompt);
+	prompt_loop(prompt, &s);
 	free(prompt);
-=======
-
-	initialize_struct(&s);
-	if (argc > 1)
-	{
-		if (argv[1])
-		{
-			prompt = create_prompt();
-			prompt_loop(prompt, &s);
-			//free(s.builtins.func_list);
-			free(prompt);
-		}
-	}
->>>>>>> main
 }
