@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 13:41:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:07:17 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <string.h>
+# include <fcntl.h>
 # include "../lib/libft/libft.h"
 
 // Prompt par default utiliser si le custom prompt fail
@@ -52,6 +53,10 @@ typedef struct s_list
 	t_types			type;
 	struct s_list	*next;
 }					t_list;
+
+/*		TO REMOVE			*/
+int	debug(char *path);
+void	print_list(t_list *head);
 
 /*			GENERAL			*/
 int	is_sep(char c);
