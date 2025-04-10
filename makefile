@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+         #
+#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/09 00:03:59 by emonacho         ###   ########.fr        #
+#    Updated: 2025/04/10 10:46:11 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 MAKEFLAGS += --no-print-directory
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 
 BUILD_PATH = build
 
@@ -23,8 +23,10 @@ LIBFT = $(LIBFT_PATH)/libft.a
 CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/prompt.c\
-			$(CFILES_PATH)/parsing.c
-
+			$(CFILES_PATH)/lexer.c\
+			$(CFILES_PATH)/list.c\
+			$(CFILES_PATH)/utils.c\
+			&(CFILES_PATH)/parsing.c\
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
@@ -44,9 +46,12 @@ $(NAME): $(OBJ) $(LIBFT)
 	@echo "Linking $(NAME)...\n"
 	@$(CC) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
-$(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c
+$(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c 
 	@mkdir -p $(BUILD_PATH)
 	@$(CC) $(CFLAGS) -I$(LIBFT_PATH) -c $< -o $@
+
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=resources/a.supp --log-file="resources/leaks.log" ./minishell
 
 clean:
 	@echo "Cleaning object files...\n"
