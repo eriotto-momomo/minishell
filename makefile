@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/10 10:46:11 by timmi            ###   ########.fr        #
+#    Updated: 2025/04/10 14:08:41 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/lexer.c\
 			$(CFILES_PATH)/list.c\
 			$(CFILES_PATH)/utils.c\
-			&(CFILES_PATH)/parsing.c\
+			$(CFILES_PATH)/parsing.c\
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
