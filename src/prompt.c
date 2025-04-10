@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/04 15:32:48 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/10 09:59:24 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,6 @@ static char	*join_prompt(char *usr, char *hostname)
 	return (full_prompt);
 }
 
-/**
- * @brief	Create a shell prompt using the user's name and the host/session name.
- *
- * @details	This function retrieves the current user's name and the hostname from
- *			the environment variables. If the hostname is not available, it attempts
- *			to use the session manager name instead, trimming it if necessary.
- *			The prompt is then built by combining the user and host/session name.
- *			If neither is available, a default prompt "minishell-1.0" is used.
- *
- * @return	A dynamically allocated string containing the full shell prompt.
- *			The caller is responsible for freeing it.
- */
 char	*create_prompt(void)
 {
 	char	*usr;
