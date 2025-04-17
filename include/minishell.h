@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 16:07:17 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 11:41:47 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ typedef struct s_list
 	t_types			type;
 	struct s_list	*next;
 }					t_list;
+
+// typedef struct	s_tree
+// {
+// 	char			*data;
+// 	struct s_tree	left;
+// 	struct s_tree	right;
+// }					t_tree;
 
 /*		TO REMOVE			*/
 int	debug(char *path);
@@ -161,4 +168,5 @@ char	*get_sep(char *cmd, int i);
  */
 char	*get_quote(char *cmd, int i);
 
+int	get_token_id(char *token);
 #endif
