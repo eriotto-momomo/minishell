@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 16:05:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 09:42:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,24 @@ char	*get_sep(char *cmd, int i)
 {
 	char	*sep;
 
-	sep = malloc(sizeof(char) * 2);
-	if (!sep)
-		return (NULL);
-	sep[0] = cmd[i];
-	sep[1] = '\0';
+	if ((cmd[i] == '<' && cmd[i + 1] == '<')
+		|| (cmd[i] == '>' && cmd[i + 1] == '>'))
+	{
+		sep = malloc(sizeof(char) * 3);
+		if (!sep)
+			return (NULL);
+		sep[0] = cmd[i];
+		sep[1] = cmd[i];
+		sep[3] = '\0';
+	}
+	else
+	{
+		sep = malloc(sizeof(char) * 2);
+		if (!sep)
+			return (NULL);
+		sep[0] = cmd[i];
+		sep[1] = '\0';	
+	}
 	return (sep);
 }
 
