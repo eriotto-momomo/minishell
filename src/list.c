@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/09 10:37:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 11:41:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*create_node(char *data)
 	if (!newNode)
 		return (NULL);
 	newNode->data = data;
-	newNode->type = 0; // provisoir
+	newNode->type = get_token_id(data);
 	/* newNode->type = get_token(newNode->data);  A voir */
 	newNode->next = NULL;
 	return newNode;
