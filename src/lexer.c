@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 13:33:51 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 15:41:37 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,56 @@ static char	*get_el(char *cmd, int i)
 
 int	get_token_id(char *token)
 {
-	if (token[0] == '>' || token[0] == '<')
-		return (REDIR);
+	
+	if (token[0] == '>')
+	{
+		if (token[1] == '>')
+			return (APP_OUT_REDIR);
+		return (OUT_REDIR);
+	}
+	if (token[0] == '<')
+	{
+		if (token[1] == '<')
+			return (HERE_DOC);
+		return (IN_REDIR);
+	}
 	if (token[0] == '|')
 		return (PIPE);
 	return (WORD);
+}
+
+int	syntax_checker(t_list *token)
+{
+	t_list	*temp;
+	
+	temp = token;
+	while (temp)
+	{
+		if (temp->type == PIPE)
+		{
+			if (!temp->prev || !temp->next || temp->prev->type != WORD)
+				printf("minishell: syntax error near unexpected token `|\n");
+			else if (temp->next->type == PIPE)
+				printf("minishell: Does not handle `||\n");
+		}
+		if (temp->type == OUT_REDIR)
+		{
+			if (!temp->next)
+				printf("minishell: syntax error near unexpected token `newline'\n");
+		}
+		if (temp->type == IN_REDIR)
+		{
+			if (!temp->data)
+			printf("minishell: syntax error near unexpected token `newline'\n");
+		}
+		if (temp->type == HERE_DOC)
+		{
+			if (!temp->next)
+				printf("minishell: syntax error near unexpected token `newline'");
+		}
+		temp = temp->next;
+	}
+	return (0);
 }
 
 t_list	*tokenize(char *cmd)

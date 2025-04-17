@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 11:41:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 14:25:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_list	*create_node(char *data)
 	newNode->type = get_token_id(data);
 	/* newNode->type = get_token(newNode->data);  A voir */
 	newNode->next = NULL;
+	newNode->prev = NULL;
 	return newNode;
 }
 
@@ -54,6 +55,7 @@ void	add_back(t_list	**head, char *data)
     while (temp->next != NULL)
         temp = temp->next;
     temp->next = newNode;
+	newNode->prev = temp;
 }
 
 void	free_list(t_list *head)
