@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 09:42:40 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 11:46:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ void	print_list(t_list *head)
 	temp = head;
 	while (temp)
 	{
-		printf("Node n. %d : %s %s %s\n", i++, G, temp->data, RST);
+		printf("Node n. %d\n", i++);
+		printf("Data :%s %s %s\n",G, temp->data, RST);
+		printf("Type : %s %d %s\n", G, temp->type, RST);
+		printf("=======================================\n");
 		temp = temp->next;
 	}
 }

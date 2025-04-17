@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/10 10:48:24 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 13:33:51 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ static char	*get_el(char *cmd, int i)
 	else
 		to_push = get_word(cmd, i);
 	return (to_push);
+}
+
+int	get_token_id(char *token)
+{
+	if (token[0] == '>' || token[0] == '<')
+		return (REDIR);
+	if (token[0] == '|')
+		return (PIPE);
+	return (WORD);
 }
 
 t_list	*tokenize(char *cmd)
