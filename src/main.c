@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 16:37:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 17:15:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	prompt_loop(char *prompt, t_shell *s)
 		// need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
-			head = tokenize(line_read);
+			head = lexer(line_read);
 			syntax_analysis(head);
-			// print_list(head);
+			print_list(head);
 			free_list(head);
 		}
 		free(line_read);

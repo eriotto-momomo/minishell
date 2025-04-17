@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 16:32:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 17:13:42 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	*create_prompt(void);
 
 /*			PARSER			*/
 int	simple_token_interpreter(t_shell *s, char *line_read);
+int	syntax_analysis(t_list *token);
 
 /*		Linked list			*/
 t_list	*create_node(char *data);
@@ -165,7 +166,6 @@ char	*get_sep(char *cmd, int i);
  * @note The caller is responsible for freeing the returned string.
  */
 char	*get_quote(char *cmd, int i);
-
+t_list	*lexer(char *cmd);
 int	get_token_id(char *token);
-int	syntax_analysis(t_list *token);
 #endif
