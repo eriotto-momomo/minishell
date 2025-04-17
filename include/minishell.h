@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 15:05:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 16:32:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,5 @@ char	*get_sep(char *cmd, int i);
 char	*get_quote(char *cmd, int i);
 
 int	get_token_id(char *token);
-int	syntax_checker(t_list *token);
+int	syntax_analysis(t_list *token);
 #endif
