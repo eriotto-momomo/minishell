@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 11:41:47 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 15:05:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,14 @@
 # define SEPARATORS "|\"\'<>"
 # define BUILTINS "cd echo env exit export pwd unset"
 
-/*
- Attribution d'une valeur constante pour chaque token
- - WORD =	0
- - PIPE =	1
- - REDIR =	2
-*/
 typedef enum e_types
 {
 	WORD,
+	IN_REDIR,
+	OUT_REDIR,
+	APP_OUT_REDIR,
+	HERE_DOC,
 	PIPE,
-	REDIR
 }	t_types;
 
 /*Structure pour les token :
@@ -52,6 +49,7 @@ typedef struct s_list
 	char			*data;
 	t_types			type;
 	struct s_list	*next;
+	struct s_list	*prev;
 }					t_list;
 
 // typedef struct	s_tree
@@ -169,4 +167,5 @@ char	*get_sep(char *cmd, int i);
 char	*get_quote(char *cmd, int i);
 
 int	get_token_id(char *token);
+int	syntax_checker(t_list *token);
 #endif
