@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 14:30:15 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/17 16:37:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	prompt_loop(char *prompt, t_shell *s)
 		{
 			add_history(line_read);
 			head = tokenize(line_read);
-			syntax_checker(head);
-			print_list(head);
+			syntax_analysis(head);
+			// print_list(head);
 			free_list(head);
 		}
 		free(line_read);
