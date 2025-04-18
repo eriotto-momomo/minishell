@@ -1,20 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 21:54:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/18 18:05:20 by emonacho         ###   ########.fr       */
+/*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
+/*   Updated: 2025/04/18 18:03:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_isspace(char c)
-{
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
-}
+#ifndef PARSER_H
+# define PARSER_H
+#endif
