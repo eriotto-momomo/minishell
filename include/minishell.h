@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/18 18:02:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/19 17:15:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
+# include <signal.h>
 # include <string.h>
 # include <fcntl.h>
 # include "./lexer.h"
 # include "./parser.h"
 # include "./prompt.h"
+# include "./signals.h"
 # include "./utils.h"
 # include "../lib/libft/libft.h"
 
