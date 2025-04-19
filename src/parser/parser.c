@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 21:54:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/18 18:05:20 by emonacho         ###   ########.fr       */
+/*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
+/*   Updated: 2025/04/19 19:54:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_isspace(char c)
+/*
+t_ast	parse_tokens(t_list *head)
 {
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
+	...
 }
+*/
