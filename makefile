@@ -6,7 +6,7 @@
 #    By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/18 17:35:53 by emonacho         ###   ########.fr        #
+#    Updated: 2025/04/19 18:42:37 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/lexer/lexer_utils.c\
 			$(CFILES_PATH)/lexer/lexer.c\
+			$(CFILES_PATH)/parser/parser_cmd.c\
+			$(CFILES_PATH)/parser/parser_func.c\
+			$(CFILES_PATH)/parser/parser_utils.c\
 			$(CFILES_PATH)/parser/parser.c\
 			$(CFILES_PATH)/prompt/prompt.c\
 			$(CFILES_PATH)/utils/list.c\
