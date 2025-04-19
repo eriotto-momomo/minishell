@@ -6,11 +6,13 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/19 19:12:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:52:07 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+// `CONSTRUCTORS FUNCTIONS` pour créer les noeuds de l'AST
 
 // t_ast	*block_cmd(t_ast *ast, ??? );
 // t_ast	*pipe_cmd(t_ast *ast, ??? );

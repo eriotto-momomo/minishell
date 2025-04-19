@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/19 19:12:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:53:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef struct s_ast
 			AST_EXEC
 		} t_tag;
 		union u_data
-		{	// Contenu des structures à adapter ... ?
-			struct ast_block { t_ast *left; t_ast *right; } ast_block;
-			struct ast_pipe { t_ast *left; t_ast *right; } ast_pipe;
-			struct ast_line { t_ast *left; t_ast *right; } ast_line;
-			struct ast_redir { t_ast *left; t_ast *right; } ast_redir;
-			struct ast_exec { t_ast *left; t_ast *right; } ast_exec;
+		{	// Contenu des structures à adapter ... ? Plus de données à passer dans `s_ast_exec`?
+			struct s_ast_block { t_ast *left; t_ast *right; } ast_block;
+			struct s_ast_pipe { t_ast *left; t_ast *right; } ast_pipe;
+			struct s_ast_line { t_ast *left; t_ast *right; } ast_line;
+			struct s_ast_redir { t_ast *left; t_ast *right; } ast_redir;
+			struct s_ast_exec { t_ast *left; t_ast *right; } ast_exec;
 		} t_data;
 	  } t_ast;
 }			t_ast;
