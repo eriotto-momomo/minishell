@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/22 08:19:21 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/22 09:20:51 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int syntax_analysis(t_list *token)
 		}
 		temp = temp->next;
 	}
+	printf("Syntax Analysis passed !\n");
 	return (1);
 }
 
@@ -61,4 +62,11 @@ t_ast *parse_tokens(t_list **head)
 
 	ast = parse_line(head);
 	return (ast);
+}
+
+t_ast *parser(t_list *head)
+{
+	if (!syntax_analysis(head))
+		return (NULL);
+	return (parse_tokens(&head));
 }

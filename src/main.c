@@ -6,37 +6,38 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 08:15:25 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/22 09:08:56 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	initialize_struct(t_shell *s)
+void initialize_struct(t_shell *s)
 {
 	(void)s;
 }
 
-void	prompt_loop(char *prompt, t_shell *s)
+void prompt_loop(char *prompt, t_shell *s)
 {
-	char	*line_read;
-	int		loop;
-	t_list	*head;
-	t_ast	*ast;
+	char *line_read;
+	int loop;
+	t_list *head;
+	t_ast *ast;
 
-	(void) s;
+	(void)s;
 	loop = 1;
 	while (loop)
 	{
 		line_read = readline(prompt);
-		if (line_read && *line_read)
-		// need to add a check to not print strings containing only spaces
+		if (line_read && *line_read) // need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
 			head = lexer(line_read);
-			syntax_analysis(head);
-			print_list(head);
-			ast = parse_tokens(&head);
+			ast = parser(head);
+			if (ast)
+			{
+				printf("Can exec\n");
+			}
 			free_list(head);
 		}
 		(void)ast; // 💥TEST
@@ -44,10 +45,10 @@ void	prompt_loop(char *prompt, t_shell *s)
 	}
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_shell	s;
-	char	*prompt;
+	t_shell s;
+	char *prompt;
 
 	if (argc > 1)
 	{
