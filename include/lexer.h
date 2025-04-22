@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/19 17:28:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:24:43 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
-# define LEXER_H
+#define LEXER_H
 
 /*
  Attribution d'une valeur constante pour chaque token
@@ -24,7 +24,7 @@ typedef enum e_types
 	WORD,
 	PIPE,
 	REDIR
-}	t_types;
+} t_types;
 
 /*
 Structure pour les token :
@@ -34,10 +34,11 @@ Structure pour les token :
 */
 typedef struct s_list
 {
-	char			*data;
-	t_types			type;
-	struct s_list	*next;
-}					t_list;
+	char *data;
+	t_types type;
+	struct s_list *next;
+	struct s_list *prev;
+} t_list;
 
 /**
  * @brief Tokenizes a command string into a linked list of elements.
@@ -54,55 +55,55 @@ typedef struct s_list
  * @note This function assumes that `is_space`, `get_el`, `ft_strlen`,
  * `add_back`, and `free_list` are implemented elsewhere.
  */
-t_list	*tokenize(char *cmd);
+t_list *tokenize(char *cmd);
 
 /**
-  * @brief Extracts a word (non-space, non-separator sequence) from the command.
-  *
-  * Starting at index `i`, this function reads characters from `cmd` until it
-  * reaches a space or a separator (as defined by `is_space` and `is_sep`).
-  * The result is a newly allocated string containing the word.
-  *
-  * @param cmd The command string to parse.
-  * @param i The starting index of the word.
-  * @return char* A newly allocated string containing the word,
-  * or NULL on allocation failure.
-  *
-  * @note The caller is responsible for freeing the returned string.
-  */
-char	*get_word(char *cmd, int i);
+ * @brief Extracts a word (non-space, non-separator sequence) from the command.
+ *
+ * Starting at index `i`, this function reads characters from `cmd` until it
+ * reaches a space or a separator (as defined by `is_space` and `is_sep`).
+ * The result is a newly allocated string containing the word.
+ *
+ * @param cmd The command string to parse.
+ * @param i The starting index of the word.
+ * @return char* A newly allocated string containing the word,
+ * or NULL on allocation failure.
+ *
+ * @note The caller is responsible for freeing the returned string.
+ */
+char *get_word(char *cmd, int i);
 
 /**
-  * @brief Extracts a single character separator from the command.
-  *
-  * This function allocates and returns a string containing only the character
-  * at the given index `i` of `cmd`, assumed to be a separator.
-  *
-  * @param cmd The command string to parse.
-  * @param i The index of the separator character.
-  * @return char* A newly allocated string with the separator character,
-  * or NULL on allocation failure.
-  *
-  * @note The caller is responsible for freeing the returned string.
-  */
-char	*get_sep(char *cmd, int i);
+ * @brief Extracts a single character separator from the command.
+ *
+ * This function allocates and returns a string containing only the character
+ * at the given index `i` of `cmd`, assumed to be a separator.
+ *
+ * @param cmd The command string to parse.
+ * @param i The index of the separator character.
+ * @return char* A newly allocated string with the separator character,
+ * or NULL on allocation failure.
+ *
+ * @note The caller is responsible for freeing the returned string.
+ */
+char *get_sep(char *cmd, int i);
 
 /**
-  * @brief Extracts a quoted string from the command.
-  *
-  * This function starts at the given index `i` of the `cmd` string and extracts
-  * a substring enclosed in matching single or double quotes. It includes the
-  * opening and closing quote characters in the result.
-  *
-  * @param cmd The command string to parse.
-  * @param i The starting index of the quoted string.
-  * @return char* A newly allocated string containing the quoted substring,
-  * or NULL on allocation failure.
-  *
-  * @note The caller is responsible for freeing the returned string.
-  */
-char	*get_quote(char *cmd, int i);
+ * @brief Extracts a quoted string from the command.
+ *
+ * This function starts at the given index `i` of the `cmd` string and extracts
+ * a substring enclosed in matching single or double quotes. It includes the
+ * opening and closing quote characters in the result.
+ *
+ * @param cmd The command string to parse.
+ * @param i The starting index of the quoted string.
+ * @return char* A newly allocated string containing the quoted substring,
+ * or NULL on allocation failure.
+ *
+ * @note The caller is responsible for freeing the returned string.
+ */
+char *get_quote(char *cmd, int i);
 
-int		get_token_id(char *token);
+int get_token_id(char *token);
 
 #endif
