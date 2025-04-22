@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
+<<<<<<< HEAD:src/list.c
 /*   Updated: 2025/04/17 14:25:21 by timmi            ###   ########.fr       */
+=======
+/*   Updated: 2025/04/18 17:03:21 by emonacho         ###   ########.fr       */
+>>>>>>> main:src/utils/list.c
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/minishell.h"
+# include "../../include/minishell.h"
 
 t_list	*create_node(char *data)
 {

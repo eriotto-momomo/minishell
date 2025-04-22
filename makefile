@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
+#    By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2025/04/17 17:14:52 by timmi            ###   ########.fr        #
+=======
+#    Updated: 2025/04/19 18:42:37 by emonacho         ###   ########.fr        #
+>>>>>>> main
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +26,23 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
+<<<<<<< HEAD
 			$(CFILES_PATH)/prompt.c\
 			$(CFILES_PATH)/lexer.c\
 			$(CFILES_PATH)/list.c\
 			$(CFILES_PATH)/utils.c\
 			$(CFILES_PATH)/parser.c\
+=======
+			$(CFILES_PATH)/lexer/lexer_utils.c\
+			$(CFILES_PATH)/lexer/lexer.c\
+			$(CFILES_PATH)/parser/parser_cmd.c\
+			$(CFILES_PATH)/parser/parser_func.c\
+			$(CFILES_PATH)/parser/parser_utils.c\
+			$(CFILES_PATH)/parser/parser.c\
+			$(CFILES_PATH)/prompt/prompt.c\
+			$(CFILES_PATH)/utils/list.c\
+
+>>>>>>> main
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
@@ -46,8 +62,8 @@ $(NAME): $(OBJ) $(LIBFT)
 	@echo "Linking $(NAME)...\n"
 	@$(CC) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
-$(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c 
-	@mkdir -p $(BUILD_PATH)
+$(BUILD_PATH)/%.o: $(CFILES_PATH)/%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I$(LIBFT_PATH) -c $< -o $@
 
 valgrind: all

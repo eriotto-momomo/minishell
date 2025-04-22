@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 21:54:36 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/18 18:05:20 by emonacho         ###   ########.fr       */
+/*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
+/*   Updated: 2025/04/20 22:07:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../include/minishell.h"
 
-int	ft_isspace(char c)
+// ⚠️👷‍♂️ Travail en cours, fonctions probablement à modifier
+
+t_ast	*ast_new_node(t_ast cmd)
 {
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
+	t_ast	*ptr;
+
+	//ptr = malloc(sizeof(t_ast));
+	w_malloc((void**)&ptr, sizeof(t_ast));
+	if (ptr)
+		*ptr = cmd;
+	return (ptr);
 }
