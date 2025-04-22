@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/22 08:12:14 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/22 08:18:52 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_list
 	char *data;
 	t_types type;
 	struct s_list *next;
+	struct s_list *prev;
 } t_list;
 
 /**
@@ -107,5 +108,6 @@ char *get_sep(char *cmd, int i);
 char *get_quote(char *cmd, int i);
 
 int get_token_id(char *token);
+t_list *lexer(char *cmd);
 
 #endif

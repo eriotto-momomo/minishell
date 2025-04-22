@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+         #
+#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2025/04/17 17:14:52 by timmi            ###   ########.fr        #
-=======
-#    Updated: 2025/04/19 18:42:37 by emonacho         ###   ########.fr        #
->>>>>>> main
+#    Updated: 2025/04/22 08:14:24 by c4v3d            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +22,6 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
-<<<<<<< HEAD
-			$(CFILES_PATH)/prompt.c\
-			$(CFILES_PATH)/lexer.c\
-			$(CFILES_PATH)/list.c\
-			$(CFILES_PATH)/utils.c\
-			$(CFILES_PATH)/parser.c\
-=======
 			$(CFILES_PATH)/lexer/lexer_utils.c\
 			$(CFILES_PATH)/lexer/lexer.c\
 			$(CFILES_PATH)/parser/parser_cmd.c\
@@ -42,7 +31,6 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/prompt/prompt.c\
 			$(CFILES_PATH)/utils/list.c\
 
->>>>>>> main
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 
