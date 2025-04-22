@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/22 11:45:56 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/22 23:06:21 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ void terminate_shell(t_shell *minishell)
 		free_list(*minishell->head);
 		printf("Linked list freed !\n");
 	}
-	if (minishell->root_node)
-	{
-		// free AST
-		printf("AST freed !\n");
-	}
+	// if (minishell->root_node)
+	// {
+	// 	printf("AST freed !\n");
+	// }
 	printf("Exiting minishell !\nSee you next time !\n");
 	exit(0);
 }

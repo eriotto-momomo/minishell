@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 10:26:51 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/22 23:03:33 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_list *create_node(char *data)
 	newNode->type = get_token_id(data);
 	/* newNode->type = get_token(newNode->data);  A voir */
 	newNode->next = NULL;
+	newNode->prev = NULL;
 	return newNode;
 }
 

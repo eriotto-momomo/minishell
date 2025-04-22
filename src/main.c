@@ -3,51 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/20 22:04:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/22 23:10:06 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	initialize_struct(t_shell *s)
+void initialize_struct(t_shell *s)
 {
 	(void)s;
 }
 
-void	prompt_loop(char *prompt, t_shell *s)
+void prompt_loop(char *prompt, t_shell *s)
 {
-	char	*line_read;
-	int		loop;
-	t_list	*head;
-	t_ast	*ast;
+	char *line_read;
+	int loop;
 
-	(void) s;
 	loop = 1;
 	while (loop)
 	{
 		line_read = readline(prompt);
-		if (line_read && *line_read)
-		// need to add a check to not print strings containing only spaces
+		if (line_read && *line_read) // need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
-			head = tokenize(line_read);
-			print_list(head);
-			ast = parse_tokens(&head);
-			free_list(head);
+			*s->head = tokenize(line_read);
+			exit_check(s);
+			//  ast = parse_tokens(&head);
+			free_list(*s->head);
 		}
-		(void)ast; // 💥TEST
+		// (void)ast; // 💥TEST
 		free(line_read);
 	}
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_shell	s;
-	char	*prompt;
+	t_shell s;
+	char *prompt;
 
+	s.env = NULL;
+	s.head = malloc(sizeof(t_list **));
+	s.root_node = malloc(sizeof(t_ast **));
 	if (argc > 1)
 	{
 		printf("\nEntering Debug mode !\n\n");
