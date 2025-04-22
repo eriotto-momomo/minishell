@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/17 17:14:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/22 08:12:15 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-static char	*get_el(char *cmd, int i)
+static char *get_el(char *cmd, int i)
 {
-	char	*to_push;
+	char *to_push;
 
 	if (cmd[i] == '\'' || cmd[i] == '\"')
 		to_push = get_quote(cmd, i);
@@ -25,9 +25,9 @@ static char	*get_el(char *cmd, int i)
 	return (to_push);
 }
 
-int	get_token_id(char *token)
+int get_token_id(char *token)
 {
-	
+
 	if (token[0] == '>')
 	{
 		if (token[1] == '>')
@@ -45,11 +45,11 @@ int	get_token_id(char *token)
 	return (WORD);
 }
 
-t_list	*tokenize(char *cmd)
+t_list *tokenize(char *cmd)
 {
-	int		i;
-	char	*el;
-	t_list	*head;
+	int i;
+	char *el;
+	t_list *head;
 
 	if (!cmd)
 		return (NULL);
@@ -71,7 +71,7 @@ t_list	*tokenize(char *cmd)
 	return (head);
 }
 
-t_list	*lexer(char *cmd)
+t_list *lexer(char *cmd)
 {
 	t_list *head;
 
