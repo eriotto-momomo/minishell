@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 23:10:06 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/23 09:03:50 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void prompt_loop(char *prompt, t_shell *s)
 		if (line_read && *line_read) // need to add a check to not print strings containing only spaces
 		{
 			add_history(line_read);
-			*s->head = tokenize(line_read);
+			s->head = tokenize(line_read);
 			exit_check(s);
-			//  ast = parse_tokens(&head);
-			free_list(*s->head);
+			s->root_node = parse_tokens(&s->head);
+			free_list(s->head);
 		}
 		// (void)ast; // 💥TEST
 		free(line_read);
@@ -45,8 +45,8 @@ int main(int argc, char **argv)
 	char *prompt;
 
 	s.env = NULL;
-	s.head = malloc(sizeof(t_list **));
-	s.root_node = malloc(sizeof(t_ast **));
+	s.head = NULL;
+	s.root_node = NULL;
 	if (argc > 1)
 	{
 		printf("\nEntering Debug mode !\n\n");
