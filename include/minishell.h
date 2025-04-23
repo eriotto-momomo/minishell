@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 23:10:02 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/23 09:01:46 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 typedef struct s_shell
 {
 	char **env;
-	t_ast **root_node;
-	t_list **head;
+	t_ast *root_node;
+	t_list *head;
 } t_shell;
 
 #endif
