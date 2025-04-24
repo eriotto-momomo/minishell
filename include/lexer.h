@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 14:15:33 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:43:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,4 @@ char	*get_quote(char *cmd, int i);
 int	get_token_id(char *token);
 
 void	lexer(t_shell *s);
-
 #endif

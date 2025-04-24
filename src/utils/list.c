@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 14:15:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:43:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,20 @@ void free_list(t_list *head)
 		w_free((void **)&head);
 		head = temp;
 	}
+}
+
+size_t count_cmd(t_list *head)
+{
+	size_t	c;
+	t_list	*temp;
+
+	c = 1;
+	temp = head;
+	while (temp)
+	{
+		if (temp->type == PIPE)
+			c++;
+		temp = temp->next;
+	}
+	return (c);
 }

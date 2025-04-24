@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 14:45:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:43:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_list
 typedef struct s_shell
 {
 	char	**env;
-	int		cmd_count;
+	size_t	cmd_count;
 	char	*line;
 	t_ast	*root_node;
 	t_list	*head;

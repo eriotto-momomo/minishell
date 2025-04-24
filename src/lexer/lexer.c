@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/24 14:15:34 by emonacho         ###   ########.fr       */
+/*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
+/*   Updated: 2025/04/24 16:43:06 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void	lexer(t_shell *s)
 {
 	s->head = tokenize(s->line);
 	exit_check(s);
+	s->cmd_count = count_cmd(s->head);
 }
