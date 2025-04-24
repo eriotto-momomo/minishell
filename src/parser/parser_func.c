@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 16:39:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:35:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,28 +122,7 @@ t_ast	*parse_exec(t_list **head)
 	cmd = (t_ast *)ret;					// pointeur sur cet 'exec_node'
 	ret = parse_redir(head, ret);		// ⚠️ `ret` pointe sur la branche gauche d'une eventuelle REDIR
 	argc = 0;
-	/*while ((*head)->data && ((*head)->data[0] != '|' || (*head)->data[0] != ')'
-		|| (*head)->data[0] != '&' || (*head)->data[0] != ';'))
-	{
-		if ((*head)->type != WORD)
-			break;
-		cmd->data.ast_exec.argv[argc] = ft_strdup((*head)->data);
-		if (!cmd->data.ast_exec.argv[argc])
-		{
-			errno = ENOMEM;
-			ft_puterror("parse_exec", strerror(errno));
-			exit(1); // ❔
-		}
-		consume_token(head);
-		argc++;
-		if (argc >= 10) 				// 🗯️ À voir le nombre d'args max à gérer ❔
-		{
-			ft_puterror("parse_exec", "too many args");
-			exit(1);					// 💥TEST
-		}
-		ret = parse_redir(head, ret);			// 🗯️ 1st ver.: n'est jamais check si (*head)->type != WORD) ❔
-	}*/
-	fill_exec_node(head, cmd, &argc);	// 💥TEST
+	fill_exec_node(head, cmd, &argc);
 	print_exec_args(cmd->data.ast_exec.argv);	// 🖨️PRINT💥DEBUGING
 	printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
 	if ((*head)->data && ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
