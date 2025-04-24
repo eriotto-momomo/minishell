@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 16:38:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:35:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,30 @@ void	consume_token(t_list **head)
 	}
 }
 
+
+/*	FIRST VERSION BACKUP
+	while ((*head)->data && ((*head)->data[0] != '|' || (*head)->data[0] != ')'
+		|| (*head)->data[0] != '&' || (*head)->data[0] != ';'))
+	{
+		if ((*head)->type != WORD)
+			break;
+		cmd->data.ast_exec.argv[argc] = ft_strdup((*head)->data);
+		if (!cmd->data.ast_exec.argv[argc])
+		{
+			errno = ENOMEM;
+			ft_puterror("parse_exec", strerror(errno));
+			exit(1); // ❔
+		}
+		consume_token(head);
+		argc++;
+		if (argc >= 10) 				// 🗯️ À voir le nombre d'args max à gérer ❔
+		{
+			ft_puterror("parse_exec", "too many args");
+			exit(1);					// 💥TEST
+		}
+		ret = parse_redir(head, ret);			// 🗯️ 1st ver.: n'est jamais check si (*head)->type != WORD) ❔
+	}
+*/
 void	fill_exec_node(t_list **head, t_ast *cmd, int *argc)
 {
 	while ((*head)->data && ((*head)->data[0] != '|' || (*head)->data[0] != ')'
@@ -92,26 +116,27 @@ void	print_ast(t_ast *ast)
 		right = ast->data.ast_pipe.right;
 		if (left->tag == AST_EXEC)
 		{
-			printf("print_ast | LEFT BRANCH:");
+			//printf("print_ast  | L. BRANCH: [%sAST_EXEC%s  node]\n", P, RST);
+			printf("print_ast  | L. BRANCH:");
 			for (int i = 0; i < left->data.ast_exec.argc; i++)
 				printf(" [%s%s%s]", C, left->data.ast_exec.argv[i], RST);
 			printf("\n");
 		}
 		else if (left->tag == AST_PIPE)
-			printf("print_ast | LEFT BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+			printf("print_ast  | L. BRANCH: [%sAST_EXEC%s  node]\n", P, RST);
 		else if (left->tag == AST_REDIR)
-			printf("print_ast | LEFT BRANCH: [%sAST_REDIR%s node]\n", P, RST);
+			printf("print_ast  | L. BRANCH: [%sAST_REDIR%s node]\n", P, RST);
 		if (right->tag == AST_EXEC)
 		{
-			printf("print_ast | RIGHT BRANCH:");
+			printf("print_ast  | R. BRANCH:");
 			for (int i = 0; i < right->data.ast_exec.argc; i++)
 				printf(" [%s%s%s]", C, right->data.ast_exec.argv[i], RST);
 			printf("\n");
 		}
 		else if (right->tag == AST_PIPE)
-			printf("print_ast | RIGHT BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+			printf("print_ast  | R. BRANCH: [%sAST_EXEC%s  node]\n", P, RST);
 		else if (right->tag == AST_REDIR)
-			printf("print_ast | RIGHT BRANCH: [%sAST_REDIR%s node]\n", P, RST);
+			printf("print_ast  | R. BRANCH: [%sAST_REDIR%s node]\n", P, RST);
 		else
 			printf("[%sEMPTY BRANCH%s]\n", B, RST);
 	}
@@ -120,13 +145,13 @@ void	print_ast(t_ast *ast)
 		left = ast->data.ast_redir.left;
 		redir = ast;
 		if (left->tag == AST_EXEC)
-			printf("print_ast | LEFT BRANCH: [%sAST_EXEC%s node]\n", P, RST);
+			printf("print_ast  | L. BRANCH: [%sAST_EXEC%s  node]\n", P, RST);
 		else if (left->tag == AST_PIPE)
-			printf("print_ast | LEFT BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+			printf("print_ast  | L. BRANCH: [%sAST_EXEC%s  node]\n", P, RST);
 		else if (left->tag == AST_REDIR)
-			printf("print_ast | LEFT BRANCH: [%sAST_REDIR%s node]\n", P, RST);
+			printf("print_ast  | L. BRANCH: [%sAST_REDIR%s node]\n", P, RST);
 		if (redir->data.ast_redir.filename)
-			printf("print_ast | RIGHT BRANCH: filename [%s%s%s] >> mode [%s%d%s]\n", P, redir->data.ast_redir.filename, RST, P, redir->data.ast_redir.mode, RST);
+			printf("print_ast  | R. BRANCH: filename [%s%s%s] >> mode [%s%d%s]\n", P, redir->data.ast_redir.filename, RST, P, redir->data.ast_redir.mode, RST);
 		//else
 		//	printf("[%sEMPTY BRANCH%s]\n", B, RST);
 	}
