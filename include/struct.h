@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 10:45:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 13:53:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 typedef enum e_types
 {
 	WORD,
+	IN_REDIR,
+	OUT_REDIR,
+	APP_OUT_REDIR,
+	HERE_DOC,
 	PIPE,
 	REDIR
 } t_types;

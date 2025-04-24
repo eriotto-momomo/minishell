@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 10:38:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 13:49:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void prompt_loop(char *prompt, t_shell *s)
 		{
 			add_history(s->line);
 			lexer(s);
+			print_list(s->head);
 			s->root_node = parse_tokens(&s->head);
 			free_list(s->head);
 		}
