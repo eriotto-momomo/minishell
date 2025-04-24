@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 11:58:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 16:32:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void prompt_loop(char *prompt, t_shell *s)
 	while (loop)
 	{
 		s->line = readline(prompt);
-		if (s->line) // need to add a check to not print strings containing only spaces
+		if (s->line && *s->line ) // need to add a check to not print strings containing only spaces
 		{
+			printf("processing string\n");
 			add_history(s->line);
 			lexer(s);
-			s->root_node = parse_tokens(&s->head);
+			if (syntax_analysis(s->head))
+				s->root_node = parse_tokens(&s->head);
 			free_list(s->head);
 		}
 		// (void)ast; // 💥TEST

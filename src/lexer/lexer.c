@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/24 12:01:21 by timmi            ###   ########.fr       */
+/*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
+/*   Updated: 2025/04/24 16:35:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,5 @@ void	lexer(t_shell *s)
 {
 	s->head = tokenize(s->line);
 	exit_check(s);
+	s->cmd_count = count_cmd(s->head);
 }
