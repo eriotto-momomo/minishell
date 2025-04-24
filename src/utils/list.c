@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 17:27:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 17:48:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,48 @@
 
 t_list *create_node(char *data)
 {
-	t_list *newNode;
+	t_list	*new_node;
 
-	newNode = (t_list *)malloc(sizeof(t_list));
-	if (!newNode)
+	new_node = (t_list*)malloc(sizeof(t_list));
+	if (!new_node)
 		return (NULL);
-	newNode->data = data;
-	newNode->type = get_token_id(data);
-	/* newNode->type = get_token(newNode->data);  A voir */
-	newNode->next = NULL;
-	newNode->prev = NULL;
-	return newNode;
+	new_node->data = data;
+	new_node->type = get_token_id(data);
+	/* new_node->type = get_token(new_node->data);  A voir */
+	new_node->next = NULL;
+	new_node->prev = NULL;
+	return (new_node);
 }
 
 void add_front(t_list **head, char *data)
 {
-	t_list *newNode;
+	t_list	*new_node;
 
-	newNode = create_node(data);
+	new_node = create_node(data);
 	if (!head)
 	{
-		*head = newNode;
-		return;
+		*head = new_node;
+		return ;
 	}
-	newNode->next = *head;
-	*head = newNode;
+	new_node->next = *head;
+	*head = new_node;
 }
 
 void add_back(t_list **head, char *data)
 {
-	t_list *newNode = create_node(data);
-	t_list *temp;
+    t_list	*new_node = create_node(data);
+	t_list	*temp;
 
 	if (*head == NULL)
 	{
-		*head = newNode;
-		return;
-	}
+        *head = new_node;
+        return;
+    }
 	temp = *head;
 	while (temp->next != NULL)
 		temp = temp->next;
-	temp->next = newNode;
-	newNode->prev = temp;
+	temp->next = new_node;
+	new_node->prev = temp;
 }
 
 void free_list(t_list *head)
