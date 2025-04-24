@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 14:10:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 14:38:11 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static char *get_el(char *cmd, int i)
 
 int get_token_id(char *token)
 {
-	if (token[0] == '>' || token[0] == '<')
-		return (REDIR);
 	if (token[0] == '>')
 	{
 		if (token[1] == '>')
