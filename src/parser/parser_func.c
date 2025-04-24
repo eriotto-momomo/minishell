@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 13:59:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:11:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_ast	*parse_block(t_list **head)
 		ft_puterror("parse_block", "syntax - missing ')'");
 		exit(1);
 	}*/
-	if ((*head)->type == REDIR)
+	if ((*head)->type == IN_REDIR)
 	{
 		// consume_token(head); // ICI OU DANS PARSE_REDIR ?
 		cmd = parse_redir(head, cmd);
@@ -110,7 +110,7 @@ t_ast	*parse_redir(t_list **head, t_ast *cmd)
 		ft_puterror("parse_redir", "syntax - missing file name"); // 🗯️ USELESS géré dans `syntax_analysis`❔
 		exit(1);
 	}*/
-	if ((*head)->type != REDIR)
+	if ((*head)->type != IN_REDIR)
 		return (cmd);
 	else if ((*head)->data && ((*head)->data[0] == '<' && (*head)->data[1] == '\0'))
 		cmd = redir_cmd(cmd, (*head)->next->data, 1);

@@ -6,13 +6,13 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 17:34:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:15:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
-t_list	*create_node(char *data)
+t_list *create_node(char *data)
 {
 	t_list	*new_node;
 
@@ -23,10 +23,11 @@ t_list	*create_node(char *data)
 	new_node->type = get_token_id(data);
 	/* new_node->type = get_token(new_node->data);  A voir */
 	new_node->next = NULL;
+	new_node->prev = NULL;
 	return (new_node);
 }
 
-void	add_front(t_list **head, char *data)
+void add_front(t_list **head, char *data)
 {
 	t_list	*new_node;
 
@@ -40,12 +41,12 @@ void	add_front(t_list **head, char *data)
 	*head = new_node;
 }
 
-void	add_back(t_list	**head, char *data)
+void add_back(t_list **head, char *data)
 {
     t_list	*new_node = create_node(data);
 	t_list	*temp;
 
-    if (*head == NULL)
+	if (*head == NULL)
 	{
         *head = new_node;
         return;
@@ -56,14 +57,14 @@ void	add_back(t_list	**head, char *data)
     temp->next = new_node;
 }
 
-void	free_list(t_list *head)
+void free_list(t_list *head)
 {
-	t_list	*temp;
+	t_list *temp;
 	while (head)
 	{
 		temp = head->next;
-		free(head->data);
-		free(head);
+		w_free(((void **)&(head->data)));
+		w_free((void **)&head);
 		head = temp;
 	}
 }

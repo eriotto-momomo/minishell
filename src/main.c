@@ -6,48 +6,45 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/21 14:31:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:08:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	initialize_struct(t_shell *s)
+void initialize_struct(t_shell *s)
 {
-	(void)s;
+	s->env = NULL;
+	s->cmd_count = 0;
+	s->line = NULL;
+	s->head = NULL;
+	s->root_node = NULL;
 }
 
-void	prompt_loop(char *prompt, t_shell *s)
+void prompt_loop(char *prompt, t_shell *s)
 {
-	char	*line_read;
-	int		loop;
-	t_list	*head;
-	t_ast	*ast;
+	int loop;
 
-	(void) s;
 	loop = 1;
 	while (loop)
 	{
-		line_read = readline(prompt);
-		if (line_read && *line_read)
-		// need to add a check to not print strings containing only spaces
+		s->line = readline(prompt);
+		if (s->line) // need to add a check to not print strings containing only spaces
 		{
-			add_history(line_read);
-			head = tokenize(line_read);
-			print_list(head);
-			ast = build_ast(&head);
-			free_list(head);
-			// free_ast(ast) // TO DO👷‍♂️
+			add_history(s->line);
+			lexer(s);
+			s->root_node = build_ast(&s->head);
+			free_list(s->head);
 		}
-		(void)ast; // 💥TEST
-		free(line_read);
+		// (void)ast; // 💥TEST
+		free(s->line);
 	}
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_shell	s;
-	char	*prompt;
+	t_shell s;
+	char *prompt;
 
 	if (argc > 1)
 	{
@@ -57,6 +54,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		prompt = create_prompt();
+		initialize_struct(&s);
 		prompt_loop(prompt, &s);
 		free(prompt);
 	}

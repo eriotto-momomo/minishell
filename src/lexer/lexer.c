@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 17:37:07 by emonacho         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/24 14:15:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*get_el(char *cmd, int i)
+static char *get_el(char *cmd, int i)
 {
-	char	*to_push;
+	char *to_push;
 
 	if (cmd[i] == '\'' || cmd[i] == '\"')
 		to_push = get_quote(cmd, i);
@@ -27,18 +27,29 @@ static char	*get_el(char *cmd, int i)
 
 int	get_token_id(char *token)
 {
-	if (token[0] == '>' || token[0] == '<')
-		return (REDIR);
+
+	if (token[0] == '>')
+	{
+		if (token[1] == '>')
+			return (APP_OUT_REDIR);
+		return (OUT_REDIR);
+	}
+	if (token[0] == '<')
+	{
+		if (token[1] == '<')
+			return (HERE_DOC);
+		return (IN_REDIR);
+	}
 	if (token[0] == '|')
 		return (PIPE);
 	return (WORD);
 }
 
-t_list	*tokenize(char *cmd)
+t_list *tokenize(char *cmd)
 {
-	int		i;
-	char	*el;
-	t_list	*head;
+	int i;
+	char *el;
+	t_list *head;
 
 	if (!cmd)
 		return (NULL);
@@ -58,4 +69,10 @@ t_list	*tokenize(char *cmd)
 		i += ft_strlen(el);
 	}
 	return (head);
+}
+
+void	lexer(t_shell *s)
+{
+	s->head = tokenize(s->line);
+	exit_check(s);
 }
