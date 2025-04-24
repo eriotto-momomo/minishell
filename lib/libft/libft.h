@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/18 18:05:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:57:28 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@
 `R` - Red
 `G` - Green
 `Y` - Yellow
+'B' - Blue
+'P' - Purple
 `C` - Cyan
 `RST` - Reset to default color
 */
 # define R "\033[1;31m"
 # define G "\033[1;32m"
 # define Y "\033[1;33m"
+# define B "\033[1;34m"
+# define P "\033[1;35m"
 # define C "\033[1;36m"
 # define RST "\033[0m"
 

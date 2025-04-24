@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/20 22:07:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:03:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ t_ast	*pipe_cmd(t_ast *left, t_ast *right)
 	node = ast_new_node((t_ast){0});
 	if (!node)
 	{
-		printf("%spipe_cmd%s | New node %sAST_PIPE creation failed%s!\n", Y, RST, R, RST);	// 💥DEBUGING
+		printf("%spipe_cmd%s  | %sNew node AST_PIPE creation failed%s!\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
 	}
 	if(node)
-		printf("%spipe_cmd%s | New node %sAST_PIPE created%s!\n", Y, RST, G, RST);			// 💥DEBUGING
+		printf("%spipe_cmd%s  | %sNew node AST_PIPE%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_PIPE;
 	node->data.ast_pipe.left = left;
 	node->data.ast_pipe.right = right;
@@ -77,11 +77,11 @@ t_ast	*exec_cmd(void)
 	node = ast_new_node((t_ast){0});
 	if (!node)
 	{
-		printf("%sexec_cmd%s | %sNew node AST_EXEC creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
+		printf("%sexec_cmd%s  | %sNew node AST_EXEC creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
 	}
 	if(node)
-		printf("%sexec_cmd%s | New node %sAST_EXEC created%s!\n", Y, RST, G, RST);			// 💥DEBUGING
+		printf("%sexec_cmd%s  | %sNew node AST_EXEC%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_EXEC;
 	node->data.ast_exec.argc = 0;
 	w_malloc((void**)&node->data.ast_exec.argv, (sizeof(char**) * 10)); // À voir le nombre d'args max à gérer - ⚠️MALLOC ICI⚠️
