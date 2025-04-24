@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 16:34:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 16:43:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 # define STRUCT_H
 
 /*
- Attribution d'une valeur constante pour chaque token
- - WORD =	0
- - PIPE =	1
- - REDIR =	2
+Attribution d'une valeur constante pour chaque token
+- WORD =	0
+- IN_REDIR = 1		-> '<'
+- OUT_REDIR = 2		-> '>'
+- APP_OUT_REDIR = 3	-> '>>'
+- HERE_DOC = 4		-> '<<'
+- PIPE = 5
 */
 typedef enum e_types
 {
@@ -44,17 +47,19 @@ typedef enum	e_tag
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
 typedef struct s_ast t_ast;
 
+typedef union	u_data
+{
+	struct { t_ast *left; t_ast *right; } ast_block;
+	struct { t_ast *left; t_ast *right; } ast_pipe;
+	struct { t_ast *left; t_ast *right; } ast_line;
+	struct { t_ast *left; char *filename; int mode; } ast_redir;
+	struct { int argc; char **argv; } ast_exec;
+}				t_data;
+
 typedef struct	s_ast
 {
 	t_tag		tag;
-	union		u_data
-	{
-		struct { t_ast *left; t_ast *right; } ast_block;
-		struct { t_ast *left; t_ast *right; } ast_pipe;
-		struct { t_ast *left; t_ast *right; } ast_line;
-		struct { t_ast *left; t_ast *right; } ast_redir;
-		struct { int argc; char **argv; } ast_exec;
-	}			data;
+	t_data		data;
 }				t_ast;
 
 /*

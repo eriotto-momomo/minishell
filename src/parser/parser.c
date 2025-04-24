@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 17:24:34 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 17:41:06 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // ⚠️👷‍♂️ Travail en cours, fonctions probablement à modifier
 
-t_ast *parse_tokens(t_list **head)
+t_ast	*build_ast(t_list **head)
 {
 	t_ast *ast;
 
@@ -26,5 +26,5 @@ t_ast *parser(t_list *head)
 {
 	if (!syntax_analysis(head))
 		return (NULL);
-	return (parse_tokens(&head));
+	return (build_ast(&head));
 }

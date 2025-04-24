@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/22 11:13:38 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 14:24:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,18 @@
 `R` - Red
 `G` - Green
 `Y` - Yellow
+'B' - Blue
+'P' - Purple
 `C` - Cyan
 `RST` - Reset to default color
 */
-#define R "\033[1;31m"
-#define G "\033[1;32m"
-#define Y "\033[1;33m"
-#define C "\033[1;36m"
-#define RST "\033[0m"
+# define R "\033[1;31m"
+# define G "\033[1;32m"
+# define Y "\033[1;33m"
+# define B "\033[1;34m"
+# define P "\033[1;35m"
+# define C "\033[1;36m"
+# define RST "\033[0m"
 
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 42
@@ -84,7 +88,7 @@ int ft_isspace(char c);
 void ft_puterror(char *error_location, char *error_msg);
 char *ft_strnprefix(char *str, char *prefix, size_t len);
 
-// wrappers
+// wrapperss
 void w_free(void **ptr);
 // void	w_kill(pid_t pid, int signal);
 void w_malloc(void **ptr, size_t size);
