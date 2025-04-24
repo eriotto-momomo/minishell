@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/23 08:50:37 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 13:59:37 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,20 @@ void free_list(t_list *head)
 		w_free((void **)&head);
 		head = temp;
 	}
+}
+
+size_t count_cmd(t_list *head)
+{
+	size_t	c;
+	t_list	*temp;
+
+	c = 1;
+	temp = head;
+	while (temp)
+	{
+		if (temp->type == PIPE)
+			c++;
+		temp = temp->next;
+	}
+	return (c);
 }
