@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 17:40:50 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:48:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void prompt_loop(char *prompt, t_shell *s)
 			lexer(s);
 			print_list(s->head);
 			if (syntax_analysis(s->head))
-				s->root_node = parse_tokens(&s->head);
->>>>>>> main
+				s->root_node = build_ast(&s->head);
 			free_list(s->head);
 		}
 		// (void)ast; // 💥TEST
