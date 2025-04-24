@@ -6,9 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 15:46:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 16:35:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../include/minishell.h"
 
@@ -25,8 +27,9 @@ static char *get_el(char *cmd, int i)
 	return (to_push);
 }
 
-int get_token_id(char *token)
+int	get_token_id(char *token)
 {
+
 	if (token[0] == '>')
 	{
 		if (token[1] == '>')
