@@ -3,42 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/22 11:24:43 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 10:50:00 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 #define LEXER_H
 
-/*
- Attribution d'une valeur constante pour chaque token
- - WORD =	0
- - PIPE =	1
- - REDIR =	2
-*/
-typedef enum e_types
-{
-	WORD,
-	PIPE,
-	REDIR
-} t_types;
 
-/*
-Structure pour les token :
-- data - La string que contien le noeud
-- type - le type du token (word, pipe, redirecton, etc...)
-- next - pointeur vers le prochain noeud
-*/
-typedef struct s_list
-{
-	char *data;
-	t_types type;
-	struct s_list *next;
-	struct s_list *prev;
-} t_list;
 
 /**
  * @brief Tokenizes a command string into a linked list of elements.
@@ -105,5 +80,7 @@ char *get_sep(char *cmd, int i);
 char *get_quote(char *cmd, int i);
 
 int get_token_id(char *token);
+
+void	lexer(t_shell *s);
 
 #endif

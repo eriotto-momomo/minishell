@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/23 09:01:46 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 10:45:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <signal.h>
 #include <string.h>
 #include <fcntl.h>
+#include "./struct.h"
 #include "./lexer.h"
 #include "./parser.h"
 #include "./prompt.h"
@@ -34,12 +35,5 @@
 // Char set de caractere qui peuvent separer des token dans une commande
 #define SEPARATORS "|\"\'<>"
 #define BUILTINS "cd echo env exit export pwd unset"
-
-typedef struct s_shell
-{
-	char **env;
-	t_ast *root_node;
-	t_list *head;
-} t_shell;
 
 #endif

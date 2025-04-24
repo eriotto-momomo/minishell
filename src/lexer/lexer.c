@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 23:10:14 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 10:45:32 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,10 @@ t_list *tokenize(char *cmd)
 		i += ft_strlen(el);
 	}
 	return (head);
+}
+
+void	lexer(t_shell *s)
+{
+	s->head = tokenize(s->line);
+	exit_check(s);
 }

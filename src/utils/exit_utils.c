@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/23 09:03:06 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 09:59:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void exit_check(t_shell *shell)
 {
-	if (ft_strnprefix(shell->head->data, "exit", ft_strlen("exit")) && !shell->head->prev)
+	if (ft_strnprefix(shell->head->data, "exit", ft_strlen("exit")))
 		terminate_shell(shell);
 }
 
