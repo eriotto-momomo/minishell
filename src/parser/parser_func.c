@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 17:49:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:08:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,12 @@ t_ast	*parse_pipe(t_list **head)
 	t_ast *cmd;
 
 	cmd = parse_exec(head);
-	print_ast(cmd);			// 🖨️PRINT💥DEBUGING
 	if ((*head)->type == PIPE)
 	{
 		consume_token(head);
 		cmd = pipe_cmd(cmd, parse_pipe(head));
-		print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
 	}
+	print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
 	return (cmd);
 }
 
@@ -92,19 +91,21 @@ t_ast	*parse_redir(t_list **head, t_ast *cmd)
 	if ((*head)->type != IN_REDIR && (*head)->type != OUT_REDIR
 		&& (*head)->type != APP_OUT_REDIR && (*head)->type != HERE_DOC)
 		return (cmd);
-	else if ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
-		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC)
-	{						// 🖨️PRINT💥DEBUGING
-		if ((*head)->type == IN_REDIR)
-			cmd = redir_cmd(cmd, (*head)->next->data, 1);
-		else if ((*head)->type == OUT_REDIR)
-			cmd = redir_cmd(cmd, (*head)->next->data, 2);
-		else if ((*head)->type == APP_OUT_REDIR)
-			cmd = redir_cmd(cmd, (*head)->next->data, 3);
-		else if ((*head)->type == HERE_DOC)
-			cmd = redir_cmd(cmd, (*head)->next->data, 4);
-		//print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
-	}						// 🖨️PRINT💥DEBUGING
+	printf("%sparse_redir%s| %sREDIR detected!%s\n", Y, RST, B, RST);	// 🖨️PRINT💥DEBUGING
+	if (cmd->tag == AST_EXEC)	// 🖨️PRINT💥DEBUGING
+		printf("%sparse_redir%s| cmd->tag [%s%d%s] = EXEC_NODE\n", Y, RST, P, cmd->tag, RST);	// 🖨️PRINT💥DEBUGING
+	else if (cmd->tag == AST_REDIR)	// 🖨️PRINT💥DEBUGING
+		printf("%sparse_redir%s| cmd->tag [%s%d%s] = REDIR_NODE\n", Y, RST, P, cmd->tag, RST);	// 🖨️PRINT💥DEBUGING
+	else if (cmd->tag == AST_PIPE)	// 🖨️PRINT💥DEBUGING
+		printf("%sparse_redir%s| cmd->tag [%s%d%s] = PIPE_NODE\n", Y, RST, P, cmd->tag, RST);	// 🖨️PRINT💥DEBUGING
+	if ((*head)->type == IN_REDIR)
+		cmd = redir_cmd(cmd, (*head)->next->data, 1);
+	else if ((*head)->type == OUT_REDIR)
+		cmd = redir_cmd(cmd, (*head)->next->data, 2);
+	else if ((*head)->type == APP_OUT_REDIR)
+		cmd = redir_cmd(cmd, (*head)->next->data, 3);
+	else if ((*head)->type == HERE_DOC)
+		cmd = redir_cmd(cmd, (*head)->next->data, 4);
 	consume_token(head);
 	return (cmd);
 }
@@ -123,14 +124,10 @@ t_ast	*parse_exec(t_list **head)
 	ret = parse_redir(head, ret);		// ⚠️ `ret` pointe sur la branche gauche d'une eventuelle REDIR
 	argc = 0;
 	fill_exec_node(head, cmd, &argc);
-	print_exec_args(cmd->data.ast_exec.argv);	// 🖨️PRINT💥DEBUGING
-	printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
+	printf("%sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
 	if ((*head)->data && ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
 		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC))
-	{
-		printf("%sparse_exec%s | %sREDIR detected!%s\n", Y, RST, B, RST);		// 💥DEBUGING
 		ret = parse_redir(head, ret);			// 🗯️ 2nd ver.: si il y' a encore de la data check si REDIR ❔
-	}
 	cmd->data.ast_exec.argc = argc;
 	cmd->data.ast_exec.argv[argc] = ft_strdup("");
 	return (ret);
