@@ -5,10 +5,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/24 11:52:08 by timmi            ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2025/04/24 16:36:17 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 MAKEFLAGS += --no-print-directory
 
@@ -28,6 +29,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\
 			$(CFILES_PATH)/parser/parser.c\
+			$(CFILES_PATH)/parser/syntax_analysis.c\
 			$(CFILES_PATH)/prompt/prompt.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
