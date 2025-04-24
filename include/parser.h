@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/20 22:07:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:59:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum	e_tag
 	AST_EXEC
 } 				t_tag;
 
-// FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
+// FORWARD DECLARATION (dis au compilateur que "t_ast")
 typedef struct s_ast t_ast;
 
 typedef struct	s_ast
@@ -42,7 +42,7 @@ typedef struct	s_ast
 }				t_ast;
 
 // parser.c
-t_ast	*parse_tokens(t_list **head);
+t_ast	*build_ast(t_list **head);
 
 // parser_cmd.c
 // (prototypes temporaires)
@@ -62,5 +62,8 @@ t_ast	*parse_exec(t_list **head);
 
 // parser_utils.c
 t_ast	*ast_new_node(t_ast cmd);
+void	consume_token(t_list **head);
+void	print_exec_args(char **node); // 🚮TO REMOVE
+void	print_ast(t_ast *ast); // 🚮TO REMOVE
 
 #endif
