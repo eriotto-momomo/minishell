@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 14:34:10 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 15:00:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void prompt_loop(char *prompt, t_shell *s)
 		{
 			add_history(s->line);
 			lexer(s);
-			print_list(s->head);
-			syntax_analysis(s->head);
-			printf("Found %ld command(s)\n", s->cmd_count);
-			// s->root_node = parse_tokens(&s->head);
+			if (syntax_analysis(s->head))
+				s->root_node = parse_tokens(&s->head);
 			free_list(s->head);
 		}
 		// (void)ast; // 💥TEST

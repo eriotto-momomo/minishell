@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:11:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/24 09:58:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 15:21:48 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char *ft_strnprefix(char *str, char *prefix, size_t len)
 	size_t i;
 
 	i = 0;
+	if (!str[i])
+		return (NULL);
 	while (str[i] && i < len)
 	{
 		if (str[i] == prefix[i])
