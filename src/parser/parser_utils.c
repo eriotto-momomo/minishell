@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 14:21:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:38:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,32 @@ void	consume_token(t_list **head)
 	}
 }
 
+void	fill_exec_node(t_list **head, t_ast *cmd, int *argc)
+{
+	while ((*head)->data && ((*head)->data[0] != '|' || (*head)->data[0] != ')'
+		|| (*head)->data[0] != '&' || (*head)->data[0] != ';'))
+	{
+		//printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
+		if ((*head)->type != WORD)
+			break;
+		cmd->data.ast_exec.argv[(*argc)] = ft_strdup((*head)->data);
+		//printf("%sfill_exec_node%s | while-loop[argc:%ls]: [%s%s%s]\n", Y, RST, argc, G, cmd->data.ast_exec.argv[(*argc)], RST);			// 💥DEBUGING
+		if (!cmd->data.ast_exec.argv[(*argc)])
+		{
+			errno = ENOMEM;
+			ft_puterror("parse_exec", strerror(errno));
+			exit(1); // ❔
+		}
+		consume_token(head);
+		(*argc)++;
+		if (*argc >= 10) 				// 🗯️ À voir le nombre d'args max à gérer ❔
+		{
+			ft_puterror("parse_exec", "too many args");
+			exit(1);					// 💥TEST
+		}
+	}
+}
+
 void	print_exec_args(char **node)
 {
 	int	i;
@@ -48,7 +74,7 @@ void	print_exec_args(char **node)
 	i = 0;
 	while (node[i] && node[i][0])
 	{
-		printf("printf_exec_args | ");
+		printf("print_exec_args | ");
 		printf("[%s%s%s] ", C, node[i], RST); // 💥DEBUGING
 		printf("\n");
 		i++;
@@ -57,35 +83,54 @@ void	print_exec_args(char **node)
 
 void	print_ast(t_ast *ast)
 {
-	t_ast *left = ast->data.ast_pipe.left;
-	t_ast *right = ast->data.ast_pipe.right;
+	t_ast *left;
+	t_ast *right;
+	t_ast *redir;
 	if (ast->tag == AST_PIPE)
 	{
+		left = ast->data.ast_pipe.left;
+		right = ast->data.ast_pipe.right;
 		if (left->tag == AST_EXEC)
 		{
-			printf("printf_ast | LEFT  BRANCH:");
+			printf("print_ast | LEFT BRANCH:");
 			for (int i = 0; i < left->data.ast_exec.argc; i++)
 				printf(" [%s%s%s]", C, left->data.ast_exec.argv[i], RST);
 			printf("\n");
 		}
 		else if (left->tag == AST_PIPE)
-			printf("printf_ast | LEFT  BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+			printf("print_ast | LEFT BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+		else if (left->tag == AST_REDIR)
+			printf("print_ast | LEFT BRANCH: [%sAST_REDIR%s node]\n", P, RST);
 		if (right->tag == AST_EXEC)
 		{
-			printf("printf_ast | RIGHT BRANCH:");
+			printf("print_ast | RIGHT BRANCH:");
 			for (int i = 0; i < right->data.ast_exec.argc; i++)
 				printf(" [%s%s%s]", C, right->data.ast_exec.argv[i], RST);
 			printf("\n");
 		}
 		else if (right->tag == AST_PIPE)
-			printf("printf_ast | RIGHT BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+			printf("print_ast | RIGHT BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+		else if (right->tag == AST_REDIR)
+			printf("print_ast | RIGHT BRANCH: [%sAST_REDIR%s node]\n", P, RST);
 		else
 			printf("[%sEMPTY BRANCH%s]\n", B, RST);
 	}
-	/*else if (ast->tag == AST_BLOCK)
-	{
-	}
 	else if (ast->tag == AST_REDIR)
+	{
+		left = ast->data.ast_redir.left;
+		redir = ast;
+		if (left->tag == AST_EXEC)
+			printf("print_ast | LEFT BRANCH: [%sAST_EXEC%s node]\n", P, RST);
+		else if (left->tag == AST_PIPE)
+			printf("print_ast | LEFT BRANCH: [%sAST_PIPE%s node]\n", P, RST);
+		else if (left->tag == AST_REDIR)
+			printf("print_ast | LEFT BRANCH: [%sAST_REDIR%s node]\n", P, RST);
+		if (redir->data.ast_redir.filename)
+			printf("print_ast | RIGHT BRANCH: filename [%s%s%s] >> mode [%s%d%s]\n", P, redir->data.ast_redir.filename, RST, P, redir->data.ast_redir.mode, RST);
+		//else
+		//	printf("[%sEMPTY BRANCH%s]\n", B, RST);
+	}
+	/*else if (ast->tag == AST_BLOCK)
 	{
 	}*/
 }

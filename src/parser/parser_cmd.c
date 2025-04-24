@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 13:59:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:38:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ t_ast	*pipe_cmd(t_ast *left, t_ast *right)
 	node = ast_new_node((t_ast){0});
 	if (!node)
 	{
-		printf("%spipe_cmd%s  | %sNew node AST_PIPE creation failed%s!\n", Y, RST, R, RST);	// 💥DEBUGING
+		printf("%spipe_cmd%s   | %sNew node AST_PIPE creation failed%s!\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
 	}
 	if(node)
-		printf("%spipe_cmd%s  | %sNew node AST_PIPE%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
+		printf("%spipe_cmd%s   | %sNew node AST_PIPE%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_PIPE;
 	node->data.ast_pipe.left = left;
 	node->data.ast_pipe.right = right;
 	return (node);
 }
 
-// 🗯️ USELESS❔
+// 🗯️ USELESS ❔
 t_ast	*line_cmd(t_ast *left, t_ast *right)
 {
 	(void)left;
@@ -53,6 +53,10 @@ t_ast	*line_cmd(t_ast *left, t_ast *right)
 	return (0);
 }
 
+// '<':		fd = 0, O_RDONLY						-> mode = 1 (redir input)(reading)
+// '>':		fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 2 (redir output)(creating / overwriting)
+// '>>':	fd = 1, O_WRONLY | O_CREATE				-> mode = 3 (redir output)(appending)
+// '<<':	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
 t_ast	*redir_cmd(t_ast *left, char *filename, int mode)
 {
 	t_ast	*node;
@@ -68,6 +72,12 @@ t_ast	*redir_cmd(t_ast *left, char *filename, int mode)
 	node->tag = AST_REDIR;
 	node->data.ast_redir.left = left;
 	node->data.ast_redir.filename = ft_strdup(filename);
+	if (!node->data.ast_redir.filename)
+	{
+		errno = ENOMEM;
+		ft_puterror("redir_cmd", strerror(errno));
+		exit(1); // ❔
+	}
 	node->data.ast_redir.mode = mode;
 	return (node);
 }
