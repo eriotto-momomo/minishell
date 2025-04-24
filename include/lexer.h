@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 16:33:26 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 17:23:44 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ char *get_sep(char *cmd, int i);
   * @note The caller is responsible for freeing the returned string.
   */
 char	*get_quote(char *cmd, int i);
-
+int	get_token_id(char *token);
 void	lexer(t_shell *s);
 #endif
