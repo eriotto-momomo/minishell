@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/20 18:15:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:50:11 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_sep(char *cmd, int i)
 			return (NULL);
 		sep[0] = cmd[i];
 		sep[1] = cmd[i];
-		sep[3] = '\0';
+		sep[2] = '\0';
 	}
 	else
 	{
