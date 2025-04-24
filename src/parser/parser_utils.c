@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/21 20:03:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:10:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ void	print_exec_args(char **node)
 
 void	print_ast(t_ast *ast)
 {
+	t_ast *left = ast->data.ast_pipe.left;
+	t_ast *right = ast->data.ast_pipe.right;
 	if (ast->tag == AST_PIPE)
 	{
-		t_ast *left = ast->data.ast_pipe.left;
-		t_ast *right = ast->data.ast_pipe.right;
-		//printf("%sprint_ast%s | node type: %sAST_PIPE%s\n", Y, RST, C, RST);	// 💥DEBUGING
 		if (left->tag == AST_EXEC)
 		{
 			printf("LEFT  BRANCH:");
@@ -82,4 +81,10 @@ void	print_ast(t_ast *ast)
 		else
 			printf("[EMPTY BRANCH]\n");
 	}
+	/*else if (ast->tag == AST_BLOCK)
+	{
+	}
+	else if (ast->tag == AST_REDIR)
+	{
+	}*/
 }

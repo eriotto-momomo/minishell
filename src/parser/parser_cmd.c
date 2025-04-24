@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/21 20:03:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:59:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // `CONSTRUCTORS FUNCTIONS` pour créer les noeuds de l'AST
 // ⚠️👷‍♂️ Travail en cours, fonctions probablement à modifier
 
+// 🗯️ USELESS❔
 t_ast	*block_cmd(t_ast *left, t_ast *right)
 {
 	(void)left;
@@ -42,6 +43,7 @@ t_ast	*pipe_cmd(t_ast *left, t_ast *right)
 	return (node);
 }
 
+// 🗯️ USELESS❔
 t_ast	*line_cmd(t_ast *left, t_ast *right)
 {
 	(void)left;
@@ -51,23 +53,23 @@ t_ast	*line_cmd(t_ast *left, t_ast *right)
 	return (0);
 }
 
-/* `t_ast	*redir_cmd(t_ast *cmd, char *file_name, int oflag, int fd);`
-* t_ast *cmd: pointeur sur le `sub-tree`
-* char *file_name: pointeur sur le nom du fichier dans lequel rediriger
-* int mode: mode de lecture (`O_RDONLY | O_WRONLY | O_CREATE | O_TRUNC`)
-* int fd: 0 si < | <<, 1 si > | >> */
-// '<':		fd = 0, O_RDONLY						-> mode = 1 (reading)
-// '>':		fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 2 (creating / overwriting)
-// '>>':	fd = 1, O_WRONLY | O_CREATE				-> mode = 3 (appending)
-t_ast	*redir_cmd(t_ast *cmd, char *file_name, int mode, int fd)
+t_ast	*redir_cmd(t_ast *left, char *filename, int mode)
 {
-	(void)cmd;
-	(void)file_name;
-	(void)mode;
-	(void)fd;
+	t_ast	*node;
 
-	// ... - TO DO👷‍♂️
-	return (0);
+	node = ast_new_node((t_ast){0});
+	if (!node)
+	{
+		printf("%sredir_cmd%s  | %sNew node AST_REDIR creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
+		return (NULL);
+	}
+	if(node)
+		printf("%sredir_cmd%s  | %sNew node AST_REDIR%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
+	node->tag = AST_REDIR;
+	node->data.ast_redir.left = left;
+	node->data.ast_redir.filename = ft_strdup(filename);
+	node->data.ast_redir.mode = mode;
+	return (node);
 }
 
 t_ast	*exec_cmd(void)
