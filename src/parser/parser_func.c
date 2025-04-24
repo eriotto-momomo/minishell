@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 14:23:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:38:17 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 // `PARSING FUNCTIONS` pour analyser la syntaxe
 // ⚠️👷‍♂️ Travail en cours, fonctions probablement à modifier
+
+// 🖨️PRINTF de 💥DEBUGING:
+//printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
+//printf("%sparse_exec%s | while-loop %sSTART%s\n", Y, RST, G, RST);			// 💥DEBUGING
+//printf("%sparse_exec%s | while-loop %sEND%s\n", Y, RST, R, RST);		// 💥DEBUGING
 
 //	head->types:
 //	WORD =	0
@@ -31,7 +36,7 @@ t_ast	*parse_block(t_list **head)
 	if ((*head)->data && (*head)->data[0] != '(')
 	{
 		ft_puterror("parse_block", "unexpected syntax");
-		exit(1);
+		exit(1); // ❔
 	}
 	cmd = parse_line(head);
 	/*if (!get_closing_parenthesis(head)) //						- TO DO👷‍♂️
@@ -39,11 +44,9 @@ t_ast	*parse_block(t_list **head)
 		ft_puterror("parse_block", "syntax - missing ')'");
 		exit(1);
 	}*/
-	if ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR)
-	{
-		// consume_token(head); // ICI OU DANS PARSE_REDIR ?
+	if ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
+		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC)
 		cmd = parse_redir(head, cmd);
-	}
 
 	// ... - TO DO👷‍♂️
 	return (cmd);
@@ -54,21 +57,14 @@ t_ast	*parse_pipe(t_list **head)
 {
 	t_ast *cmd;
 
-	//printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);
 	cmd = parse_exec(head);
 	print_ast(cmd);			// 🖨️PRINT💥DEBUGING
 	if ((*head)->type == PIPE)
 	{
-		if ((*head)->next->data && (*head)->next->type != WORD)			// 🗯️ USELESS géré dans `syntax_analysis`❔
-		{
-			ft_puterror("parse_pipe", "syntax - missing exec name");	// 🗯️ NORMALEMENT USELESS, JUSTE POUR EVITER LES INFINITE LOOPS
-			exit(1);													// 🗯️ NORMALEMENT USELESS, JUSTE POUR EVITER LES INFINITE LOOPS
-		}
 		consume_token(head);
 		cmd = pipe_cmd(cmd, parse_pipe(head));
 		print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
 	}
-	// ... - TO DO👷‍♂️
 	return (cmd);
 }
 
@@ -78,7 +74,6 @@ t_ast	*parse_line(t_list **head)
 {
 	t_ast *cmd;
 
-	//printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);
 	cmd = parse_pipe(head);
 	//if ((*head)->data && ((*head)->data[0] == '&' || (*head)->data[0] == ';'))	// Demandé dans le sujet❔
 
@@ -87,42 +82,29 @@ t_ast	*parse_line(t_list **head)
 }
 
 // '<':		fd = 0, O_RDONLY						-> mode = 1 (redir input)(reading)
-// '<<':	fd = 0, O_RDONLY | ... ?				-> mode = 2 (redir input)(reading until delimiter)
-// '>':		fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 3 (redir output)(creating / overwriting)
-// '>>':	fd = 1, O_WRONLY | O_CREATE				-> mode = 4 (redir output)(appending)
+// '>':		fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 2 (redir output)(creating / overwriting)
+// '>>':	fd = 1, O_WRONLY | O_CREATE				-> mode = 3 (redir output)(appending)
+// '<<':	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
 // ⚠️ `*cmd` pointe sur la branche gauche
 // parse_redir: {< file}, {> file} ou {>> file}
 t_ast	*parse_redir(t_list **head, t_ast *cmd)
 {
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	if ((*head)->data && ((*head)->data[0] == '<' || (*head)->data[0] == '>'									// 💥DEBUGING
-		|| ((*head)->data[0] == '>' && (*head)->data[1] == '>')))
-	{
-		// printf("%sparse_redir%s | IN & OUT - %sREDIR detected!%s Nohting done except consumming token...\n", Y, RST, G, RST);			// 💥DEBUGING
-		consume_token(head);
+	if ((*head)->type != IN_REDIR && (*head)->type != OUT_REDIR
+		&& (*head)->type != APP_OUT_REDIR && (*head)->type != HERE_DOC)
 		return (cmd);
-	}
-	else																										// 💥DEBUGING
-	{
-		// printf("%sparse_redir%s | IN & OUT - %sNo REDIR detected!%s Nohting done... \n", Y, RST, C, RST);	// 💥DEBUGING
-		return (cmd);
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*if ((*head)->next->type != WORD)
-	{
-		ft_puterror("parse_redir", "syntax - missing file name"); // 🗯️ USELESS géré dans `syntax_analysis`❔
-		exit(1);
-	}*/
-	if ((*head)->type != IN_REDIR)
-		return (cmd);
-	else if ((*head)->data && ((*head)->data[0] == '<' && (*head)->data[1] == '\0'))
-		cmd = redir_cmd(cmd, (*head)->next->data, 1);
-	else if ((*head)->data && ((*head)->data[0] == '<' && (*head)->data[1] == '<'))
-		cmd = redir_cmd(cmd, (*head)->next->data, 2);
-	else if ((*head)->data && ((*head)->data[0] == '>' && (*head)->data[1] == '\0'))
-		cmd = redir_cmd(cmd, (*head)->next->data, 3);
-	else if ((*head)->data && ((*head)->data[0] == '>' && (*head)->data[1] == '>'))
-		cmd = redir_cmd(cmd, (*head)->next->data, 4);
+	else if ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
+		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC)
+	{						// 🖨️PRINT💥DEBUGING
+		if ((*head)->type == IN_REDIR)
+			cmd = redir_cmd(cmd, (*head)->next->data, 1);
+		else if ((*head)->type == OUT_REDIR)
+			cmd = redir_cmd(cmd, (*head)->next->data, 2);
+		else if ((*head)->type == APP_OUT_REDIR)
+			cmd = redir_cmd(cmd, (*head)->next->data, 3);
+		else if ((*head)->type == HERE_DOC)
+			cmd = redir_cmd(cmd, (*head)->next->data, 4);
+		//print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
+	}						// 🖨️PRINT💥DEBUGING
 	consume_token(head);
 	return (cmd);
 }
@@ -135,37 +117,44 @@ t_ast	*parse_exec(t_list **head)
 	int		argc;
 
 	if ((*head)->data && (*head)->data[0] == '(')
-		return (parse_block(head));		// exec dans un `subshell`			- Demandé dans le sujet❔ - TO DO👷‍♂️
+		return (parse_block(head));		// exec dans un `subshell`			- TO DO👷‍♂️
 	ret = exec_cmd();					// alloue un 'exec_node' (blank)	- ⚠️MALLOC ICI⚠️
 	cmd = (t_ast *)ret;					// pointeur sur cet 'exec_node'
-	ret = parse_redir(head, ret);		// gérer les redirections			- TO DO👷‍♂️
+	ret = parse_redir(head, ret);		// ⚠️ `ret` pointe sur la branche gauche d'une eventuelle REDIR
 	argc = 0;
-	//printf("%sparse_exec%s | while-loop %sSTART%s\n", Y, RST, G, RST);			// 💥DEBUGING
-	while ((*head)->data && ((*head)->data[0] != '|' || (*head)->data[0] != ')'
+	/*while ((*head)->data && ((*head)->data[0] != '|' || (*head)->data[0] != ')'
 		|| (*head)->data[0] != '&' || (*head)->data[0] != ';'))
 	{
 		if ((*head)->type != WORD)
-		{
-			// ft_puterror("parse_exec", "syntax");			// USELESS géré dans `syntax_analysis`❔
-			// exit(1);										// 💥TEST
-			break;											// 💥TEST
-		}
+			break;
 		cmd->data.ast_exec.argv[argc] = ft_strdup((*head)->data);
+		if (!cmd->data.ast_exec.argv[argc])
+		{
+			errno = ENOMEM;
+			ft_puterror("parse_exec", strerror(errno));
+			exit(1); // ❔
+		}
 		consume_token(head);
-		//printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);
 		argc++;
-		if (argc >= 10) 				// À voir le nombre d'args max à gérer
+		if (argc >= 10) 				// 🗯️ À voir le nombre d'args max à gérer ❔
 		{
 			ft_puterror("parse_exec", "too many args");
 			exit(1);					// 💥TEST
 		}
-		ret = parse_redir(head, ret);	// gérer les redirections			- TO DO👷‍♂️
+		ret = parse_redir(head, ret);			// 🗯️ 1st ver.: n'est jamais check si (*head)->type != WORD) ❔
+	}*/
+	fill_exec_node(head, cmd, &argc);	// 💥TEST
+	print_exec_args(cmd->data.ast_exec.argv);	// 🖨️PRINT💥DEBUGING
+	printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
+	if ((*head)->data && ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
+		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC))
+	{
+		printf("%sparse_exec%s | %sREDIR detected!%s\n", Y, RST, B, RST);		// 💥DEBUGING
+		ret = parse_redir(head, ret);			// 🗯️ 2nd ver.: si il y' a encore de la data check si REDIR ❔
 	}
-	//printf("%sparse_exec%s | while-loop %sEND%s\n", Y, RST, R, RST);		// 💥DEBUGING
-	print_exec_args(cmd->data.ast_exec.argv);
 	cmd->data.ast_exec.argc = argc;
 	cmd->data.ast_exec.argv[argc] = ft_strdup("");
-	return (ret);						// gérer les redirections			- TO DO👷‍♂️
+	return (ret);
 }
 
 /* Selon: 'Shell Code-- More Detail' @36:36 https://www.youtube.com/watch?v=ZjzMdsTWF0U&list=LL&index=2
