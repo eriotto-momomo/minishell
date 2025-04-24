@@ -6,12 +6,12 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 14:00:17 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 16:34:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
-#define STRUCT_H
+# define STRUCT_H
 
 /*
  Attribution d'une valeur constante pour chaque token
@@ -27,7 +27,6 @@ typedef enum e_types
 	APP_OUT_REDIR,
 	HERE_DOC,
 	PIPE,
-	REDIR
 } t_types;
 
 // ⚠️👷‍♂️ Travail en cours, fonctions et structures probablement à modifier
