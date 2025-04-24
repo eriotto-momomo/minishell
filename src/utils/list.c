@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 08:19:32 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 11:58:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void add_back(t_list **head, char *data)
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = newNode;
-	newNode->prev = temp;
 }
 
 void free_list(t_list *head)
@@ -64,8 +63,8 @@ void free_list(t_list *head)
 	while (head)
 	{
 		temp = head->next;
-		free(head->data);
-		free(head);
+		w_free(((void **)&(head->data)));
+		w_free((void **)&head);
 		head = temp;
 	}
 }

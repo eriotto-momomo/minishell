@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/22 08:12:15 by c4v3d            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/24 12:01:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../include/minishell.h"
 
@@ -25,7 +27,7 @@ static char *get_el(char *cmd, int i)
 	return (to_push);
 }
 
-int get_token_id(char *token)
+int	get_token_id(char *token)
 {
 
 	if (token[0] == '>')
@@ -71,15 +73,8 @@ t_list *tokenize(char *cmd)
 	return (head);
 }
 
-t_list *lexer(char *cmd)
+void	lexer(t_shell *s)
 {
-	t_list *head;
-
-	head = tokenize(cmd);
-	if (!head)
-	{
-		printf("Something went wrong !\n");
-		return (NULL);
-	}
-	return (head);
+	s->head = tokenize(s->line);
+	exit_check(s);
 }

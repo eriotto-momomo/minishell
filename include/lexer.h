@@ -3,45 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/22 08:18:52 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/24 11:57:15 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 #define LEXER_H
 
-/*
- Attribution d'une valeur constante pour chaque token
- - WORD =	0
- - PIPE =	1
- - REDIR =	2
-*/
-typedef enum e_types
-{
-	WORD,
-	IN_REDIR,
-	OUT_REDIR,
-	APP_OUT_REDIR,
-	HERE_DOC,
-	PIPE,
-} t_types;
 
-/*
-Structure pour les token :
-- data - La string que contien le noeud
-- type - le type du token (word, pipe, redirecton, etc...)
-- next - pointeur vers le prochain noeud
-*/
-typedef struct s_list
-{
-	char *data;
-	t_types type;
-	struct s_list *next;
-	struct s_list *prev;
-} t_list;
 
 /**
  * @brief Tokenizes a command string into a linked list of elements.
@@ -92,22 +64,21 @@ char *get_word(char *cmd, int i);
 char *get_sep(char *cmd, int i);
 
 /**
- * @brief Extracts a quoted string from the command.
- *
- * This function starts at the given index `i` of the `cmd` string and extracts
- * a substring enclosed in matching single or double quotes. It includes the
- * opening and closing quote characters in the result.
- *
- * @param cmd The command string to parse.
- * @param i The starting index of the quoted string.
- * @return char* A newly allocated string containing the quoted substring,
- * or NULL on allocation failure.
- *
- * @note The caller is responsible for freeing the returned string.
- */
-char *get_quote(char *cmd, int i);
+  * @brief Extracts a quoted string from the command.
+  *
+  * This function starts at the given index `i` of the `cmd` string and extracts
+  * a substring enclosed in matching single or double quotes. It includes the
+  * opening and closing quote characters in the result.
+  *
+  * @param cmd The command string to parse.
+  * @param i The starting index of the quoted string.
+  * @return char* A newly allocated string containing the quoted substring,
+  * or NULL on allocation failure.
+  *
+  * @note The caller is responsible for freeing the returned string.
+  */
+char	*get_quote(char *cmd, int i);
 
-int get_token_id(char *token);
-t_list *lexer(char *cmd);
+void	lexer(t_shell *s);
 
 #endif
