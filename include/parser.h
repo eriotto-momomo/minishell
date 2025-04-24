@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 16:00:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:43:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ void	consume_token(t_list **head);
 void	fill_exec_node(t_list **head, t_ast *cmd, int *argc);
 void	print_exec_args(char **node); // 🚮TO REMOVE
 void	print_ast(t_ast *ast); // 🚮TO REMOVE
+
+// syntax analysis
+int	syntax_analysis(t_list *token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/24 09:59:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 15:37:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void exit_check(t_shell *shell)
 {
 	if (ft_strnprefix(shell->head->data, "exit", ft_strlen("exit")))
+	{	
+		printf("what\n");
 		terminate_shell(shell);
+	}
 }
 
 void terminate_shell(t_shell *minishell)
