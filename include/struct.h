@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 14:11:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:24:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 # define STRUCT_H
 
 /*
- Attribution d'une valeur constante pour chaque token
- - WORD =	0
- - PIPE =	1
- - REDIR =	2
+Attribution d'une valeur constante pour chaque token
+- WORD =	0
+- IN_REDIR = 1
+- OUT_REDIR = 2
+- APP_OUT_REDIR = 3
+- HERE_DOC = 4
+- PIPE = 5
 */
 typedef enum e_types
 {

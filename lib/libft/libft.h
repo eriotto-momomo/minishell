@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 14:08:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:24:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int ft_isspace(char c);
 void ft_puterror(char *error_location, char *error_msg);
 char *ft_strnprefix(char *str, char *prefix, size_t len);
 
-// wrappers
+// wrapperss
 void w_free(void **ptr);
 // void	w_kill(pid_t pid, int signal);
 void w_malloc(void **ptr, size_t size);

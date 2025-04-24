@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 14:11:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:23:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 // ⚠️👷‍♂️ Travail en cours, fonctions probablement à modifier
 
 //	head->types:
-// WORD =	0
-// PIPE =	1
-// REDIR =	2
+//	WORD =	0
+//	IN_REDIR = 1
+//	OUT_REDIR = 2
+//	APP_OUT_REDIR = 3
+//	HERE_DOC = 4
+//	PIPE = 5
 
 // parse_block: (LINE) REDIR
 t_ast	*parse_block(t_list **head)
@@ -36,7 +39,7 @@ t_ast	*parse_block(t_list **head)
 		ft_puterror("parse_block", "syntax - missing ')'");
 		exit(1);
 	}*/
-	if ((*head)->type == IN_REDIR)
+	if ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR)
 	{
 		// consume_token(head); // ICI OU DANS PARSE_REDIR ?
 		cmd = parse_redir(head, cmd);
