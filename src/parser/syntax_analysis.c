@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 14:49:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 15:06:08 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int syntax_checker(t_list *token)
 		else if (temp->next->type == PIPE)
 			err = 2; // minishell: Does not handle `||\n
 	}
-	if (temp->type == OUT_REDIR || temp->type == IN_REDIR || temp->type == HERE_DOC || APP_OUT_REDIR)
+	else if (temp->type == OUT_REDIR || temp->type == IN_REDIR || temp->type == HERE_DOC || temp->type == APP_OUT_REDIR)
 	{
 		if (!temp->next)
 			err = 3; // minishell: syntax error near unexpected token `newline'\n
@@ -46,7 +46,7 @@ int	syntax_analysis(t_list *token)
 		if (err)
 		{
 			if (!temp->next)
-				printf("minishell: syntax error near unexpected token `newline'");
+				printf("minishell: syntax error near unexpected token `newline'\n");
 			printf("%sSyntax error n %d\n%s",R, err, RST);
 			return (0);
 		}
