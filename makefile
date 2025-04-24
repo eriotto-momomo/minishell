@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
+#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/03 11:40:12 by timmi             #+#    #+#              #
-#    Updated: 2025/04/22 11:35:35 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/04/24 14:21:48 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\
 			$(CFILES_PATH)/parser/parser.c\
+			$(CFILES_PATH)/parser/syntax_analysis.c\
 			$(CFILES_PATH)/prompt/prompt.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
