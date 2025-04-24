@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/18 17:03:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:34:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,46 @@
 
 t_list	*create_node(char *data)
 {
-	t_list	*newNode;
+	t_list	*new_node;
 
-	newNode = (t_list*)malloc(sizeof(t_list));
-	if (!newNode)
+	new_node = (t_list*)malloc(sizeof(t_list));
+	if (!new_node)
 		return (NULL);
-	newNode->data = data;
-	newNode->type = get_token_id(data);
-	/* newNode->type = get_token(newNode->data);  A voir */
-	newNode->next = NULL;
-	return newNode;
+	new_node->data = data;
+	new_node->type = get_token_id(data);
+	/* new_node->type = get_token(new_node->data);  A voir */
+	new_node->next = NULL;
+	return (new_node);
 }
 
 void	add_front(t_list **head, char *data)
 {
-	t_list	*newNode;
+	t_list	*new_node;
 
-	newNode = create_node(data);
+	new_node = create_node(data);
 	if (!head)
 	{
-		*head = newNode;
+		*head = new_node;
 		return ;
 	}
-	newNode->next = *head;
-	*head = newNode;
+	new_node->next = *head;
+	*head = new_node;
 }
 
 void	add_back(t_list	**head, char *data)
 {
-    t_list	*newNode = create_node(data);
+    t_list	*new_node = create_node(data);
 	t_list	*temp;
 
     if (*head == NULL)
 	{
-        *head = newNode;
+        *head = new_node;
         return;
     }
     temp = *head;
     while (temp->next != NULL)
         temp = temp->next;
-    temp->next = newNode;
+    temp->next = new_node;
 }
 
 void	free_list(t_list *head)

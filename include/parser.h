@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/21 19:59:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:11:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,24 @@ typedef enum	e_tag
 } 				t_tag;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast")
-typedef struct s_ast t_ast;
+typedef struct s_ast	t_ast;
+
+typedef union	u_data
+{
+	struct { t_ast *left; t_ast *right; } ast_block;
+	struct { t_ast *left; t_ast *right; } ast_pipe;
+	struct { t_ast *left; t_ast *right; } ast_line;
+	struct { t_ast *left; char *filename; int mode; } ast_redir;
+	struct { int argc; char **argv; } ast_exec;
+}				t_data;
 
 typedef struct	s_ast
+{
+	t_tag		tag;
+	t_data		data;
+}				t_ast;
+
+/*typedef struct	s_ast
 {
 	t_tag		tag;
 	union		u_data
@@ -36,10 +51,10 @@ typedef struct	s_ast
 		struct { t_ast *left; t_ast *right; } ast_block;
 		struct { t_ast *left; t_ast *right; } ast_pipe;
 		struct { t_ast *left; t_ast *right; } ast_line;
-		struct { t_ast *left; t_ast *right; } ast_redir;
+		struct { t_ast *left; char *filename; int mode; } ast_redir;
 		struct { int argc; char **argv; } ast_exec;
 	}			data;
-}				t_ast;
+}				t_ast;*/
 
 // parser.c
 t_ast	*build_ast(t_list **head);
@@ -49,7 +64,7 @@ t_ast	*build_ast(t_list **head);
 t_ast	*block_cmd(t_ast *left, t_ast *right);
 t_ast	*pipe_cmd(t_ast *left, t_ast *right);
 t_ast	*line_cmd(t_ast *left, t_ast *right);
-t_ast	*redir_cmd(t_ast *cmd, char *file_name, int mode, int fd);
+t_ast	*redir_cmd(t_ast *left, char *filename, int mode);
 t_ast	*exec_cmd(void);
 
 // parser_func.c
