@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 10:43:59 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 11:56:53 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 # define PARSER_H
 
 // parser.c
-t_ast	*parse_tokens(t_list **head);
+t_ast *parse_tokens(t_list **head);
+t_ast *parser(t_list *head);
 
 // parser_cmd.c
 // (prototypes temporaires)
-t_ast	*block_cmd(t_ast *left, t_ast *right);
-t_ast	*pipe_cmd(t_ast *left, t_ast *right);
-t_ast	*line_cmd(t_ast *left, t_ast *right);
-t_ast	*redir_cmd(t_ast *cmd, char *file_name, int mode, int fd);
-t_ast	*exec_cmd(void);
+t_ast *block_cmd(t_ast *left, t_ast *right);
+t_ast *pipe_cmd(t_ast *left, t_ast *right);
+t_ast *line_cmd(t_ast *left, t_ast *right);
+t_ast *redir_cmd(t_ast *cmd, char *file_name, int mode, int fd);
+t_ast *exec_cmd(void);
 
 // parser_func.c
 // (prototypes temporaires)
-t_ast	*parse_block(t_list **head);
-t_ast	*parse_pipe(t_list **head);
-t_ast	*parse_line(t_list **head);
-t_ast	*parse_redir(t_list **head, t_ast *cmd);
-t_ast	*parse_exec(t_list **head);
+t_ast *parse_block(t_list **head);
+t_ast *parse_pipe(t_list **head);
+t_ast *parse_line(t_list **head);
+t_ast *parse_redir(t_list **head, t_ast *cmd);
+t_ast *parse_exec(t_list **head);
 
 // parser_utils.c
-t_ast	*ast_new_node(t_ast cmd);
+t_ast *ast_new_node(t_ast cmd);
 
 #endif

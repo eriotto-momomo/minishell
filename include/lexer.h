@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 10:50:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 11:57:15 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,20 @@ char *get_word(char *cmd, int i);
 char *get_sep(char *cmd, int i);
 
 /**
- * @brief Extracts a quoted string from the command.
- *
- * This function starts at the given index `i` of the `cmd` string and extracts
- * a substring enclosed in matching single or double quotes. It includes the
- * opening and closing quote characters in the result.
- *
- * @param cmd The command string to parse.
- * @param i The starting index of the quoted string.
- * @return char* A newly allocated string containing the quoted substring,
- * or NULL on allocation failure.
- *
- * @note The caller is responsible for freeing the returned string.
- */
-char *get_quote(char *cmd, int i);
-
-int get_token_id(char *token);
+  * @brief Extracts a quoted string from the command.
+  *
+  * This function starts at the given index `i` of the `cmd` string and extracts
+  * a substring enclosed in matching single or double quotes. It includes the
+  * opening and closing quote characters in the result.
+  *
+  * @param cmd The command string to parse.
+  * @param i The starting index of the quoted string.
+  * @return char* A newly allocated string containing the quoted substring,
+  * or NULL on allocation failure.
+  *
+  * @note The caller is responsible for freeing the returned string.
+  */
+char	*get_quote(char *cmd, int i);
 
 void	lexer(t_shell *s);
 
