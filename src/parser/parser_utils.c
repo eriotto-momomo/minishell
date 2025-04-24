@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 17:48:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:55:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,9 @@ void	fill_exec_node(t_list **head, t_ast *cmd, int *argc)
 	while ((*head)->data && ((*head)->data[0] != '|' || (*head)->data[0] != ')'
 		|| (*head)->data[0] != '&' || (*head)->data[0] != ';'))
 	{
-		//printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
 		if ((*head)->type != WORD)
 			break;
 		cmd->data.ast_exec.argv[(*argc)] = ft_strdup((*head)->data);
-		//printf("%sfill_exec_node%s | while-loop[argc:%ls]: [%s%s%s]\n", Y, RST, argc, G, cmd->data.ast_exec.argv[(*argc)], RST);			// 💥DEBUGING
 		if (!cmd->data.ast_exec.argv[(*argc)])
 		{
 			errno = ENOMEM;
@@ -89,6 +87,8 @@ void	fill_exec_node(t_list **head, t_ast *cmd, int *argc)
 			exit(1);					// 💥TEST
 		}
 	}
+	print_exec_args(cmd->data.ast_exec.argv);	// 🖨️PRINT💥DEBUGING
+
 }
 
 void	print_exec_args(char **node)
@@ -98,7 +98,7 @@ void	print_exec_args(char **node)
 	i = 0;
 	while (node[i] && node[i][0])
 	{
-		printf("print_exec_args | ");
+		printf("print_exec_args ");
 		printf("[%s%s%s] ", C, node[i], RST); // 💥DEBUGING
 		printf("\n");
 		i++;
