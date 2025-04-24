@@ -6,7 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/24 16:47:13 by emonacho         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/24 17:21:56 by timmi            ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +38,14 @@ void prompt_loop(char *prompt, t_shell *s)
 			printf("processing string\n");
 			add_history(s->line);
 			lexer(s);
+<<<<<<< HEAD
 			//if (syntax_analysis(s->head))
 			s->root_node = build_ast(&s->head);
+=======
+			print_list(s->head);
+			if (syntax_analysis(s->head))
+				s->root_node = parse_tokens(&s->head);
+>>>>>>> main
 			free_list(s->head);
 		}
 		// (void)ast; // 💥TEST

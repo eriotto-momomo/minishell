@@ -6,7 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/24 16:43:52 by emonacho         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/24 17:27:50 by timmi            ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +52,7 @@ void add_back(t_list **head, char *data)
 
 	if (*head == NULL)
 	{
+<<<<<<< HEAD
         *head = new_node;
         return;
     }
@@ -55,6 +60,16 @@ void add_back(t_list **head, char *data)
     while (temp->next != NULL)
         temp = temp->next;
     temp->next = new_node;
+=======
+		*head = newNode;
+		return;
+	}
+	temp = *head;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = newNode;
+	newNode->prev = temp;
+>>>>>>> main
 }
 
 void free_list(t_list *head)
