@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 10:45:32 by timmi            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/24 12:01:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../../include/minishell.h"
 
@@ -25,10 +27,21 @@ static char *get_el(char *cmd, int i)
 	return (to_push);
 }
 
-int get_token_id(char *token)
+int	get_token_id(char *token)
 {
-	if (token[0] == '>' || token[0] == '<')
-		return (REDIR);
+
+	if (token[0] == '>')
+	{
+		if (token[1] == '>')
+			return (APP_OUT_REDIR);
+		return (OUT_REDIR);
+	}
+	if (token[0] == '<')
+	{
+		if (token[1] == '<')
+			return (HERE_DOC);
+		return (IN_REDIR);
+	}
 	if (token[0] == '|')
 		return (PIPE);
 	return (WORD);

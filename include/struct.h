@@ -6,12 +6,12 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 10:45:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/24 12:01:08 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
-#define STRUCT_H
+# define STRUCT_H
 
 /*
  Attribution d'une valeur constante pour chaque token
@@ -22,8 +22,11 @@
 typedef enum e_types
 {
 	WORD,
+	IN_REDIR,
+	OUT_REDIR,
+	APP_OUT_REDIR,
+	HERE_DOC,
 	PIPE,
-	REDIR
 } t_types;
 
 // ⚠️👷‍♂️ Travail en cours, fonctions et structures probablement à modifier
