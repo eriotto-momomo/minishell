@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 21:45:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 22:25:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ void prompt_loop(char *prompt, t_shell *s)
 		{
 			add_history(s->line);
 			lexer(s);
-			//print_list(s->head);
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&s->head);
 			simple_cmd(s->root_node, s->env);
-			// 	free_list(s->head);
 		}
 		// (void)ast; // 💥TEST
 		free(s->line);
