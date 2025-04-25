@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 17:05:26 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 17:33:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static char	*pathfinder(char *cmd, char **path)
 		free (full_path);
 		i++;
 	}
-	printf("No path found...\n");
 	return (NULL);
 }
 
@@ -39,10 +38,14 @@ void	cmd_execution(char **cmd, char **path)
 
 	cmd_path = pathfinder(cmd[0], path);
 	if (!cmd_path)
-		printf("No path Found...\n");
+	{
+		perror("Command not found");
+		exit(127);
+	}
 	if (execve(cmd_path, cmd, path) == -1)
 	{
-		printf("Failed execve\n");
-		
+		free(cmd_path);
+		perror("Command not executable");
+		exit(126);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/24 15:37:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 17:15:00 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void terminate_shell(t_shell *minishell)
 	if (minishell->root_node)
 	{
 		printf("AST freed !\n");
+	}
+	if (minishell->path)
+	{
+		ft_free_array(minishell->path, ft_count_tab(minishell->path, 0), 'c');
 	}
 	printf("Exiting minishell !\nSee you next time !\n");
 	exit(0);
