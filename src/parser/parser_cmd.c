@@ -6,24 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 17:48:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/25 22:09:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// `CONSTRUCTORS FUNCTIONS` pour créer les noeuds de l'AST
-// ⚠️👷‍♂️ Travail en cours, fonctions probablement à modifier
-
-// 🗯️ USELESS❔
-t_ast	*block_cmd(t_ast *left, t_ast *right)
-{
-	(void)left;
-	(void)right;
-
-	// ... - TO DO👷‍♂️
-	return (0);
-}
 
 t_ast	*pipe_cmd(t_ast *left, t_ast *right)
 {
@@ -32,25 +19,15 @@ t_ast	*pipe_cmd(t_ast *left, t_ast *right)
 	node = ast_new_node((t_ast){0});
 	if (!node)
 	{
-		printf("%spipe_cmd%s   | %sNew node AST_PIPE creation failed%s!\n", Y, RST, R, RST);	// 💥DEBUGING
+		printf("%spipe_cmd...%s| %sNew node AST_PIPE creation failed%s!\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
 	}
-	if(node)
-		printf("%spipe_cmd%s   | %sNew node AST_PIPE%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
+	//if(node)
+	//	printf("%spipe_cmd...%s| %sNew node AST_PIPE%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_PIPE;
 	node->data.ast_pipe.left = left;
 	node->data.ast_pipe.right = right;
 	return (node);
-}
-
-// 🗯️ USELESS ❔
-t_ast	*line_cmd(t_ast *left, t_ast *right)
-{
-	(void)left;
-	(void)right;
-
-	// ... - TO DO👷‍♂️
-	return (0);
 }
 
 // '<':		fd = 0, O_RDONLY						-> mode = 1 (redir input)(reading)
@@ -64,21 +41,21 @@ t_ast	*redir_cmd(t_ast *left, char *filename, int mode)
 	node = ast_new_node((t_ast){0});
 	if (!node)
 	{
-		printf("%sredir_cmd%s  | %sNew node AST_REDIR creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
+		printf("%sredir_cmd..%s| %sNew node AST_REDIR creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
 	}
-	if(node)
-		printf("%sredir_cmd%s  | %sNew node AST_REDIR%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
+	//if(node)
+	//	printf("%sredir_cmd..%s| %sNew node AST_REDIR%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_REDIR;
 	node->data.ast_redir.left = left;
+	node->data.ast_redir.mode = mode;
 	node->data.ast_redir.filename = ft_strdup(filename);
 	if (!node->data.ast_redir.filename)
 	{
 		errno = ENOMEM;
 		ft_puterror("redir_cmd", strerror(errno));
-		exit(1); // ❔
+		exit(1); // // 🗯️ Ou on "catch" errno dans le main pour quit clean ❔
 	}
-	node->data.ast_redir.mode = mode;
 	return (node);
 }
 
@@ -89,14 +66,24 @@ t_ast	*exec_cmd(void)
 	node = ast_new_node((t_ast){0});
 	if (!node)
 	{
-		printf("%sexec_cmd%s   | %sNew node AST_EXEC creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
+		printf("%sexec_cmd...%s| %sNew node AST_EXEC creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
 	}
-	if(node)
-		printf("%sexec_cmd%s   | %sNew node AST_EXEC%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
+	//if(node)
+	//	printf("%sexec_cmd...%s| %sNew node AST_EXEC%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_EXEC;
 	node->data.ast_exec.argc = 0;
-	w_malloc((void**)&node->data.ast_exec.argv, (sizeof(char**) * 10)); // À voir le nombre d'args max à gérer - ⚠️MALLOC ICI⚠️
-	//node->data.ast_exec.argv = malloc(sizeof(char **) * 10); 			// À voir le nombre d'args max à gérer - ⚠️MALLOC ICI⚠️
+	w_malloc((void**)&node->data.ast_exec.argv, (sizeof(char**) * 10)); // 🗯️ Nombre d'args max à gérer ❔
+	//node->data.ast_exec.argv = malloc(sizeof(char **) * 10);
 	return (node);
+}
+
+t_ast	*ast_new_node(t_ast cmd)
+{
+	t_ast	*ptr;
+
+	w_malloc((void **)&ptr, sizeof(t_ast));
+	if (ptr)
+		*ptr = cmd;
+	return (ptr);
 }
