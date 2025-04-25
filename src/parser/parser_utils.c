@@ -6,11 +6,13 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 22:26:38 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/25 23:20:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*get_env_val(char *var);
 
 void	consume_token(t_list **head)
 {
@@ -34,6 +36,8 @@ void	fill_exec_node(t_list **head, t_ast *cmd, int *argc)
 			break;
 		if ((*head)->data[0] == '\"' || (*head)->data[0] == '\'')
 			cmd->data.ast_exec.argv[(*argc)] = ft_strtrim((*head)->data, "\'\"");
+		else if ((*head)->data[0] == '$')
+			cmd->data.ast_exec.argv[(*argc)] = get_env_val((*head)->data);
 		else
 			cmd->data.ast_exec.argv[(*argc)] = ft_strdup((*head)->data);
 		if (!cmd->data.ast_exec.argv[(*argc)])
@@ -50,6 +54,19 @@ void	fill_exec_node(t_list **head, t_ast *cmd, int *argc)
 			exit(1);	// 💥TEST
 		}
 	}
+}
+
+char	*get_env_val(char *var)
+{
+	char *tmp;
+	char	*ret;
+
+	tmp = var;
+
+	var = ft_strtrim(var, "$");
+	ret = getenv(var);
+	free(tmp);
+	return (ret);
 }
 
 // 🖨️PRINT💥DEBUGING
