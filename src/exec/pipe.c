@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_utils.c                                       :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/25 19:16:05 by timmi            ###   ########.fr       */
+/*   Created: 2025/04/25 19:04:01 by timmi             #+#    #+#             */
+/*   Updated: 2025/04/25 19:11:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void exit_check(t_shell *shell)
+void	in_pipe(int *p, t_ast *node)
 {
-	if (ft_strnprefix(shell->head->data, "exit", ft_strlen("exit")))
-	{	
-		printf("what\n");
-		terminate_shell(shell);
-	}
-}
-
-void terminate_shell(t_shell *minishell)
-{
-	if (minishell->head)
-	{
-		free_list(minishell->head);
-		printf("Linked list freed !\n");
-	}
-	if (minishell->root_node)
-	{
-		printf("AST freed !\n");
-	}
-	printf("Exiting minishell !\nSee you next time !\n");
-	exit(0);
+	dup2(p[1], STDIN_FILENO);
+	close(p[0]);
+	close(p[1]);
+	cmd_execution(node->data.ast_exec.argv);
 }

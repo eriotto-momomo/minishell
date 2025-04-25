@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 16:40:33 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 19:22:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ t_ast	*parse_pipe(t_list **head)
 	t_ast *cmd;
 
 	cmd = parse_exec(head);
-	print_ast(cmd);			// 🖨️PRINT💥DEBUGING
+	// print_ast(cmd);			// 🖨️PRINT💥DEBUGING
 	if ((*head)->type == PIPE)
 	{
 		consume_token(head);
 		cmd = pipe_cmd(cmd, parse_pipe(head));
-		print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
+		// print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
 	}
 	return (cmd);
 }
@@ -123,12 +123,12 @@ t_ast	*parse_exec(t_list **head)
 	ret = parse_redir(head, ret);		// ⚠️ `ret` pointe sur la branche gauche d'une eventuelle REDIR
 	argc = 0;
 	fill_exec_node(head, cmd, &argc);
-	print_exec_args(cmd->data.ast_exec.argv);	// 🖨️PRINT💥DEBUGING
-	printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
+	// print_exec_args(cmd->data.ast_exec.argv);	// 🖨️PRINT💥DEBUGING
+	// printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
 	if ((*head)->data && ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
 		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC))
 	{
-		printf("%sparse_exec%s | %sREDIR detected!%s\n", Y, RST, B, RST);		// 💥DEBUGING
+		// printf("%sparse_exec%s | %sREDIR detected!%s\n", Y, RST, B, RST);		// 💥DEBUGING
 		ret = parse_redir(head, ret);			// 🗯️ 2nd ver.: si il y' a encore de la data check si REDIR ❔
 	}
 	cmd->data.ast_exec.argc = argc;

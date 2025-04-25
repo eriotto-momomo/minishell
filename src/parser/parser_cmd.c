@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 16:29:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 19:23:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ t_ast	*exec_cmd(void)
 	node = ast_new_node((t_ast){0});
 	if (!node)
 	{
-		printf("%sexec_cmd%s   | %sNew node AST_EXEC creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
+		// printf("%sexec_cmd%s   | %sNew node AST_EXEC creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
 	}
 	if(node)
-		printf("%sexec_cmd%s   | %sNew node AST_EXEC%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
+		// printf("%sexec_cmd%s   | %sNew node AST_EXEC%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_EXEC;
 	node->data.ast_exec.argc = 0;
 	w_malloc((void**)&node->data.ast_exec.argv, (sizeof(char**) * 10)); // À voir le nombre d'args max à gérer - ⚠️MALLOC ICI⚠️
