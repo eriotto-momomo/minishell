@@ -6,51 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 19:22:46 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 22:34:12 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-// `PARSING FUNCTIONS` pour analyser la syntaxe
-// ⚠️👷‍♂️ Travail en cours, fonctions probablement à modifier
-
-// 🖨️PRINTF de 💥DEBUGING:
-//printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
-//printf("%sparse_exec%s | while-loop %sSTART%s\n", Y, RST, G, RST);			// 💥DEBUGING
-//printf("%sparse_exec%s | while-loop %sEND%s\n", Y, RST, R, RST);		// 💥DEBUGING
-
-//	head->types:
-//	WORD =	0
-//	IN_REDIR = 1
-//	OUT_REDIR = 2
-//	APP_OUT_REDIR = 3
-//	HERE_DOC = 4
-//	PIPE = 5
-
-// parse_block: (LINE) REDIR
-t_ast	*parse_block(t_list **head)
-{
-	t_ast *cmd;
-
-	if ((*head)->data && (*head)->data[0] != '(')
-	{
-		ft_puterror("parse_block", "unexpected syntax");
-		exit(1); // ❔
-	}
-	cmd = parse_line(head);
-	/*if (!get_closing_parenthesis(head)) //						- TO DO👷‍♂️
-	{
-		ft_puterror("parse_block", "syntax - missing ')'");
-		exit(1);
-	}*/
-	if ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
-		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC)
-		cmd = parse_redir(head, cmd);
-
-	// ... - TO DO👷‍♂️
-	return (cmd);
-}
 
 // parse_pipe: EXEC [|PIPE]
 t_ast	*parse_pipe(t_list **head)
@@ -58,16 +18,15 @@ t_ast	*parse_pipe(t_list **head)
 	t_ast *cmd;
 
 	cmd = parse_exec(head);
-	// print_ast(cmd);			// 🖨️PRINT💥DEBUGING
+	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
 	if ((*head)->type == PIPE)
 	{
 		consume_token(head);
 		cmd = pipe_cmd(cmd, parse_pipe(head));
-		// print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
+		print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
 	}
 	return (cmd);
 }
-
 
 // parse_line: PIPE {&} [;LINE]
 t_ast	*parse_line(t_list **head)
@@ -75,100 +34,54 @@ t_ast	*parse_line(t_list **head)
 	t_ast *cmd;
 
 	cmd = parse_pipe(head);
-	//if ((*head)->data && ((*head)->data[0] == '&' || (*head)->data[0] == ';'))	// Demandé dans le sujet❔
 
-	// ... - TO DO👷‍♂️
+	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
+	printf("%sparse_line.%s| %sPARSING FINISHED! root_node to return%s:\n", R, RST, P, RST);	// 🖨️PRINT💥DEBUGING
+	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
+
 	return (cmd);
 }
 
-// '<':		fd = 0, O_RDONLY						-> mode = 1 (redir input)(reading)
-// '>':		fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 2 (redir output)(creating / overwriting)
-// '>>':	fd = 1, O_WRONLY | O_CREATE				-> mode = 3 (redir output)(appending)
-// '<<':	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
-// ⚠️ `*cmd` pointe sur la branche gauche
 // parse_redir: {< file}, {> file} ou {>> file}
-t_ast	*parse_redir(t_list **head, t_ast *cmd)
+t_ast	*parse_redir(t_list **head, t_ast *left)
 {
 	if ((*head)->type != IN_REDIR && (*head)->type != OUT_REDIR
 		&& (*head)->type != APP_OUT_REDIR && (*head)->type != HERE_DOC)
-		return (cmd);
-	else if ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
-		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC)
-	{						// 🖨️PRINT💥DEBUGING
-		if ((*head)->type == IN_REDIR)
-			cmd = redir_cmd(cmd, (*head)->next->data, 1);
-		else if ((*head)->type == OUT_REDIR)
-			cmd = redir_cmd(cmd, (*head)->next->data, 2);
-		else if ((*head)->type == APP_OUT_REDIR)
-			cmd = redir_cmd(cmd, (*head)->next->data, 3);
-		else if ((*head)->type == HERE_DOC)
-			cmd = redir_cmd(cmd, (*head)->next->data, 4);
-		//print_ast(cmd); 	// 🖨️PRINT💥DEBUGING
-	}						// 🖨️PRINT💥DEBUGING
+		return (left);
+	if ((*head)->type == IN_REDIR)
+		left = redir_cmd(left, (*head)->next->data, 1);
+	else if ((*head)->type == OUT_REDIR)
+		left = redir_cmd(left, (*head)->next->data, 2);
+	else if ((*head)->type == APP_OUT_REDIR)
+		left = redir_cmd(left, (*head)->next->data, 3);
+	else if ((*head)->type == HERE_DOC)
+		left = redir_cmd(left, (*head)->next->data, 4);
 	consume_token(head);
-	return (cmd);
+	return (left);
 }
 
-// parse_exec: REDIR {aaa REDIR} ou ( BLOCK
+
+// parse_exec: REDIR {aaa REDIR}
+/*
+*	`exec_node = exec_cmd(NULL);`: alloue un 'exec_node' (blank)	- ⚠️MALLOC ICI⚠️
+*	`root_ptr = exec_node;`: pointe sur `exec_node`
+* 	`root_ptr = parse_redir(head, root_ptr);`: redirige output de `exec_node` si `redir`
+*/
 t_ast	*parse_exec(t_list **head)
 {
-	t_ast	*ret; 						// Pointe sur l'AST construit jusqu'à présent
-	t_ast	*cmd;
+	t_ast	*root_ptr;
+	t_ast	*exec_node;
 	int		argc;
 
-	if ((*head)->data && (*head)->data[0] == '(')
-		return (parse_block(head));		// exec dans un `subshell`			- TO DO👷‍♂️
-	ret = exec_cmd();					// alloue un 'exec_node' (blank)	- ⚠️MALLOC ICI⚠️
-	cmd = (t_ast *)ret;					// pointeur sur cet 'exec_node'
-	ret = parse_redir(head, ret);		// ⚠️ `ret` pointe sur la branche gauche d'une eventuelle REDIR
+	exec_node = exec_cmd();
+	root_ptr = exec_node;
+	root_ptr = parse_redir(head, root_ptr);
 	argc = 0;
-	fill_exec_node(head, cmd, &argc);
-	// print_exec_args(cmd->data.ast_exec.argv);	// 🖨️PRINT💥DEBUGING
-	// printf(">> %sCURRENT TOKEN%s: [%s%s%s] | type: %d | next: %p\n", C, RST, C, (*head)->data, RST, (*head)->type, (void *)(*head)->next);	// 🖨️PRINT💥DEBUGING
+	fill_exec_node(head, exec_node, &argc);
 	if ((*head)->data && ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
 		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC))
-	{
-		// printf("%sparse_exec%s | %sREDIR detected!%s\n", Y, RST, B, RST);		// 💥DEBUGING
-		ret = parse_redir(head, ret);			// 🗯️ 2nd ver.: si il y' a encore de la data check si REDIR ❔
-	}
-	cmd->data.ast_exec.argc = argc;
-	cmd->data.ast_exec.argv[argc] = '\0';
-	return (ret);
+		root_ptr = parse_redir(head, root_ptr);
+	exec_node->data.ast_exec.argc = argc;
+	exec_node->data.ast_exec.argv[argc] = '\0';
+	return (root_ptr);
 }
-
-/* Selon: 'Shell Code-- More Detail' @36:36 https://www.youtube.com/watch?v=ZjzMdsTWF0U&list=LL&index=2
-/!\ Il n'utilise pas une liste chainée
-struct *parseexec(char **ps, char*es)
-{
-	char *q, *eq;
-	int tok, argc;
-	struct execcmd *cmd;
-	struct cmd *ret; // pointe sur l'AST construit jusqu'à présent
-
-	if(peek(ps, es, "("))
-		return parseblock(ps, es);
-	ret = execcmd(); // alloue un 'exec node' (blank)
-	cmd = (struct execcmd*)ret; // pointeur sur ce 'exec node'
-	argc = 0;
-	ret = parseredirs(ret, ps, es); *//* /!\ pointe sur une redirection:
-	- Au début de parseexec, 'ret' pointait sur l'AST construit jusqu'à présent
-	- À présent il pointe sur la redirection qui pointe sur "l'ancien pointeur"
-	- En d'autres termes: 'ret' pointe désormais sur l'exec_node qui doit être redirigé
-	*//*
-	while(!peek(ps, es, "|)&;")) {
-		if ((tok=gettoken(ps, es, &q, &eq)) == 0)
-			break;
-		if (tok != 'a')
-			panic("syntax");
-		cmd->argv[argc] = q; // 'q' pointe au début du file_name et 'eq' à la fin
-		cmd->eargv[argc] = eq; // inutile pour nous... remplir exec_node avec les 'tokens' arguments
-		argc++;
-		if (argc >= MAXARGS)
-			panic("too many args");
-		ret = parseredirs(ret, ps, es);
-	}
-	cmd->argv[argc] = 0;
-	cmd->eargv[argc] = 0;
-	return (ret);
-}
-*/
