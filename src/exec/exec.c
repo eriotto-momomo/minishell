@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 17:33:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 19:22:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,34 @@ static char	*pathfinder(char *cmd, char **path)
 	return (NULL);
 }
 
-void	cmd_execution(char **cmd, char **path)
+void	cmd_execution(char **cmd)
 {
+	char	**path;
 	char	*cmd_path;
-
+	
+	path = ft_split(getenv("PATH"), ':');
 	cmd_path = pathfinder(cmd[0], path);
 	if (!cmd_path)
 	{
 		perror("Command not found");
+		free(path);
 		exit(127);
 	}
 	if (execve(cmd_path, cmd, path) == -1)
 	{
 		free(cmd_path);
+		free(path);
 		perror("Command not executable");
 		exit(126);
 	}
+}
+
+void	simple_cmd(t_ast *node)
+{
+	pid_t	pid1;
+
+	pid1 = fork();
+	if (pid1 == 0)
+		cmd_execution(node->data.ast_exec.argv);
+	waitpid(pid1, NULL, 0);
 }
