@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/04/24 16:36:17 by timmi            ###   ########.fr        #
+#    Updated: 2025/04/25 19:05:00 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/prompt/prompt.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
+			$(CFILES_PATH)/exec/exec.c\
+			$(CFILES_PATH)/exec/pipe.c\
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
