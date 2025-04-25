@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 14:41:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 17:03:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void initialize_struct(t_shell *s)
 {
 	s->env = NULL;
+	s->path = ft_split(getenv("PATH"), ':');
 	s->cmd_count = 0;
 	s->line = NULL;
 	s->head = NULL;
@@ -36,7 +37,7 @@ void prompt_loop(char *prompt, t_shell *s)
 			//print_list(s->head);
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&s->head);
-			execution(s->root_node->data.ast_exec.argv);
+			cmd_execution(s->root_node->data.ast_exec.argv, s->path);
 			free_list(s->head);
 		}
 		// (void)ast; // 💥TEST

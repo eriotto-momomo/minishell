@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 13:04:27 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 17:04:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 #define EXEC_H
 
-void	execution();
+void	cmd_execution(char **cmd, char **path);
 
 #endif
