@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 17:48:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:41:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void prompt_loop(char *prompt, t_shell *s)
 		s->line = readline(prompt);
 		if (s->line && *s->line ) // need to add a check to not print strings containing only spaces
 		{
-			printf("processing string\n");
 			add_history(s->line);
 			lexer(s);
-			print_list(s->head);
+			//print_list(s->head);
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&s->head);
+			execution(s->root_node->data.ast_exec.argv);
 			free_list(s->head);
 		}
 		// (void)ast; // 💥TEST
