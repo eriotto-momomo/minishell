@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 19:22:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 21:45:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*pathfinder(char *cmd, char **path)
 	return (NULL);
 }
 
-void	cmd_execution(char **cmd)
+void	cmd_execution(char **cmd, char **envp)
 {
 	char	**path;
 	char	*cmd_path;
@@ -45,7 +45,7 @@ void	cmd_execution(char **cmd)
 		free(path);
 		exit(127);
 	}
-	if (execve(cmd_path, cmd, path) == -1)
+	if (execve(cmd_path, cmd, envp) == -1)
 	{
 		free(cmd_path);
 		free(path);
@@ -54,12 +54,12 @@ void	cmd_execution(char **cmd)
 	}
 }
 
-void	simple_cmd(t_ast *node)
+void	simple_cmd(t_ast *node, char **envp)
 {
 	pid_t	pid1;
 
 	pid1 = fork();
 	if (pid1 == 0)
-		cmd_execution(node->data.ast_exec.argv);
+		cmd_execution(node->data.ast_exec.argv, envp);
 	waitpid(pid1, NULL, 0);
 }

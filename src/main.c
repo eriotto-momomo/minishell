@@ -6,15 +6,15 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 19:23:58 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 21:45:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void initialize_struct(t_shell *s)
+void initialize_struct(t_shell *s, char	**envp)
 {
-	s->env = NULL;
+	s->env = envp;
 	s->cmd_count = 0;
 	s->line = NULL;
 	s->head = NULL;
@@ -36,7 +36,7 @@ void prompt_loop(char *prompt, t_shell *s)
 			//print_list(s->head);
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&s->head);
-			simple_cmd(s->root_node);
+			simple_cmd(s->root_node, s->env);
 			// 	free_list(s->head);
 		}
 		// (void)ast; // 💥TEST
@@ -44,7 +44,7 @@ void prompt_loop(char *prompt, t_shell *s)
 	}
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
 	t_shell s;
 	char *prompt;
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	else
 	{
 		prompt = create_prompt();
-		initialize_struct(&s);
+		initialize_struct(&s, envp);
 		prompt_loop(prompt, &s);
 		free(prompt);
 	}
