@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 17:40:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/25 22:25:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ t_list *tokenize(char *cmd)
 		return (NULL);
 	i = 0;
 	head = NULL;
+	while (cmd[i] && ft_isspace(cmd[i]))
+		i++;
 	while (cmd[i])
 	{
-		while (cmd[i] && ft_isspace(cmd[i]))
-			i++;
 		el = get_el(cmd, i);
 		if (!el)
 		{
@@ -67,6 +67,8 @@ t_list *tokenize(char *cmd)
 		}
 		add_back(&head, el);
 		i += ft_strlen(el);
+		while (cmd[i] && ft_isspace(cmd[i]))
+			i++;
 	}
 	return (head);
 }
