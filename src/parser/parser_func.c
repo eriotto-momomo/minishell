@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 17:49:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:40:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ t_ast	*parse_exec(t_list **head)
 		ret = parse_redir(head, ret);			// 🗯️ 2nd ver.: si il y' a encore de la data check si REDIR ❔
 	}
 	cmd->data.ast_exec.argc = argc;
-	cmd->data.ast_exec.argv[argc] = ft_strdup("");
+	cmd->data.ast_exec.argv[argc] = '\0';
 	return (ret);
 }
 
