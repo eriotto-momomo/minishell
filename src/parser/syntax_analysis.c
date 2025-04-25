@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/24 15:06:08 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/25 21:35:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int syntax_checker(t_list *token) 
+static int syntax_checker(t_list *token)
 {
-	int		err; 
+	int		err;
 	t_list	*temp;
-	
+
 	err = 0;
 	temp = token;
 	if (temp->type == PIPE)
@@ -38,8 +38,8 @@ int	syntax_analysis(t_list *token)
 {
 	t_list	*temp;
 	int		err;
- 
-	temp = token; 
+
+	temp = token;
 	while (temp)
 	{
 		err = syntax_checker(temp);
