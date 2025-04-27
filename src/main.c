@@ -3,16 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 22:25:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/27 14:08:15 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void initialize_struct(t_shell *s, char	**envp)
+void printPreorder(t_ast *node)
+{
+	if (node == NULL)
+		return;
+
+	/* first print data of node */
+	if (node->tag == AST_PIPE)
+		printf("|\n");
+	else if (node->tag == AST_REDIR)
+		printf(">\n");
+	else if (node->tag == AST_EXEC)
+		printf("%s\n", node->data.ast_exec.argv[0]);
+
+	if (node->tag != AST_EXEC)
+	{
+		printPreorder(node->data.ast_pipe.left);
+		printPreorder(node->data.ast_pipe.right);
+	}
+	else
+		return;
+}
+
+void initialize_struct(t_shell *s, char **envp)
 {
 	s->env = envp;
 	s->cmd_count = 0;
@@ -29,13 +51,14 @@ void prompt_loop(char *prompt, t_shell *s)
 	while (loop)
 	{
 		s->line = readline(prompt);
-		if (s->line && *s->line ) // need to add a check to not print strings containing only spaces
+		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
 		{
 			add_history(s->line);
 			lexer(s);
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&s->head);
-			simple_cmd(s->root_node, s->env);
+			// simple_cmd(s->root_node, s->env);
+			printPreorder(s->root_node);
 		}
 		// (void)ast; // 💥TEST
 		free(s->line);
