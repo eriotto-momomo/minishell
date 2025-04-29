@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 22:34:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/30 00:52:59 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ t_ast	*parse_pipe(t_list **head)
 	t_ast *cmd;
 
 	cmd = parse_exec(head);
-	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
+	// print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
 	if ((*head)->type == PIPE)
 	{
 		consume_token(head);
 		cmd = pipe_cmd(cmd, parse_pipe(head));
-		print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
+		// print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
 	}
 	return (cmd);
 }
@@ -36,8 +36,8 @@ t_ast	*parse_line(t_list **head)
 	cmd = parse_pipe(head);
 
 	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
-	printf("%sparse_line.%s| %sPARSING FINISHED! root_node to return%s:\n", R, RST, P, RST);	// 🖨️PRINT💥DEBUGING
-	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
+	// printf("%sparse_line.%s| %sPARSING FINISHED! root_node to return%s:\n", R, RST, P, RST);	// 🖨️PRINT💥DEBUGING
+	// print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
 
 	return (cmd);
 }
