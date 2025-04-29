@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
+#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/04/25 19:05:00 by timmi            ###   ########.fr        #
+#    Updated: 2025/04/29 10:48:27 by c4v3d            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/pipe.c\
+			$(CFILES_PATH)/builtin/ft_echo.c \
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)

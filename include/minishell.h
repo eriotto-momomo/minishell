@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 13:03:56 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/29 10:55:38 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include "./signals.h"
 #include "./utils.h"
 #include "./exec.h"
+#include "./builtin.h"
 #include "../lib/libft/libft.h"
 
 // Prompt par default utiliser si le custom prompt fail
