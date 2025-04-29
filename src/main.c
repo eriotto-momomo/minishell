@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 22:25:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/29 10:59:10 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void initialize_struct(t_shell *s, char	**envp)
+void initialize_struct(t_shell *s, char **envp)
 {
 	s->env = envp;
 	s->cmd_count = 0;
@@ -29,13 +29,14 @@ void prompt_loop(char *prompt, t_shell *s)
 	while (loop)
 	{
 		s->line = readline(prompt);
-		if (s->line && *s->line ) // need to add a check to not print strings containing only spaces
+		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
 		{
 			add_history(s->line);
 			lexer(s);
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&s->head);
-			simple_cmd(s->root_node, s->env);
+			// simple_cmd(s->root_node, s->env);
+			ft_echo(s->root_node->data.ast_exec.argv, 1);
 		}
 		// (void)ast; // 💥TEST
 		free(s->line);
