@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/29 15:32:49 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/30 01:05:44 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,43 +29,70 @@ static size_t	len_calc(char **tab)
 	return (total_len);
 }
 
-static char	*tabtos(char **tab)
+static char	*tab_to_string(char **tab, int i)
 {
-	char 	*ptr;
-	int		i;
-	size_t	total_len;
-	char	*final_str;
-	int		len;
-	
-	i = 1;
-	len = 0;
-	total_len = len_calc(tab);
-	final_str = malloc(total_len + 1);
-	if (!final_str)
+	char	*ptr;
+	char	*ret;
+	size_t	len;
+
+	ret = NULL;
+	len = len_calc(tab);
+	ret = malloc(len + 1);
+	if (!ret)
 		return (NULL);
-	while (tab[i])
+	ptr = ret;
+	while (tab[++i])
 	{
-		len = ft_strlen(tab[i]);
-		ft_memcpy(ptr, tab[i], len);
-		ptr += len;
+		ft_memcpy(ptr, tab[i], ft_strlen(tab[i]));
+		ptr += ft_strlen(tab[i]);
 		if (tab[i + 1])
 		{
 			*ptr = ' ';
 			ptr++;
 		}
-		i++;
 	}
 	*ptr = '\0';
-	printf("str :%s\n", final_str);
-	return (final_str);
+	return (ret);
+}
+
+static int	flag_check(char *flag)
+{
+	int	i;
+
+	if (flag[0] != '-' || flag[1] != 'n')
+		return (0);
+	i = 2;
+	while (flag[i])
+	{
+		if (flag[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	ft_echo(char **args, int fd_out)
 {
+	char	*temp;
 	char	*str;
+	int		offset;
 
+	offset = 0;
 	if (args[1])
-		str = tabtos(args);
-	write(fd_out, str, ft_strlen(str));
-	return (1);
+	{
+		if (flag_check(args[1]))
+			offset = 1;
+		str = tab_to_string(args, offset);
+		if (!str)
+			return (-1);
+		if (!offset)
+		{
+			temp = str;
+			str = ft_strjoin(str, "\n");
+			free(temp);	
+		}
+		write(fd_out, str, ft_strlen(str));
+		free(str);
+	}
+	return (0);
 }
