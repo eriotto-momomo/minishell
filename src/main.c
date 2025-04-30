@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/30 10:42:23 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/30 13:36:47 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void initialize_struct(t_shell *s, char **envp)
 	s->env = envp;
 	s->cmd_count = 0;
 	s->line = NULL;
+	s->old_path = NULL;
 	s->head = NULL;
 	s->root_node = NULL;
 }
@@ -36,7 +37,8 @@ void prompt_loop(char *prompt, t_shell *s)
 			if (syntax_analysis(s->head))
 			 	s->root_node = build_ast(&s->head);
 			// simple_cmd(s->root_node, s->env);
-			// ft_echo(s->root_node->data.ast_exec.argv, 1);
+			ft_echo(s->root_node->data.ast_exec.argv, 1);
+			ft_cd(s);
 		}
 		free_list(&(s->head)); // Free Linked list
 		free(s->line); // Free read buffer
