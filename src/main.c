@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/30 09:28:43 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/30 10:42:23 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ void prompt_loop(char *prompt, t_shell *s)
 		{
 			add_history(s->line);
 			lexer(s);
-			// if (syntax_analysis(s->head))
-			// 	s->root_node = build_ast(&s->head);
+			if (syntax_analysis(s->head))
+			 	s->root_node = build_ast(&s->head);
 			// simple_cmd(s->root_node, s->env);
-			//ft_echo(s->root_node->data.ast_exec.argv, 1);
+			// ft_echo(s->root_node->data.ast_exec.argv, 1);
 		}
-		// (void)ast; // 💥TEST
-		free_list(&(s->head));
-		free(s->line);
+		free_list(&(s->head)); // Free Linked list
+		free(s->line); // Free read buffer
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 22:25:20 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/30 10:26:24 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_list *tokenize(char *cmd)
 		el = get_el(cmd, i);
 		if (!el)
 		{
-			free_list(head);
+			free_list(&head);
 			return (NULL);
 		}
 		add_back(&head, el);
