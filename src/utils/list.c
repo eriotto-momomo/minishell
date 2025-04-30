@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/30 09:28:41 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/30 10:21:52 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ t_list *create_node(char *data)
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
-}
-
-void add_front(t_list **head, char *data)
-{
-	t_list	*new_node;
-
-	new_node = create_node(data);
-	if (!head)
-	{
-		*head = new_node;
-		return ;
-	}
-	new_node->next = *head;
-	*head = new_node;
 }
 
 void add_back(t_list **head, char *data)
@@ -63,6 +49,8 @@ void free_list(t_list **head)
 	t_list *current;
 	t_list *temp;
 
+	if (!head || !*head)
+		return ;
 	current = *head;
 	while (current)
 	{
