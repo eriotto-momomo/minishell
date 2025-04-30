@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/24 16:35:26 by timmi            ###   ########.fr       */
+/*   Updated: 2025/04/30 09:28:24 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void print_list(t_list *head);
 t_list *create_node(char *data);
 void add_back(t_list **head, char *data);
 void add_front(t_list **head, char *data);
-void free_list(t_list *head);
+void free_list(t_list **head);
 size_t count_cmd(t_list *head);
 
 // lexer_utils.c
