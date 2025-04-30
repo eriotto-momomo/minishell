@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/04/30 01:05:44 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/04/30 09:08:38 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	ft_echo(char **args, int fd_out)
 		{
 			temp = str;
 			str = ft_strjoin(str, "\n");
-			free(temp);	
+			free(temp);
+			temp = NULL;
 		}
 		write(fd_out, str, ft_strlen(str));
 		free(str);
