@@ -6,82 +6,71 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 23:20:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:40:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 // parse_pipe: EXEC [|PIPE]
-t_ast	*parse_pipe(t_list **head)
+t_ast	*parse_pipe(t_list **tok)
 {
-	t_ast *cmd;
+	t_ast	*node;
 
-	cmd = parse_exec(head);
-	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
-	if ((*head)->type == PIPE)
+	if ((*tok)->data == NULL)
+		return (NULL);
+	node = parse_exec(tok);
+	if ((*tok) && (*tok)->type == PIPE)
 	{
-		consume_token(head);
-		cmd = pipe_cmd(cmd, parse_pipe(head));
-		print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
+		get_next_token((tok));
+		node = add_pipe_node(node, parse_pipe(tok));
 	}
-	return (cmd);
+	return (node);
 }
 
 // parse_line: PIPE {&} [;LINE]
-t_ast	*parse_line(t_list **head)
+t_ast	*parse_line(t_list **tok)
 {
-	t_ast *cmd;
+	t_ast	*node;
 
-	cmd = parse_pipe(head);
-
-	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
-	printf("%sparse_line.%s| %sPARSING FINISHED! root_node to return%s:\n", R, RST, P, RST);	// 🖨️PRINT💥DEBUGING
-	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
-
-	return (cmd);
+	node = parse_pipe(tok);
+	//printf("============ ROOT NODE ============\n");
+	//print_node(node);
+	return (node);
 }
 
 // parse_redir: {< file}, {> file} ou {>> file}
-t_ast	*parse_redir(t_list **head, t_ast *left)
+t_ast	*parse_redir(t_list **tok, t_ast *left)
 {
-	if ((*head)->type != IN_REDIR && (*head)->type != OUT_REDIR
-		&& (*head)->type != APP_OUT_REDIR && (*head)->type != HERE_DOC)
-		return (left);
-	if ((*head)->type == IN_REDIR)
-		left = redir_cmd(left, (*head)->next->data, 1);
-	else if ((*head)->type == OUT_REDIR)
-		left = redir_cmd(left, (*head)->next->data, 2);
-	else if ((*head)->type == APP_OUT_REDIR)
-		left = redir_cmd(left, (*head)->next->data, 3);
-	else if ((*head)->type == HERE_DOC)
-		left = redir_cmd(left, (*head)->next->data, 4);
-	consume_token(head);
+	if ((*tok))
+	{
+		if ((*tok)->type != IN_REDIR && (*tok)->type != OUT_REDIR
+			&& (*tok)->type != APP_OUT_REDIR && (*tok)->type != HERE_DOC)
+			return (left);
+		if ((*tok)->type == IN_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, 1);
+		else if ((*tok)->type == OUT_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, 2);
+		else if ((*tok)->type == APP_OUT_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, 3);
+		else if ((*tok)->type == HERE_DOC)
+			left = add_redir_node(left, (*tok)->next->data, 4);
+		print_node(left);
+	}
+	get_next_token(tok);
 	return (left);
 }
 
-
 // parse_exec: REDIR {aaa REDIR}
-/*
-*	`exec_node = exec_cmd(NULL);`: alloue un 'exec_node' (blank)	- ⚠️MALLOC ICI⚠️
-*	`root_ptr = exec_node;`: pointe sur `exec_node`
-* 	`root_ptr = parse_redir(head, root_ptr);`: redirige output de `exec_node` si `redir`
-*/
-t_ast	*parse_exec(t_list **head)
+t_ast	*parse_exec(t_list **tok)
 {
 	t_ast	*root_ptr;
 	t_ast	*exec_node;
-	int		argc;
 
-	exec_node = exec_cmd();
+	exec_node = add_exec_node(tok);
 	root_ptr = exec_node;
-	root_ptr = parse_redir(head, root_ptr);
-	argc = 0;
-	fill_exec_node(head, exec_node, &argc);
-	if ((*head)->data && ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
-		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC))
-		root_ptr = parse_redir(head, root_ptr);
-	exec_node->data.ast_exec.argc = argc;
-	exec_node->data.ast_exec.argv[argc] = '\0';
+	root_ptr = parse_redir(tok, root_ptr);
+	if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
+		root_ptr = parse_redir(tok, root_ptr);
 	return (root_ptr);
 }
