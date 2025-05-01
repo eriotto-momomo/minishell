@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/30 13:36:47 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/01 09:51:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void prompt_loop(char *prompt, t_shell *s)
 			if (syntax_analysis(s->head))
 			 	s->root_node = build_ast(&s->head);
 			// simple_cmd(s->root_node, s->env);
-			ft_echo(s->root_node->data.ast_exec.argv, 1);
+			//ft_echo(s->root_node->data.ast_exec.argv, 1);
 			ft_cd(s);
 		}
-		free_list(&(s->head)); // Free Linked list
+		//free_list(&(s->head)); // Free Linked list
 		free(s->line); // Free read buffer
 	}
 }
