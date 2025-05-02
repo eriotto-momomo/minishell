@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/01 18:40:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:37:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,37 @@ t_ast	*build_ast(t_list **tok)
 	return (ast);
 }
 
-t_ast	*parser(t_list *tok)
+void	parser(t_shell *s)
 {
-	t_ast	*ast;
+	t_list *temp;
 
-	if (!syntax_analysis(tok))
-		return (NULL);
-	ast = build_ast(&tok);
-	return (ast);
+	temp = s->head;
+	if (!syntax_analysis(temp))
+		return ;
+	s->root_node = build_ast(&temp);
+	//printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
+	//print_node(s->root_node); // PRINT DEBUGGING 📠
+	//printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
+}
+
+void print_preorder(t_ast *node)
+{
+	if (node == NULL)
+		return;
+
+	/* first print data of node */
+	if (node->tag == AST_PIPE)
+		printf("|\n");
+	else if (node->tag == AST_REDIR)
+		printf(">\n");
+	else if (node->tag == AST_EXEC)
+		printf("%s\n", node->data.ast_exec.argv[0]);
+
+	if (node->tag != AST_EXEC)
+	{
+		print_preorder(node->data.ast_pipe.right);
+		print_preorder(node->data.ast_pipe.left);
+	}
+	else
+		return;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:35:57 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/20 17:22:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:47:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // FORWARD DECLARATION (dis au compilateur que "t_shell" existe)
 typedef struct s_shell	t_shell;
 
-void	prompt_loop(char *prompt, t_shell *s);
+void	prompt_loop(t_shell *s);
 
 /**
  * @brief	Create a shell prompt using the user's name and the host name.

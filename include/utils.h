@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 10:56:54 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/02 15:54:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
-#define UTILS_H
+# define UTILS_H
 
 // TO REMOVE
 //////////////////////////////////
@@ -29,11 +29,14 @@ size_t count_cmd(t_list *head);
 // lexer_utils.c
 int is_sep(char c);
 
-// EXIT
+// exit_utils.c
 void exit_check(t_shell *shell);
 void terminate_shell(t_shell *minishell);
 
 // free_ast.c
-void	free_ast(t_ast *ast);
+void	free_pipe_node(t_ast *node);
+void	free_redir_node(t_ast *node);
+void	free_exec_node(t_ast *node);
+void	free_ast(t_ast **node);
 
 #endif
