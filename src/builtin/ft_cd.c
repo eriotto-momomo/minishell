@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/01 17:42:05 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/02 12:00:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*save_cwd(void)
+char	*save_cwd(void)
 {
 	char	buffer[PATH_MAX];
 
@@ -24,46 +24,44 @@ static char	*save_cwd(void)
 	return(ft_strdup(buffer));
 }
 
-static char	*make_path(char *arg, char *pwd)
+static char	*make_curpath(char *arg, char *pwd)
 {
-	char	*home;
-	//char	*path;
+	// char	*temp;
 	
 	if (!arg)
+		return (getenv("HOME"));
+	if (arg[0] == '.')
 	{
-		home = getenv("HOME");
-		if (!home)
-			return (NULL);
-		return (home);
-		
-	}
-	if (ft_strnstr(arg, "..", 2) || arg[0] == '.')
-		printf("found\n");
-	else
-	{
-		if (pwd[ft_strlen(pwd)] != '/')
-			return  (ft_strjoin(pwd, arg));
 		arg++;
-		printf("trim!\n");
-		return  (ft_strjoin(pwd, arg));
+		if (pwd[ft_strlen(pwd)] == '/')
+			return (ft_strjoin(pwd, arg));
+		// temp = arg;
+		arg = ft_strjoin("/", arg);
+		// free(temp);
+		return (ft_strjoin(pwd, arg));
 	}
-	return (NULL);
+	return (arg);
 }
 
 int	ft_cd(t_shell *s)
 {
 	char	*arg;
-	char	*path;
+	char	*curpath;
 
 	arg = s->root_node->data.ast_exec.argv[1];
-	s->old_path = save_cwd();
-	if (!s->old_path)
-		return (1);
-	path = make_path(arg, s->old_path);
-	if (sizeof(path) > PATH_MAX)
-		printf("Path too long\n");
-	printf("path :%s\n", path);
-	chdir(path);
-	printf("pwd :%s\n", getenv("PWD"));
+	
+	s->old_pwd = s->pwd; // TO INIT
+	
+	curpath = make_curpath(arg, s->pwd);
+	if (sizeof(curpath) > PATH_MAX)
+		printf("curpath too long\n");
+	printf("curpath : %s\n", curpath);
+	if (chdir(curpath) == -1)
+	{
+		perror("cd");
+		return (-1);
+	}
+	s->pwd = save_cwd();
+	printf("pwd : %s\n", s->pwd);
 	return(0);
 }
