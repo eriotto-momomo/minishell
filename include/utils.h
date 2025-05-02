@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/30 10:05:25 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/02 10:46:39 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ int is_sep(char c);
 // EXIT
 void exit_check(t_shell *shell);
 void terminate_shell(t_shell *minishell);
+
+// free_ast.c
+void	free_ast(t_ast *ast);
 
 #endif
