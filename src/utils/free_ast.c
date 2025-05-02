@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 15:12:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:56:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,16 @@ void	free_exec_node(t_ast *node)
 	}
 }
 
-void	free_ast(t_ast *node)
+void	free_ast(t_ast **node)
 {
 	if (!node)
 		return ;
-	if (node && node->tag == AST_PIPE)
-		free_pipe_node(node);
-	else if (node && node->tag == AST_REDIR)
-		free_redir_node(node);
-	else if (node && node->tag == AST_EXEC)
-		free_exec_node(node);
+	if (node && (*node)->tag == AST_PIPE)
+		free_pipe_node(*node);
+	else if (node && (*node)->tag == AST_REDIR)
+		free_redir_node(*node);
+	else if (node && (*node)->tag == AST_EXEC)
+		free_exec_node(*node);
+	*node = NULL;
 	//printf("%s🔥AST FREED🔥%s\n", G, RST); // PRINT DEBUGGING 📠
 }

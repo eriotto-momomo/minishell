@@ -6,7 +6,7 @@
 #    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/02 12:47:55 by emonacho         ###   ########.fr        #
+#    Updated: 2025/05/02 15:17:20 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/pipe.c\
+			$(CFILES_PATH)/builtin/ft_echo.c \
+			$(CFILES_PATH)/builtin/ft_cd.c \
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)

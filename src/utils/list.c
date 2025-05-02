@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 12:47:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:19:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ t_list *create_node(char *data)
 	return (new_node);
 }
 
-void add_front(t_list **head, char *data)
-{
-	t_list	*new_node;
-
-	new_node = create_node(data);
-	if (!head)
-	{
-		*head = new_node;
-		return ;
-	}
-	new_node->next = *head;
-	*head = new_node;
-}
-
 void add_back(t_list **head, char *data)
 {
     t_list	*new_node = create_node(data);
@@ -58,17 +44,24 @@ void add_back(t_list **head, char *data)
 	new_node->prev = temp;
 }
 
-void free_list(t_list *head)
+void free_list(t_list **head)
 {
+	t_list *current;
 	t_list *temp;
-	while (head)
+
+	if (!head || !*head)
+		return ;
+	current = *head;
+	while (current)
 	{
-		temp = head->next;
-		w_free(((void **)&(head->data)));
-		w_free((void **)&head);
-		head = temp;
+		temp = current->next;
+		w_free((void **)&(current->data));
+		w_free((void **)&current);
+		current = temp;
 	}
+	*head = NULL;
 }
+
 
 size_t count_cmd(t_list *head)
 {
