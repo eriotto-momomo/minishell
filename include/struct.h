@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 10:46:30 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/02 10:51:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ typedef struct s_shell
 	char	**env;
 	size_t	cmd_count;
 	char	*line;
-	char	*old_path;
+	char	*old_pwd;
+	char	*pwd;
 	t_ast	*root_node;
 	t_list	*head;
 }			t_shell;
