@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/01 17:31:38 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 14:48:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,18 @@ void printPreorder(t_ast *node)
 		return;
 }
 
-
-void initialize_struct(t_shell *s, char	**envp)
+void initialize_struct(t_shell *s, char **envp)
 {
 	s->env = envp;
 	s->cmd_count = 0;
 	s->line = NULL;
+	s->old_pwd = NULL;
+	s->pwd = save_cwd();
+	s->old_pwd = save_cwd();
 	s->head = NULL;
 	s->root_node = NULL;
 }
+
 
 void prompt_loop(char *prompt, t_shell *s)
 {
@@ -53,18 +56,18 @@ void prompt_loop(char *prompt, t_shell *s)
 	while (loop)
 	{
 		s->line = readline(prompt);
-		if (s->line && *s->line ) // need to add a check to not print strings containing only spaces
+		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
 		{
 			add_history(s->line);
 			lexer(s);
 			tok = s->head;
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&tok);
+			//free_list(&(s->head));
 			//simple_cmd(s->root_node, s->env);
-			//printPreorder(s->root_node);
+			//ft_cd(s);
+			terminate_shell(s);
 		}
-		free_list(s->head);
-		// (void)ast; // 💥TEST
 		free(s->line);
 	}
 }
