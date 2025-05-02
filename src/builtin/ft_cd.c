@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/02 14:27:58 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/02 14:47:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_replace(char **buff, char *new_value)
 {
 	if (buff || *buff)
 	{
-		w_free((void **)*buff);
+		w_free((void **)buff);
 		*buff = NULL;
 	}
 	*buff = new_value;

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 14:15:17 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/02 14:48:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void prompt_loop(char *prompt, t_shell *s)
 			tok = s->head;
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&tok);
-			free_list(&(s->head));
+			//free_list(&(s->head));
 			//simple_cmd(s->root_node, s->env);
 			//ft_cd(s);
 			terminate_shell(s);
