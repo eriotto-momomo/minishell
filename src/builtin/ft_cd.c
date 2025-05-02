@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/02 12:00:20 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/02 14:27:58 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,39 @@ char	*save_cwd(void)
 		perror("getwcd failed: ");
 		return (NULL);
 	}
-	return(ft_strdup(buffer));
+	return (ft_strdup(buffer));
 }
 
 static char	*make_curpath(char *arg, char *pwd)
 {
-	// char	*temp;
-	
-	if (!arg)
-		return (getenv("HOME"));
-	if (arg[0] == '.')
+	char	*curpath;
+	char	*temp;
+
+	if (!arg || arg[0] == '~')
+		return (ft_strdup(getenv("HOME")));
+	if (arg[0] == '-')
+		return (ft_strdup(getenv("OLDPWD")));
+	if (arg[0] == '.' && arg[1] == '/')
 	{
 		arg++;
 		if (pwd[ft_strlen(pwd)] == '/')
 			return (ft_strjoin(pwd, arg));
-		// temp = arg;
-		arg = ft_strjoin("/", arg);
-		// free(temp);
-		return (ft_strjoin(pwd, arg));
+		temp = ft_strjoin("/", arg);
+		curpath = ft_strjoin(pwd, temp);
+		free(temp);
+		return (curpath);
 	}
-	return (arg);
+	return (ft_strdup(arg));
+}
+
+void	ft_replace(char **buff, char *new_value)
+{
+	if (buff || *buff)
+	{
+		w_free((void **)*buff);
+		*buff = NULL;
+	}
+	*buff = new_value;
 }
 
 int	ft_cd(t_shell *s)
@@ -49,19 +62,17 @@ int	ft_cd(t_shell *s)
 	char	*curpath;
 
 	arg = s->root_node->data.ast_exec.argv[1];
-	
-	s->old_pwd = s->pwd; // TO INIT
-	
 	curpath = make_curpath(arg, s->pwd);
 	if (sizeof(curpath) > PATH_MAX)
 		printf("curpath too long\n");
-	printf("curpath : %s\n", curpath);
+	ft_replace(&(s->old_pwd), save_cwd());
 	if (chdir(curpath) == -1)
 	{
 		perror("cd");
+		w_free((void **)&curpath);
 		return (-1);
 	}
-	s->pwd = save_cwd();
-	printf("pwd : %s\n", s->pwd);
-	return(0);
+	w_free((void **)&curpath);
+	ft_replace(&(s->pwd), save_cwd());
+	return (0);
 }
