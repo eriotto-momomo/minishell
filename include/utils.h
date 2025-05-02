@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 14:28:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:54:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void print_list(t_list *head);
 t_list *create_node(char *data);
 void add_back(t_list **head, char *data);
 void add_front(t_list **head, char *data);
-void free_list(t_list *head);
+void free_list(t_list **head);
 size_t count_cmd(t_list *head);
 
 // lexer_utils.c
@@ -37,6 +37,6 @@ void terminate_shell(t_shell *minishell);
 void	free_pipe_node(t_ast *node);
 void	free_redir_node(t_ast *node);
 void	free_exec_node(t_ast *node);
-void	free_ast(t_ast *node);
+void	free_ast(t_ast **node);
 
 #endif
