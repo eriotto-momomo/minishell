@@ -6,34 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/01 17:31:38 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:06:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void printPreorder(t_ast *node)
-{
-	if (node == NULL)
-		return;
-
-	/* first print data of node */
-	if (node->tag == AST_PIPE)
-		printf("|\n");
-	else if (node->tag == AST_REDIR)
-		printf(">\n");
-	else if (node->tag == AST_EXEC)
-		printf("%s\n", node->data.ast_exec.argv[0]);
-
-	if (node->tag != AST_EXEC)
-	{
-		printPreorder(node->data.ast_pipe.right);
-		printPreorder(node->data.ast_pipe.left);
-	}
-	else
-		return;
-}
-
 
 void initialize_struct(t_shell *s, char	**envp)
 {
@@ -47,7 +24,6 @@ void initialize_struct(t_shell *s, char	**envp)
 void prompt_loop(char *prompt, t_shell *s)
 {
 	int loop;
-	t_list	*tok;
 
 	loop = 1;
 	while (loop)
@@ -57,14 +33,12 @@ void prompt_loop(char *prompt, t_shell *s)
 		{
 			add_history(s->line);
 			lexer(s);
-			tok = s->head;
-			if (syntax_analysis(s->head))
-				s->root_node = build_ast(&tok);
+			parser(s);
 			//simple_cmd(s->root_node, s->env);
+			free_ast(s->root_node);
 			//printPreorder(s->root_node);
 		}
-		free_list(s->head);
-		// (void)ast; // 💥TEST
+		//free_list(s->head); // 🆘SEGFAULT
 		free(s->line);
 	}
 }

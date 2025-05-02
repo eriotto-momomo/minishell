@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/01 18:40:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:11:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_ast	*parse_pipe(t_list **tok)
 	{
 		get_next_token((tok));
 		node = add_pipe_node(node, parse_pipe(tok));
+		//print_node(node); // PRINT DEBUGGING 📠
 	}
 	return (node);
 }
@@ -34,8 +35,6 @@ t_ast	*parse_line(t_list **tok)
 	t_ast	*node;
 
 	node = parse_pipe(tok);
-	//printf("============ ROOT NODE ============\n");
-	//print_node(node);
 	return (node);
 }
 
@@ -55,8 +54,8 @@ t_ast	*parse_redir(t_list **tok, t_ast *left)
 			left = add_redir_node(left, (*tok)->next->data, 3);
 		else if ((*tok)->type == HERE_DOC)
 			left = add_redir_node(left, (*tok)->next->data, 4);
-		print_node(left);
 	}
+	get_next_token(tok);
 	get_next_token(tok);
 	return (left);
 }
@@ -68,9 +67,11 @@ t_ast	*parse_exec(t_list **tok)
 	t_ast	*exec_node;
 
 	exec_node = add_exec_node(tok);
+	//print_node(exec_node); // PRINT DEBUGGING 📠
 	root_ptr = exec_node;
 	root_ptr = parse_redir(tok, root_ptr);
 	if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
 		root_ptr = parse_redir(tok, root_ptr);
+	//print_node(root_ptr); // PRINT DEBUGGING 📠
 	return (root_ptr);
 }
