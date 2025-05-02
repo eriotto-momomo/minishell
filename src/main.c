@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 11:04:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/02 14:15:17 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ void initialize_struct(t_shell *s, char **envp)
 	s->line = NULL;
 	s->old_pwd = NULL;
 	s->pwd = save_cwd();
+	s->old_pwd = save_cwd();
 	s->head = NULL;
 	s->root_node = NULL;
 }
+
 
 void prompt_loop(char *prompt, t_shell *s)
 {
@@ -61,11 +63,11 @@ void prompt_loop(char *prompt, t_shell *s)
 			tok = s->head;
 			if (syntax_analysis(s->head))
 				s->root_node = build_ast(&tok);
+			free_list(&(s->head));
 			//simple_cmd(s->root_node, s->env);
-			ft_cd(s);
+			//ft_cd(s);
+			terminate_shell(s);
 		}
-		//free_list(s->head);
-		// (void)ast; // 💥TEST
 		free(s->line);
 	}
 }
