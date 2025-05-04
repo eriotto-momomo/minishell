@@ -6,7 +6,7 @@
 #    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/02 15:17:20 by emonacho         ###   ########.fr        #
+#    Updated: 2025/05/04 12:52:51 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/parser/parser_main.c\
 			$(CFILES_PATH)/parser/syntax_analysis.c\
 			$(CFILES_PATH)/prompt/prompt.c\
+			$(CFILES_PATH)/signals/signals.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/utils/free_ast.c\
 			$(CFILES_PATH)/utils/list.c\

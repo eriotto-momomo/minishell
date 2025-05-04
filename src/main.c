@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:55:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/04 13:42:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void prompt_loop(t_shell *s)
 	loop = 1;
 	while (loop)
 	{
+
+		get_signals(s);
 		s->line = readline(s->prompt);
 		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
 		{
