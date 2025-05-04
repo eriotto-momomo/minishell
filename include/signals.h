@@ -3,13 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:13:43 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/19 17:27:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/04 12:51:38 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SIGNALS_H
 # define SIGNALS_H
+
+// signals.c
+void get_signals(t_shell *s);
+
 #endif
