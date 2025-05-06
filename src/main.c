@@ -6,37 +6,16 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:10:20 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/06 16:19:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void printPreorder(t_ast *node)
-{
-	if (node == NULL)
-		return;
-
-	/* first print data of node */
-	if (node->tag == AST_PIPE)
-		printf("|\n");
-	else if (node->tag == AST_REDIR)
-		printf(">\n");
-	else if (node->tag == AST_EXEC)
-		printf("%s\n", node->data.ast_exec.argv[0]);
-
-	if (node->tag != AST_EXEC)
-	{
-		printPreorder(node->data.ast_pipe.right);
-		printPreorder(node->data.ast_pipe.left);
-	}
-	else
-		return;
-}
-
-void initialize_struct(t_shell *s, char **envp)
+void initialize_struct(t_shell *s, char	**envp)
 {
 	s->env = envp;
+	s->prompt = NULL;
 	s->cmd_count = 0;
 	s->line = NULL;
 	s->old_pwd = NULL;
@@ -47,26 +26,24 @@ void initialize_struct(t_shell *s, char **envp)
 }
 
 
-void prompt_loop(char *prompt, t_shell *s)
+void prompt_loop(t_shell *s)
 {
 	int loop;
-	t_list	*tok;
 
 	loop = 1;
 	while (loop)
 	{
-		s->line = readline(prompt);
+		s->line = readline(s->prompt);
 		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
 		{
 			add_history(s->line);
 			lexer(s);
-			tok = s->head;
-			if (syntax_analysis(s->head))
-				s->root_node = build_ast(&tok);
-			//free_list(&(s->head));
+			parser(s);
 			//simple_cmd(s->root_node, s->env);
 			//ft_cd(s);
-			terminate_shell(s);
+			ft_pwd();
+			free_ast(&(s->root_node));
+			free_list(&(s->head));
 		}
 		free(s->line);
 	}
@@ -75,7 +52,6 @@ void prompt_loop(char *prompt, t_shell *s)
 int main(int argc, char **argv, char **envp)
 {
 	t_shell s;
-	char *prompt;
 
 	if (argc > 1)
 	{
@@ -84,9 +60,8 @@ int main(int argc, char **argv, char **envp)
 	}
 	else
 	{
-		prompt = create_prompt();
 		initialize_struct(&s, envp);
-		prompt_loop(prompt, &s);
-		free(prompt);
+		s.prompt = create_prompt();
+		prompt_loop(&s);
 	}
 }
