@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:55:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/07 07:56:09 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void prompt_loop(t_shell *s)
 			lexer(s);
 			parser(s);
 			//simple_cmd(s->root_node, s->env);
-			//ft_cd(s);
+			ft_cd(s);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
