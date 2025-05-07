@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:13:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/06 16:18:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/07 08:16:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_pwd()
+int	ft_pwd(t_shell *s)
 {
 	char	*pwd;
 
 	pwd = getenv("PWD");
 	if (!pwd)
-		return (-1);
+	{
+		pwd = s->pwd;
+		if (!pwd)
+			return (-1);
+	}
 	printf("%s\n", pwd);
 	return (0);
 }

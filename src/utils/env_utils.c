@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 10:47:01 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 08:16:12 by c4v3d            ###   ########.fr       */
+/*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
+/*   Updated: 2025/05/07 10:48:13 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-#define BUILTIN_H
+#include "../../include/minishell.h"
 
-// BUILTINS
-int ft_echo(char **args, int fd_out);
-int	ft_cd(t_shell *s);
-int	ft_pwd(t_shell *s);
+char	*ft_getenv(char **env, const char *name)
+{
+	int		i;
+	char	*value;
 
-// UTILS
-char	*save_cwd(void);
-
-#endif
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(name, env[i], ft_strlen(name)) == 0)
+		{
+			value = ft_strchr(env[i], '=');
+			if (!value)
+				return (NULL);
+			value++;
+			return (value);
+		}
+		i++;
+	}
+	return (NULL);
+}
