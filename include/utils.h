@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/07 10:38:44 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 11:44:39 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ size_t count_cmd(t_list *head);
 int is_sep(char c);
 
 // exit_utils.c
+void	free_str_array(char **array);
 void exit_check(t_shell *shell);
 void terminate_shell(t_shell *minishell);
 
@@ -42,4 +43,5 @@ void	free_ast(t_ast **node);
 
 // env
 char	*ft_getenv(char **env, const char *name);
+char	**env_dup(char **array);
 #endif
