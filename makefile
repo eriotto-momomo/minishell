@@ -6,7 +6,7 @@
 #    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/07 10:39:07 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/05/07 14:30:30 by c4v3d            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,10 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/pipe.c\
-			$(CFILES_PATH)/builtin/ft_echo.c \
-			$(CFILES_PATH)/builtin/ft_cd.c \
-			$(CFILES_PATH)/builtin/ft_pwd.c \
+			$(CFILES_PATH)/builtin/ft_echo.c\
+			$(CFILES_PATH)/builtin/ft_cd.c\
+			$(CFILES_PATH)/builtin/ft_pwd.c\
+			$(CFILES_PATH)/builtin/ft_env.c
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
