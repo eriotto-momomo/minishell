@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 14:29:15 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 22:06:40 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,6 @@ void	ft_replace(void **buff, void *new_value)
 	*buff = new_value;
 }
 
-// static void	update_path(t_shell *s)
-// {
-// 	ft_replace((void **)&(s->old_pwd), ft_strdup(old_pwd));
-// 	ft_replace((void **)&(s->pwd), save_cwd());
-// }
 
 int	ft_cd(t_shell *s)
 {
