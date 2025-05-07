@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 09:09:18 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 14:04:06 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,19 @@ char	*save_cwd(void)
 	return (ft_strdup(buffer));
 }
 
-static char	*make_curpath(char *arg, char *pwd)
+static char	*make_curpath(t_shell *s)
 {
+	char	*arg;
+	char	*pwd;
 	char	*curpath;
 	char	*temp;
 
+	arg = s->root_node->data.ast_exec.argv[1];
+	pwd = s->pwd;
 	if (!arg || arg[0] == '~')
-		return (ft_strdup(getenv("HOME")));
+		return (ft_strdup(ft_getenv(s->env, "HOME")));
 	if (arg[0] == '-')
-		return (ft_strdup(getenv("OLDPWD")));
+		return (ft_strdup(ft_getenv(s->env, "OLDPWD")));
 	if (arg[0] == '.' && arg[1] == '/')
 	{
 		arg += 2;
@@ -61,12 +65,10 @@ void	ft_replace(void **buff, void *new_value)
 
 int	ft_cd(t_shell *s)
 {
-	char	*arg;
 	char	*old_pwd;
 	char	*curpath;
 
-	arg = s->root_node->data.ast_exec.argv[1];
-	curpath = make_curpath(arg, s->pwd);
+	curpath = make_curpath(s);
 	if (ft_strlen(curpath) > PATH_MAX)
 		printf("curpath too long\n");
 	old_pwd = save_cwd();
