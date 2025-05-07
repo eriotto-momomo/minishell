@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
+#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/02 15:17:20 by emonacho         ###   ########.fr        #
+#    Updated: 2025/05/06 16:19:17 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/exec/pipe.c\
 			$(CFILES_PATH)/builtin/ft_echo.c \
 			$(CFILES_PATH)/builtin/ft_cd.c \
+			$(CFILES_PATH)/builtin/ft_pwd.c \
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
