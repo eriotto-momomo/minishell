@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 08:05:44 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 08:07:57 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	ft_cd(t_shell *s)
 
 	arg = s->root_node->data.ast_exec.argv[1];
 	curpath = make_curpath(arg, s->pwd);
-	printf("curpath : %s\n", curpath);
 	if (sizeof(curpath) > PATH_MAX)
 		printf("curpath too long\n");
 	ft_replace(&(s->old_pwd), save_cwd());
