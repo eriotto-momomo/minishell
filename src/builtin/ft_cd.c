@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 14:04:06 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 14:29:15 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	ft_cd(t_shell *s)
 
 	curpath = make_curpath(s);
 	if (ft_strlen(curpath) > PATH_MAX)
-		printf("curpath too long\n");
+	{
+		ft_putstr_fd("curpath too long\n", 2);
+		return (-1);
+	}
 	old_pwd = save_cwd();
 	if (chdir(curpath) == -1)
 	{

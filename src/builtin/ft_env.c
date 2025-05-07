@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 10:47:01 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 14:29:44 by c4v3d            ###   ########.fr       */
+/*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
+/*   Updated: 2025/05/07 15:47:54 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-#define BUILTIN_H
+#include "../../include/minishell.h"
 
-// BUILTINS
-int ft_echo(char **args, int fd_out);
-int	ft_cd(t_shell *s);
-int	ft_pwd(t_shell *s);
-void	ft_env(t_shell *s, int fd_out);
+void	ft_env(t_shell *s, int fd_out)
+{
+	int		i;
+	char	*output;
+	char	*temp;
 
-// UTILS
-char	*save_cwd(void);
-
-#endif
+	i = 0;
+	output = ft_calloc(1, 1);
+	while (s->env[i])
+	{
+		temp = ft_strjoin(output, s->env[i]);
+		free(output);
+		output = ft_strjoin(temp, "\n");
+		free(temp);
+		i++;
+	}
+	if (output)
+	{
+		ft_putstr_fd(output, fd_out);
+		free(output);
+	}
+}

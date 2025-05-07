@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/07 11:45:33 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 14:30:48 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void prompt_loop(t_shell *s)
 			lexer(s);
 			parser(s);
 			//simple_cmd(s->root_node, s->env);
-			ft_cd(s);
+			//ft_cd(s);
+			ft_env(s, 0);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
