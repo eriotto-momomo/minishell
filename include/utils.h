@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 15:54:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/07 10:38:44 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,7 @@ void	free_redir_node(t_ast *node);
 void	free_exec_node(t_ast *node);
 void	free_ast(t_ast **node);
 
+
+// env
+char	*ft_getenv(char **env, const char *name);
 #endif

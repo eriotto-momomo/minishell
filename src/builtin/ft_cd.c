@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 08:13:32 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 09:09:18 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,38 @@ static char	*make_curpath(char *arg, char *pwd)
 	return (ft_strdup(arg));
 }
 
-void	ft_replace(char **buff, char *new_value)
+void	ft_replace(void **buff, void *new_value)
 {
-	if (buff || *buff)
-	{
-		w_free((void **)buff);
-		*buff = NULL;
-	}
+	if (buff && *buff)
+		w_free(buff);
 	*buff = new_value;
 }
+
+// static void	update_path(t_shell *s)
+// {
+// 	ft_replace((void **)&(s->old_pwd), ft_strdup(old_pwd));
+// 	ft_replace((void **)&(s->pwd), save_cwd());
+// }
 
 int	ft_cd(t_shell *s)
 {
 	char	*arg;
+	char	*old_pwd;
 	char	*curpath;
 
 	arg = s->root_node->data.ast_exec.argv[1];
 	curpath = make_curpath(arg, s->pwd);
-	if (sizeof(curpath) > PATH_MAX)
+	if (ft_strlen(curpath) > PATH_MAX)
 		printf("curpath too long\n");
-	ft_replace(&(s->old_pwd), save_cwd());
+	old_pwd = save_cwd();
 	if (chdir(curpath) == -1)
 	{
 		perror("cd");
 		w_free((void **)&curpath);
+		w_free((void **)&old_pwd);
 		return (-1);
 	}
 	w_free((void **)&curpath);
-	ft_replace(&(s->pwd), save_cwd());
+	w_free((void **)&old_pwd);
 	return (0);
 }
