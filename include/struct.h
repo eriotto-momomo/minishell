@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/07 16:12:20 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 22:14:24 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,19 @@ Structure pour les token :
 */
 typedef struct s_list
 {
-	char *data;
-	t_types type;
-	struct s_list *next;
-	struct s_list *prev;
-} t_list;
+	char			*data;
+	t_types			type;
+	struct s_list	*next;
+	struct s_list	*prev;
+}					t_list;
 
 typedef struct	s_env
 {
-	char	*name;
-	char	*value;
-};
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}					t_env;
 
 typedef struct s_shell
 {
