@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:44:28 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:21:38 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,27 @@ typedef struct s_shell
 	t_ast	*root_node;
 	t_list	*head;
 }			t_shell;
+
+typedef struct s_hti
+{
+	const char	*key;
+	void		*value;
+
+	t_ht* _table;
+	size_t _index;
+} t_hti;
+
+typedef struct	s_ht_entry
+{
+	const char		*key;
+	void			*value;
+}t_ht_entry;
+
+typedef struct	s_ht
+{
+	t_ht_entry	*entries;
+	size_t		capacity;
+	size_t		lenght;
+}
 
 #endif
