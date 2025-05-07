@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/07 10:10:14 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 10:53:01 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ static char	*join_prompt(char *usr, char *hostname)
 	return (full_prompt);
 }
 
-char	*create_prompt(void)
+void	create_prompt(t_shell *s)
 {
 	char	*usr;
 	char	*host_name;
 	char	*full_prompt;
 
-	usr = getenv("USER");
-	host_name = getenv("HOSTNAME");
+	usr = ft_getenv(s->env, "USER");
+	host_name = ft_getenv(s->env, "HOSTNAME");
 	if (!host_name)
 	{
-		host_name = getenv("SESSION_MANAGER");
+		host_name = ft_getenv(s->env, "SESSION_MANAGER");
 		if (host_name)
 			trim_prompt(host_name);
 	}
@@ -57,5 +57,5 @@ char	*create_prompt(void)
 		full_prompt = join_prompt(usr, host_name);
 	else
 		full_prompt = ft_strdup(DEFAULT_PROMPT);
-	return (full_prompt);
+	s->prompt = full_prompt;
 }

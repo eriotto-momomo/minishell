@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/07 10:39:54 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 10:53:22 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int main(int argc, char **argv, char **envp)
 	else
 	{
 		initialize_struct(&s, envp);
-		s.prompt = create_prompt();
+		create_prompt(&s);
 		prompt_loop(&s);
 	}
 }
