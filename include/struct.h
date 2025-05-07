@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:44:28 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:12:20 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ typedef struct s_list
 	struct s_list *next;
 	struct s_list *prev;
 } t_list;
+
+typedef struct	s_env
+{
+	char	*name;
+	char	*value;
+};
 
 typedef struct s_shell
 {
