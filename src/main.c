@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 13:39:05 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 14:23:06 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void prompt_loop(t_shell *s)
 			ft_env(s->env_list, 0);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
+			free_env(&(s->env_list));
 		}
 		free(s->line);
 	}
