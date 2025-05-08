@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 15:56:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/08 10:14:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_pipe_node(t_ast *node)
 			free_redir_node(node->data.ast_pipe.right);
 	}
 	w_free((void **)&node);
-	//printf("%s🔶FREE PIPE_NODE.|%s %sFREED!%s\n", Y, RST, G, RST); // PRINT DEBUGGING 📠
+	printf("%s🔶FREE PIPE_NODE.|%s %sFREED!%s\n", Y, RST, G, RST); // PRINT DEBUGGING 📠
 }
 
 void	free_redir_node(t_ast *node)
@@ -54,7 +54,7 @@ void	free_redir_node(t_ast *node)
 	node->data.ast_redir.mode = 0;
 	w_free((void **)&node->data.ast_redir.filename);
 	w_free((void **)&node);
-	//printf("%s🔴FREE REDIR_NODE|%s %sFREED!%s\n", R, RST, G, RST); // PRINT DEBUGGING 📠
+	printf("%s🔴FREE REDIR_NODE|%s %sFREED!%s\n", R, RST, G, RST); // PRINT DEBUGGING 📠
 }
 
 void	free_exec_node(t_ast *node)
@@ -68,14 +68,14 @@ void	free_exec_node(t_ast *node)
 			&& node->data.ast_exec.argc > 0)
 	{
 		i = 0;
-		//printf("%s🔵FREE EXEC_NODE.|%s %sFREED!%s", B, RST, G, RST); // PRINT DEBUGGING 📠
+		printf("%s🔵FREE EXEC_NODE.|%s %sFREED!%s", B, RST, G, RST); // PRINT DEBUGGING 📠
 		while (i < node->data.ast_exec.argc)
 		{
-			//printf(" %sargv[%d]%s[%s]", B, i, RST, node->data.ast_exec.argv[i]); // PRINT DEBUGGING 📠
+			printf(" %sargv[%d]%s[%s]", B, i, RST, node->data.ast_exec.argv[i]); // PRINT DEBUGGING 📠
 			w_free((void **)&node->data.ast_exec.argv[i]);
 			i++;
 		}
-		//printf("\n"); // PRINT DEBUGGING 📠
+		printf("\n"); // PRINT DEBUGGING 📠
 		node->data.ast_exec.argc = 0;
 		w_free((void **)&node->data.ast_exec.argv);
 		w_free((void **)&node);

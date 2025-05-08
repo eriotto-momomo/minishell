@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/04 13:42:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/08 22:38:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void initialize_struct(t_shell *s, char	**envp)
 	s->old_pwd = save_cwd();
 	s->head = NULL;
 	s->root_node = NULL;
+	s->sig = malloc(sizeof(t_sig *));
 }
 
 
@@ -30,24 +31,29 @@ void prompt_loop(t_shell *s)
 {
 	int loop;
 
+	sig_setup();
 	loop = 1;
 	while (loop)
 	{
-
-		get_signals(s);
-		s->line = readline(s->prompt);
-		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
+		while (1)
 		{
-			add_history(s->line);
-			lexer(s);
-			parser(s);
-			//simple_cmd(s->root_node, s->env);
-			//ft_cd(s);
-			free_ast(&(s->root_node));
-			free_list(&(s->head));
+			if (sig_catcher())
+				break ;
+			s->line = readline(s->prompt);
+			if (s->line && *s->line) // need to add a check to not print strings containing only spaces
+			{
+				add_history(s->line);
+				lexer(s);
+				parser(s);
+				//simple_cmd(s->root_node, s->env);
+				//ft_cd(s);
+				free_ast(&(s->root_node));
+				free_list(&(s->head));
+			}
+			free(s->line);
 		}
-		free(s->line);
 	}
+	free(s->sig);
 }
 
 int main(int argc, char **argv, char **envp)
