@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 10:47:01 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 13:46:02 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/06 16:13:49 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/07 08:16:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-#define BUILTIN_H
+#include "../../include/minishell.h"
 
-// BUILTINS
-int		ft_echo(char **args, int fd_out);
-int		ft_cd(t_shell *s);
-int		ft_pwd(t_shell *s);
-void	ft_env(t_env *h_env, int fd_out);
-// UTILS
-char	*save_cwd(void);
+int	ft_pwd(t_shell *s)
+{
+	char	*pwd;
 
-#endif
+	pwd = getenv("PWD");
+	if (!pwd)
+	{
+		pwd = s->pwd;
+		if (!pwd)
+			return (-1);
+	}
+	printf("%s\n", pwd);
+	return (0);
+}

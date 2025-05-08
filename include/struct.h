@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:44:28 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:55:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,23 @@ Structure pour les token :
 */
 typedef struct s_list
 {
-	char *data;
-	t_types type;
-	struct s_list *next;
-	struct s_list *prev;
-} t_list;
+	char			*data;
+	t_types			type;
+	struct s_list	*next;
+	struct s_list	*prev;
+}					t_list;
+
+typedef struct	s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}					t_env;
 
 typedef struct s_shell
 {
-	char	**env;
+	t_env	*env_list;
 	char	*prompt;
 	size_t	cmd_count;
 	char	*line;

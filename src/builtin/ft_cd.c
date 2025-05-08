@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/02 14:47:20 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 13:39:34 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,22 @@ char	*save_cwd(void)
 	return (ft_strdup(buffer));
 }
 
-static char	*make_curpath(char *arg, char *pwd)
+static char	*make_curpath(t_shell *s)
 {
+	char	*arg;
+	char	*pwd;
 	char	*curpath;
 	char	*temp;
 
+	arg = s->root_node->data.ast_exec.argv[1];
+	pwd = s->pwd;
 	if (!arg || arg[0] == '~')
-		return (ft_strdup(getenv("HOME")));
+		return (ft_strdup(ft_getenv(s->env_list, "HOME")));
 	if (arg[0] == '-')
-		return (ft_strdup(getenv("OLDPWD")));
+		return (ft_strdup(ft_getenv(s->env_list, "OLDPWD")));
 	if (arg[0] == '.' && arg[1] == '/')
 	{
-		arg++;
+		arg += 2;
 		if (pwd[ft_strlen(pwd)] == '/')
 			return (ft_strjoin(pwd, arg));
 		temp = ft_strjoin("/", arg);
@@ -46,33 +50,34 @@ static char	*make_curpath(char *arg, char *pwd)
 	return (ft_strdup(arg));
 }
 
-void	ft_replace(char **buff, char *new_value)
+void	ft_replace(void **buff, void *new_value)
 {
-	if (buff || *buff)
-	{
-		w_free((void **)buff);
-		*buff = NULL;
-	}
+	if (buff && *buff)
+		w_free(buff);
 	*buff = new_value;
 }
 
+
 int	ft_cd(t_shell *s)
 {
-	char	*arg;
+	char	*old_pwd;
 	char	*curpath;
 
-	arg = s->root_node->data.ast_exec.argv[1];
-	curpath = make_curpath(arg, s->pwd);
-	if (sizeof(curpath) > PATH_MAX)
-		printf("curpath too long\n");
-	ft_replace(&(s->old_pwd), save_cwd());
+	curpath = make_curpath(s);
+	if (ft_strlen(curpath) > PATH_MAX)
+	{
+		ft_putstr_fd("curpath too long\n", 2);
+		return (-1);
+	}
+	old_pwd = save_cwd();
 	if (chdir(curpath) == -1)
 	{
 		perror("cd");
 		w_free((void **)&curpath);
+		w_free((void **)&old_pwd);
 		return (-1);
 	}
 	w_free((void **)&curpath);
-	ft_replace(&(s->pwd), save_cwd());
+	w_free((void **)&old_pwd);
 	return (0);
 }
