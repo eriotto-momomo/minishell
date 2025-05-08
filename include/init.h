@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 16:13:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 21:21:59 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/08 21:27:42 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/08 21:29:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#ifndef INIT_H
+# define INIT_H
 
-int	ft_pwd(t_shell *s)
-{
-	char	*pwd;
+t_env	*table_to_ll(char **env);
+char	*get_value(char *s);
+char	*get_name(char	*s);
 
-	pwd = getenv("PWD");
-	if (!pwd)
-	{
-		pwd = s->pwd;
-		if (!pwd)
-			return (-1);
-	}
-	printf("%s\n", pwd);
-	return (0);
-}
+#endif
