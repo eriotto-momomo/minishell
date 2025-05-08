@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 11:08:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 11:20:02 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**env_dup(char **array)
 	return (copy);
 }
 
-char	*ft_getenv(char **env, const char *name)
+char	*ft_getenv(t_env *h_env, const char *name)
 {
 	int		i;
 	char	*value;
@@ -180,6 +180,7 @@ t_env	*table_to_ll(char **env)
 		value = get_value(env[i]);
 		if (!name || !value)
 		{
+			// FRE EVERYHTING
 			w_free((void **)&name);
 			w_free((void **)&value);
 			return (NULL);
