@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 18:54:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 20:34:02 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void prompt_loop(t_shell *s)
 			//ft_unset(s);
 			//ft_env(s->env_list, 0);
 			ft_export(s);
+			ft_env(s->env_list, 0);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 			free_env(&(s->env_list));
