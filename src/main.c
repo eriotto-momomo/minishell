@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/07 14:30:48 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/08 10:54:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void initialize_struct(t_shell *s, char	**envp)
 {
 	s->env = env_dup(envp);
+	s->env_list = table_to_ll(envp);
 	if (!s->env)
 		terminate_shell(s);
 	s->prompt = NULL;
@@ -43,7 +44,7 @@ void prompt_loop(t_shell *s)
 			parser(s);
 			//simple_cmd(s->root_node, s->env);
 			//ft_cd(s);
-			ft_env(s, 0);
+			//ft_env(s, 0);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}

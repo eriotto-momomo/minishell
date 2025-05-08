@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/07 11:44:39 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/08 10:42:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,8 @@ void	free_ast(t_ast **node);
 // env
 char	*ft_getenv(char **env, const char *name);
 char	**env_dup(char **array);
+
+// env++
+t_env	*table_to_ll(char **env);
+void add_var_back(t_env **head, char *name, char *value);
 #endif
