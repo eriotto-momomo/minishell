@@ -6,12 +6,31 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:44:28 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:02:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
+/*
+* L'enum 'e_signal' est utilisee pour indiquer le type de signal recu au shell par la
+* variable globale 'g_sig'
+* CTRLC = 'CTRL + C'
+* CTRLD = 'CTRL + D'
+* CTRLBACK = 'CTRL + \'
+*/
+enum e_signal
+{
+	CTRLC,
+	CTRLD,
+	CTRLBACK
+};
+
+typedef struct	s_signals
+{
+	int	signal;
+}	t_sig;
 
 /*
 Attribution d'une valeur constante pour chaque token
@@ -79,6 +98,7 @@ typedef struct s_shell
 	char	*pwd;
 	t_ast	*root_node;
 	t_list	*head;
+	t_sig	*sig;
 }			t_shell;
 
 #endif
