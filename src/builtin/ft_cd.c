@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 13:39:34 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 18:44:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,6 @@ static char	*make_curpath(t_shell *s)
 	}
 	return (ft_strdup(arg));
 }
-
-void	ft_replace(void **buff, void *new_value)
-{
-	if (buff && *buff)
-		w_free(buff);
-	*buff = new_value;
-}
-
 
 int	ft_cd(t_shell *s)
 {

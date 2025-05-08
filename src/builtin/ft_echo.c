@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 12:56:25 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:19:13 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,15 @@ static int	flag_check(char *flag)
 	return (1);
 }
 
-int	ft_echo(char **args, int fd_out)
+int	ft_echo(t_shell *s, int fd_out)
 {
+	char	**args;
 	char	*temp;
 	char	*str;
 	int		offset;
 
 	offset = 0;
+	args = s->root_node->data.ast_exec.argv;
 	if (args[1])
 	{
 		if (flag_check(args[1]))

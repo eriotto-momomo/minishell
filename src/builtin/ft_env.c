@@ -6,13 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 14:30:11 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:20:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-
 
 static char	*make_var(char	*name, char *value)
 {
@@ -36,14 +34,14 @@ static char	*make_var(char	*name, char *value)
 	return (ret);
 }
 
-void	ft_env(t_env *h_env, int fd_out)
+void	ft_env(t_shell *s, int fd_out)
 {
 	t_env	*ptr;
 	char	*line;
 	char	*temp;
 	char	*to_print;
 
-	ptr = h_env;
+	ptr = s->env_list;
 	to_print = ft_strdup("");
 	while (ptr)
 	{
