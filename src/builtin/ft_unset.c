@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:19:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 17:20:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:22:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int		delenv(t_shell *s, char *target)
+int	delenv(t_shell *s, char *target)
 {
 	t_env	*temp;
 
@@ -33,7 +33,7 @@ int	ft_unset(t_shell *s)
 {
 	char	**args;
 	int		i;
-	
+
 	if (s->root_node->data.ast_exec.argc == 1)
 	{
 		ft_putstr_fd("unset: not enough arguments\n", 2);
@@ -45,4 +45,3 @@ int	ft_unset(t_shell *s)
 		delenv(s, args[i++]);
 	return (0);
 }
-
