@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 20:53:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:21:39 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	treat_var(t_env *env, char *arg)
 	char	*name;
 	char	*value;
 	t_env	*ptr;
-	
+
 	if (!ft_strchr(arg, '='))
 		return ;
 	name = get_name(arg);
