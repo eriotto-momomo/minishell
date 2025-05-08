@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 22:26:41 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 22:21:29 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ static char	*pathfinder(char *cmd)
 	return (NULL);
 }
 
-void	cmd_execution(char **cmd, char **envp)
+void	cmd_execution(char **argv, t_env *env)
 {
 	char	*cmd_path;
 	
 	
-	cmd_path = pathfinder(cmd[0]);
+	cmd_path = pathfinder(argv[0]);
 	if (!cmd_path)
 	{
 		perror("Command not found");
 		exit(127);
 	}
-	if (execve(cmd_path, cmd, envp) == -1)
+	if (execve(cmd_path, argv, env) == -1)
 	{
 		free(cmd_path);
 		perror("Command not executable");
@@ -57,12 +57,12 @@ void	cmd_execution(char **cmd, char **envp)
 	}
 }
 
-void	simple_cmd(t_ast *node, char **envp)
+void	simple_cmd(t_shell *s)
 {
 	pid_t	pid1;
 
 	pid1 = fork();
 	if (pid1 == 0)
-		cmd_execution(node->data.ast_exec.argv, envp);
+		cmd_execution(s->root_node->data.ast_exec.argv, s->env_list);
 	waitpid(pid1, NULL, 0);
 }
