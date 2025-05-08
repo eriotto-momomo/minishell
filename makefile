@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/08 10:51:20 by timmi            ###   ########.fr        #
+#    Updated: 2025/05/08 16:33:17 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/builtin/ft_echo.c\
 			$(CFILES_PATH)/builtin/ft_cd.c\
 			$(CFILES_PATH)/builtin/ft_pwd.c\
-			$(CFILES_PATH)/builtin/ft_env.c
+			$(CFILES_PATH)/builtin/ft_env.c\
+			$(CFILES_PATH)/builtin/ft_unset.c
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
