@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 14:20:17 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 15:17:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	free_env(t_env **h_env)
 	t_env	*current;
 	t_env	*temp;
 
-	if (!h_env || *h_env)
+	if (!h_env || !*h_env)
 		return ;
 	current = *h_env;
 	while (current)
 	{
 		temp = current->next;
-		w_free((void ** )&(current->name));
+		w_free((void **)&(current->name));
 		w_free((void **)&(current->value));
 		w_free((void **)&current);
 		current = temp;
