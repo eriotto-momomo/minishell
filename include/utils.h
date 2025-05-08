@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/08 18:22:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:28:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ void	free_ast(t_ast **node);
 char	*ft_getenv(t_env *h_env, const char *name);
 char	**env_dup(char **array);
 void	free_env(t_env **h_env);
-char	*get_value(char *s);
-char	*get_name(char	*s);
 
 // env++
-t_env	*table_to_ll(char **env);
+
 void add_var_back(t_env **head, char *name, char *value);
 #endif
