@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 11:20:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 13:31:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,56 +14,19 @@
 
 #include <assert.h>
 
-char	**env_dup(char **array)
-{
-	int		i;
-	char	**copy;
-	
-	i = 0;
-	if (!array)
-		return (NULL);
-	while (array[i])
-		i++;
-	copy = malloc((i + 1) * sizeof(char *));
-	if (!copy)
-		return (NULL);
-	i = 0;
-	while (array[i])
-	{
-		copy[i] = ft_strdup(array[i]);
-		if (!copy[i])
-		{
-			free_str_array(copy);
-			return (NULL);
-		}
-		i++;
-	}
-	copy[i] = NULL;
-	return (copy);
-}
-
 char	*ft_getenv(t_env *h_env, const char *name)
 {
-	int		i;
-	char	*value;
-
-	i = 0;
-	while (env[i])
+	t_env	*temp;
+	
+	temp = h_env;
+	while (temp)
 	{
-		if (ft_strncmp(name, env[i], ft_strlen(name)) == 0)
-		{
-			value = ft_strchr(env[i], '=');
-			if (!value)
-				return (NULL);
-			value++;
-			return (value);
-		}
-		i++;
+		if (ft_strncmp(name, temp->name, ft_strlen(name)) == 0)
+			return (temp->value);
+		temp = temp->next;
 	}
 	return (NULL);
 }
-
-
 
 t_env *create_var(char *name, char	*value)
 {
@@ -153,18 +116,6 @@ static char	*get_value(char *s)
 	return(value);
 }
 
-void	print_env(t_env *head)
-{
-	t_env	*temp;
-
-	temp = head;
-	while (temp)
-	{
-		printf("%s=%s\n", temp->name, temp->value);
-		temp = temp->next;
-	}
-}
-
 t_env	*table_to_ll(char **env)
 {
 	int		i;
@@ -188,6 +139,5 @@ t_env	*table_to_ll(char **env)
 		add_var_back(&head, name, value);
 		i++;
 	}
-	print_env(head);
 	return (head);
 }

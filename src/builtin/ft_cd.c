@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 22:06:40 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/08 13:39:34 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static char	*make_curpath(t_shell *s)
 	arg = s->root_node->data.ast_exec.argv[1];
 	pwd = s->pwd;
 	if (!arg || arg[0] == '~')
-		return (ft_strdup(ft_getenv(s->env, "HOME")));
+		return (ft_strdup(ft_getenv(s->env_list, "HOME")));
 	if (arg[0] == '-')
-		return (ft_strdup(ft_getenv(s->env, "OLDPWD")));
+		return (ft_strdup(ft_getenv(s->env_list, "OLDPWD")));
 	if (arg[0] == '.' && arg[1] == '/')
 	{
 		arg += 2;
