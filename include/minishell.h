@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/30 13:20:57 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/07 22:41:47 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,10 @@
 // Char set de caractere qui peuvent separer des token dans une commande
 #define SEPARATORS "|\"\'<>"
 #define BUILTINS "cd echo env exit export pwd unset"
+
+// ENV
+t_env	*create_var(char *name, char	*value);
+void	add_var_back(t_env **head, char *name, char *value);
+void	del_var(t_env **head, t_env **target);
 
 #endif

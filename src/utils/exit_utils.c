@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/02 15:56:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:14:59 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void exit_check(t_shell *shell)
+void	exit_check(t_shell *shell)
 {
 	if (ft_strnprefix(shell->head->data, "exit", ft_strlen("exit")))
 		terminate_shell(shell);
