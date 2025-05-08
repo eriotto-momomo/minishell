@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 15:17:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 17:52:11 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	del_var(t_env **head, t_env **target)
 	w_free((void **)&(*target));
 }
 
-static char	*get_name(char	*s)
+char	*get_name(char	*s)
 {
 	int		i;
 	size_t	len;
@@ -115,7 +115,7 @@ static char	*get_name(char	*s)
 	return(name);
 }
 
-static char	*get_value(char *s)
+char	*get_value(char *s)
 {
 	int		i;
 	int		offset;
