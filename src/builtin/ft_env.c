@@ -3,34 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/07 15:50:53 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/08 13:44:59 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_env(t_shell *s, int fd_out)
+
+
+static char	*make_var(char	*name, char *value)
 {
 	int		i;
-	char	*output;
-	char	*temp;
+	int		j;
+	char	*ret;
 
-	i = 0;
-	output = ft_calloc(1, 1);
-	while (s->env[i])
+	if (!name || !value)
+		return (NULL);
+	ret = malloc((ft_strlen(name) + ft_strlen(value) + 2) * sizeof(char));
+	if (!ret)
+		return (NULL);
+	i = -1;
+	while (name[++i])
+		ret[i] = name[i];
+	ret[i++] = '=';
+	j = 0;
+	while (value[j])
+		ret[i++] = value[j++];
+	ret[i] = '\0';
+	return (ret);
+}
+
+void	ft_env(t_env *h_env, int fd_out)
+{
+	t_env	*ptr;
+	char	*var;
+	char	*temp;
+	char	*to_print;
+
+	ptr = h_env;
+	to_print = ft_calloc(1, 1);
+	while (ptr)
 	{
-		temp = ft_strjoin(output, s->env[i]);
-		free(output);
-		output = ft_strjoin(temp, "\n");
+		var = make_var(ptr->name, ptr->value);
+		temp = ft_strjoin(to_print, var);
+		free(var);
+		free(to_print);
+		to_print = ft_strjoin(temp, "\n");
 		free(temp);
-		i++;
+		ptr = ptr->next;
 	}
-	if (output)
-	{
-		ft_putstr_fd(output, fd_out);
-		free(output);
-	}
+	ft_putstr_fd(to_print, fd_out);
 }
