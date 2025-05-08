@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/08 13:19:48 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/08 14:20:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ size_t count_cmd(t_list *head);
 int is_sep(char c);
 
 // exit_utils.c
-void	free_str_array(char **array);
 void exit_check(t_shell *shell);
 void terminate_shell(t_shell *minishell);
 
@@ -44,6 +43,7 @@ void	free_ast(t_ast **node);
 // env
 char	*ft_getenv(t_env *h_env, const char *name);
 char	**env_dup(char **array);
+void	free_env(t_env **h_env);
 
 // env++
 t_env	*table_to_ll(char **env);
