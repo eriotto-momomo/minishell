@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   wrappers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/19 17:13:43 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/09 17:36:41 by emonacho         ###   ########.fr       */
+/*   Created: 2025/05/09 13:00:59 by emonacho          #+#    #+#             */
+/*   Updated: 2025/05/09 17:50:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+#include "../../include/minishell.h"
 
-// signals.c
-void	sig_setup(void);
+char	*w_readline(const char *prompt, t_shell *s)
+{
+	(void)s;
+	char	*line_read;
 
-#endif
+	line_read = readline(prompt);
+	printf("w_readline | %sline read!%s\n", P, RST);
+	if (!line_read)
+		return (NULL);
+	return (line_read);
+}

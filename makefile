@@ -6,7 +6,7 @@
 #    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/04 12:52:51 by emonacho         ###   ########.fr        #
+#    Updated: 2025/05/09 13:00:42 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/exec/pipe.c\
 			$(CFILES_PATH)/builtin/ft_echo.c \
 			$(CFILES_PATH)/builtin/ft_cd.c \
+			$(CFILES_PATH)/wrappers/wrappers.c \
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)

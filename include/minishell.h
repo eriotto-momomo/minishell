@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 18:27:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:40:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <linux/limits.h>
 #include "./struct.h"
@@ -30,6 +31,7 @@
 #include "./utils.h"
 #include "./exec.h"
 #include "./builtin.h"
+#include "./wrappers.h"
 #include "../lib/libft/libft.h"
 
 // Prompt par default utiliser si le custom prompt fail
