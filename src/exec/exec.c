@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 13:46:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 15:04:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	ft_extern(t_shell *s)
 
 int	simple_cmd(t_shell *s)
 {
+	if (ft_strchr(s->root_node->data.ast_exec.argv[0], '$'))
+		var_expansion(s, s->root_node->data.ast_exec.argv[0]);
 	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s));
 	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
