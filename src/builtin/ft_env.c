@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 21:20:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 13:42:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*make_var(char	*name, char *value)
 	return (ret);
 }
 
-void	ft_env(t_shell *s, int fd_out)
+int	ft_env(t_shell *s, int fd_out)
 {
 	t_env	*ptr;
 	char	*line;
@@ -49,7 +49,7 @@ void	ft_env(t_shell *s, int fd_out)
 		if (!line)
 		{
 			free (to_print);
-			return ;
+			return (-1);
 		}
 		temp = ft_strjoin(to_print, line);
 		free(line);
@@ -60,4 +60,5 @@ void	ft_env(t_shell *s, int fd_out)
 	}
 	ft_putstr_fd(to_print, fd_out);
 	free(to_print);
+	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:13:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 21:21:59 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 13:40:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_pwd(t_shell *s)
+int	ft_pwd(t_shell *s, int	fd_out)
 {
 	char	*pwd;
 
@@ -23,6 +23,6 @@ int	ft_pwd(t_shell *s)
 		if (!pwd)
 			return (-1);
 	}
-	printf("%s\n", pwd);
+	ft_putstr_fd(pwd, fd_out);
 	return (0);
 }

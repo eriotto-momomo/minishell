@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:26:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 21:30:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 12:15:02 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,31 @@ char	*get_value(char *s)
 		value[i++] = s[offset++];
 	value[i] = '\0';
 	return(value);
+}
+
+char	**ll_to_table(t_env *h_env)
+{
+	char	**table;
+	char	*tmp;
+	t_env	*ptr;
+	int		i;
+
+	ptr = h_env;
+	table = malloc(sizeof(char *) * env_len(ptr) + 1);
+	if (!table)
+		return (NULL);
+	i = 0;
+	while (ptr)
+	{
+		table[i] = ft_strjoin(ptr->name, "=");
+		tmp = table[i];
+		table[i] = ft_strjoin(table[i], ptr->value);
+		free(tmp);
+		i++;
+		ptr = ptr->next;
+	}
+	table[i] = NULL;
+	return (table);
 }
 
 t_env	*table_to_ll(char **env)
