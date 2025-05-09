@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 22:21:29 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 12:00:42 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*pathfinder(char *cmd)
 void	cmd_execution(char **argv, t_env *env)
 {
 	char	*cmd_path;
-	
+	char	**env_table;
 	
 	cmd_path = pathfinder(argv[0]);
 	if (!cmd_path)
@@ -49,9 +49,11 @@ void	cmd_execution(char **argv, t_env *env)
 		perror("Command not found");
 		exit(127);
 	}
-	if (execve(cmd_path, argv, env) == -1)
+	env_table = ll_to_table(env);
+	if (execve(cmd_path, argv, env_table) == -1)
 	{
-		free(cmd_path);
+		w_free((void **)&cmd_path);
+		w_free((void **)&env_table);
 		perror("Command not executable");
 		exit(126);
 	}
