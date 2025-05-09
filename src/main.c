@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 12:04:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 13:44:12 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,8 @@ void prompt_loop(t_shell *s)
 			lexer(s);
 			parser(s);
 			simple_cmd(s);
-			//ft_cd(s);
-			//ft_env(s->env_list, 0);
-			//ft_unset(s);
-			//ft_export(s);
-			//ft_env(s, 0);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
-			//free_env(&(s->env_list));
 		}
 		free(s->line);
 	}
