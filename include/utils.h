@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/08 21:28:54 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 11:54:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void print_list(t_list *head);
 //////////////////////////////////
 
 // list.c
-t_list *create_node(char *data);
-void add_back(t_list **head, char *data);
-void add_front(t_list **head, char *data);
-void free_list(t_list **head);
-size_t count_cmd(t_list *head);
+t_list	*create_node(char *data);
+void	add_back(t_list **head, char *data);
+void	add_front(t_list **head, char *data);
+void	free_list(t_list **head);
+size_t	count_cmd(t_list *head);
+size_t	env_len(t_env *h_env);
 
 // lexer_utils.c
 int is_sep(char c);
