@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 22:38:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:40:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,22 @@ void initialize_struct(t_shell *s, char	**envp)
 
 void prompt_loop(t_shell *s)
 {
-	int loop;
-
 	sig_setup();
-	loop = 1;
-	while (loop)
+	while (1)
 	{
-		while (1)
+		//s->line = w_readline(s->prompt, s); //🚩 test
+		s->line = readline(s->prompt);
+		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
 		{
-			if (sig_catcher())
-				break ;
-			s->line = readline(s->prompt);
-			if (s->line && *s->line) // need to add a check to not print strings containing only spaces
-			{
-				add_history(s->line);
-				lexer(s);
-				parser(s);
-				//simple_cmd(s->root_node, s->env);
-				//ft_cd(s);
-				free_ast(&(s->root_node));
-				free_list(&(s->head));
-			}
-			free(s->line);
+			add_history(s->line);
+			lexer(s);
+			parser(s);
+			//simple_cmd(s->root_node, s->env);
+			//ft_cd(s);
+			free_ast(&(s->root_node));
+			free_list(&(s->head));
 		}
+		free(s->line);
 	}
 	free(s->sig);
 }
