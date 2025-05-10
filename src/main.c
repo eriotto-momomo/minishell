@@ -3,18 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 17:40:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/10 13:27:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void	print_env(t_env *head)
+{
+	t_env	*temp;
+
+	temp = head;
+	while (temp)
+	{
+		printf("%s=%s\n", temp->name, temp->value);
+		temp = temp->next;
+	}
+}
+
 void initialize_struct(t_shell *s, char	**envp)
 {
-	s->env = envp;
+	s->env_list = table_to_ll(envp);
+	if (!s->env_list)
+		terminate_shell(s);
 	s->prompt = NULL;
 	s->cmd_count = 0;
 	s->line = NULL;
@@ -39,8 +53,7 @@ void prompt_loop(t_shell *s)
 			add_history(s->line);
 			lexer(s);
 			parser(s);
-			//simple_cmd(s->root_node, s->env);
-			//ft_cd(s);
+			simple_cmd(s);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
@@ -61,7 +74,7 @@ int main(int argc, char **argv, char **envp)
 	else
 	{
 		initialize_struct(&s, envp);
-		s.prompt = create_prompt();
+		create_prompt(&s);
 		prompt_loop(&s);
 	}
 }

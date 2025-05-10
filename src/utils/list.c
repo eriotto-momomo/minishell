@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/02 15:19:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/09 12:11:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,19 @@ size_t count_cmd(t_list *head)
 		temp = temp->next;
 	}
 	return (c);
+}
+
+size_t	env_len(t_env *h_env)
+{
+	size_t	len;
+	t_env	*temp;
+	
+	len = 0;
+	temp = h_env;
+	while (temp)
+	{
+		len++;
+		temp = temp->next;
+	}
+	return (len);
 }
