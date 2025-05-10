@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/09 17:48:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/10 14:10:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../include/minishell.h"
 
@@ -17,9 +16,11 @@ void	sigint_rst_prompt(int signal)
 {
 	(void)signal;
 	write(1, "\n", 1);
+	/*
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	*/
 }
 
 void	sigquit_ignore(void)
