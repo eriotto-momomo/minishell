@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/10 13:27:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:33:30 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void initialize_struct(t_shell *s, char	**envp)
 
 void prompt_loop(t_shell *s)
 {
-	sig_setup();
+	//sig_setup(); //⚠️ WIP
 	while (1)
 	{
 		//s->line = w_readline(s->prompt, s); //🚩 test
@@ -53,7 +53,8 @@ void prompt_loop(t_shell *s)
 			add_history(s->line);
 			lexer(s);
 			parser(s);
-			simple_cmd(s);
+			//simple_cmd(s); //💥 CRASH AVEC REDIR
+			test_redir(s); //⚠️ WIP
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
