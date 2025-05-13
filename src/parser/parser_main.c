@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 22:35:33 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/13 23:09:00 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	parser(t_shell *s)
 		return ;
 	s->root_node = build_ast(&temp);
 	s->current_node = s->root_node;
-	printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
-	print_node(s->root_node); // PRINT DEBUGGING 📠
-	printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
+	// printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
+	// print_node(s->root_node); // PRINT DEBUGGING 📠
+	// printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
 }
 
 void print_preorder(t_ast *node)
