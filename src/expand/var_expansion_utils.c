@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 15:22:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:17:15 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_in_env(t_env	*env, char *var)
 		return (0);
 	while (env)
 	{
-		if (ft_strncmp(env->name, var, ft_strlen(var)) == 0)
+		if (ft_strncmp(env->name, var, ft_strlen(env->name)) == 0)
 			return (1);
 		env = env->next;
 	}

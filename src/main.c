@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 11:23:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:20:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void prompt_loop(t_shell *s)
 			lexer(s);
 			parser(s);
 			var_expansion(s, s->root_node->data.ast_exec.argv);
-			//simple_cmd(s);
+			simple_cmd(s);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
