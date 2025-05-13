@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 18:21:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/13 22:35:23 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ t_ast	*parse_exec(t_list **tok)
 	root_ptr = parse_redir(tok, root_ptr);
 	if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
 		root_ptr = parse_redir(tok, root_ptr);
-	//print_node(root_ptr); // PRINT DEBUGGING 📠
+	print_node(root_ptr); // PRINT DEBUGGING 📠
 	return (root_ptr);
 }

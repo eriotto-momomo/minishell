@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 18:21:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/13 22:35:33 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	parser(t_shell *s)
 	if (!syntax_analysis(temp))
 		return ;
 	s->root_node = build_ast(&temp);
-	//printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
-	//print_node(s->root_node); // PRINT DEBUGGING 📠
-	//printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
+	s->current_node = s->root_node;
+	printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
+	print_node(s->root_node); // PRINT DEBUGGING 📠
+	printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
 }
 
 void print_preorder(t_ast *node)
