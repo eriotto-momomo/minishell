@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 22:35:19 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/13 23:05:40 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ void prompt_loop(t_shell *s)
 	while (loop)
 	{
 		s->line = readline(s->prompt);
-		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
+		if (s->line && *s->line)
 		{
 			add_history(s->line);
 			lexer(s);
 			parser(s);
-			//simple_cmd(s);
-			print_preorder(s->root_node);
+			execution(s->current_node, STDIN_FILENO, STDOUT_FILENO);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
