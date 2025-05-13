@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 13:44:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 18:22:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void prompt_loop(t_shell *s)
 			add_history(s->line);
 			lexer(s);
 			parser(s);
-			simple_cmd(s);
+			//simple_cmd(s);
+			//print_preorder(s->root_node);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}

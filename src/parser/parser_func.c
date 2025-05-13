@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 15:15:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:21:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,26 @@
 // parse_pipe: EXEC [|PIPE]
 t_ast	*parse_pipe(t_list **tok)
 {
+	t_ast	*right;
+	t_ast	*left;
+
+	if (!*tok || (*tok)->data == NULL)
+		return (NULL);
+	left = parse_exec(tok);					// on commence par parser le noeud le plus à droite
+	while (*tok && (*tok)->type == PIPE)
+	{
+		get_next_token(tok);				// consomme '|'
+		right = parse_exec(tok);			// parse la commande à gauche du pipe
+		left = add_pipe_node(left, right);	// construit node: gauche = left, droite = right
+		//print_node(left); // PRINT DEBUGGING 📠
+	}
+	return (left);
+}
+
+/*t_ast	*parse_pipe(t_list **tok)
+{
 	t_ast	*node;
+
 
 	if ((*tok)->data == NULL)
 		return (NULL);
@@ -24,10 +43,10 @@ t_ast	*parse_pipe(t_list **tok)
 	{
 		get_next_token((tok));
 		node = add_pipe_node(node, parse_pipe(tok));
-		//print_node(node); // PRINT DEBUGGING 📠
+		print_node(node); // PRINT DEBUGGING 📠
 	}
 	return (node);
-}
+}*/
 
 // parse_line: PIPE {&} [;LINE]
 t_ast	*parse_line(t_list **tok)
@@ -67,7 +86,6 @@ t_ast	*parse_exec(t_list **tok)
 	t_ast	*exec_node;
 
 	exec_node = add_exec_node(tok);
-	//print_node(exec_node); // PRINT DEBUGGING 📠
 	root_ptr = exec_node;
 	root_ptr = parse_redir(tok, root_ptr);
 	if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))

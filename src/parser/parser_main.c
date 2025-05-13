@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 15:37:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:21:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void print_preorder(t_ast *node)
 
 	if (node->tag != AST_EXEC)
 	{
-		print_preorder(node->data.ast_pipe.right);
 		print_preorder(node->data.ast_pipe.left);
+		print_preorder(node->data.ast_pipe.right);
 	}
 	else
 		return;
