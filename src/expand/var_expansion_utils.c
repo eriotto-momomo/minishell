@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   var_expansion_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 14:54:52 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 15:20:06 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/13 15:22:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
+#include "../../include/minishell.h"
 
-void	var_expansion(t_shell *s, char **args);
+int	is_in_env(t_env	*env, char *var)
+{
+	if (!var)
+		return (0);
+	while (env)
+	{
+		if (ft_strncmp(env->name, var, ft_strlen(var)) == 0)
+			return (1);
+		env = env->next;
+	}
+	return (0);
+}
 
-//UTILS
-int	is_in_env(t_env	*env, char *var);
-size_t	offset_calc(char *str);
+size_t	offset_calc(char *str)
+{
+	size_t	offset;
 
-#endif
+	offset = 0;
+	while (str[offset] && str[offset] != '$')
+		offset++;
+	return (offset);
+}
