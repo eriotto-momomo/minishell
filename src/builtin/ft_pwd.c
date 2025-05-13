@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 13:43:35 by timmi            ###   ########.fr       */
+/*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
+/*   Updated: 2025/05/13 21:14:10 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-#define EXEC_H
+#include "../../include/minishell.h"
 
-#include <sys/types.h>
-#include <sys/wait.h>
+int	ft_pwd(t_shell *s, int	fd_out)
+{
+	char	*pwd;
 
-void	cmd_execution(char **argv);
-void	in_pipe(int *p, t_ast *node);
-int		simple_cmd(t_shell *s);
-int		ft_extern(t_shell *s);
-
-#endif
+	pwd = getenv("PWD");
+	if (!pwd)
+	{
+		pwd = s->pwd;
+		if (!pwd)
+			return (-1);
+	}
+	ft_putstr_fd(pwd, fd_out);
+	return (0);
+}

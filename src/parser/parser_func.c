@@ -3,85 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 22:34:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 18:21:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 // parse_pipe: EXEC [|PIPE]
-t_ast	*parse_pipe(t_list **head)
+t_ast	*parse_pipe(t_list **tok)
 {
-	t_ast *cmd;
+	t_ast	*right;
+	t_ast	*left;
 
-	cmd = parse_exec(head);
-	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
-	if ((*head)->type == PIPE)
+	if (!*tok || (*tok)->data == NULL)
+		return (NULL);
+	left = parse_exec(tok);					// on commence par parser le noeud le plus à droite
+	while (*tok && (*tok)->type == PIPE)
 	{
-		consume_token(head);
-		cmd = pipe_cmd(cmd, parse_pipe(head));
-		print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
+		get_next_token(tok);				// consomme '|'
+		right = parse_exec(tok);			// parse la commande à gauche du pipe
+		left = add_pipe_node(left, right);	// construit node: gauche = left, droite = right
+		//print_node(left); // PRINT DEBUGGING 📠
 	}
-	return (cmd);
-}
-
-// parse_line: PIPE {&} [;LINE]
-t_ast	*parse_line(t_list **head)
-{
-	t_ast *cmd;
-
-	cmd = parse_pipe(head);
-
-	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
-	printf("%sparse_line.%s| %sPARSING FINISHED! root_node to return%s:\n", R, RST, P, RST);	// 🖨️PRINT💥DEBUGING
-	print_node(cmd);	// 🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING🖨️PRINT💥DEBUGING
-
-	return (cmd);
-}
-
-// parse_redir: {< file}, {> file} ou {>> file}
-t_ast	*parse_redir(t_list **head, t_ast *left)
-{
-	if ((*head)->type != IN_REDIR && (*head)->type != OUT_REDIR
-		&& (*head)->type != APP_OUT_REDIR && (*head)->type != HERE_DOC)
-		return (left);
-	if ((*head)->type == IN_REDIR)
-		left = redir_cmd(left, (*head)->next->data, 1);
-	else if ((*head)->type == OUT_REDIR)
-		left = redir_cmd(left, (*head)->next->data, 2);
-	else if ((*head)->type == APP_OUT_REDIR)
-		left = redir_cmd(left, (*head)->next->data, 3);
-	else if ((*head)->type == HERE_DOC)
-		left = redir_cmd(left, (*head)->next->data, 4);
-	consume_token(head);
 	return (left);
 }
 
+/*t_ast	*parse_pipe(t_list **tok)
+{
+	t_ast	*node;
+
+
+	if ((*tok)->data == NULL)
+		return (NULL);
+	node = parse_exec(tok);
+	if ((*tok) && (*tok)->type == PIPE)
+	{
+		get_next_token((tok));
+		node = add_pipe_node(node, parse_pipe(tok));
+		print_node(node); // PRINT DEBUGGING 📠
+	}
+	return (node);
+}*/
+
+// parse_line: PIPE {&} [;LINE]
+t_ast	*parse_line(t_list **tok)
+{
+	t_ast	*node;
+
+	node = parse_pipe(tok);
+	return (node);
+}
+
+// parse_redir: {< file}, {> file} ou {>> file}
+t_ast	*parse_redir(t_list **tok, t_ast *left)
+{
+	if ((*tok))
+	{
+		if ((*tok)->type != IN_REDIR && (*tok)->type != OUT_REDIR
+			&& (*tok)->type != APP_OUT_REDIR && (*tok)->type != HERE_DOC)
+			return (left);
+		if ((*tok)->type == IN_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, 1);
+		else if ((*tok)->type == OUT_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, 2);
+		else if ((*tok)->type == APP_OUT_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, 3);
+		else if ((*tok)->type == HERE_DOC)
+			left = add_redir_node(left, (*tok)->next->data, 4);
+	}
+	get_next_token(tok);
+	get_next_token(tok);
+	return (left);
+}
 
 // parse_exec: REDIR {aaa REDIR}
-/*
-*	`exec_node = exec_cmd(NULL);`: alloue un 'exec_node' (blank)	- ⚠️MALLOC ICI⚠️
-*	`root_ptr = exec_node;`: pointe sur `exec_node`
-* 	`root_ptr = parse_redir(head, root_ptr);`: redirige output de `exec_node` si `redir`
-*/
-t_ast	*parse_exec(t_list **head)
+t_ast	*parse_exec(t_list **tok)
 {
 	t_ast	*root_ptr;
 	t_ast	*exec_node;
-	int		argc;
 
-	exec_node = exec_cmd();
+	exec_node = add_exec_node(tok);
 	root_ptr = exec_node;
-	root_ptr = parse_redir(head, root_ptr);
-	argc = 0;
-	fill_exec_node(head, exec_node, &argc);
-	if ((*head)->data && ((*head)->type == IN_REDIR || (*head)->type == OUT_REDIR
-		|| (*head)->type == APP_OUT_REDIR || (*head)->type == HERE_DOC))
-		root_ptr = parse_redir(head, root_ptr);
-	exec_node->data.ast_exec.argc = argc;
-	exec_node->data.ast_exec.argv[argc] = '\0';
+	root_ptr = parse_redir(tok, root_ptr);
+	if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
+		root_ptr = parse_redir(tok, root_ptr);
+	//print_node(root_ptr); // PRINT DEBUGGING 📠
 	return (root_ptr);
 }
