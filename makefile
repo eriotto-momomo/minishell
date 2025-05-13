@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/04/25 19:05:00 by timmi            ###   ########.fr        #
+#    Updated: 2025/05/09 12:03:31 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,16 +25,25 @@ CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/lexer/lexer_utils.c\
 			$(CFILES_PATH)/lexer/lexer.c\
-			$(CFILES_PATH)/parser/parser_cmd.c\
+			$(CFILES_PATH)/parser/parser_add_node.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\
-			$(CFILES_PATH)/parser/parser.c\
+			$(CFILES_PATH)/parser/parser_main.c\
 			$(CFILES_PATH)/parser/syntax_analysis.c\
 			$(CFILES_PATH)/prompt/prompt.c\
-			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
+			$(CFILES_PATH)/utils/free_ast.c\
+			$(CFILES_PATH)/utils/list.c\
+			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/pipe.c\
+			$(CFILES_PATH)/builtin/ft_echo.c\
+			$(CFILES_PATH)/builtin/ft_cd.c\
+			$(CFILES_PATH)/builtin/ft_pwd.c\
+			$(CFILES_PATH)/builtin/ft_env.c\
+			$(CFILES_PATH)/builtin/ft_unset.c\
+			$(CFILES_PATH)/builtin/ft_export.c\
+			$(CFILES_PATH)/init/init_env.c\
 
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)

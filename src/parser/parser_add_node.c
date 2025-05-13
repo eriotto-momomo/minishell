@@ -1,51 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_cmd.c                                       :+:      :+:    :+:   */
+/*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 22:34:56 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/01 18:37:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_ast	*pipe_cmd(t_ast *left, t_ast *right)
+t_ast	*add_pipe_node(t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 
 	node = ast_new_node((t_ast){0});
 	if (!node)
-	{
-		printf("%spipe_cmd...%s| %sNew node AST_PIPE creation failed%s!\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
-	}
-	//if(node)
-	//	printf("%spipe_cmd...%s| %sNew node AST_PIPE%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_PIPE;
 	node->data.ast_pipe.left = left;
 	node->data.ast_pipe.right = right;
 	return (node);
 }
 
-// '<':		fd = 0, O_RDONLY						-> mode = 1 (redir input)(reading)
-// '>':		fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 2 (redir output)(creating / overwriting)
-// '>>':	fd = 1, O_WRONLY | O_CREATE				-> mode = 3 (redir output)(appending)
-// '<<':	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
-t_ast	*redir_cmd(t_ast *left, char *filename, int mode)
+// '<'	fd = 0, O_RDONLY						-> mode = 1 (redir input)(reading)
+// '>'	fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 2 (redir output)(creating / overwriting)
+// '>>'	fd = 1, O_WRONLY | O_CREATE				-> mode = 3 (redir output)(appending)
+// '<<'	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
+t_ast	*add_redir_node(t_ast *left, char *filename, int mode)
 {
 	t_ast	*node;
 
 	node = ast_new_node((t_ast){0});
 	if (!node)
-	{
-		printf("%sredir_cmd..%s| %sNew node AST_REDIR creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
-	}
-	//if(node)
-	//	printf("%sredir_cmd..%s| %sNew node AST_REDIR%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_REDIR;
 	node->data.ast_redir.left = left;
 	node->data.ast_redir.mode = mode;
@@ -53,37 +43,41 @@ t_ast	*redir_cmd(t_ast *left, char *filename, int mode)
 	if (!node->data.ast_redir.filename)
 	{
 		errno = ENOMEM;
-		ft_puterror("redir_cmd", strerror(errno));
+		ft_puterror("add_redir_node", strerror(errno));
 		exit(1); // // 🗯️ Ou on "catch" errno dans le main pour quit clean ❔
 	}
 	return (node);
 }
 
-t_ast	*exec_cmd(void)
+t_ast	*add_exec_node(t_list **tok)
 {
 	t_ast	*node;
 
 	node = ast_new_node((t_ast){0});
 	if (!node)
-	{
-		printf("%sexec_cmd...%s| %sNew node AST_EXEC creation failed!%s\n", Y, RST, R, RST);	// 💥DEBUGING
 		return (NULL);
-	}
-	//if(node)
-	//	printf("%sexec_cmd...%s| %sNew node AST_EXEC%s created!\n", Y, RST, G, RST);			// 💥DEBUGING
 	node->tag = AST_EXEC;
 	node->data.ast_exec.argc = 0;
 	w_malloc((void**)&node->data.ast_exec.argv, (sizeof(char**) * 10)); // 🗯️ Nombre d'args max à gérer ❔
-	//node->data.ast_exec.argv = malloc(sizeof(char **) * 10);
+	while (*tok && (*tok)->type == WORD)
+	{
+		node->data.ast_exec.argv[node->data.ast_exec.argc++]
+			= fill_exec_node(*tok);
+		if (!tok || !(*tok)->next)
+			break ;
+		else
+			get_next_token(tok);
+	}
+	node->data.ast_exec.argv[node->data.ast_exec.argc] = '\0';
 	return (node);
 }
 
-t_ast	*ast_new_node(t_ast cmd)
+t_ast	*ast_new_node(t_ast node)
 {
 	t_ast	*ptr;
 
 	w_malloc((void **)&ptr, sizeof(t_ast));
 	if (ptr)
-		*ptr = cmd;
+		*ptr = node;
 	return (ptr);
 }

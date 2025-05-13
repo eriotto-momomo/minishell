@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 21:51:08 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/09 12:11:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ t_list *create_node(char *data)
 	return (new_node);
 }
 
-void add_front(t_list **head, char *data)
-{
-	t_list	*new_node;
-
-	new_node = create_node(data);
-	if (!head)
-	{
-		*head = new_node;
-		return ;
-	}
-	new_node->next = *head;
-	*head = new_node;
-}
-
 void add_back(t_list **head, char *data)
 {
     t_list	*new_node = create_node(data);
@@ -58,17 +44,24 @@ void add_back(t_list **head, char *data)
 	new_node->prev = temp;
 }
 
-void free_list(t_list *head)
+void free_list(t_list **head)
 {
+	t_list *current;
 	t_list *temp;
-	while (head)
+
+	if (!head || !*head)
+		return ;
+	current = *head;
+	while (current)
 	{
-		temp = head->next;
-		w_free(((void **)&(head->data)));
-		w_free((void **)&head);
-		head = temp;
+		temp = current->next;
+		w_free((void **)&(current->data));
+		w_free((void **)&current);
+		current = temp;
 	}
+	*head = NULL;
 }
+
 
 size_t count_cmd(t_list *head)
 {
@@ -84,4 +77,19 @@ size_t count_cmd(t_list *head)
 		temp = temp->next;
 	}
 	return (c);
+}
+
+size_t	env_len(t_env *h_env)
+{
+	size_t	len;
+	t_env	*temp;
+	
+	len = 0;
+	temp = h_env;
+	while (temp)
+	{
+		len++;
+		temp = temp->next;
+	}
+	return (len);
 }

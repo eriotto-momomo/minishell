@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/27 14:06:31 by c4v3d            ###   ########.fr       */
+/*   Created: 2025/05/08 21:27:42 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/09 12:01:15 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#ifndef INIT_H
+# define INIT_H
 
-t_ast *build_ast(t_list **head)
-{
-	t_ast *ast;
+// ENV
+t_env	*table_to_ll(char **env);
+char	*get_value(char *s);
+char	*get_name(char	*s);
+char	**ll_to_table(t_env *h_env);
 
-	ast = parse_line(head);
-	return (ast);
-}
-
-t_ast *parser(t_list *head)
-{
-	if (!syntax_analysis(head))
-		return (NULL);
-	return (build_ast(&head));
-}
+#endif
