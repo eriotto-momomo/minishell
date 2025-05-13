@@ -6,12 +6,28 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 13:44:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 17:25:05 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+// static void	print_ast(t_ast *current_node)
+// {
+// 	if (!current_node)
+// 		return ;
+// 	if (current_node->tag == AST_PIPE)
+// 	{
+// 		printf("|\n");
+// 		print_ast(current_node->data.ast_pipe.right);
+// 		print_ast(current_node->data.ast_pipe.left);
+// 	}
+// 	if (current_node->tag == AST_EXEC)
+// 	{
+// 		printf("%s\n", current_node->data.ast_exec.argv[0]);
+// 		return ;
+// 	}
+// }
 void	print_env(t_env *head)
 {
 	t_env	*temp;
@@ -37,6 +53,7 @@ void initialize_struct(t_shell *s, char	**envp)
 	s->old_pwd = save_cwd();
 	s->head = NULL;
 	s->root_node = NULL;
+	s->current_node = NULL;
 }
 
 
@@ -53,7 +70,8 @@ void prompt_loop(t_shell *s)
 			add_history(s->line);
 			lexer(s);
 			parser(s);
-			simple_cmd(s);
+			//simple_cmd(s);
+			print_preorder(s->root_node);
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
