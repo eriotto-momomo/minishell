@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 11:47:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 14:09:30 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,16 @@ static char	*dup_prefix(char *str)
 	return (ret);
 }
 
+static size_t	offset_calc(char *str)
+{
+	size_t	offset;
+
+	offset = 0;
+	while (str[offset] && str[offset] != '$')
+		offset++;
+	return (offset);
+}
+
 static char 	*replace(t_env *env, char *str, char *value)
 {
 	int		i;
@@ -81,10 +91,8 @@ static char 	*replace(t_env *env, char *str, char *value)
 	if (value)
 	{
 		join = ft_strjoin(prefix, ft_getenv(env, value));
-		free(prefix);
-		free(value);
-		i = ft_strlen(join);
-		rest = ft_substr(str, i, ft_strlen(str));
+		i = (int)offset_calc(str) + ft_strlen(value);
+		rest = ft_substr(str, i + 1, ft_strlen(str));
 		prefix = ft_strjoin(join, rest);
 		return (prefix);
 	}
@@ -92,29 +100,43 @@ static char 	*replace(t_env *env, char *str, char *value)
 	return (NULL);
 }
 
-void	expand(t_env *env, char *str)
+void	expand(t_env *env, char **str)
 {
 	char	*var;
 	char	*r_str;
 	
-	if (!ft_strchr(str, '$'))
+	if (!ft_strchr(*str, '$'))
+	{
+		printf("no more var\n");
 		return ;
-	var = get_var(str);
+	}
+	var = get_var(*str);
 	if (is_in_env(env, var))
 	{
-		r_str = replace(env, str, var);
+		r_str = replace(env, *str, var);
 		if (r_str)
 		{
-			free(str);
-			str = r_str;
+			free(*str);
+			free(var);
+			*str = r_str;
+			printf("found :%s\n", r_str);
 		}
 		else
+		{
+			free(var);
+			printf("r_str is null\n");
 			return ;
+		}
 	}
 	else
+	{
+		printf("Not in env\n");
+		free(var);
 		return ;
+	}
 	expand(env, str);
 }
+
 
 void	var_expansion(t_shell *s, char **args)
 {
@@ -122,7 +144,8 @@ void	var_expansion(t_shell *s, char **args)
 	
 	i = 0;
 	while (args[i])
-		expand(s->env_list, args[i++]);
+		expand(s->env_list, &args[i++]);
+	printf("resultat : %s\n", s->root_node->data.ast_exec.argv[0]);
 	printf("finished!\n");
 	
 }
