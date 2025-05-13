@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 12:55:01 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:34:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_shell
 	char	*line;
 	char	*old_pwd;
 	char	*pwd;
+	t_ast	*current_node;
 	t_ast	*root_node;
 	t_list	*head;
 }			t_shell;
