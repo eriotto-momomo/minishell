@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:54:52 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 14:59:37 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 10:55:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
 # define EXPAND_H
 
-void	var_expansion(t_shell *s, char *str);
+void	var_expansion(t_shell *s, char **args);
 
 #endif
