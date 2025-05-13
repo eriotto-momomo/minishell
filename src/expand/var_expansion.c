@@ -6,19 +6,18 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 14:09:30 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 15:22:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-
-static char 	*get_var(char *s)
+static char	*get_var(char *s)
 {
 	char	*ret;
 	int		start;
 	int		i;
-	
+
 	start = 0;
 	i = 0;
 	while (s[start] && s[start] != '$')
@@ -36,22 +35,11 @@ static char 	*get_var(char *s)
 	return (ret);
 }
 
-int	is_in_env(t_env	*env, char *var)
-{
-	while (env)
-	{
-		if (ft_strncmp(env->name, var, ft_strlen(var)) == 0)
-			return (1);
-		env = env->next;
-	}
-	return (0);
-}
-
 static char	*dup_prefix(char *str)
 {
 	int		i;
 	char	*ret;
-	
+
 	i = 0;
 	while (str[i] && str[i] != '$')
 		i++;
@@ -68,84 +56,65 @@ static char	*dup_prefix(char *str)
 	return (ret);
 }
 
-static size_t	offset_calc(char *str)
-{
-	size_t	offset;
-
-	offset = 0;
-	while (str[offset] && str[offset] != '$')
-		offset++;
-	return (offset);
-}
-
-static char 	*replace(t_env *env, char *str, char *value)
+static char	*replace(t_env *env, char *str, char *value)
 {
 	int		i;
 	char	*prefix;
 	char	*join;
 	char	*rest;
-	
+
 	prefix = dup_prefix(str);
 	if (!prefix)
 		return (NULL);
-	if (value)
-	{
+	if (env)
 		join = ft_strjoin(prefix, ft_getenv(env, value));
-		i = (int)offset_calc(str) + ft_strlen(value);
-		rest = ft_substr(str, i + 1, ft_strlen(str));
-		prefix = ft_strjoin(join, rest);
-		return (prefix);
-	}
+	else
+		join = ft_strjoin(prefix, "");
 	free(prefix);
-	return (NULL);
+	if (!join)
+		return (NULL);
+	i = (int)offset_calc(str) + ft_strlen(value);
+	rest = ft_substr(str, i + 1, ft_strlen(str));
+	if (rest)
+		prefix = ft_strjoin(join, rest);
+	else
+		free(prefix);
+	free(join);
+	free(rest);
+	return (prefix);
 }
 
 void	expand(t_env *env, char **str)
 {
 	char	*var;
 	char	*r_str;
-	
+
 	if (!ft_strchr(*str, '$'))
-	{
-		printf("no more var\n");
 		return ;
-	}
 	var = get_var(*str);
 	if (is_in_env(env, var))
-	{
 		r_str = replace(env, *str, var);
-		if (r_str)
-		{
-			free(*str);
-			free(var);
-			*str = r_str;
-			printf("found :%s\n", r_str);
-		}
-		else
-		{
-			free(var);
-			printf("r_str is null\n");
-			return ;
-		}
+	else
+		r_str = replace(NULL, *str, var);
+	free(var);
+	if (r_str)
+	{
+		free(*str);
+		*str = r_str;
 	}
 	else
-	{
-		printf("Not in env\n");
-		free(var);
 		return ;
-	}
 	expand(env, str);
 }
-
 
 void	var_expansion(t_shell *s, char **args)
 {
 	int	i;
-	
+
 	i = 0;
 	while (args[i])
 		expand(s->env_list, &args[i++]);
 	printf("resultat : %s\n", s->root_node->data.ast_exec.argv[0]);
+	printf("resultat : %s\n", s->root_node->data.ast_exec.argv[1]);
 	printf("finished!\n");
-	
 }
