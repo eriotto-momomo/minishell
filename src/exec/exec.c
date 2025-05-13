@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 13:46:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 23:04:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,44 @@ int	simple_cmd(t_shell *s)
 	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(s));
 	return (ft_extern(s));
+}
+
+int	execution(t_ast *current_node, int fd_in, int fd_out)
+{	
+	int		pipefd[2];
+	pid_t	pid;
+	
+	if (current_node->tag == AST_PIPE)
+	{
+		if (pipe(pipefd) == -1)
+		{
+			perror("pipe");
+			exit(0);
+		}
+		execution(current_node->data.ast_pipe.left, fd_in, pipefd[1]);
+		close(pipefd[1]);
+		execution(current_node->data.ast_pipe.right, pipefd[0], fd_out);
+		close(pipefd[0]);
+	}
+	else if (current_node->tag == AST_EXEC)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			if (fd_in != STDIN_FILENO)
+			{
+				dup2(fd_in, STDIN_FILENO);
+				close(fd_in);
+			}
+			if (fd_out != STDOUT_FILENO)
+			{
+				dup2(fd_out, STDOUT_FILENO);
+				close(fd_out);
+			}
+			cmd_execution(current_node->data.ast_exec.argv);
+		}
+		else if (pid > 0)
+			waitpid(pid, NULL, 0);
+	}
+	return (0);
 }
