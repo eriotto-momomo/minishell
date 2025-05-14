@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/14 08:18:01 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/14 09:19:40 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,23 @@ char	*pathfinder(char *cmd)
 	}
 	ft_free_array(path, ft_count_tab(path, 0), 'c');
 	return (NULL);
+}
+
+int	cmd_execution(char **argv)
+{
+	char	*cmd_path;
+	
+	cmd_path = pathfinder(argv[0]);
+	if (!cmd_path)
+	{
+		perror("Command not found");
+		exit(127);
+	}
+	if (execve(cmd_path, argv, NULL) == -1)
+	{
+		w_free((void **)&cmd_path);
+		perror("Command not executable");
+		exit(126);
+	}
+	return (0);
 }
