@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
+#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/09 12:03:31 by timmi            ###   ########.fr        #
+#    Updated: 2025/05/14 08:17:42 by c4v3d            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
-			$(CFILES_PATH)/exec/pipe.c\
+			$(CFILES_PATH)/exec/exec_utils.c\
 			$(CFILES_PATH)/builtin/ft_echo.c\
 			$(CFILES_PATH)/builtin/ft_cd.c\
 			$(CFILES_PATH)/builtin/ft_pwd.c\
