@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 23:09:21 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/14 10:12:11 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ t_ast	*parse_redir(t_list **tok, t_ast *left)
 			&& (*tok)->type != APP_OUT_REDIR && (*tok)->type != HERE_DOC)
 			return (left);
 		if ((*tok)->type == IN_REDIR)
-			left = add_redir_node(left, (*tok)->next->data, 1);
+			left = add_redir_node(left, (*tok)->next->data, IN_REDIR);
 		else if ((*tok)->type == OUT_REDIR)
-			left = add_redir_node(left, (*tok)->next->data, 2);
+			left = add_redir_node(left, (*tok)->next->data, OUT_REDIR);
 		else if ((*tok)->type == APP_OUT_REDIR)
-			left = add_redir_node(left, (*tok)->next->data, 3);
+			left = add_redir_node(left, (*tok)->next->data, APP_OUT_REDIR);
 		else if ((*tok)->type == HERE_DOC)
-			left = add_redir_node(left, (*tok)->next->data, 4);
+			left = add_redir_node(left, (*tok)->next->data, HERE_DOC);
 	}
 	get_next_token(tok);
 	get_next_token(tok);
