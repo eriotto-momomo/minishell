@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/14 10:10:24 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/14 10:35:28 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,17 @@ static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 
 int	handle_redir(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 {
-	if (current_node->data.ast_redir.mode == )
+	if (current_node->data.ast_redir.mode == IN_REDIR)
+	{
+
+	}
+	if (current_node->data.ast_redir.mode == OUT_REDIR)
+		// Do something
+	if (current_node->data.ast_redir.mode == APP_OUT_REDIR)
+		// Do something
+	if (current_node->data.ast_redir.mode == HERE_DOC)
+		
+	
 }
 
 int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
