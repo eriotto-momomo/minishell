@@ -6,80 +6,96 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 13:46:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/15 09:14:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*pathfinder(char *cmd)
+static int	ft_external(t_ast *current_node, int fd_in, int fd_out)
 {
-	int		i;
-	char	**path;
-	char	*full_path;
-	char	*temp;
-
-	i = 0;
-	path = ft_split(getenv("PATH"), ':');
-	while (path[i])
-	{
-		temp = ft_strjoin(path[i], "/");
-		full_path = ft_strjoin(temp, cmd);
-		free(temp);
-		if (access(full_path, F_OK) == 0)
-		{
-			ft_free_array(path, ft_count_tab(path, 0), 'c');
-			return (full_path);
-		}
-		free (full_path);
-		i++;
-	}
-	ft_free_array(path, ft_count_tab(path, 0), 'c');
-	return (NULL);
-}
-
-void	cmd_execution(char **argv)
-{
-	char	*cmd_path;
+	pid_t pid;
 	
-	cmd_path = pathfinder(argv[0]);
-	if (!cmd_path)
+	pid = fork();
+	if (pid == 0)
 	{
-		perror("Command not found");
-		exit(127);
+		handle_pipe(fd_in, fd_out);
+		cmd_execution(current_node->data.ast_exec.argv);
 	}
-	if (execve(cmd_path, argv, NULL) == -1)
-	{
-		w_free((void **)&cmd_path);
-		perror("Command not executable");
-		exit(126);
-	}
+	if (pid > 0)
+		waitpid(pid, NULL, 0);
+	return (0);
 }
 
-int	ft_extern(t_shell *s)
+static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 {
-	pid_t	pid1;
-
-	pid1 = fork();
-	if (pid1 == 0)
-		cmd_execution(s->root_node->data.ast_exec.argv);
-	waitpid(pid1, NULL, 0);
-	return (1);
-}
-
-int	simple_cmd(t_shell *s)
-{
-	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], CD, ft_strlen(CD)) == 0)
+	if (ft_strncmp(current_node->data.ast_exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s));
-	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
-		return (ft_echo(s, 0));
-	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], PWD, ft_strlen(PWD)) == 0)
-		return (ft_pwd(s, 0));
-	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], ENV, ft_strlen(ENV)) == 0)
-		return (ft_env(s, 0));
-	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
+	if (ft_strncmp(current_node->data.ast_exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
+		return (ft_echo(s, fd_out));
+	if (ft_strncmp(current_node->data.ast_exec.argv[0], PWD, ft_strlen(PWD)) == 0)
+		return (ft_pwd(s, fd_out));
+	if (ft_strncmp(current_node->data.ast_exec.argv[0], ENV, ft_strlen(ENV)) == 0)
+		return (ft_env(s, fd_out));
+	if (ft_strncmp(current_node->data.ast_exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
 		return (ft_unset(s));
-	if (ft_strncmp(s->root_node->data.ast_exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
+	if (ft_strncmp(current_node->data.ast_exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(s));
-	return (ft_extern(s));
+	return (ft_external(current_node, fd_in, fd_out));
 }
+
+int	get_fd(char *path, int mode)
+{
+	int	fd;
+
+	if (mode)
+		fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd = open(path, O_RDONLY);
+	return (fd);
+}
+
+// int	handle_redir(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
+// {
+// 	int	fd;
+// 	if (current_node->data.ast_redir.mode == IN_REDIR)
+// 	{
+// 		fd = get_fd(current_node->data.ast_redir.filename, 0);
+// 		if (fd == -1)
+// 		{
+// 			perror("open failed");
+// 			exit(0);
+// 		}
+		
+// 	}
+// 	if (current_node->data.ast_redir.mode == OUT_REDIR)
+// 		// Do something
+// 	if (current_node->data.ast_redir.mode == APP_OUT_REDIR)
+// 		// Do something
+// 	if (current_node->data.ast_redir.mode == HERE_DOC)
+// 	return (fd);
+// }
+
+int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
+{	
+	int		pipefd[2];
+	
+	if ((*current_node)->tag == AST_PIPE)
+	{
+		if (pipe(pipefd) == -1)
+		{
+			perror("pipe");
+			exit(0);
+		}
+		execution(s, &((*current_node)->data.ast_pipe.left), fd_in, pipefd[1]);
+		close(pipefd[1]);
+		execution(s, &((*current_node)->data.ast_pipe.right), pipefd[0], fd_out);
+		close(pipefd[0]);
+	}
+	// else if ((*current_node)->tag == AST_REDIR)
+	// 	handle_redir(s, (*current_node)->data.ast_redir, fd_in, fd_out);
+	else if ((*current_node)->tag == AST_EXEC)
+		handle_exec(s, (*current_node), fd_in, fd_out);
+	return (0);
+}
+
