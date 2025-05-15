@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/12 11:33:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 12:23:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int		simple_cmd(t_shell *s);
 int		ft_extern(t_shell *s);
 
 // redir.c
-void	test_redir(t_shell *s);
+int	test_redir(t_ast *node);
 
 #endif

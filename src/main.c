@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 09:40:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 12:27:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void prompt_loop(t_shell *s)
 			lexer(s);
 			parser(s);
 			//simple_cmd(s); //💥 CRASH AVEC REDIR
-			test_redir(s); //⚠️ WIP
+			test_redir(s->root_node); //⚠️ WIP
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
