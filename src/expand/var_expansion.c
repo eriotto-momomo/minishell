@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 16:15:24 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/15 09:41:08 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*get_var(char *s)
 	if (!ret)
 		return (NULL);
 	i = 0;
-	while (s[start] && !ft_is_space(s[start]) && !is_sep(s[start]))
+	while (s[start] && !ft_isspace(s[start]) && !is_sep(s[start]))
 		ret[i++] = s[start++];
 	ret[i] = '\0';
 	return (ret);
