@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 12:55:01 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/14 10:35:52 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ typedef struct s_ast t_ast;
 
 typedef union	u_data
 {
-	struct { t_ast *parent; t_ast *left; t_ast *right; } ast_pipe;
-	struct { t_ast *parent; t_ast *left; char *filename; int mode; } ast_redir;
-	struct { t_ast *parent; int argc; char **argv; } ast_exec;
+	struct { t_ast *left; t_ast *right; } ast_pipe;
+	struct { t_ast *left; char *filename; int mode; } ast_redir;
+	struct { int argc; char **argv; } ast_exec;
 }				t_data;
 
 typedef struct	s_ast
@@ -85,6 +85,7 @@ typedef struct s_shell
 	char	*line;
 	char	*old_pwd;
 	char	*pwd;
+	t_ast	*current_node;
 	t_ast	*root_node;
 	t_list	*head;
 }			t_shell;
