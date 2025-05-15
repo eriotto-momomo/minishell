@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/08 10:37:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:40:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void print_preorder(t_ast *node)
 
 	if (node->tag != AST_EXEC)
 	{
-		print_preorder(node->data.ast_pipe.right);
 		print_preorder(node->data.ast_pipe.left);
+		print_preorder(node->data.ast_pipe.right);
 	}
 	else
 		return;
