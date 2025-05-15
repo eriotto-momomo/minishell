@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 18:21:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:15:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parser(t_shell *s)
 
 	temp = s->head;
 	if (!syntax_analysis(temp))
-		return ;
+		terminate_shell(s);
 	s->root_node = build_ast(&temp);
 	//printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
 	//print_node(s->root_node); // PRINT DEBUGGING 📠
