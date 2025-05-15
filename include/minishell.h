@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/10 16:59:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:11:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <string.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
-//#include <linux/limits.h> //⚠️ commenté pour MacOS
+#include <linux/limits.h>
 #include "./init.h"
 #include "./struct.h"
 #include "./lexer.h"
