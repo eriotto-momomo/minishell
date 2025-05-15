@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+         #
+#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/10 17:13:25 by emonacho         ###   ########.fr        #
+#    Updated: 2025/05/15 17:00:26 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
-			$(CFILES_PATH)/exec/pipe.c\
+			$(CFILES_PATH)/exec/exec_utils.c\
 			$(CFILES_PATH)/exec/redir.c\
 			$(CFILES_PATH)/builtin/ft_echo.c\
 			$(CFILES_PATH)/builtin/ft_cd.c\

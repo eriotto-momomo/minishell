@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/15 11:36:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:01:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	parser(t_shell *s)
 	if (!syntax_analysis(temp))
 		return ;
 	s->root_node = build_ast(&temp);
-	printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
-	print_node(s->root_node); // PRINT DEBUGGING 📠
-	printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
+	//printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
+	//print_node(s->root_node); // PRINT DEBUGGING 📠
+	//printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
 }
 
 void print_preorder(t_ast *node)

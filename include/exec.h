@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 12:23:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:12:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 #include <sys/wait.h>
 
 // exec.c
-void	cmd_execution(char **argv);
-void	in_pipe(int *p, t_ast *node);
-int		simple_cmd(t_shell *s);
-int		ft_extern(t_shell *s);
+int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out);
+int	cmd_execution(char **argv);
+
+// exec_utils.c
+char	*pathfinder(char *cmd);
+void	handle_pipe(int	fd_in, int fd_out);
 
 // redir.c
-int	test_redir(t_ast *node);
+int		get_fd(t_ast *node);
 
 #endif
