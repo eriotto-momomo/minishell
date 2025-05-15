@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 18:21:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:18:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ast	*parse_pipe(t_list **tok)
 		get_next_token(tok);				// consomme '|'
 		right = parse_exec(tok);			// parse la commande à gauche du pipe
 		left = add_pipe_node(left, right);	// construit node: gauche = left, droite = right
-		//print_node(left); // PRINT DEBUGGING 📠
+		print_node(left); // PRINT DEBUGGING 📠
 	}
 	return (left);
 }
@@ -65,14 +65,14 @@ t_ast	*parse_redir(t_list **tok, t_ast *left)
 		if ((*tok)->type != IN_REDIR && (*tok)->type != OUT_REDIR
 			&& (*tok)->type != APP_OUT_REDIR && (*tok)->type != HERE_DOC)
 			return (left);
-		if ((*tok)->type == IN_REDIR)
-			left = add_redir_node(left, (*tok)->next->data, 1);
-		else if ((*tok)->type == OUT_REDIR)
-			left = add_redir_node(left, (*tok)->next->data, 2);
+		if ((*tok)->type == OUT_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, OUT_REDIR);
 		else if ((*tok)->type == APP_OUT_REDIR)
-			left = add_redir_node(left, (*tok)->next->data, 3);
+			left = add_redir_node(left, (*tok)->next->data, APP_OUT_REDIR);
+		else if ((*tok)->type == IN_REDIR)
+			left = add_redir_node(left, (*tok)->next->data, IN_REDIR);
 		else if ((*tok)->type == HERE_DOC)
-			left = add_redir_node(left, (*tok)->next->data, 4);
+			left = add_redir_node(left, (*tok)->next->data, HERE_DOC);
 	}
 	get_next_token(tok);
 	get_next_token(tok);
@@ -90,6 +90,6 @@ t_ast	*parse_exec(t_list **tok)
 	root_ptr = parse_redir(tok, root_ptr);
 	if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
 		root_ptr = parse_redir(tok, root_ptr);
-	//print_node(root_ptr); // PRINT DEBUGGING 📠
+	print_node(root_ptr); // PRINT DEBUGGING 📠
 	return (root_ptr);
 }
