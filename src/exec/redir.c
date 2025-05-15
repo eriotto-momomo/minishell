@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/12 11:33:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:15:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ int	append_cmd_output(t_shell *s, char *output_path)
 	printf("Redirect OUTPUT in %sAPPEND%s mode\n", Y, RST);
 	(void)s;
 	(void)output_path;
+	int	output;
+
+	output = open(output_path, O_CREAT | O_WRONLY | O_APPEND);
+	if (output < 0)
+	{
+		errno = ENOENT;
+		return (ft_puterror("append_cmd_output", strerror(errno)));
+	}
 
 	return (1);
 }
@@ -46,6 +54,14 @@ int	trunc_cmd_output(t_shell *s, char *output_path)
 	printf("Redirect OUTPUT in %sCREATE/TRUNCATE%s mode\n", Y, RST);
 	(void)s;
 	(void)output_path;
+	int	output;
+
+	output = open(output_path, O_CREAT | O_WRONLY | O_TRUNC);
+	if (output < 0)
+	{
+		errno = ENOENT;
+		return (ft_puterror("trunc_cmd_output", strerror(errno)));
+	}
 
 	return (1);
 }
