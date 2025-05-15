@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/13 18:22:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:38:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void initialize_struct(t_shell *s, char	**envp)
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
 		terminate_shell(s);
+	s->err = 0;
 	s->prompt = NULL;
-	s->cmd_count = 0;
 	s->line = NULL;
 	s->old_pwd = NULL;
 	s->pwd = save_cwd();
