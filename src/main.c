@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 14:58:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:03:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void initialize_struct(t_shell *s, char	**envp)
 	s->head = NULL;
 	s->root_node = NULL;
 	s->current_node = NULL;
+	s->heredoc_path = NULL;
 }
 
 
@@ -79,7 +80,7 @@ void prompt_loop(t_shell *s)
 			free_ast(&(s->root_node));
 			free_list(&(s->head));
 		}
-		free(s->line);
+		w_free((void **)&s->line);
 	}
 	free(s->sig);
 }

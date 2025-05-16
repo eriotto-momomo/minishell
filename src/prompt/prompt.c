@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 13:22:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:00:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	reset_prompt(t_shell *s, int mode)
+{
+	(void)s;
+
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	if (mode == RESET_PROMPT)
+		rl_redisplay();
+	if (mode == HEREDOC_PROMPT)
+		return ;
+}
 
 static void	trim_prompt(char *str)
 {
