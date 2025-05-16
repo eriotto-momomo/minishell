@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_utils.c                                       :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/16 14:11:28 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/16 16:24:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_check(t_shell *s)
+void init_shell(t_shell *s, char	**envp)
 {
-	if (ft_strnprefix(s->head->data, "exit", ft_strlen("exit")))
+	s->env_list = table_to_ll(envp);
+	if (!s->env_list)
 		terminate_shell(s);
-}
-
-void terminate_shell(t_shell *s)
-{
-	if (s->head)
-		free_list(&(s->head));
-	if (s->root_node)
-		free_ast(&(s->root_node));
-	if (s->env_list)
-		free_env(&(s->env_list));
-	w_free((void **)&(s->pwd));
-	w_free((void **)&(s->old_pwd));
-	w_free((void **)&(s->prompt));
-	printf("Exiting minishell !\nSee you next time !\n");
-	exit(0);
+	s->ret_value = 0;
+	s->prompt = NULL;
+	s->line = NULL;
+	s->old_pwd = NULL;
+	s->pwd = save_cwd();
+	s->old_pwd = save_cwd();
+	s->head = NULL;
+	s->root_node = NULL;
+	s->current_node = NULL;
 }
