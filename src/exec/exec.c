@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:31:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:05:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	ft_external(t_ast *current_node, int fd_in, int fd_out)
+static int	ft_external(t_env *env, t_ast *current_node, int fd_in, int fd_out)
 {
 	pid_t	pid;
 	int		ret;
 
 	pid = fork();
+	
 	if (pid == 0)
 	{
 		handle_pipe(fd_in, fd_out);
-		ret = cmd_execution(current_node->data.ast_exec.argv);
+		ret = cmd_execution(env, current_node->data.ast_exec.argv);
 	}
 	else
 		waitpid(pid, NULL, 0);
@@ -42,7 +43,7 @@ static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 		return (ft_unset(s));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(s));
-	return (ft_external(current_node, fd_in, fd_out));
+	return (ft_external(s->env_list, current_node, fd_in, fd_out));
 }
 
 static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
