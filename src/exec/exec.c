@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 17:38:05 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:03:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 	// 	handle_redir(s, (*current_node)->data.ast_redir, fd_in, fd_out);
 	
 	else if ((*current_node)->tag == AST_EXEC)
+	{
+		var_expansion(s, (*current_node)->data.ast_exec.argv);
 		handle_exec(s, (*current_node), fd_in, fd_out);
+	}
 	return (0);
 }
 
