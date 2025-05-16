@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/16 20:08:37 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 21:29:32 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_pipe(int	fd_in, int fd_out)
 	}
 }
 
-static char	*pathfinder(t_env *env, char *cmd)
+char	*pathfinder(t_env *env, char *cmd)
 {
 	int		i;
 	char	**path;
@@ -42,14 +42,13 @@ static char	*pathfinder(t_env *env, char *cmd)
 		free(temp);
 		if (access(full_path, F_OK) == 0)
 		{
-			// ft_free_array(path, ft_count_tab(path, 0), 'c');
-			printf("%s\n", full_path);
+			// ft_free_array(path, ft_count_tab(path, 0), 'c'); PROBLEM
 			return (full_path);
 		}
 		free (full_path);
 		i++;
 	}
-	ft_free_array(path, ft_count_tab(path, 0), 'c');
+	// ft_free_array(path, ft_count_tab(path, 0), 'c');
 	return (NULL);
 }
 
@@ -57,7 +56,6 @@ int	cmd_execution(t_env *env, char **argv)
 {
 	char	*cmd_path;
 	
-	printf("%s\n", argv[0]);
 	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{
