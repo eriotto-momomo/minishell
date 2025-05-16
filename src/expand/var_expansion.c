@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 09:50:34 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:36:34 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,4 @@ void	var_expansion(t_shell *s, char **args)
 	{
 		expand(s->env_list, &args[i++]);
 	}
-	printf("resultat : %s\n", s->root_node->data.ast_exec.argv[0]);
-	printf("resultat : %s\n", s->root_node->data.ast_exec.argv[1]);
-	printf("finished!\n");
 }
