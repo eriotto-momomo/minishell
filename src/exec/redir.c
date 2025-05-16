@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 19:03:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:29:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	put_in_heredoc(t_shell *s, int fd)
 	if (!append_line)
 		return (0);
 	ft_putstr_fd(append_line, fd);
-	w_free((void **)&append_line);
+	free(append_line);
 	return (1);
 }
 
@@ -56,14 +56,13 @@ int	handle_heredoc(t_shell *s)
 		{
 			if (is_delimiter(s->line, s->root_node->data.ast_redir.filename))
 				break ;
-			expand(s->env_list, s->line); // 🚩
+			expand(s->env_list, &(s->line)); // 🚩
 			if (!put_in_heredoc(s, fd))
 				return (-1);
 		}
 		w_free((void **)&s->line);
 	}
 	w_free((void **)&s->line);
-	return (1);
 	return (fd);
 }
 // 🚩 tmp.file PATH sera 'unlink' apres l'appel des REDIR 🚩
