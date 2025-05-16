@@ -3,55 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/01 18:34:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:03:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	syntax_checker(t_list *tok)
+static int	quote_check(t_list *tok)
 {
-	int		err;
-	t_list	*temp;
-
-	err = 0;
-	temp = tok;
-	if (temp->type == PIPE)
+	if (tok->data[0] == '\'' || tok->data[0] == '\"')
 	{
-		if (!temp->prev || !temp->next || temp->prev->type != WORD)
-			err = 1; // minishell: syntax error near unexpected tok `|\n
-		else if (temp->next->type == PIPE)
-			err = 2; // minishell: Does not handle `||\n
+		if (tok->data[0] == '\'' && tok->data[ft_strlen(tok->data)] != '\'')
+			return (UNMATCHED_QUOTE);
+		else if (tok->data[0] == '\"' && tok->data[ft_strlen(tok->data)] != '\"')
+			return (UNMATCHED_QUOTE);
 	}
-	else if (temp->type == OUT_REDIR || temp->type == IN_REDIR
-		|| temp->type == HERE_DOC || temp->type == APP_OUT_REDIR)
-	{
-		if (!temp->next)
-			err = 3; // minishell: syntax error near unexpected tok `newline'\n
-	}
-	return (err);
+	return (0);
 }
 
-int	syntax_analysis(t_list *tok)
+static int	syntax_checker(t_list *tok)
 {
-	t_list	*temp;
+	if (tok->data[0] == '\"' || tok->data[0] == '\'')
+		return (quote_check(tok));
+	if (tok->type == OUT_REDIR || tok->type == IN_REDIR
+		|| tok->type == HERE_DOC || tok->type == APP_OUT_REDIR)
+	{
+		if (!tok->next)
+			return (UNEXPECTED_TOK);
+	}
+	if (tok->type == PIPE)
+	{
+		if (!tok->prev || !tok->next || tok->prev->type != WORD)
+			return (UNEXPECTED_TOK);
+		else if (tok->next->type == PIPE)
+			return (UNEXPECTED_TOK);
+	}
+	return (0);
+}
+
+int	syntax_analysis(t_list *current_tok)
+{
 	int		err;
 
-	temp = tok;
-	while (temp)
+	while (current_tok)
 	{
-		err = syntax_checker(temp);
+		err = syntax_checker(current_tok);
 		if (err)
 		{
-			if (!temp->next)
-				printf("minishell: syntax error near unexpected token `newline'\n");
-			printf("%sSyntax error n %d\n%s", R, err, RST);
-			return (0);
+			print_error(err);
+			return (1);
 		}
-		temp = temp->next;
+		current_tok = current_tok->next;
 	}
-	return (1);
+	return (0);
 }

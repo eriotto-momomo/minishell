@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/09 11:54:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:54:32 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ size_t	env_len(t_env *h_env);
 int is_sep(char c);
 
 // exit_utils.c
-void exit_check(t_shell *shell);
-void terminate_shell(t_shell *minishell);
+void exit_check(t_shell *s);
+void terminate_shell(t_shell *s);
 
 // free_ast.c
 void	free_pipe_node(t_ast *node);
