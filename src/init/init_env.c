@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:26:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 12:15:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/13 09:25:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_name(char	*s)
 
 	i = 0;
 	len = 0;
-	while (s[len] != '=')
+	while (s[len] && s[len] != '=')
 		len++;
 	name = malloc((len + 1) *  sizeof(char));
 	if (!name)
