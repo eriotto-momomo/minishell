@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:03:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:17:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_fd(char *path, int mode)
 	return (fd);
 }
 
-int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
+static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {	
 	int		pipefd[2];
 	
@@ -67,9 +67,9 @@ int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 			perror("pipe");
 			exit(0);
 		}
-		execution(s, &((*current_node)->data.ast_pipe.left), fd_in, pipefd[1]);
+		preorder_exec(s, &((*current_node)->data.ast_pipe.left), fd_in, pipefd[1]);
 		close(pipefd[1]);
-		execution(s, &((*current_node)->data.ast_pipe.right), pipefd[0], fd_out);
+		preorder_exec(s, &((*current_node)->data.ast_pipe.right), pipefd[0], fd_out);
 		close(pipefd[0]);
 	}
 	// else if ((*current_node)->tag == AST_REDIR)
@@ -83,3 +83,11 @@ int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 	return (0);
 }
 
+void	execution(t_shell *s)
+{
+	int	err;
+
+	err = preorder_exec(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
+	s->ret_value = err;		
+	free_ast(&(s->root_node));
+}
