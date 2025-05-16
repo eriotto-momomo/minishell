@@ -6,9 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 14:18:44 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:37:29 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "../include/minishell.h"
 
@@ -17,6 +19,7 @@ void	process_input(t_shell *s)
 	lexer(s);
 	if (parser(s))
 		return ;
+	execution(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
 	free_ast(&(s->root_node));
 }
 
@@ -28,7 +31,7 @@ void prompt_loop(t_shell *s)
 	while (loop)
 	{
 		s->line = readline(s->prompt);
-		if (s->line && *s->line) // need to add a check to not print strings containing only spaces
+		if (s->line && *s->line)
 		{
 			add_history(s->line);
 			process_input(s);

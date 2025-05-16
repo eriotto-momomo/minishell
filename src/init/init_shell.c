@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:58:01 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:38:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void init_shell(t_shell *s, char	**envp)
 	s->old_pwd = save_cwd();
 	s->head = NULL;
 	s->root_node = NULL;
+	s->current_node = NULL;
 }
