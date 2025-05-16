@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:23:21 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:58:02 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct	s_env
 typedef struct s_shell
 {
 	t_env	*env_list;
-	int		err;
 	char	*prompt;
 	char	*line;
 	char	*old_pwd;

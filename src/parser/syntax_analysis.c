@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:15:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:03:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	syntax_analysis(t_list *current_tok)
 	{
 		err = syntax_checker(current_tok);
 		if (err)
-			return (err);
+		{
+			print_error(err);
+			return (1);
+		}
 		current_tok = current_tok->next;
 	}
 	return (0);

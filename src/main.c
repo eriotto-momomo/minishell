@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:15:27 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:18:44 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	process_input(t_shell *s)
 {
 	lexer(s);
-	parser(s);
+	if (parser(s))
+		return ;
+	free_ast(&(s->root_node));
 }
 
 void prompt_loop(t_shell *s)
