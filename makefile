@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/09 12:03:31 by timmi            ###   ########.fr        #
+#    Updated: 2025/05/16 13:07:53 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/builtin/ft_unset.c\
 			$(CFILES_PATH)/builtin/ft_export.c\
 			$(CFILES_PATH)/init/init_env.c\
-
+			$(CFILES_PATH)/init/init_shell.c\
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 

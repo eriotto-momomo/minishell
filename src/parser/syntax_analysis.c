@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 16:14:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:15:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	quote_check(t_list *tok)
 	if (tok->data[0] == '\'' || tok->data[0] == '\"')
 	{
 		if (tok->data[0] == '\'' && tok->data[ft_strlen(tok->data)] != '\'')
-			return (1);
+			return (UNMATCHED_QUOTE);
 		else if (tok->data[0] == '\"' && tok->data[ft_strlen(tok->data)] != '\"')
-			return (1);
+			return (UNMATCHED_QUOTE);
 	}
 	return (0);
 }
@@ -27,12 +27,7 @@ static int	quote_check(t_list *tok)
 static int	syntax_checker(t_list *tok)
 {
 	if (tok->data[0] == '\"' || tok->data[0] == '\'')
-	{
-		if (quote_check(tok))
-			return (UNMATCHED_QUOTE);
-		else
-			return (0);
-	}
+		return (quote_check(tok));
 	if (tok->type == OUT_REDIR || tok->type == IN_REDIR
 		|| tok->type == HERE_DOC || tok->type == APP_OUT_REDIR)
 	{
@@ -44,7 +39,7 @@ static int	syntax_checker(t_list *tok)
 		if (!tok->prev || !tok->next || tok->prev->type != WORD)
 			return (UNEXPECTED_TOK);
 		else if (tok->next->type == PIPE)
-			return (2);
+			return (UNEXPECTED_TOK);
 	}
 	return (0);
 }
@@ -60,5 +55,5 @@ int	syntax_analysis(t_list *current_tok)
 			return (err);
 		current_tok = current_tok->next;
 	}
-	return (1);
+	return (0);
 }
