@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 18:21:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:05:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	free_pipe_node(t_ast *node)
 {
-	if (!node->data.ast_pipe.right || !node->data.ast_pipe.left)
-		ft_puterror("free_pipe_node", "trying to free an empty node"); // PRINT DEBUGGING 📠
 	if (node->data.ast_pipe.left)
 	{
 		if (node->data.ast_pipe.left->tag == AST_EXEC)
@@ -40,8 +38,6 @@ void	free_pipe_node(t_ast *node)
 
 void	free_redir_node(t_ast *node)
 {
-	if (!node->data.ast_redir.left)
-		ft_puterror("free_redir_node", "trying to free an empty node"); // PRINT DEBUGGING 📠
 	if (node->data.ast_redir.left)
 	{
 		if (node->data.ast_redir.left->tag == AST_EXEC)
@@ -61,9 +57,6 @@ void	free_exec_node(t_ast *node)
 {
 	int	i;
 
-	if (!(node->data.ast_exec.argv && node->data.ast_exec.argv[0]
-		&& node->data.ast_exec.argc > 0))
-		ft_puterror("free_exec_node", "trying to free an empty node"); // PRINT DEBUGGING 📠
 	if (node->data.ast_exec.argv && node->data.ast_exec.argv[0]
 			&& node->data.ast_exec.argc > 0)
 	{

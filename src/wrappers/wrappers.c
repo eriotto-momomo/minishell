@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   wrappers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 14:54:52 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:24:57 by emonacho         ###   ########.fr       */
+/*   Created: 2025/05/09 13:00:59 by emonacho          #+#    #+#             */
+/*   Updated: 2025/05/15 14:55:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
+#include "../../include/minishell.h"
 
-void	var_expansion(t_shell *s, char **args);
+char	*w_readline(const char *prompt, t_shell *s)
+{
+	(void)s;
+	char	*line_read;
 
-//UTILS
-int		is_in_env(t_env	*env, char *var);
-size_t	offset_calc(char *str);
-void	expand(t_env *env, char **str);
-
-#endif
+	line_read = readline(prompt);
+	printf("w_readline | %sline read!%s\n", P, RST);
+	if (!line_read)
+		return (NULL);
+	return (line_read);
+}

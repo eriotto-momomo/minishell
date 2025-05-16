@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/01 18:37:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:17:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ t_ast	*add_pipe_node(t_ast *left, t_ast *right)
 	return (node);
 }
 
-// '<'	fd = 0, O_RDONLY						-> mode = 1 (redir input)(reading)
-// '>'	fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 2 (redir output)(creating / overwriting)
-// '>>'	fd = 1, O_WRONLY | O_CREATE				-> mode = 3 (redir output)(appending)
+
+// '>'	fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 1 (redir output)(creating / overwriting)
+// '>>'	fd = 1, O_WRONLY | O_CREATE				-> mode = 2 (redir output)(appending)
+// '<'	fd = 0, O_RDONLY						-> mode = 3 (redir input)(reading)
 // '<<'	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
 t_ast	*add_redir_node(t_ast *left, char *filename, int mode)
 {
@@ -68,7 +69,7 @@ t_ast	*add_exec_node(t_list **tok)
 		else
 			get_next_token(tok);
 	}
-	node->data.ast_exec.argv[node->data.ast_exec.argc] = '\0';
+	node->data.ast_exec.argv[node->data.ast_exec.argc] = "\0";
 	return (node);
 }
 
