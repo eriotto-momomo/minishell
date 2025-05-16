@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:14:36 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/09 14:54:52 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/13 15:20:06 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-#define EXEC_H
+#ifndef EXPAND_H
+# define EXPAND_H
 
-#include <sys/types.h>
-#include <sys/wait.h>
+void	var_expansion(t_shell *s, char **args);
 
-void	execution(t_shell *s);
-int		cmd_execution(char **argv);
-//utils
-char	*pathfinder(char *cmd);
-void	handle_pipe(int	fd_in, int fd_out);
+//UTILS
+int	is_in_env(t_env	*env, char *var);
+size_t	offset_calc(char *str);
 
 #endif

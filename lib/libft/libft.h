@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 13:57:41 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/15 09:41:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ int ft_tolower(int c);
 int ft_toupper(int c);
 
 // libft custom
-int ft_atoi_safe(const char *str, int *error);
-int ft_isspace(char c);
-void ft_puterror(char *error_location, char *error_msg);
-char *ft_strnprefix(char *str, char *prefix, size_t len);
+int		ft_atoi_safe(const char *str, int *error);
+int		ft_isspace(char c);
+void	ft_puterror(char *error_location, char *error_msg);
+char	*ft_strnprefix(char *str, char *prefix, size_t len);
 void	*ft_free_array(void *array, int size, char mode);
 size_t	ft_count_tab(void *tab, int mode);
 
