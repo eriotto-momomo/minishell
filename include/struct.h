@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 14:38:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:23:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ typedef enum	e_tag
 	AST_EXEC
 } 				t_tag;
 
-typedef enum e_syntax_errors
+typedef enum e_errors_return
 {
 	UNEXPECTED_TOK,
 	UNMATCHED_QUOTE,
 	
-}				t_s_error;
+}				t_errors;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
 typedef struct s_ast t_ast;
