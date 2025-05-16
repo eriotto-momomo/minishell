@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 21:27:42 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:05:08 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/16 16:24:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#include "../../include/minishell.h"
 
-// ENV
-t_env	*table_to_ll(char **env);
-char	*get_value(char *s);
-char	*get_name(char	*s);
-char	**ll_to_table(t_env *h_env);
-
-// Struct
-void init_shell(t_shell *s, char	**envp);
-#endif
+void init_shell(t_shell *s, char	**envp)
+{
+	s->env_list = table_to_ll(envp);
+	if (!s->env_list)
+		terminate_shell(s);
+	s->ret_value = 0;
+	s->prompt = NULL;
+	s->line = NULL;
+	s->old_pwd = NULL;
+	s->pwd = save_cwd();
+	s->old_pwd = save_cwd();
+	s->head = NULL;
+	s->root_node = NULL;
+	s->current_node = NULL;
+}

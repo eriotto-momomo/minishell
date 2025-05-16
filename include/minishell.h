@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 22:06:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:48:53 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <linux/limits.h>
+# include "./error.h"
 # include "./struct.h"
 # include "./lexer.h"
 # include "./parser.h"

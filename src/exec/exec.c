@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 09:14:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:16:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 static int	ft_external(t_ast *current_node, int fd_in, int fd_out)
 {
-	pid_t pid;
+	pid_t	pid;
+	int		ret;
 	
 	pid = fork();
 	if (pid == 0)
 	{
 		handle_pipe(fd_in, fd_out);
-		cmd_execution(current_node->data.ast_exec.argv);
+		ret = cmd_execution(current_node->data.ast_exec.argv);
 	}
-	if (pid > 0)
+	else
 		waitpid(pid, NULL, 0);
-	return (0);
+	return (ret);
 }
 
 static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
@@ -55,27 +56,6 @@ int	get_fd(char *path, int mode)
 	return (fd);
 }
 
-// int	handle_redir(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
-// {
-// 	int	fd;
-// 	if (current_node->data.ast_redir.mode == IN_REDIR)
-// 	{
-// 		fd = get_fd(current_node->data.ast_redir.filename, 0);
-// 		if (fd == -1)
-// 		{
-// 			perror("open failed");
-// 			exit(0);
-// 		}
-		
-// 	}
-// 	if (current_node->data.ast_redir.mode == OUT_REDIR)
-// 		// Do something
-// 	if (current_node->data.ast_redir.mode == APP_OUT_REDIR)
-// 		// Do something
-// 	if (current_node->data.ast_redir.mode == HERE_DOC)
-// 	return (fd);
-// }
-
 int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {	
 	int		pipefd[2];
@@ -94,6 +74,7 @@ int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 	}
 	// else if ((*current_node)->tag == AST_REDIR)
 	// 	handle_redir(s, (*current_node)->data.ast_redir, fd_in, fd_out);
+	
 	else if ((*current_node)->tag == AST_EXEC)
 		handle_exec(s, (*current_node), fd_in, fd_out);
 	return (0);
