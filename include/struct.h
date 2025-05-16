@@ -6,12 +6,13 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 17:42:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:20:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
 
 enum	e_mode
 {
@@ -38,15 +39,6 @@ typedef struct	s_signals
 	int	signal;
 }	t_sig;
 
-/*
-Attribution d'une valeur constante pour chaque token
-- WORD =	0
-- IN_REDIR = 1		-> '<'
-- OUT_REDIR = 2		-> '>'
-- APP_OUT_REDIR = 3	-> '>>'
-- HERE_DOC = 4		-> '<<'
-- PIPE = 5
-*/
 typedef enum e_types
 {
 	WORD,
@@ -63,6 +55,13 @@ typedef enum	e_tag
 	AST_REDIR,
 	AST_EXEC
 } 				t_tag;
+
+typedef enum e_errors_return
+{
+	UNEXPECTED_TOK,
+	UNMATCHED_QUOTE,
+
+}				t_errors;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
 typedef struct s_ast t_ast;
@@ -105,8 +104,8 @@ typedef struct	s_env
 typedef struct s_shell
 {
 	t_env	*env_list;
+	int		ret_value;
 	char	*prompt;
-	size_t	cmd_count;
 	char	*line;
 	char	*old_pwd;
 	char	*pwd;

@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_utils.c                                       :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/16 14:11:28 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/16 13:24:21 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/16 13:50:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_check(t_shell *s)
+static void	syntax_error(int err)
 {
-	if (ft_strnprefix(s->head->data, "exit", ft_strlen("exit")))
-		terminate_shell(s);
+	if (err == UNEXPECTED_TOK)
+		ft_putstr_fd("Unexpected token found!\n", STDERR_FILENO);
+	else if (err == UNMATCHED_QUOTE)
+		ft_putstr_fd("Unmactched quote found!\n", STDERR_FILENO);
 }
 
-void terminate_shell(t_shell *s)
+void	print_error(int err)
 {
-	if (s->head)
-		free_list(&(s->head));
-	if (s->root_node)
-		free_ast(&(s->root_node));
-	if (s->env_list)
-		free_env(&(s->env_list));
-	w_free((void **)&(s->pwd));
-	w_free((void **)&(s->old_pwd));
-	w_free((void **)&(s->prompt));
-	printf("Exiting minishell !\nSee you next time !\n");
-	exit(0);
+	if (err < 5)
+		syntax_error(err);
+	// else if (err < 10 && err > 5)
+	// 	lexer_error(err);
 }

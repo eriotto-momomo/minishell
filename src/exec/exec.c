@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:12:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:06:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 static int	ft_external(t_ast *current_node, int fd_in, int fd_out)
 {
-	pid_t pid;
+	pid_t	pid;
+	int		ret;
 
 	pid = fork();
 	if (pid == 0)
 	{
 		handle_pipe(fd_in, fd_out);
-		cmd_execution(current_node->data.ast_exec.argv);
+		ret = cmd_execution(current_node->data.ast_exec.argv);
 	}
-	if (pid > 0)
+	else
 		waitpid(pid, NULL, 0);
-	return (0);
+	return (ret);
 }
 
 static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
