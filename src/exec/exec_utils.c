@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/16 21:29:32 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 21:38:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ char	*pathfinder(t_env *env, char *cmd)
 		free(temp);
 		if (access(full_path, F_OK) == 0)
 		{
-			// ft_free_array(path, ft_count_tab(path, 0), 'c'); PROBLEM
+			ft_free_char_array(path, ft_count_tab(path, 0));
 			return (full_path);
 		}
 		free (full_path);
 		i++;
 	}
-	// ft_free_array(path, ft_count_tab(path, 0), 'c');
+	ft_free_char_array(path, ft_count_tab(path, 0));
 	return (NULL);
 }
 
 int	cmd_execution(t_env *env, char **argv)
 {
 	char	*cmd_path;
-	
+
 	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{

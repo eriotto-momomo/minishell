@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_main.c                                      :+:      :+:    :+:   */
+/*   ft_free_char_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 21:35:12 by emonacho         ###   ########.fr       */
+/*   Created: 2025/05/16 21:25:38 by emonacho          #+#    #+#             */
+/*   Updated: 2025/05/16 21:39:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-t_ast	*build_ast(t_list **tok)
+void	*ft_free_char_array(char **array, int size)
 {
-	t_ast	*ast;
+	int		i;
 
-	ast = parse_line(tok);
-	return (ast);
-}
-
-int	parser(t_shell *s)
-{
-	t_list *temp;
-
-	temp = s->head;
-	if (syntax_analysis(temp))
+	while (i < size)
 	{
-		free_list(&(s->head));
-		return (1);
+		if (array[i] != NULL)
+		{
+			w_free((void **)&array[i]);
+			array[i] = NULL;
+		}
+		i++;
 	}
-	s->root_node = build_ast(&temp);
-	s->current_node = s->root_node;
-	free_list(&(s->head));
-	return (0);
+	w_free((void **)&array);
+	return (NULL);
 }
-

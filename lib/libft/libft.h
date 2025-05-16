@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 19:22:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:26:06 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int		ft_isspace(char c);
 int		ft_puterror(char *error_location, char *error_msg);
 char	*ft_strnprefix(char *str, char *prefix, size_t len);
 void	*ft_free_array(void *array, int size, char mode);
+void	*ft_free_char_array(char **array, int size);
 size_t	ft_count_tab(void *tab, int mode);
 
 // wrapperss
