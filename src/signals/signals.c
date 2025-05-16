@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/10 14:10:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:17:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sigint_rst_prompt(int signal)
 {
 	(void)signal;
 	write(1, "\n", 1);
-	/*
+	/* COMMENTED FOR MACos
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

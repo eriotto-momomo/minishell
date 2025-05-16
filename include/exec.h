@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 18:12:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:15:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ char	*pathfinder(char *cmd);
 void	handle_pipe(int	fd_in, int fd_out);
 
 // redir.c
-int		get_fd(t_ast *node);
+int		redirect(t_shell *s);
 
 #endif

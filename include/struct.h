@@ -6,12 +6,18 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 16:55:38 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:31:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
+enum	e_mode
+{
+	RESET_PROMPT,
+	HEREDOC_PROMPT
+};
 
 /*
 * L'enum 'e_signal' est utilisee pour indiquer le type de signal recu au shell par la
