@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/02 14:28:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:23:12 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,24 @@ t_ast	*add_exec_node(t_list **tok);
 t_ast	*ast_new_node(t_ast node);
 
 // parser_main.c
+/**
+ * @file parser.c
+ * @brief Parses the token list and creates an Abstract Syntax Tree (AST).
+ * 
+ * The `parser` function analyzes the list of tokens to validate the syntax.
+ * If the syntax is correct, it constructs an AST and frees the token list.
+ * Otherwise, it frees the token list and returns an error code.
+ * 
+ * @param s A pointer to the main shell structure containing the token list and the root AST node.
+ * 
+ * @return 
+ * - 0 if the syntax is valid and the AST is successfully created.
+ * - 1 if a syntax error is detected.
+ * 
+ * @note The token list is always freed by this function, regardless of the outcome.
+ */
+int		parser(t_shell *s);
 t_ast	*build_ast(t_list **tok);
-void	parser(t_shell *s);
 void	print_preorder(t_ast *node);
 
 // parser_func.c

@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 21:27:42 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:05:08 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/16 13:56:49 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/16 14:00:25 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#include "../../include/minishell.h"
 
-// ENV
-t_env	*table_to_ll(char **env);
-char	*get_value(char *s);
-char	*get_name(char	*s);
-char	**ll_to_table(t_env *h_env);
-
-// Struct
-void init_shell(t_shell *s, char	**envp);
-#endif
+void	syntax_failed(s)
+{
+	free_list(&s);
+}
