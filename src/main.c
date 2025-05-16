@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 18:17:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:58:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 // 		return ;
 // 	}
 // }
+
 void	print_env(t_env *head)
 {
 	t_env	*temp;
@@ -73,7 +74,7 @@ void prompt_loop(t_shell *s)
 			lexer(s);
 			parser(s);
 			//execution(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
-			get_fd(s->root_node);
+			redirect(s);
 			//simple_cmd(s); //💥 CRASH AVEC REDIR
 			free_ast(&(s->root_node));
 			free_list(&(s->head));

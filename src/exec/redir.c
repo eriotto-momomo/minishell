@@ -6,36 +6,84 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/15 18:56:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:58:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	handle_heredoc(t_ast *node)
+int	is_nested_heredoc(void)
+{
+	return (0);
+}
+
+int	is_delimiter(char *line, char *delimiter)
+{
+	size_t	i;
+
+	i = 0;
+	if (line[i] == delimiter[i])
+	{
+		while (line[i] && delimiter[i]
+			&& (line[i] == delimiter[i]))
+			i++;
+		if (line[i] == '\0' && delimiter[i] == '\0')
+			return (1);
+	}
+	return (0);
+}
+
+void	reset_prompt(t_shell *s, int mode)
+{
+	(void)s;
+
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	if (mode == RESET_PROMPT)
+		rl_redisplay();
+	if (mode == HEREDOC_PROMPT)
+		return ;
+		//s->line = readline(">");
+}
+
+// 0. 'node->data.ast_redir.filename' is the delimiter
+// 1. OPEN the heredoc and display a new prompt begining by '>'
+// 2. Handle multiple nested HEREDOC
+// ...
+
+// NE DOIT PAS METTRE A JOUR HISTORY?!
+int	handle_heredoc(t_shell *s)
 {
 	printf("%sHEREDOC work in progress ...%s\n", P, RST);
-	printf("handle_heredoc | %sdelimiter = %s%s\n", P, node->data.ast_redir.filename, RST);
 
-	// 0. 'node->data.ast_redir.filename' is the delimiter
-	// 1. OPEN the heredoc and display a new prompt begining by '>'
-	// 2.
-	// ...
+	char	*delimiter;
 
-	// NE DOIT PAS METTRE A JOUR HISTORY?!
-
+	delimiter = ft_strdup(s->root_node->data.ast_redir.filename);
+	reset_prompt(s, HEREDOC_PROMPT);
+	while (1)
+	{
+		s->line = readline("> ");
+		if (s->line && *s->line)
+		{
+			if (is_delimiter(s->line, delimiter))
+				break ;
+			//if (is_nested_heredoc)
+			//{
+			//}
+		}
+		free(s->line);
+	}
 	return (-1);
 }
 
-// '>'	fd = 1, O_CREAT | O_WRONLY |  O_TRUNC	-> mode = 1 (redir output)(creating / overwriting)
-// '>>'	fd = 1, O_CREAT | O_WRONLY | O_APPEND	-> mode = 2 (redir output)(appending)
-// '<'	fd = 0, O_RDONLY						-> mode = 3 (redir input)(reading)
-// '<<'	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
+
 int	w_open_redir(t_ast *node)
 {
 	int	fd;
 
 	fd = -1;
+	if (node->tag != AST_REDIR)
+		return (-1);
 	if (node->data.ast_redir.mode == OUT_REDIR)
 		fd = open(node->data.ast_redir.filename, O_CREAT | O_WRONLY |  O_TRUNC, 0644);
 	else if (node->data.ast_redir.mode == APP_OUT_REDIR)
@@ -51,19 +99,14 @@ int	w_open_redir(t_ast *node)
 	return (fd);
 }
 
-int	get_fd(t_ast *node)
+int	redirect(t_shell *s)
 {
 	int	fd;
 
 	fd = -1;
-	if (node->tag == AST_REDIR)
-		printf("test_redir | %sAST_REDIR found!%s\n", G, RST);
-	else {
-		printf("test_redir | %sNo AST_REDIR found!%s\n", R, RST);
-		return (0); }
-	if (node->data.ast_redir.mode == HERE_DOC)
-		fd = handle_heredoc(node);
+	if (s->root_node->data.ast_redir.mode == HERE_DOC)
+		fd = handle_heredoc(s);
 	else
-		fd = w_open_redir(node);
+		fd = w_open_redir(s->root_node);
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/15 18:19:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:12:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 	{
 		if ((*current_node)->data.ast_redir.mode == OUT_REDIR
 			|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
-			execution(s, &((*current_node)->data.ast_redir.left), fd_in, get_fd(*current_node));
+			execution(s, &((*current_node)->data.ast_redir.left), fd_in, redirect(s));
 		else
-			execution(s, &((*current_node)->data.ast_redir.left), get_fd(*current_node), fd_out);
+			execution(s, &((*current_node)->data.ast_redir.left), redirect(s), fd_out);
 	}*/
 	else if ((*current_node)->tag == AST_EXEC)
 		handle_exec(s, (*current_node), fd_in, fd_out);
