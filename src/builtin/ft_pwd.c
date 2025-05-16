@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/13 21:14:10 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/16 20:24:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 int	ft_pwd(t_shell *s, int	fd_out)
 {
 	char	*pwd;
+	char	*tmp;
 
-	pwd = getenv("PWD");
+	pwd = ft_getenv(s->env_list," PWD");
 	if (!pwd)
 	{
 		pwd = s->pwd;
 		if (!pwd)
 			return (-1);
 	}
-	ft_putstr_fd(pwd, fd_out);
+	tmp = ft_strjoin(pwd, "\n");
+	if (!tmp)
+		return (-1);
+	ft_putstr_fd(tmp, fd_out);
+	free(tmp);
 	return (0);
 }
