@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/16 16:51:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 21:38:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_pipe(int	fd_in, int fd_out)
 	}
 }
 
-char	*pathfinder(char *cmd)
+char	*pathfinder(t_env *env, char *cmd)
 {
 	int		i;
 	char	**path;
@@ -34,7 +34,7 @@ char	*pathfinder(char *cmd)
 	char	*temp;
 
 	i = 0;
-	path = ft_split(getenv("PATH"), ':');
+	path = ft_split(ft_getenv(env, "PATH"), ':');
 	while (path[i])
 	{
 		temp = ft_strjoin(path[i], "/");
@@ -42,21 +42,21 @@ char	*pathfinder(char *cmd)
 		free(temp);
 		if (access(full_path, F_OK) == 0)
 		{
-			ft_free_array(path, ft_count_tab(path, 0), 'c');
+			ft_free_char_array(path, ft_count_tab(path, 0));
 			return (full_path);
 		}
 		free (full_path);
 		i++;
 	}
-	ft_free_array(path, ft_count_tab(path, 0), 'c');
+	ft_free_char_array(path, ft_count_tab(path, 0));
 	return (NULL);
 }
 
-int	cmd_execution(char **argv)
+int	cmd_execution(t_env *env, char **argv)
 {
 	char	*cmd_path;
-	
-	cmd_path = pathfinder(argv[0]);
+
+	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{
 		perror("Command not found");

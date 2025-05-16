@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 21:29:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:35:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,6 @@ int	parser(t_shell *s)
 	s->root_node = build_ast(&temp);
 	s->current_node = s->root_node;
 	free_list(&(s->head));
-	//printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
-	//print_node(s->root_node); // PRINT DEBUGGING 📠
-	//printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
 	return (0);
 }
 
-void print_preorder(t_ast *node)
-{
-	if (node == NULL)
-		return;
-
-	/* first print data of node */
-	if (node->tag == AST_PIPE)
-		printf("|\n");
-	else if (node->tag == AST_REDIR)
-		printf(">\n");
-	else if (node->tag == AST_EXEC)
-		printf("%s\n", node->data.ast_exec.argv[0]);
-
-	if (node->tag != AST_EXEC)
-	{
-		print_preorder(node->data.ast_pipe.left);
-		print_preorder(node->data.ast_pipe.right);
-	}
-	else
-		return;
-}

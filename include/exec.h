@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:21:50 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:58:12 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 // exec.c
 void	execution(t_shell *s);
-int		cmd_execution(char **argv);
+int		cmd_execution(t_env *env, char **argv);
 
 // exec_utils.c
-char	*pathfinder(char *cmd);
+// char	*pathfinder(char *cmd);
 void	handle_pipe(int	fd_in, int fd_out);
 
 // redir.c

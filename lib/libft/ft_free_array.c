@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:40:57 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 21:25:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 21:39:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,12 @@ void	*ft_free_array(void *array, int size, char mode)
 		{
 			if (char_array[i] != NULL)
 			{
-				printf("ft_free_array | array[%d]: [%s%s%s]\n", i, B, char_array[i], RST); //🆗
-				w_free((void **)&char_array[i]); // 🚩TEST🚩
-				//free(char_array[i]);
+				w_free((void **)&char_array[i]);
 				char_array[i] = NULL;
 			}
 			i++;
 		}
-		w_free((void **)&char_array); // 🚩TEST🚩
-		//free(char_array);
+		w_free((void **)&char_array);
 	}
 	return (NULL);
 }
