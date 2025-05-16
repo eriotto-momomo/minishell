@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_struct.c                                      :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:05:32 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:58:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void init_shell(t_shell *s, char	**envp)
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
 		terminate_shell(s);
-	s->err = 0;
 	s->prompt = NULL;
 	s->line = NULL;
 	s->old_pwd = NULL;

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/15 16:15:27 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:23:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,19 @@ t_ast	*build_ast(t_list **tok)
 	return (ast);
 }
 
-void	parser(t_shell *s)
+int	parser(t_shell *s)
 {
 	t_list *temp;
 
 	temp = s->head;
-	if (!syntax_analysis(temp))
-		terminate_shell(s);
+	if (syntax_analysis(temp))
+	{
+		free_list(&(s->head));
+		return (1);
+	}
 	s->root_node = build_ast(&temp);
-	//printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
-	//print_node(s->root_node); // PRINT DEBUGGING 📠
-	//printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
+	free_list(&(s->env_list));
+	return (0);
 }
 
 void print_preorder(t_ast *node)
