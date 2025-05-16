@@ -6,15 +6,22 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 14:58:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:03:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_nested_heredoc(void)
+int	put_in_heredoc(t_shell *s, int fd)
 {
-	return (0);
+	char	*append_line;
+
+	append_line = ft_strjoin(s->line, "\n");
+	if (!append_line)
+		return (0);
+	ft_putstr_fd(append_line, fd);
+	w_free((void **)&append_line);
+	return (1);
 }
 
 int	is_delimiter(char *line, char *delimiter)
@@ -33,48 +40,34 @@ int	is_delimiter(char *line, char *delimiter)
 	return (0);
 }
 
-void	reset_prompt(t_shell *s, int mode)
-{
-	(void)s;
-
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	if (mode == RESET_PROMPT)
-		rl_redisplay();
-	if (mode == HEREDOC_PROMPT)
-		return ;
-		//s->line = readline(">");
-}
-
-// 0. 'node->data.ast_redir.filename' is the delimiter
-// 1. OPEN the heredoc and display a new prompt begining by '>'
-// 2. Handle multiple nested HEREDOC
-// ...
-
-// NE DOIT PAS METTRE A JOUR HISTORY?!
 int	handle_heredoc(t_shell *s)
 {
-	printf("%sHEREDOC work in progress ...%s\n", P, RST);
+	int		fd;
 
-	char	*delimiter;
-
-	delimiter = ft_strdup(s->root_node->data.ast_redir.filename);
+	s->heredoc_path = ft_strdup("../tmp/tmp.txt");
+	fd = open(s->heredoc_path, O_CREAT, 0644);
+	if (fd < 0)
+		return (-1);
 	reset_prompt(s, HEREDOC_PROMPT);
 	while (1)
 	{
 		s->line = readline("> ");
 		if (s->line && *s->line)
 		{
-			if (is_delimiter(s->line, delimiter))
+			if (is_delimiter(s->line, s->root_node->data.ast_redir.filename))
 				break ;
-			//if (is_nested_heredoc)
-			//{
-			//}
+			expand(s->env_list, s->line); // 🚩
+			if (!put_in_heredoc(s, fd))
+				return (-1);
 		}
-		free(s->line);
+		w_free((void **)&s->line);
 	}
-	return (-1);
+	w_free((void **)&s->line);
+	return (1);
+	return (fd);
 }
+// 🚩 tmp.file PATH sera 'unlink' apres l'appel des REDIR 🚩
+// 🚩 tmp.file FD sera 'close' apres l'appel des REDIR 🚩
 
 
 int	w_open_redir(t_ast *node)
@@ -108,5 +101,6 @@ int	redirect(t_shell *s)
 		fd = handle_heredoc(s);
 	else
 		fd = w_open_redir(s->root_node);
+	// 🚩 FD est a 'close' apres l'appel des REDIR 🚩
 	return (fd);
 }

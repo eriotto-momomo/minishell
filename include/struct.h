@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:31:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:42:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_shell
 	t_ast	*root_node;
 	t_list	*head;
 	t_sig	*sig;
+	char	*heredoc_path;
 }			t_shell;
 
 #endif
