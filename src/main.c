@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 21:29:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 21:47:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	process_input(t_shell *s)
 	lexer(s);
 	if (parser(s))
 		return ;
-	execution(s);
+	//execution(s);
+	redirect(s); //🚩 test
 }
 
 void prompt_loop(t_shell *s)
@@ -34,7 +35,6 @@ void prompt_loop(t_shell *s)
 		{
 			add_history(s->line);
 			process_input(s);
-			// redirect(s);
 		}
 		w_free((void **)&s->line);
 	}

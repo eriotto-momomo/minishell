@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 19:29:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 22:14:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	handle_heredoc(t_shell *s)
 {
 	int		fd;
 
-	s->heredoc_path = ft_strdup("../tmp/tmp.txt");
-	fd = open(s->heredoc_path, O_CREAT, 0644);
+	s->heredoc_path = ft_strdup("../../tmp");
+	fd = open(s->heredoc_path, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd < 0)
 		return (-1);
 	reset_prompt(s, HEREDOC_PROMPT);
@@ -56,7 +56,8 @@ int	handle_heredoc(t_shell *s)
 		{
 			if (is_delimiter(s->line, s->root_node->data.ast_redir.filename))
 				break ;
-			expand(s->env_list, &(s->line)); // 🚩
+			expand(s->env_list, &(s->line));
+			printf("handle_heredoc | s->line after expand: [%s%s%s]\n", B, s->line, RST); // 🚩
 			if (!put_in_heredoc(s, fd))
 				return (-1);
 		}
@@ -64,6 +65,7 @@ int	handle_heredoc(t_shell *s)
 	}
 	w_free((void **)&s->line);
 	return (fd);
+	return (0);
 }
 // 🚩 tmp.file PATH sera 'unlink' apres l'appel des REDIR 🚩
 // 🚩 tmp.file FD sera 'close' apres l'appel des REDIR 🚩
