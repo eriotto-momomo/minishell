@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 14:23:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 14:38:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	parser(t_shell *s)
 		return (1);
 	}
 	s->root_node = build_ast(&temp);
-	free_list(&(s->env_list));
+	s->current_node = s->root_node;
+	free_list(&(s->head));
 	return (0);
 }
 
