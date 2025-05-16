@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 14:39:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:08:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int	parser(t_shell *s)
 	s->current_node = s->root_node;
 	free_list(&(s->head));
 	return (0);
+	//printf("%s============ ROOT NODE ============%s\n", Y, RST); // PRINT DEBUGGING 📠
+	//print_node(s->root_node); // PRINT DEBUGGING 📠
+	//printf("%s===================================%s\n", Y, RST); // PRINT DEBUGGING 📠
 }
 
 void print_preorder(t_ast *node)

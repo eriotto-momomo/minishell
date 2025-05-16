@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/14 10:12:11 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/15 18:13:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,10 @@ t_ast	*parse_pipe(t_list **tok)
 		get_next_token(tok);				// consomme '|'
 		right = parse_exec(tok);			// parse la commande à gauche du pipe
 		left = add_pipe_node(left, right);	// construit node: gauche = left, droite = right
-		//print_node(left); // PRINT DEBUGGING 📠
+		print_node(left); // PRINT DEBUGGING 📠
 	}
 	return (left);
 }
-
-/*t_ast	*parse_pipe(t_list **tok)
-{
-	t_ast	*node;
-
-
-	if ((*tok)->data == NULL)
-		return (NULL);
-	node = parse_exec(tok);
-	if ((*tok) && (*tok)->type == PIPE)
-	{
-		get_next_token((tok));
-		node = add_pipe_node(node, parse_pipe(tok));
-		print_node(node); // PRINT DEBUGGING 📠
-	}
-	return (node);
-}*/
 
 // parse_line: PIPE {&} [;LINE]
 t_ast	*parse_line(t_list **tok)

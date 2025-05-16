@@ -3,15 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 16:24:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:20:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
+
+enum	e_mode
+{
+	RESET_PROMPT,
+	HEREDOC_PROMPT
+};
+
+/*
+* L'enum 'e_signal' est utilisee pour indiquer le type de signal recu au shell par la
+* variable globale 'g_sig'
+* CTRLC = 'CTRL + C'
+* CTRLD = 'CTRL + D'
+* CTRLBACK = 'CTRL + \'
+*/
+enum e_signal
+{
+	CTRLC,
+	CTRLD,
+	CTRLBACK
+};
+
+typedef struct	s_signals
+{
+	int	signal;
+}	t_sig;
 
 typedef enum e_types
 {
@@ -34,7 +60,7 @@ typedef enum e_errors_return
 {
 	UNEXPECTED_TOK,
 	UNMATCHED_QUOTE,
-	
+
 }				t_errors;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
@@ -86,6 +112,8 @@ typedef struct s_shell
 	t_ast	*current_node;
 	t_ast	*root_node;
 	t_list	*head;
+	t_sig	*sig;
+	char	*heredoc_path;
 }			t_shell;
 
 #endif

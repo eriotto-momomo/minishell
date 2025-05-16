@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:14:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:21:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+// exec.c
 void	execution(t_shell *s);
 int		cmd_execution(char **argv);
-//utils
+
+// exec_utils.c
 char	*pathfinder(char *cmd);
 void	handle_pipe(int	fd_in, int fd_out);
+
+// redir.c
+int		redirect(t_shell *s);
 
 #endif

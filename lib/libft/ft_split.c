@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:42:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 17:19:23 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/10 14:06:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	**splitword(const char *s, char c, char **s2, int num_word)
 		len_word = 0;
 		word++;
 	}
-	s2[word] = '\0';
+	s2[word] = "\0";
 	return (s2);
 }
 

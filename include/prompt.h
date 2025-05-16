@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:35:57 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/07 10:53:09 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:00:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	prompt_loop(t_shell *s);
  *			The caller is responsible for freeing it.
  */
 void	create_prompt(t_shell *s);
+void	reset_prompt(t_shell *s, int mode);
 
 #endif

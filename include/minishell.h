@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:03:39 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:22:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@
 # include <unistd.h>
 # include <signal.h>
 # include <string.h>
+# include <sys/ioctl.h>
 # include <fcntl.h>
 # include <linux/limits.h>
 # include "./error.h"
+# include "./init.h"
 # include "./struct.h"
 # include "./lexer.h"
 # include "./parser.h"
@@ -30,7 +32,7 @@
 # include "./signals.h"
 # include "./utils.h"
 # include "./builtin.h"
-# include "./init.h"
+# include "./wrappers.h"
 # include "./expand.h"
 # include "./exec.h"
 # include "../lib/libft/libft.h"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:17:07 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/16 19:31:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_external(t_ast *current_node, int fd_in, int fd_out)
 {
 	pid_t	pid;
 	int		ret;
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -45,21 +45,10 @@ static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 	return (ft_external(current_node, fd_in, fd_out));
 }
 
-int	get_fd(char *path, int mode)
-{
-	int	fd;
-
-	if (mode)
-		fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		fd = open(path, O_RDONLY);
-	return (fd);
-}
-
 static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
-{	
+{
 	int		pipefd[2];
-	
+
 	if ((*current_node)->tag == AST_PIPE)
 	{
 		if (pipe(pipefd) == -1)
@@ -72,9 +61,16 @@ static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out
 		preorder_exec(s, &((*current_node)->data.ast_pipe.right), pipefd[0], fd_out);
 		close(pipefd[0]);
 	}
-	// else if ((*current_node)->tag == AST_REDIR)
-	// 	handle_redir(s, (*current_node)->data.ast_redir, fd_in, fd_out);
-	
+	/*else if ((*current_node)->tag == AST_REDIR)
+	{
+		if ((*current_node)->data.ast_redir.mode == OUT_REDIR
+			|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
+			execution(s, &((*current_node)->data.ast_redir.left), fd_in, redirect(s));
+		else
+			execution(s, &((*current_node)->data.ast_redir.left), redirect(s), fd_out);
+		// 🚩 tmp.file PATH a 'unlink' apres l'appel des REDIR 🚩
+		// 🚩 tmp.file FD a 'close' apres l'appel des REDIR 🚩
+	}*/
 	else if ((*current_node)->tag == AST_EXEC)
 	{
 		var_expansion(s, (*current_node)->data.ast_exec.argv);
@@ -88,6 +84,6 @@ void	execution(t_shell *s)
 	int	err;
 
 	err = preorder_exec(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
-	s->ret_value = err;		
+	s->ret_value = err;
 	free_ast(&(s->root_node));
 }
