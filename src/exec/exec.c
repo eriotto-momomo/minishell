@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:06:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:31:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 	return (ft_external(current_node, fd_in, fd_out));
 }
 
-int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
+static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {
 	int		pipefd[2];
 
@@ -56,9 +56,9 @@ int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 			perror("pipe");
 			exit(0);
 		}
-		execution(s, &((*current_node)->data.ast_pipe.left), fd_in, pipefd[1]);
+		preorder_exec(s, &((*current_node)->data.ast_pipe.left), fd_in, pipefd[1]);
 		close(pipefd[1]);
-		execution(s, &((*current_node)->data.ast_pipe.right), pipefd[0], fd_out);
+		preorder_exec(s, &((*current_node)->data.ast_pipe.right), pipefd[0], fd_out);
 		close(pipefd[0]);
 	}
 	/*else if ((*current_node)->tag == AST_REDIR)
@@ -68,9 +68,22 @@ int	execution(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 			execution(s, &((*current_node)->data.ast_redir.left), fd_in, redirect(s));
 		else
 			execution(s, &((*current_node)->data.ast_redir.left), redirect(s), fd_out);
+		// 🚩 tmp.file PATH a 'unlink' apres l'appel des REDIR 🚩
+		// 🚩 tmp.file FD a 'close' apres l'appel des REDIR 🚩
 	}*/
 	else if ((*current_node)->tag == AST_EXEC)
+	{
+		var_expansion(s, (*current_node)->data.ast_exec.argv);
 		handle_exec(s, (*current_node), fd_in, fd_out);
+	}
 	return (0);
 }
 
+void	execution(t_shell *s)
+{
+	int	err;
+
+	err = preorder_exec(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
+	s->ret_value = err;
+	free_ast(&(s->root_node));
+}

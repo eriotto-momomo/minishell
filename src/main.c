@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:10:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:23:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	process_input(t_shell *s)
 	lexer(s);
 	if (parser(s))
 		return ;
-	execution(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
-	free_ast(&(s->root_node));
+	execution(s);
 }
 
 void prompt_loop(t_shell *s)
