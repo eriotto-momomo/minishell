@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 21:27:42 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:05:08 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/16 13:24:21 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/16 13:50:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#include "../../include/minishell.h"
 
-// ENV
-t_env	*table_to_ll(char **env);
-char	*get_value(char *s);
-char	*get_name(char	*s);
-char	**ll_to_table(t_env *h_env);
+static void	syntax_error(int err)
+{
+	if (err == UNEXPECTED_TOK)
+		ft_putstr_fd("Unexpected token found!\n", STDERR_FILENO);
+	else if (err == UNMATCHED_QUOTE)
+		ft_putstr_fd("Unmactched quote found!\n", STDERR_FILENO);
+}
 
-// Struct
-void init_shell(t_shell *s, char	**envp);
-#endif
+void	print_error(int err)
+{
+	if (err < 5)
+		syntax_error(err);
+	// else if (err < 10 && err > 5)
+	// 	lexer_error(err);
+}

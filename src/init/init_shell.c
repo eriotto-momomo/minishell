@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 19:04:01 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 21:45:45 by timmi            ###   ########.fr       */
+/*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
+/*   Updated: 2025/05/16 16:24:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// void	in_pipe(int *p, t_ast *node)
-// {
-// 	dup2(p[1], STDIN_FILENO);
-// 	close(p[0]);
-// 	close(p[1]);
-// 	cmd_execution(node->data.ast_exec.argv);
-// }
+void init_shell(t_shell *s, char	**envp)
+{
+	s->env_list = table_to_ll(envp);
+	if (!s->env_list)
+		terminate_shell(s);
+	s->ret_value = 0;
+	s->prompt = NULL;
+	s->line = NULL;
+	s->old_pwd = NULL;
+	s->pwd = save_cwd();
+	s->old_pwd = save_cwd();
+	s->head = NULL;
+	s->root_node = NULL;
+	s->current_node = NULL;
+}

@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/13 15:20:19 by timmi            ###   ########.fr        #
+#    Updated: 2025/05/16 17:38:32 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
-			$(CFILES_PATH)/exec/pipe.c\
+			$(CFILES_PATH)/exec/exec_utils.c\
+			$(CFILES_PATH)/errors/print_error.c\
 			$(CFILES_PATH)/builtin/ft_echo.c\
 			$(CFILES_PATH)/builtin/ft_cd.c\
 			$(CFILES_PATH)/builtin/ft_pwd.c\
@@ -44,9 +45,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/builtin/ft_unset.c\
 			$(CFILES_PATH)/builtin/ft_export.c\
 			$(CFILES_PATH)/init/init_env.c\
-			$(CFILES_PATH)/expand/var_expansion.c\
-			$(CFILES_PATH)/expand/var_expansion_utils.c\
-
+			$(CFILES_PATH)/init/init_shell.c\
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 

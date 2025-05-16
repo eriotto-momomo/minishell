@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/30 10:26:24 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:29:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ t_list *tokenize(char *cmd)
 	char *el;
 	t_list *head;
 
-	if (!cmd)
-		return (NULL);
 	i = 0;
 	head = NULL;
 	while (cmd[i] && ft_isspace(cmd[i]))
@@ -76,6 +74,10 @@ t_list *tokenize(char *cmd)
 void	lexer(t_shell *s)
 {
 	s->head = tokenize(s->line);
+	if (!s->head)
+	{
+		perror("Something went wrong");
+		terminate_shell(s);
+	}
 	exit_check(s);
-	s->cmd_count = count_cmd(s->head);
 }
