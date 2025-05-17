@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/17 15:24:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/17 17:09:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_shell
 	t_list	*head;
 	t_sig	*sig;
 	char	*heredoc_tmp;
+	int		fd;
 }			t_shell;
 
 #endif
