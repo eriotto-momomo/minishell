@@ -1,0 +1,14 @@
+{
+	"files.associations": {
+		"minishell.h": "c",
+		"string.h": "c",
+		"stdio.h": "c",
+		"libft.h": "c",
+		"ioctl.h": "c",
+		"stdlib.h": "c",
+		"struct.h": "c",
+		"readline.h": "c",
+		"wait.h": "c",
+		"types.h": "c"
+	}
+}
