@@ -20,8 +20,8 @@ void	process_input(t_shell *s)
 	lexer(s);
 	if (parser(s))
 		return ;
-	//execution(s);
-	redirect(s); //🚩 test
+	execution(s);
+	//redirect(s); //🚩 test
 }
 
 void prompt_loop(t_shell *s)
