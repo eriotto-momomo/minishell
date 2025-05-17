@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:20:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:17:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,15 @@ typedef enum	e_tag
 	AST_EXEC
 } 				t_tag;
 
+
+//	NO_ERRORS = 0
+//	UNEXPECTED_TOK = 1
+//	UNMATCHED_QUOTE = 2
 typedef enum e_errors_return
 {
+	NO_ERRORS,
 	UNEXPECTED_TOK,
 	UNMATCHED_QUOTE,
-
 }				t_errors;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
