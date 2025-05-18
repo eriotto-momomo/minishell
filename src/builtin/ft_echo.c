@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 21:19:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/18 17:27:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	**get_args(t_ast *node)
+{
+	char	**args;
+
+	args = NULL;
+	if (node->tag == AST_EXEC)
+		args = node->data.ast_exec.argv;
+	else if (node->tag == AST_REDIR)
+		args = node->data.ast_redir.left->data.ast_exec.argv;
+	return (args);
+}
 
 static size_t	len_calc(char **tab)
 {
@@ -79,7 +91,7 @@ int	ft_echo(t_shell *s, int fd_out)
 	int		offset;
 
 	offset = 0;
-	args = s->root_node->data.ast_exec.argv;
+	args = get_args(s->root_node);
 	if (args[1])
 	{
 		if (flag_check(args[1]))
@@ -94,7 +106,7 @@ int	ft_echo(t_shell *s, int fd_out)
 			free(temp);
 			temp = NULL;
 		}
-		write(fd_out, str, ft_strlen(str));
+		ft_putstr_fd(str, fd_out);
 		free(str);
 	}
 	return (0);
