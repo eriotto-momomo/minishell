@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/18 17:30:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:24:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 
 static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {
-	int		pipefd[2];
+	int		pipefd[2]; // 🚧 REMPLACER par 's->pipefd'❔ Pour nous permetter ensuite d'appeler une fonction 'handle_pipe'❔ 🚧
 
 	//print_node((*current_node)); // PRINT DEBUGGING 📠
 	if ((*current_node)->tag == AST_PIPE)
