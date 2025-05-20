@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/18 19:24:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:32:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,15 @@ int	redirect(t_shell *s)
 		w_free((void**)&s->heredoc_tmp);
 	}
 	else if (s->root_node->data.ast_redir.mode == OUT_REDIR)
+	{
+		fprintf(stderr, "redirect| OUT_REDIR | OPEN/CREATE file [%s%s%s]\n", Y, s->root_node->data.ast_redir.filename, RST); // 🖨️PRINT💥DEBUGING
 		s->fd = open(s->root_node->data.ast_redir.filename, O_CREAT | O_WRONLY |  O_TRUNC, 0644);
+	}
 	else if (s->root_node->data.ast_redir.mode == APP_OUT_REDIR)
+	{
+		fprintf(stderr, "redirect| APP_OUT_REDIR |OPEN/CREATE file [%s%s%s]\n", Y, s->root_node->data.ast_redir.filename, RST); // 🖨️PRINT💥DEBUGING
 		s->fd = open(s->root_node->data.ast_redir.filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	}
 	if (s->fd < 0)
 		return (-1);
 	return (s->fd);

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/18 17:27:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:32:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	**get_args(t_ast *node)
 		args = node->data.ast_exec.argv;
 	else if (node->tag == AST_REDIR)
 		args = node->data.ast_redir.left->data.ast_exec.argv;
+	fprintf(stderr, "get_args| %sARGV[1][%s]%s\n", Y, args[1], RST); // 🖨️PRINT💥DEBUGING
 	return (args);
 }
 
@@ -92,6 +93,7 @@ int	ft_echo(t_shell *s, int fd_out)
 
 	offset = 0;
 	args = get_args(s->root_node);
+	fprintf(stderr, "ft_echo| %sWill output ARGV[1][%s] in FD_OUT: %d%s\n", Y, args[1], fd_out, RST); // 🖨️PRINT💥DEBUGING
 	if (args[1])
 	{
 		if (flag_check(args[1]))
