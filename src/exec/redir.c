@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/20 12:32:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:26:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,40 @@ int	redirect_input(t_shell *s)
 	return (0);
 }
 
-int	redirect(t_shell *s)
+int	redirect(t_shell *s, t_ast *current_node)
+{
+	s->fd = -1;
+	if (current_node->data.ast_redir.mode == IN_REDIR
+		|| current_node->data.ast_redir.mode == HERE_DOC)
+	{
+		if (current_node->data.ast_redir.mode == HERE_DOC)
+		{
+			s->heredoc_tmp = ft_strdup("./tmp/heredoc_tmp.txt");
+			if (!s->heredoc_tmp)
+				return (-1);
+			if (!handle_heredoc(s))
+				return (-1);
+		}
+		s->fd = redirect_input(s);
+		w_free((void**)&s->heredoc_tmp);
+	}
+	else if (current_node->data.ast_redir.mode == OUT_REDIR)
+	{
+		fprintf(stderr, "redirect| OUT_REDIR | OPEN/CREATE file [%s%s%s]\n", Y, current_node->data.ast_redir.filename, RST); // 🖨️PRINT💥DEBUGING
+		s->fd = open(current_node->data.ast_redir.filename, O_CREAT | O_WRONLY |  O_TRUNC, 0644);
+	}
+	else if (current_node->data.ast_redir.mode == APP_OUT_REDIR)
+	{
+		fprintf(stderr, "redirect| APP_OUT_REDIR |OPEN/CREATE file [%s%s%s]\n", Y, current_node->data.ast_redir.filename, RST); // 🖨️PRINT💥DEBUGING
+		s->fd = open(current_node->data.ast_redir.filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	}
+	if (s->fd < 0)
+		return (-1);
+	return (s->fd);
+}
+
+// BACKUP 💾
+/*int	redirect(t_shell *s)
 {
 	s->fd = -1;
 	if (s->root_node->data.ast_redir.mode == IN_REDIR
@@ -128,5 +161,5 @@ int	redirect(t_shell *s)
 	if (s->fd < 0)
 		return (-1);
 	return (s->fd);
-}
+}*/
 // 🚩 Le FD des OUT_REDIR est a 'close' apres les redirections 🚩

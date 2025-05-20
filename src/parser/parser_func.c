@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/20 09:26:08 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:50:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,27 +77,12 @@ t_ast	*parse_exec(t_list **tok)
 	}
 	root_ptr = exec_node;
 
-	//if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
 	while((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
 	{
 		//fprintf(stderr, "parse_exec | %s%s%s\n", Y, "if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))", RST);
 		root_ptr = parse_redir(tok, root_ptr);
 		print_node(root_ptr); // 🖨️PRINT💥DEBUGING
 	}
-	/*if ((*tok)->next && !((*tok)->type == WORD || (*tok)->type == PIPE))
-	{
-		fprintf(stderr, "parse_exec | %s%s%s\n", Y, "if ((*tok)->next)", RST);
-		root_ptr = parse_exec(tok);
-		fprintf(stderr, "parse_exec | %s%s%s\n", Y, "root_ptr pointing to: ", RST);
-		print_node(root_ptr);
-	}*/
-
-	// BACKUP 💾
-	/*if ((*tok)->next)
-		root_ptr = parse_redir(tok, root_ptr);
-	if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
-		root_ptr->data.ast_redir.left = parse_exec(tok);*/
-
 	return (root_ptr);
 }
 
