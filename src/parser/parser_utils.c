@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/18 17:29:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/20 09:35:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	get_next_token(t_list **tok)
 {
 	if ((*tok)->next)
+	{
+		fprintf(stderr, "get_next_token | TOKEN CONSUMMED: %s%s%s\n", Y, (*tok)->data, RST); // 🖨️PRINT💥DEBUGING
 		*tok = (*tok)->next;
+	}
 }
 
 char	*fill_exec_node(t_list *tok)
@@ -95,7 +98,7 @@ void	print_node(t_ast *ast)
 		else if (left->tag == AST_PIPE)
 			printf("%sprint_node%s| L. BRANCH: [%sAST_EXEC%s]\n", B, RST, P, RST);
 		else if (left->tag == AST_REDIR)
-			printf("%sprint_node%s| L. BRANCH: [%sAST_REDIR%s]\n", B, RST, P, RST);
+			printf("%sprint_node%s| L. BRANCH: [%sAST_REDIR%s] filename[%s%s%s]\n", B, RST, P, RST, P, redir->data.ast_redir.left->data.ast_redir.filename, RST);
 		if (redir->data.ast_redir.filename)
 			printf("%sprint_node%s| R. BRANCH: filename [%s%s%s] >> mode [%s%d%s]\n", B, RST, P, redir->data.ast_redir.filename, RST, P, redir->data.ast_redir.mode, RST);
 	}
