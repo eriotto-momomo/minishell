@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/20 15:26:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:15:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,17 +116,13 @@ int	redirect(t_shell *s, t_ast *current_node)
 		w_free((void**)&s->heredoc_tmp);
 	}
 	else if (current_node->data.ast_redir.mode == OUT_REDIR)
-	{
-		fprintf(stderr, "redirect| OUT_REDIR | OPEN/CREATE file [%s%s%s]\n", Y, current_node->data.ast_redir.filename, RST); // 🖨️PRINT💥DEBUGING
 		s->fd = open(current_node->data.ast_redir.filename, O_CREAT | O_WRONLY |  O_TRUNC, 0644);
-	}
 	else if (current_node->data.ast_redir.mode == APP_OUT_REDIR)
-	{
-		fprintf(stderr, "redirect| APP_OUT_REDIR |OPEN/CREATE file [%s%s%s]\n", Y, current_node->data.ast_redir.filename, RST); // 🖨️PRINT💥DEBUGING
 		s->fd = open(current_node->data.ast_redir.filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	}
 	if (s->fd < 0)
 		return (-1);
+	else	// 🖨️PRINT💥DEBUGING
+		fprintf(stderr, "redirect| OPEN/CREATE file [%s%s%s] fd[%s%d%s]\n", Y, current_node->data.ast_redir.filename, RST, Y, s->fd, RST); // 🖨️PRINT💥DEBUGING
 	return (s->fd);
 }
 

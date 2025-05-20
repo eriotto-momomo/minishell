@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/20 15:26:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:27:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,32 @@ static int	ft_external(t_env *env, t_ast *current_node, int fd_in, int fd_out)
 
 static int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {
+	/*while ((*current_node) && (*current_node)->data.ast_redir.left)	// 📍DESCEND DANS L'AST
+	{
+		fprintf(stderr, "handle_redir| %s%s%s\n", Y, "Going down the tree...", RST);	// 🖨️PRINT💥DEBUGING
+		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, fd_out);
+		if (!(*current_node)->data.ast_redir.left)
+			break;
+	}
+	fprintf(stderr, "handle_redir| %s%s%s\n", Y, "Lowest node in the tree reached!", RST);	// 🖨️PRINT💥DEBUGING*/
 	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
 			|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
 	{
 		fd_out = redirect(s, (*current_node));
 		if (fd_out < 0)
-		{
-			ft_puterror("handle_redir", "fd_out opening failed");
 			return (-1);
-		}
 	}
 	else
 	{
 		fd_in = redirect(s, (*current_node));
 		if (fd_in < 0)
 			return (-1);
-	} // 📍OUVRE LE FD DE REDIRECTION
+	}
+	// BACKUP 💾
 	if ((*current_node)->data.ast_redir.left->tag == AST_EXEC)
 	{
-		fprintf(stderr, "handle_redir| %s%s%s\n", Y, "EXEC DETECTED!", RST); // 🖨️PRINT💥DEBUGING
-		fprintf(stderr, "handle_redir| %sWill output/input next exec node in:\n FD_IN: %d | FD_OUT: %d%s\n", Y, fd_in, fd_out, RST); // 🖨️PRINT💥DEBUGING
-		s->current_node = (*current_node)->data.ast_redir.left; // TEST
-		handle_exec(s, s->current_node, fd_in, fd_out); //TEST
-		//handle_exec(s, (*current_node)->data.ast_redir.left, fd_in, fd_out);
+		fprintf(stderr, "handle_redir| %sWill output/input EXEC_NODE in FD_IN: %d | FD_OUT: %d%s\n", Y, fd_in, fd_out, RST); // 🖨️PRINT💥DEBUGING
+		s->current_node = (*current_node)->data.ast_redir.left;	//🚨 NECESSAIRE POUR APPELER LES BUILTINS AVEC LE BON NODE
 	}
 	if ((*current_node)->data.ast_redir.left)	// 📍DESCEND DANS L'AST
 		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, fd_out);
@@ -122,12 +125,10 @@ static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out
 {
 	int		pipefd[2]; // 🚧 REMPLACER par 's->pipefd'❔ Pour nous permetter ensuite d'appeler une fonction 'handle_pipe'❔ 🚧
 
-	//fprintf(stderr, "preorder_exec| %sWill output/input next node in:\n FD_IN: %d | FD_OUT: %d%s\n", Y, fd_in, fd_out, RST); // 🖨️PRINT💥DEBUGING
-	//print_node((*current_node)); // PRINT DEBUGGING 📠
-	if (!(*current_node)) // 🚩TEST🚩
+	if (!(*current_node))
 		return (0);
-	fprintf(stderr, "preorder_exec| %s%s%s\n", Y, "↓current_node↓", RST); // 🖨️PRINT💥DEBUGING
-	print_node((*current_node));
+	fprintf(stderr, "preorder_exec| %s%s%s\n", Y, "↓current_node↓", RST);	// 🖨️PRINT💥DEBUGING
+	print_node((*current_node));											// 🖨️PRINT💥DEBUGING
 	if ((*current_node)->tag == AST_PIPE)
 	{
 		if (pipe(pipefd) == -1)
@@ -150,8 +151,11 @@ static int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out
 	}
 	else if ((*current_node)->tag == AST_EXEC)
 	{
+		fprintf(stderr, "preorder_exec| output/input exec node in fd[%s%d%s]\n", Y, s->fd, RST); // 🖨️PRINT💥DEBUGING
 		// var_expansion(s, (*current_node)->data.ast_exec.argv);
 		handle_exec(s, (*current_node), fd_in, fd_out);
+		fprintf(stderr, "preorder_exec| %sEXITING handle_exec%s\n", Y, RST); // 🖨️PRINT💥DEBUGING
+
 	}
 	return (0);
 }
