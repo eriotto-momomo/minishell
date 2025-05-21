@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/21 16:19:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:05:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	handle_heredoc(t_shell *s)
 	ptr = s->root_node->data.ast_redir.filename;
 	s->fd = open(s->heredoc_tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (s->fd < 0)
-		return (0);
+		return (-1);
 	reset_prompt(s, HEREDOC_PROMPT);
 	while (1)
 	{
@@ -69,14 +69,14 @@ int	handle_heredoc(t_shell *s)
 		if ((ptr[0] != '\'' && ptr[ft_strlen(ptr)] != '\'')		// 🚨 A TESTER!
 			&& (ptr[0] != '\"' && ptr[ft_strlen(ptr)] != '\"'))	// 🚨 A TESTER!
 			expand(s->env_list, &(s->line));
-		if (!put_in_heredoc(s->line, s->fd))
-			return (0);
+		if (put_in_heredoc(s->line, s->fd) != 0)
+			return (-1);
 		w_free((void **)&s->line);
 	}
 	w_free((void **)&s->line);
 	if (close(s->fd) < 0)
-		return (0);
-	return (1);
+		return (-1);
+	return (0);
 }
 
 int	redirect_input(t_shell *s)

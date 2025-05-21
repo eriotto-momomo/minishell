@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/09 12:11:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 16:53:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,25 @@ t_list *create_node(char *data)
 	return (new_node);
 }
 
-void add_back(t_list **head, char *data)
+int add_back(t_list **head, char *data)
 {
-    t_list	*new_node = create_node(data);
+    t_list	*new_node;
 	t_list	*temp;
 
+	new_node = create_node(data);
+	if (!new_node)
+		return (1);
 	if (*head == NULL)
 	{
         *head = new_node;
-        return;
+        return (0);
     }
 	temp = *head;
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new_node;
 	new_node->prev = temp;
+	return (0);
 }
 
 void free_list(t_list **head)
@@ -83,7 +87,7 @@ size_t	env_len(t_env *h_env)
 {
 	size_t	len;
 	t_env	*temp;
-	
+
 	len = 0;
 	temp = h_env;
 	while (temp)

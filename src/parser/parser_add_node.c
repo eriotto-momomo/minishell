@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 21:34:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:54:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_ast	*add_pipe_node(t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 
+	if (!left || !right)
+		return (NULL);
 	node = ast_new_node((t_ast){0});
 	if (!node)
 		return (NULL);
@@ -34,6 +36,8 @@ t_ast	*add_redir_node(t_ast *left, char *filename, int mode)
 {
 	t_ast	*node;
 
+	if (!left)
+		return (NULL);
 	node = ast_new_node((t_ast){0});
 	if (!node)
 		return (NULL);
@@ -45,7 +49,7 @@ t_ast	*add_redir_node(t_ast *left, char *filename, int mode)
 	{
 		errno = ENOMEM;
 		ft_puterror("add_redir_node", strerror(errno));
-		exit(1); // // 🗯️ Ou on "catch" errno dans le main pour quit clean ❔
+		return (NULL);
 	}
 	return (node);
 }
@@ -64,6 +68,12 @@ t_ast	*add_exec_node(t_list **tok)
 	{
 		node->data.ast_exec.argv[node->data.ast_exec.argc++]
 			= fill_exec_node(*tok);
+		if (!node->data.ast_exec.argv[node->data.ast_exec.argc - 1]) // 🗯️ -1❔
+		{
+			ft_free_char_array(node->data.ast_exec.argv,
+				node->data.ast_exec.argc - 1); // 🗯️ -1❔
+			return (NULL);
+		}
 		if (!tok || !(*tok)->next)
 			break ;
 		else
