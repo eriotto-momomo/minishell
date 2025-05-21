@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 21:25:38 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 21:39:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:59:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	*ft_free_char_array(char **array, int size)
 {
-	int		i;
+	int	i;
 
+	i = 0;
 	while (i < size)
 	{
 		if (array[i] != NULL)

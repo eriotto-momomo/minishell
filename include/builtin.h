@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:47:01 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/09 13:42:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 11:38:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 // BUILTINS
 int	ft_cd(t_shell *s);
-int	ft_echo(t_shell *s, int fd_out);
+int	ft_echo(t_ast **current_node, int fd_out);
 int	ft_pwd(t_shell *s, int	fd_out);
 int	ft_env(t_shell *s, int fd_out);
 int	ft_unset(t_shell *s);
