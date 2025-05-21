@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 18:44:07 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 09:38:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static char	*make_curpath(t_shell *s)
 
 	arg = s->root_node->data.ast_exec.argv[1];
 	pwd = s->pwd;
-	if (!arg || arg[0] == '~')
+	if (!arg || (arg[0] == '~' && !arg[1]))
 		return (ft_strdup(ft_getenv(s->env_list, "HOME")));
-	if (arg[0] == '-')
+	if ((arg[0] == '-' && !arg[1]))
 		return (ft_strdup(ft_getenv(s->env_list, "OLDPWD")));
 	if (arg[0] == '.' && arg[1] == '/')
 	{

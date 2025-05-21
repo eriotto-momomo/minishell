@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:26:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 21:28:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 14:49:59 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,43 +46,6 @@ char	*get_name(char *s)
 	ft_strlcpy(name, s, len + 1);
 	return (name);
 }
-
-
-char	**ll_to_table(t_env *h_env)
-{
-	char	**table;
-	t_env	*ptr;
-	int		i;
-	int		len;
-
-	len = env_len(h_env);
-	table = malloc(sizeof(char *) * (len + 1));
-	if (!table)
-		return (NULL);
-	ptr = h_env;
-	i = 0;
-	while (ptr)
-	{
-		if (!ptr->value)
-			ptr->value = "";
-		table[i] = ft_strjoin(ptr->name, "=");
-		if (!table[i])
-			return (NULL); // Gérer l'erreur d'allocation
-		
-		char *tmp = table[i];
-		table[i] = ft_strjoin(tmp, ptr->value);
-		free(tmp);
-
-		if (!table[i])
-			return (NULL); // Gérer l'erreur d'allocation
-
-		i++;
-		ptr = ptr->next;
-	}
-	table[i] = NULL;
-	return (table);
-}
-
 
 void	free_env_list(t_env **head)
 {
