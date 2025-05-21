@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:08:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:58:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	quote_check(t_list *tok)
 {
 	if (tok->data[0] == '\'' || tok->data[0] == '\"')
 	{
-		if (tok->data[0] == '\'' && tok->data[ft_strlen(tok->data)] != '\'')
+		if (tok->data[0] == '\'' && tok->data[ft_strlen(tok->data) - 1] != '\'')
 			return (UNMATCHED_QUOTE);
-		else if (tok->data[0] == '\"' && tok->data[ft_strlen(tok->data)] != '\"')
+		else if (tok->data[0] == '\"' && tok->data[ft_strlen(tok->data) - 1] != '\"')
 			return (UNMATCHED_QUOTE);
 	}
 	return (0);
