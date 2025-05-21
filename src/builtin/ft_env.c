@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/09 13:42:33 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 14:45:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*make_var(char	*name, char *value)
 
 	if (!name || !value)
 		return (NULL);
-	ret = malloc((ft_strlen(name) + ft_strlen(value) + 2) * sizeof(char));
+	ret = malloc((ft_strlen(name) + ft_strlen(value) + 3) * sizeof(char));
 	if (!ret)
 		return (NULL);
 	i = -1;
@@ -30,6 +30,7 @@ static char	*make_var(char	*name, char *value)
 	j = 0;
 	while (value[j])
 		ret[i++] = value[j++];
+	ret[i++] = '\n';
 	ret[i] = '\0';
 	return (ret);
 }
@@ -37,25 +38,24 @@ static char	*make_var(char	*name, char *value)
 int	ft_env(t_shell *s, int fd_out)
 {
 	t_env	*ptr;
-	char	*line;
-	char	*temp;
+	char	*var;
+	char	*tmp;
 	char	*to_print;
 
 	ptr = s->env_list;
 	to_print = ft_strdup("");
 	while (ptr)
 	{
-		line = make_var(ptr->name, ptr->value);
-		if (!line)
+		var = make_var(ptr->name, ptr->value);
+		tmp = to_print;
+		to_print = ft_strjoin(to_print, var);
+		free(var);
+		if (!to_print)
 		{
-			free (to_print);
+			free(tmp);
 			return (-1);
 		}
-		temp = ft_strjoin(to_print, line);
-		free(line);
-		free(to_print);
-		to_print = ft_strjoin(temp, "\n");
-		free(temp);
+		free(tmp);
 		ptr = ptr->next;
 	}
 	ft_putstr_fd(to_print, fd_out);
