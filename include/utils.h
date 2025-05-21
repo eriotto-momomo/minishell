@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/21 09:15:39 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 16:47:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void print_list(t_list *head);
 
 // list.c
 t_list	*create_node(char *data);
-void	add_back(t_list **head, char *data);
-void	add_front(t_list **head, char *data);
+int		add_back(t_list **head, char *data);
+//int		add_front(t_list **head, char *data);
 void	free_list(t_list **head);
 size_t	count_cmd(t_list *head);
 size_t	env_len(t_env *h_env);
@@ -32,7 +32,7 @@ int is_sep(char c);
 
 // exit_utils.c
 void exit_check(t_shell *s);
-void terminate_shell(t_shell *s);
+void terminate_shell(t_shell *s, int error);
 
 // free_ast.c
 void	free_pipe_node(t_ast *node);

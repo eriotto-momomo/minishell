@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/21 14:54:33 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:54:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void init_shell(t_shell *s, char	**envp)
 {
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
-		terminate_shell(s);
+		terminate_shell(s, errno);
 	s->ret_value = 0;
 	s->prompt = NULL;
 	s->line = NULL;

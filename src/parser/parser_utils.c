@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/21 15:53:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:30:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	get_next_token(t_list **tok)
 {
-	if ((*tok)->next)
+	if ((*tok) && (*tok)->next)
 		*tok = (*tok)->next;
 }
 
@@ -22,12 +22,14 @@ char	*fill_exec_node(t_list *tok)
 {
 	char	*arg;
 
+	if (!tok)
+		return (NULL);
 	arg = ft_strdup(tok->data);
 	if (!arg)
 	{
 		errno = ENOMEM;
-		ft_puterror("parse_exec", strerror(errno));
-		exit(1); // 🗯️ Ou on "catch" errno dans le main pour quit clean ❔
+		ft_puterror("fill_exec_node", strerror(errno));
+		return (NULL);
 	}
 	return (arg);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:29:45 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 17:01:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,22 @@ t_list *tokenize(char *cmd)
 
 	i = 0;
 	head = NULL;
-	while (cmd[i] && ft_isspace(cmd[i]))
-		i++;
 	while (cmd[i])
 	{
+		while (cmd[i] && ft_isspace(cmd[i]))
+			i++;
 		el = get_el(cmd, i);
 		if (!el)
 		{
 			free_list(&head);
 			return (NULL);
 		}
-		add_back(&head, el);
+		if (add_back(&head, el) == 1)
+		{
+			free_list(&head);
+			return (NULL);
+		}
 		i += ft_strlen(el);
-		while (cmd[i] && ft_isspace(cmd[i]))
-			i++;
 	}
 	return (head);
 }
@@ -75,9 +77,6 @@ void	lexer(t_shell *s)
 {
 	s->head = tokenize(s->line);
 	if (!s->head)
-	{
-		perror("Something went wrong");
-		terminate_shell(s);
-	}
+		terminate_shell(s, errno);
 	exit_check(s);
 }

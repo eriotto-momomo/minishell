@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/16 14:11:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 17:00:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	exit_check(t_shell *s)
 {
-	if (ft_strnprefix(s->head->data, "exit", ft_strlen("exit")))
-		terminate_shell(s);
+	if (ft_strlen(s->head->data) == ft_strlen("exit"))
+		if (ft_strncmp(s->head->data, "exit", ft_strlen("exit")) == 0)
+			terminate_shell(s, 0);
 }
 
-void terminate_shell(t_shell *s)
+void	terminate_shell(t_shell *s, int error)
 {
 	if (s->head)
 		free_list(&(s->head));
@@ -29,6 +30,10 @@ void terminate_shell(t_shell *s)
 	w_free((void **)&(s->pwd));
 	w_free((void **)&(s->old_pwd));
 	w_free((void **)&(s->prompt));
-	printf("Exiting minishell !\nSee you next time !\n");
-	exit(0);
+	if (error)
+	{
+		perror(strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+	exit(EXIT_SUCCESS);
 }
