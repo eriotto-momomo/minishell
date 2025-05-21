@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 21:34:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 09:15:48 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ char	*ft_getenv(t_env *h_env, const char *name)
 	temp = h_env;
 	while (temp)
 	{
-		if (ft_strncmp(name, temp->name, ft_strlen(name)) == 0)
-			return (temp->value);
+		if ((ft_strlen(name) == ft_strlen(temp->name))
+			&& (ft_strncmp(name, temp->name, ft_strlen(temp->name)) == 0))
+				return (temp->value);
 		temp = temp->next;
 	}
 	return (NULL);
