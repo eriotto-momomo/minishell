@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 13:54:32 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 09:15:39 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ void	free_ast(t_ast **node);
 
 
 // env
+/**
+ * @brief Retrieves the value of an environment variable.
+ *
+ * Iterates through a linked list of environment variables and returns the value
+ * associated with the given name if found.
+ *
+ * @param h_env Pointer to the head of the linked list of environment variables.
+ * @param name Name of the environment variable to search for (null-terminated string).
+ * @return The value associated with the variable (char *) if found, NULL otherwise.
+ * @note The returned pointer refers directly to the stored value; it is not a
+ * duplicated string. Do not modify or free it unless you manage the original list.
+ */
 char	*ft_getenv(t_env *h_env, const char *name);
 char	**env_dup(char **array);
 void	free_env(t_env **h_env);
