@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/20 13:50:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:20:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ast	*parse_pipe(t_list **tok)
 		get_next_token(tok);				// consomme '|'
 		right = parse_exec(tok);			// parse la commande à gauche du pipe
 		left = add_pipe_node(left, right);	// construit node: gauche = left, droite = right
-		print_node(left); // 🖨️PRINT💥DEBUGING
+		//print_node(left); // 🖨️PRINT💥DEBUGING
 	}
 	return (left);
 }
@@ -58,7 +58,7 @@ t_ast	*parse_redir(t_list **tok, t_ast *left)
 			left = add_redir_node(left, (*tok)->next->data, HERE_DOC);
 		get_next_token(tok);
 		get_next_token(tok);
-		print_node(left); // 🖨️PRINT💥DEBUGING
+		//print_node(left); // 🖨️PRINT💥DEBUGING
 	}
 	return (left);
 }
@@ -69,20 +69,12 @@ t_ast	*parse_exec(t_list **tok)
 	t_ast	*root_ptr;
 	t_ast	*exec_node;
 
-	fprintf(stderr, "parse_exec | current token: %s%s%s\n", Y, (*tok)->data, RST); // 🖨️PRINT💥DEBUGING
 	if ((*tok) && (*tok)->type == WORD)
-	{
 		exec_node = add_exec_node(tok);
-		print_node(exec_node); // 🖨️PRINT💥DEBUGING
-	}
 	root_ptr = exec_node;
 
 	while((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
-	{
-		//fprintf(stderr, "parse_exec | %s%s%s\n", Y, "if ((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))", RST);
 		root_ptr = parse_redir(tok, root_ptr);
-		print_node(root_ptr); // 🖨️PRINT💥DEBUGING
-	}
 	return (root_ptr);
 }
 
