@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/08 21:19:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/21 12:27:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	**get_args(t_ast *node)
+{
+	char	**args;
+
+	args = NULL;
+	if (!node)
+		return (NULL);
+	if (node->tag == AST_EXEC)
+			args = node->data.ast_exec.argv;
+	else if (node->tag == AST_REDIR)
+	{
+		if (node->data.ast_redir.left && node->data.ast_redir.left->tag == AST_EXEC)
+			args = node->data.ast_redir.left->data.ast_exec.argv;
+	}
+	return (args);
+}
 
 static size_t	len_calc(char **tab)
 {
@@ -71,7 +88,7 @@ static int	flag_check(char *flag)
 	return (1);
 }
 
-int	ft_echo(t_shell *s, int fd_out)
+int	ft_echo(t_ast **current_node, int fd_out)
 {
 	char	**args;
 	char	*temp;
@@ -79,7 +96,7 @@ int	ft_echo(t_shell *s, int fd_out)
 	int		offset;
 
 	offset = 0;
-	args = s->root_node->data.ast_exec.argv;
+	args = get_args(*current_node);
 	if (args[1])
 	{
 		if (flag_check(args[1]))
@@ -94,7 +111,7 @@ int	ft_echo(t_shell *s, int fd_out)
 			free(temp);
 			temp = NULL;
 		}
-		write(fd_out, str, ft_strlen(str));
+		ft_putstr_fd(str, fd_out);
 		free(str);
 	}
 	return (0);
