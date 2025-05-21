@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/20 17:22:53 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:27:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	**get_args(t_ast *node)
 {
-	fprintf(stderr, "get_args| node->data.ast_exec.argv[1][%s%s%s]\n", Y, node->data.ast_exec.argv[1], RST);	// 🖨️PRINT💥DEBUGING
 	char	**args;
 
 	args = NULL;
@@ -27,7 +26,6 @@ char	**get_args(t_ast *node)
 		if (node->data.ast_redir.left && node->data.ast_redir.left->tag == AST_EXEC)
 			args = node->data.ast_redir.left->data.ast_exec.argv;
 	}
-	fprintf(stderr, "get_args| args[1][%s%s%s]\n", Y, args[1], RST);	// 🖨️PRINT💥DEBUGING
 	return (args);
 }
 
@@ -90,17 +88,15 @@ static int	flag_check(char *flag)
 	return (1);
 }
 
-int	ft_echo(t_shell *s, int fd_out)
+int	ft_echo(t_ast **current_node, int fd_out)
 {
 	char	**args;
 	char	*temp;
 	char	*str;
 	int		offset;
 
-	fprintf(stderr, "ft_echo| %s%s%s\n", Y, "ENTERING ft_echo", RST);	// 🖨️PRINT💥DEBUGING
 	offset = 0;
-	args = get_args(s->current_node);
-	fprintf(stderr, "ft_echo| args[1][%s%s%s]\n", Y, args[1], RST);	// 🖨️PRINT💥DEBUGING
+	args = get_args(*current_node);
 	if (args[1])
 	{
 		if (flag_check(args[1]))
@@ -118,6 +114,5 @@ int	ft_echo(t_shell *s, int fd_out)
 		ft_putstr_fd(str, fd_out);
 		free(str);
 	}
-	fprintf(stderr, "ft_echo| %s%s%s\n", Y, "EXITING ft_echo", RST);	// 🖨️PRINT💥DEBUGING
 	return (0);
 }
