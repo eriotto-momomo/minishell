@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/21 18:56:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:48:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 			|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
 	{
 		fd_out = redirect(s, (*current_node));
-		if ((!s->root_fd) && fd_out >= 0)
+		if ((s->root_fd == -1) && fd_out >= 0)
 			s->root_fd = fd_out;
 	}
 	else

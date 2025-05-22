@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/21 19:06:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:47:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	execution(t_shell *s)
 {
 	int	err;
 
+	s->root_fd = -1;
 	err = preorder_exec(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
 	s->ret_value = err;
 	//if (err != 0)

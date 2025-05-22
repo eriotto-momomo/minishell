@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/21 16:54:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:45:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void init_shell(t_shell *s, char	**envp)
 	s->head = NULL;
 	s->root_node = NULL;
 	s->current_node = NULL;
-	s->root_fd = 0;
 }

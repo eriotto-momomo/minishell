@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/21 18:30:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:11:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,16 @@ void	print_node(t_ast *ast)
 	if (ast->tag == AST_EXEC)
 	{
 		printf("%sprint_node%s| %sEXEC NODE%s\n", B, RST, G, RST);
+		printf("%sprint_node%s| argc: %d\n", B, RST, ast->data.ast_exec.argc);
 		printf("%sprint_node%s| args:", B, RST);
-		for (int i = 0; i < ast->data.ast_exec.argc; i++)
-				printf(" [%s%s%s]", C, ast->data.ast_exec.argv[i], RST);
+		//for (int i = 0; i < ast->data.ast_exec.argc; i++)
+		//		printf(" [%s%s%s]", C, ast->data.ast_exec.argv[i], RST);
+		int i = 0;
+		while (ast->data.ast_exec.argv[i])
+		{
+			printf(" [%s%s%s]", C, ast->data.ast_exec.argv[i], RST);
+			i++;
+		}
 		printf("\n");
 	}
 	else if (ast->tag == AST_PIPE)
