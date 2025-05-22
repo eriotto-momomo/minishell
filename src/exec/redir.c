@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/22 17:12:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:37:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int	redirect(t_shell *s, t_ast *current_node)
 	{
 		if (current_node->data.ast_redir.mode == HERE_DOC)
 		{
-			s->heredoc_tmp = ft_strdup("./tmp/heredoc_tmp.txt");
+			//s->heredoc_tmp = ft_strdup("./tmp/heredoc_tmp.txt");
+			s->heredoc_tmp = ft_strdup("heredoc_tmp.txt");
 			if (!s->heredoc_tmp)
 				return (-1);
 			if (handle_heredoc(s) != 0)
@@ -118,7 +119,8 @@ int	redirect(t_shell *s, t_ast *current_node)
 		s->fd = redirect_input(s);
 		// 🚩
 		if (s->current_node->data.ast_redir.left->tag == AST_EXEC)
-			s->current_node->data.ast_redir.left->data.ast_exec.argv[s->current_node->data.ast_redir.left->data.ast_exec.argc++] = ft_strdup("./tmp/heredoc_tmp.txt");
+			s->current_node->data.ast_redir.left->data.ast_exec.argv[s->current_node->data.ast_redir.left->data.ast_exec.argc++] = ft_strdup("heredoc_tmp.txt");
+			//s->current_node->data.ast_redir.left->data.ast_exec.argv[s->current_node->data.ast_redir.left->data.ast_exec.argc++] = ft_strdup("./tmp/heredoc_tmp.txt");
 		// 🚩
 		print_node(s->current_node->data.ast_redir.left); // PRINT DEBUGGING 📠
 		w_free((void**)&s->heredoc_tmp);
