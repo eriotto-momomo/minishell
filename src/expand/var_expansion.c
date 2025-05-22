@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:03:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/22 16:03:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,36 @@ void	expand(t_env *env, char **str)
 	expand(env, str);
 }
 
-void	var_expansion(t_shell *s, char **args)
+static int	trim_quote(char **s)
+{
+	char	*trim;
+
+	if (*s[0] == '\'' || *s[0] == '\"')
+	{
+		trim = ft_substr(*s, 1, ft_strlen(*s) - 2);
+		if (!trim)
+			return (0);
+		w_free((void **)s);
+		*s = ft_strdup(trim);
+		free(trim);
+		if (!*s)
+			return (0);
+	}
+	return (1);
+}
+
+int	var_expansion(t_shell *s, char **args)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (args[i])
 	{
-		expand(s->env_list, &args[i++]);
+		if (!trim_quote(&args[i]))
+			return (1);
+		printf("args after trim %s\n", args[i]);
+		expand(s->env_list, &args[i]);
+		i++;
 	}
+	return (0);
 }
