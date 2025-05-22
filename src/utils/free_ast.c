@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 14:05:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:23:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,24 @@ void	free_exec_node(t_ast *node)
 			&& node->data.ast_exec.argc > 0)
 	{
 		i = 0;
-		//printf("%s🔵FREE EXEC_NODE.|%s %sFREED!%s", B, RST, G, RST); // PRINT DEBUGGING 📠
-		while (i < node->data.ast_exec.argc)
+		printf("%s🔵FREE EXEC_NODE.|%s %sFREED!%s", B, RST, G, RST); // PRINT DEBUGGING 📠
+		// 🚨TEST🚨 **argv is allocated with more slots than usually required (10)
+		while (node->data.ast_exec.argv[i])
 		{
-			//printf(" %sargv[%d]%s[%s]", B, i, RST, node->data.ast_exec.argv[i]); // PRINT DEBUGGING 📠
+			printf(" %sargv[%d]%s[%s]", B, i, RST, node->data.ast_exec.argv[i]); // PRINT DEBUGGING 📠
 			w_free((void **)&node->data.ast_exec.argv[i]);
 			i++;
 		}
-		//printf("\n"); // PRINT DEBUGGING 📠
+		printf("\n"); // PRINT DEBUGGING 📠
+
+		// BACKUP 💾
+		//while (i < node->data.ast_exec.argc)
+		//{
+		//	//printf(" %sargv[%d]%s[%s]", B, i, RST, node->data.ast_exec.argv[i]); // PRINT DEBUGGING 📠
+		//	w_free((void **)&node->data.ast_exec.argv[i]);
+		//	i++;
+		//}
+
 		node->data.ast_exec.argc = 0;
 		w_free((void **)&node->data.ast_exec.argv);
 		w_free((void **)&node);
