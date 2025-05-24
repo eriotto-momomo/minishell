@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/04/25 22:26:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/24 16:29:42 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,110 +26,83 @@ int	is_sep(char c)
 	return (0);
 }
 
-char	*get_quote(char *cmd, int i)
+char	*get_quote(char *cmd)
 {
 	char	quote;
 	char	*str;
 	size_t	len;
+	size_t	i;
 
-	quote = cmd[i];
+	if (!cmd || (*cmd != '\'' && *cmd != '"'))
+		return (NULL);
+	quote = *cmd;
 	len = 1;
-	while (cmd[i + len] && cmd[i + len] != quote)
+	while (cmd[len] && cmd[len] != quote)
 		len++;
+	if (!cmd[len])
+		return (NULL);
 	len++;
-	str = malloc((sizeof(char) * len + 1));
+	str = malloc(len + 1);
 	if (!str)
 		return (NULL);
-	len = 0;
-	str[len++] = cmd[i++];
-	while (cmd[i] && cmd[i] != quote)
-		str[len++] = cmd[i++];
-	str[len++] = cmd[i];
-	str[len] = '\0';
+	i = -1;
+	while (++i < len)
+		str[i] = cmd[i];
+	str[i] = '\0';
 	return (str);
 }
 
-char	*get_sep(char *cmd, int i)
+char	*get_sep(char *cmd)
 {
 	char	*sep;
 
-	if ((cmd[i] == '<' && cmd[i + 1] == '<')
-		|| (cmd[i] == '>' && cmd[i + 1] == '>'))
+	if (!cmd)
+		return (NULL);
+	if ((cmd[0] == '<' && cmd[1] == '<') || (cmd[0] == '>' && cmd[1] == '>'))
 	{
-		sep = malloc(sizeof(char) * 3);
+		sep = malloc(3);
 		if (!sep)
 			return (NULL);
-		sep[0] = cmd[i];
-		sep[1] = cmd[i];
+		sep[0] = cmd[0];
+		sep[1] = cmd[1];
 		sep[2] = '\0';
 	}
 	else
 	{
-		sep = malloc(sizeof(char) * 2);
+		sep = malloc(2);
 		if (!sep)
 			return (NULL);
-		sep[0] = cmd[i];
+		sep[0] = cmd[0];
 		sep[1] = '\0';
 	}
 	return (sep);
 }
 
-char	*get_word(char *cmd, int i)
+
+char	*get_word(char *cmd)
 {
 	size_t	len;
 	char	*word;
+	size_t	i;
 
-	len = 0;
-	while (cmd[i + len] && !(is_sep(cmd[i + len]) || ft_isspace(cmd[i + len])))
-		len++;
-	word = malloc((sizeof(char) * len) + 1);
-	if (!word)
+	if (!cmd)
 		return (NULL);
 	len = 0;
-	while (cmd[i] && !(is_sep(cmd[i]) || ft_isspace(cmd[i])))
-		word[len++] = cmd[i++];
-	word[len] = '\0';
+	while (cmd[len] && !is_sep(cmd[len]) && !ft_isspace(cmd[len]))
+		len++;
+
+	word = malloc(len + 1);
+	if (!word)
+		return (NULL);
+
+	i = 0;
+	while (i < len)
+	{
+		word[i] = cmd[i];
+		i++;
+	}
+	word[i] = '\0';
 	return (word);
 }
 
-int	debug(char *path)
-{
-	t_list	*head;
-	int 	fd;
-	char	*line;
 
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Failed to open file\n");
-		return (1);
-	}
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		printf("=================================");
-		printf("\nCmd to tokenize : %s %s %s\n", C, line, RST);
-		head = tokenize(line);
-		print_list(head);
-	}
-	return (0);
-}
-
-void	print_list(t_list *head)
-{
-	int		i;
-	t_list	*temp;
-
-	i = 0;
-	temp = head;
-	while (temp)
-	{
-		printf("Node n. %d\n", i++);
-		printf("Data :%s %s %s\n",G, temp->data, RST);
-		printf("Type : %s %d %s\n", G, temp->type, RST);
-		printf("=======================================\n");
-		temp = temp->next;
-	}
-}

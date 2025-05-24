@@ -6,22 +6,22 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 13:29:45 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/24 16:34:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char *get_el(char *cmd, int i)
+static char *get_el(char *cmd)
 {
 	char *to_push;
 
-	if (cmd[i] == '\'' || cmd[i] == '\"')
-		to_push = get_quote(cmd, i);
-	else if (is_sep(cmd[i]))
-		to_push = get_sep(cmd, i);
+	if (*cmd == '\'' || *cmd == '\"')
+		to_push = get_quote(cmd);
+	else if (is_sep(*cmd))
+		to_push = get_sep(cmd);
 	else
-		to_push = get_word(cmd, i);
+		to_push = get_word(cmd);
 	return (to_push);
 }
 
@@ -45,36 +45,46 @@ int	get_token_id(char *token)
 	return (WORD);
 }
 
-t_list *tokenize(char *cmd)
+int tokenize(t_list **head, char *cmd)
 {
-	int i;
-	char *el;
-	t_list *head;
+	char	*el;
+	char	*rest;
+	size_t	len;
 
-	i = 0;
-	head = NULL;
-	while (cmd[i] && ft_isspace(cmd[i]))
-		i++;
-	while (cmd[i])
+	if (!cmd || !*cmd)
+		return (1);
+	while (ft_isspace(*cmd))
+		cmd++;
+	el = get_el(cmd);
+	if (!el)
+		return (0);
+	len = ft_strlen(el);
+	rest = ft_strdup(cmd + len);
+	if (!rest)
 	{
-		el = get_el(cmd, i);
-		if (!el)
-		{
-			free_list(&head);
-			return (NULL);
-		}
-		add_back(&head, el);
-		i += ft_strlen(el);
-		while (cmd[i] && ft_isspace(cmd[i]))
-			i++;
+		free(el);
+		return (0);
 	}
-	return (head);
+	if (!add_back(head, el))
+	{
+		free(el);
+		free(rest);
+		return (0);
+	}
+	free(el);
+	return (tokenize(head, rest));
 }
+
 
 void	lexer(t_shell *s)
 {
-	s->head = tokenize(s->line);
-	if (!s->head)
+	t_list	*token;
+	char	*to_tokenize;
+
+	token = NULL;
+	s->head = token;
+	to_tokenize = s->line;
+	if (tokenize(&(s->head), to_tokenize))
 	{
 		perror("Something went wrong");
 		terminate_shell(s);
