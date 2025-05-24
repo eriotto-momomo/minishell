@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:45:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/24 15:45:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/24 15:52:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int process_quote(char **s)
 		(str[0] == '"' && str[len - 1] == '"'))
 	{
 		trimmed = ft_substr(str, 1, len - 2);
+		printf("%s\n",trimmed);
 		if (!trimmed)
 			return (0);
 		free(*s);

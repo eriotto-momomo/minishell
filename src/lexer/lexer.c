@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/24 15:44:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/24 15:55:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ t_list *tokenize(char *cmd)
 			free_list(&head);
 			return (NULL);
 		}
+		i += ft_strlen(el);
 		if (!process_quote(&el))
 		{
 			free_list(&head);
 			return (NULL);
 		}
 		add_back(&head, el);
-		i += ft_strlen(el);
 	}
 	return (head);
 }
