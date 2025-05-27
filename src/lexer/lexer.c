@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/24 16:34:43 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 09:03:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,44 +47,36 @@ int	get_token_id(char *token)
 
 int tokenize(t_list **head, char *cmd)
 {
+	char	*ptr;
 	char	*el;
-	char	*rest;
-	size_t	len;
 
 	if (!cmd || !*cmd)
 		return (1);
-	while (ft_isspace(*cmd))
-		cmd++;
-	el = get_el(cmd);
-	if (!el)
-		return (0);
-	len = ft_strlen(el);
-	rest = ft_strdup(cmd + len);
-	if (!rest)
+	ptr = cmd;
+	while (ptr)
 	{
-		free(el);
-		return (0);
+		while (ft_isspace(*ptr))
+			ptr++;
+		if (!*ptr)
+			return (1);
+		el = get_el(ptr);
+		if (!el)
+			return (0);
+		ptr += ft_strlen(el);
+		if (!add_back(head, el))
+			return (0);
 	}
-	if (!add_back(head, el))
-	{
-		free(el);
-		free(rest);
-		return (0);
-	}
-	free(el);
-	return (tokenize(head, rest));
+	return (1);
 }
 
 
 void	lexer(t_shell *s)
 {
 	t_list	*token;
-	char	*to_tokenize;
 
 	token = NULL;
 	s->head = token;
-	to_tokenize = s->line;
-	if (tokenize(&(s->head), to_tokenize))
+	if (!tokenize(&(s->head), s->line))
 	{
 		perror("Something went wrong");
 		terminate_shell(s);

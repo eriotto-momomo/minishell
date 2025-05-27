@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/24 16:34:10 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 08:35:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 void	process_input(t_shell *s)
 {
 	lexer(s);
+	printf("test\n");
 	if (parser(s))
 		return ;
 	execution(s);

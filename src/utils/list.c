@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/24 16:33:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 08:59:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	add_back(t_list **head, char *data)
 		temp = temp->next;
 	temp->next = new_node;
 	new_node->prev = temp;
-	return (0);
+	return (1);
 }
 
 void free_list(t_list **head)
