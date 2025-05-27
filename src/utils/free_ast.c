@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/22 17:23:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:33:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_pipe_node(t_ast *node)
 			free_redir_node(node->data.ast_pipe.right);
 	}
 	w_free((void **)&node);
-	//printf("%s🔶FREE PIPE_NODE.|%s %sFREED!%s\n", Y, RST, G, RST); // PRINT DEBUGGING 📠
+	printf("%s🔶FREE PIPE_NODE.|%s %sFREED!%s\n", Y, RST, G, RST); // PRINT DEBUGGING 📠
 }
 
 void	free_redir_node(t_ast *node)
@@ -50,7 +50,7 @@ void	free_redir_node(t_ast *node)
 	node->data.ast_redir.mode = 0;
 	w_free((void **)&node->data.ast_redir.filename);
 	w_free((void **)&node);
-	//printf("%s🔴FREE REDIR_NODE|%s %sFREED!%s\n", R, RST, G, RST); // PRINT DEBUGGING 📠
+	printf("%s🔴FREE REDIR_NODE|%s %sFREED!%s\n", R, RST, G, RST); // PRINT DEBUGGING 📠
 }
 
 void	free_exec_node(t_ast *node)
@@ -66,6 +66,9 @@ void	free_exec_node(t_ast *node)
 		while (node->data.ast_exec.argv[i])
 		{
 			printf(" %sargv[%d]%s[%s]", B, i, RST, node->data.ast_exec.argv[i]); // PRINT DEBUGGING 📠
+			if (ft_strncmp(node->data.ast_exec.argv[i], "./tmp/heredoc_tmp.txt",
+					ft_strlen(node->data.ast_exec.argv[i])))
+				unlink("./tmp/heredoc_tmp.txt");
 			w_free((void **)&node->data.ast_exec.argv[i]);
 			i++;
 		}
@@ -96,5 +99,5 @@ void	free_ast(t_ast **node)
 	else if (node && (*node)->tag == AST_EXEC)
 		free_exec_node(*node);
 	*node = NULL;
-	//printf("%s🔥AST FREED🔥%s\n", G, RST); // PRINT DEBUGGING 📠
+	printf("%s🔥AST FREED🔥%s\n", G, RST); // PRINT DEBUGGING 📠
 }
