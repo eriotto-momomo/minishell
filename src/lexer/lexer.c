@@ -6,15 +6,15 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/27 09:03:40 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 09:20:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char *get_el(char *cmd)
+static char	*get_el(char *cmd)
 {
-	char *to_push;
+	char	*to_push;
 
 	if (*cmd == '\'' || *cmd == '\"')
 		to_push = get_quote(cmd);
@@ -27,7 +27,6 @@ static char *get_el(char *cmd)
 
 int	get_token_id(char *token)
 {
-
 	if (token[0] == '>')
 	{
 		if (token[1] == '>')
@@ -45,7 +44,7 @@ int	get_token_id(char *token)
 	return (WORD);
 }
 
-int tokenize(t_list **head, char *cmd)
+int	tokenize(t_list **head, char *cmd)
 {
 	char	*ptr;
 	char	*el;
@@ -68,7 +67,6 @@ int tokenize(t_list **head, char *cmd)
 	}
 	return (1);
 }
-
 
 void	lexer(t_shell *s)
 {

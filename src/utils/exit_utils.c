@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/16 14:11:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 09:21:00 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void terminate_shell(t_shell *s)
 		free_ast(&(s->root_node));
 	if (s->env_list)
 		free_env(&(s->env_list));
+	w_free((void **)&(s->line));
 	w_free((void **)&(s->pwd));
 	w_free((void **)&(s->old_pwd));
 	w_free((void **)&(s->prompt));
