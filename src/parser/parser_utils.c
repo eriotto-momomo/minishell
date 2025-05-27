@@ -6,16 +6,46 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/22 17:11:31 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:21:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	get_next_token(t_list **tok)
+int	count_args(t_list *tok)
 {
-	if ((*tok) && (*tok)->next)
+	int	count;
+	t_list *ptr;
+
+	ptr = tok;
+	count = 0;
+	while (ptr && ptr->type ==  WORD)
+	{
+		if (ptr->type ==  WORD)
+			count++;
+		if (ptr->next)
+			ptr = ptr->next;
+		else if(!ptr->next)
+			break ;
+	}
+	if (count >= ARG_MAX)
+	{
+		errno = E2BIG;
+		ft_puterror("count_args", strerror(errno));
+		return (-1);
+	}
+	return (count);
+}
+
+int	get_next_token(t_list **tok)
+{
+	if (!(*tok) || !(*tok)->next)
+		return (0);
+	else
+	{
 		*tok = (*tok)->next;
+		return (1);
+	}
 }
 
 char	*fill_exec_node(t_list *tok)

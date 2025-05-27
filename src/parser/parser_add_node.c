@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/21 18:54:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:26:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,25 @@ t_ast	*add_redir_node(t_ast *left, char *filename, int mode)
 t_ast	*add_exec_node(t_list **tok)
 {
 	t_ast	*node;
+	int		i;
 
 	node = ast_new_node((t_ast){0});
 	if (!node)
 		return (NULL);
 	node->tag = AST_EXEC;
-	node->data.ast_exec.argc = 0;
-	w_malloc((void**)&node->data.ast_exec.argv, (sizeof(char**) * 10)); // 🗯️ Nombre d'args max à gérer ❔
-	while (*tok && (*tok)->type == WORD)
-	{
-		node->data.ast_exec.argv[node->data.ast_exec.argc++]
-			= fill_exec_node(*tok);
-		if (!node->data.ast_exec.argv[node->data.ast_exec.argc - 1]) // 🗯️ -1❔
-		{
-			ft_free_char_array(node->data.ast_exec.argv,
-				node->data.ast_exec.argc - 1); // 🗯️ -1❔
+	node->data.ast_exec.argc = count_args(*tok);
+	node->data.ast_exec.argv = malloc(sizeof(char **) * (node->data.ast_exec.argc + 1)); //📍`+1` au cas ou il y'a un HEREDOC a gerer
+	if (!node->data.ast_exec.argv)
 			return (NULL);
-		}
-		if (!tok || !(*tok)->next)
+	i = 0;
+	while ((*tok && (*tok)->type == WORD) && i < node->data.ast_exec.argc)
+	{
+		node->data.ast_exec.argv[i] = fill_exec_node(*tok);
+		if (!node->data.ast_exec.argv[i])
+			return (ft_free_char_array(node->data.ast_exec.argv, i));
+		if (!get_next_token(tok))
 			break ;
-		else
-			get_next_token(tok);
+		i++;
 	}
 	node->data.ast_exec.argv[node->data.ast_exec.argc] = '\0';
 	return (node);
@@ -87,7 +85,8 @@ t_ast	*ast_new_node(t_ast node)
 {
 	t_ast	*ptr;
 
-	w_malloc((void **)&ptr, sizeof(t_ast));
+	//w_malloc((void **)&ptr, sizeof(t_ast));
+	ptr = malloc(sizeof(t_ast));
 	if (ptr)
 		*ptr = node;
 	return (ptr);
