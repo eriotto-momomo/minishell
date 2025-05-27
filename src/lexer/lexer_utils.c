@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/24 16:29:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 09:07:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ char	*get_sep(char *cmd)
 	return (sep);
 }
 
-
 char	*get_word(char *cmd)
 {
 	size_t	len;
@@ -90,11 +89,9 @@ char	*get_word(char *cmd)
 	len = 0;
 	while (cmd[len] && !is_sep(cmd[len]) && !ft_isspace(cmd[len]))
 		len++;
-
 	word = malloc(len + 1);
 	if (!word)
 		return (NULL);
-
 	i = 0;
 	while (i < len)
 	{
@@ -104,5 +101,3 @@ char	*get_word(char *cmd)
 	word[i] = '\0';
 	return (word);
 }
-
-
