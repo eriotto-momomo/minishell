@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   get_arr_size.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 16:41:42 by emonacho         ###   ########.fr       */
+/*   Created: 2025/05/29 16:25:30 by emonacho          #+#    #+#             */
+/*   Updated: 2025/05/29 16:28:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void init_shell(t_shell *s, char	**envp)
+size_t	get_arr_size(char **arr)
 {
-	s->env_list = table_to_ll(envp);
-	if (!s->env_list)
-		terminate_shell(s, errno);
-	s->ret_value = 0;
-	s->prompt = NULL;
-	s->line = NULL;
-	s->old_pwd = NULL;
-	s->pwd = save_cwd();
-	s->old_pwd = save_cwd();
-	s->head = NULL;
-	s->root_node = NULL;
-	s->current_node = NULL;
-	s->heredoc_list = NULL;
-	s->heredoc_count = 1;
+	size_t	i;
+
+	i = 0;
+	if (!arr)
+		return (0);
+	while(1)
+	{
+		if (arr[i])
+			i++;
+		else
+			break ;
+	}
+	if (i > 0)
+		return (i - 2);
+	else
+		return (0);
 }

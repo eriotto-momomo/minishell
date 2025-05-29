@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/27 16:44:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:09:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define PARSER_H
 
 // parser_add_node.c
+int		put_in_heredoc_list(t_shell *s, char *filename);
 t_ast	*add_pipe_node(t_ast *left, t_ast *right);
-t_ast	*add_redir_node(t_ast *left, char *filename, int mode);
+t_ast	*add_redir_node(t_shell *s, t_ast *left, char *filename, int mode);
 t_ast	*add_exec_node(t_list **tok);
 t_ast	*ast_new_node(t_ast node);
 
@@ -37,14 +38,14 @@ t_ast	*ast_new_node(t_ast node);
  * @note The token list is always freed by this function, regardless of the outcome.
  */
 int		parser(t_shell *s);
-t_ast	*build_ast(t_list **tok);
+t_ast	*build_ast(t_shell *s, t_list **tok);
 void	print_preorder(t_ast *node);
 
 // parser_func.c
-t_ast	*parse_pipe(t_list **tok);
-t_ast	*parse_line(t_list **tok);
-t_ast	*parse_redir(t_list **tok, t_ast *left);
-t_ast	*parse_exec(t_list **tok);
+t_ast	*parse_pipe(t_shell *s, t_list **tok);
+t_ast	*parse_line(t_shell *s, t_list **tok);
+t_ast	*parse_redir(t_shell *s, t_list **tok, t_ast *left);
+t_ast	*parse_exec(t_shell *s, t_list **tok);
 
 // parser_utils.c
 char	*fill_exec_node(t_list *tok);

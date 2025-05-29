@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/21 14:54:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:56:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ typedef struct s_shell
 	t_list	*head;
 	t_sig	*sig;
 	char	*heredoc_tmp;
+	char	**heredoc_list;
+	int		heredoc_count;
 	int		fd;
 	int		root_fd;
 	int		pipefd[2]; // 🚨 NORM OK❔ Besoin d'un malloc❔
