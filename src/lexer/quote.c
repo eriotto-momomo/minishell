@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:45:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/27 10:58:58 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/29 16:32:11 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,3 @@ int	process_quote(char **s)
 	}
 	return (1);
 }
-
-
-// int	process_quote(char **s)
-// {
-// 	char	*str;
-// 	char	*tmp;
-// 	int		start;
-	
-// 	str = *s;
-// 	start = 0;
-// 	while (*str)
-// 	{
-// 		while(ft_isspace(*str))
-// 			str++;
-// 		tmp = get_el(*str);
-		
-// 	}
-// 	return (1);
-// }
