@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 21:26:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:43:47 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	*ft_strnprefix(char *str, char *prefix, size_t len);
 void	*ft_free_array(void *array, int size, char mode);
 void	*ft_free_char_array(char **array, int size);
 size_t	ft_count_tab(void *tab, int mode);
+int		ft_isquote(int c);
 
 // wrapperss
 void w_free(void **ptr);

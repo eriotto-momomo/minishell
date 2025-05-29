@@ -3,23 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/17 15:18:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:53:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static int	check_match_quote(char *s, int i)
+{
+	char	quote;
+	
+	quote = s[i++];
+	while (s[i] && s[i] != quote)
+		i++;
+	if (s[i] == quote)
+		return (i);
+	return (0);
+}
+
 static int	quote_check(t_list *tok)
 {
-	if (tok->data[0] == '\'' || tok->data[0] == '\"')
+	int		start;
+
+	start = 0;
+	while (tok->data[start])
 	{
-		if (tok->data[0] == '\'' && tok->data[ft_strlen(tok->data) - 1] != '\'')
-			return (UNMATCHED_QUOTE);
-		else if (tok->data[0] == '\"' && tok->data[ft_strlen(tok->data) - 1] != '\"')
-			return (UNMATCHED_QUOTE);
+		if (ft_isquote(tok->data[start]))
+		{
+			start = check_match_quote(tok->data, start);
+			if (!start)
+				return (UNMATCHED_QUOTE);
+		}
+		start++;
 	}
 	return (0);
 }
