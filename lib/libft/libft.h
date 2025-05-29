@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/21 18:33:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:27:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int		ft_puterror(char *error_location, char *error_msg);
 void	*ft_free_array(void *array, int size, char mode);
 void	*ft_free_char_array(char **array, int size);
 size_t	ft_count_tab(void *tab, int mode);
+char	**grow_array(char **arr, size_t size);
+size_t	get_arr_size(char **arr);
 
 // wrapperss
 void w_free(void **ptr);

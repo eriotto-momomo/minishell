@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/22 13:48:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:07:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 
 int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {
+	printf("handle_redir| %sredir node:%s\n", Y, RST);
+	print_node((*current_node));
 	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
 			|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
 	{
