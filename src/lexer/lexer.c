@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 12:35:07 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/29 16:32:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	tokenize(t_list **head, char *cmd)
 		if (!*ptr)
 			return (1);
 		el = get_el(ptr);
-		printf("el :%s\n", el);
 		if (!el)
 			return (0);
 		ptr += ft_strlen(el);
@@ -56,14 +55,12 @@ int	tokenize(t_list **head, char *cmd)
 	return (1);
 }
 
-
 void	lexer(t_shell *s)
 {
 	t_list	*token;
 
 	token = NULL;
 	s->head = token;
-	rm_quote(s->line);
 	if (!tokenize(&(s->head), s->line))
 	{
 		perror("Something went wrong");

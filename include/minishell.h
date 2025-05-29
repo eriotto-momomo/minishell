@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:22:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:08:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define DEFAULT_PROMPT "minishell-1.0$ "
 
 // Char set de caractere qui peuvent separer des token dans une commande
-# define SEPARATORS "|\"\'<>"
+# define SEPARATORS "|<>"
 
 // ENV
 t_env	*create_var(char *name, char	*value);
