@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/18 15:28:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/27 09:19:17 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void prompt_loop(t_shell *s)
 {
 	while (1)
 	{
-		s->line = readline(s->prompt);
+		s->line = (readline(s->prompt));
 		if (s->line && *s->line)
 		{
 			add_history(s->line);
@@ -41,10 +41,11 @@ int main(int argc, char **argv, char **envp)
 {
 	t_shell s;
 
+	(void)argv;
 	if (argc > 1)
 	{
 		printf("\nEntering Debug mode !\n\n");
-		debug(argv[1]);
+		// debug(argv[1]);
 	}
 	else
 	{
