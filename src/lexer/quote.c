@@ -6,25 +6,24 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 14:45:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/24 15:52:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 10:58:58 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
-int process_quote(char **s)
+int	process_quote(char **s)
 {
-	char *trimmed;
-	char *str;
-	size_t len;
+	char	*trimmed;
+	char	*str;
+	size_t	len;
 
 	str = *s;
 	len = ft_strlen(str);
-	if ((str[0] == '\'' && str[len - 1] == '\'') ||
-		(str[0] == '"' && str[len - 1] == '"'))
+	if ((str[0] == '\'' && str[len - 1] == '\'')
+		|| (str[0] == '"' && str[len - 1] == '"'))
 	{
 		trimmed = ft_substr(str, 1, len - 2);
-		printf("%s\n",trimmed);
 		if (!trimmed)
 			return (0);
 		free(*s);
@@ -32,3 +31,22 @@ int process_quote(char **s)
 	}
 	return (1);
 }
+
+
+// int	process_quote(char **s)
+// {
+// 	char	*str;
+// 	char	*tmp;
+// 	int		start;
+	
+// 	str = *s;
+// 	start = 0;
+// 	while (*str)
+// 	{
+// 		while(ft_isspace(*str))
+// 			str++;
+// 		tmp = get_el(*str);
+		
+// 	}
+// 	return (1);
+// }
