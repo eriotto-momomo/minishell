@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/30 18:32:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:54:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,16 @@ int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 		fd_in = redirect(s, (*current_node), fd_in, fd_out);	// Ne recup pas reellemnent le `fd`
 	if (fd_in < 0 || fd_out < 0)
 		return (-1);
-	if ((*current_node)->data.ast_redir.mode == OUT_REDIR)
-			preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, s->root_fd);
+	//if ((*current_node)->data.ast_redir.mode == OUT_REDIR)
+	//		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, s->root_fd);
 	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
 		|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
 	{
+		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, s->root_fd); //🚨TEST🚨
 		if (close(fd_out) < 0)
 			return (-1);
 	}
+	//else	// IN_REDIR ou HEREDOC
 	printf("%shandle_redir |[2] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 	return (0);
 }
