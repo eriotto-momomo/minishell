@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/30 12:39:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:03:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 
 int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {
+	printf("%shandle_redir |[1] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
 			|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
 	{
@@ -53,21 +54,49 @@ int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 			s->root_fd = fd_out;
 	}
 	else
-		fd_in = redirect(s, (*current_node), fd_in, s->root_fd);
+		fd_in = redirect(s, (*current_node), fd_in, fd_out); // PAASSER FD NECESSAIRE?
 	if (fd_in < 0 || fd_out < 0)
 		return (-1);
-	if ((*current_node)->data.ast_redir.left->tag == AST_EXEC)	// 🚨 Pas au bon endroit?
+	if ((s->root_fd > -1) && (*current_node)->data.ast_redir.left->tag == AST_EXEC)
 		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, s->root_fd);
-	//else	// 🚨 Fais bugger les multiples HEREDOCS, vraiment necessaire? 🚧 A bien tester sans! 🚧
-	//	preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, fd_out);
+	else	// 🚨 Fais bugger les multiples HEREDOCS, mais les OUTPUT_REDIR ne fonctionnent pas sans
+		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, fd_out);
 	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
 		|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
 	{
 		if (close(fd_out) < 0)
 			return (-1);
 	}
+	printf("%shandle_redir |[2] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 	return (0);
 }
+
+// BACKUP 💾
+/*int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
+{
+	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
+			|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
+	{
+		fd_out = redirect(s, (*current_node));
+		if ((!s->root_fd) && fd_out >= 0)
+			s->root_fd = fd_out;
+	}
+	else
+		fd_in = redirect(s, (*current_node));
+	if (fd_in < 0 || fd_out < 0)
+		return (0);
+	if ((*current_node)->data.ast_redir.left->tag == AST_EXEC)
+		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, s->root_fd);
+	else
+		preorder_exec(s, &(*current_node)->data.ast_redir.left, fd_in, fd_out);
+	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
+		|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
+	{
+		if (close(fd_out) < 0)
+			return (0);
+	}
+	return (1);
+}*/
 
 int	setup_pipe(int	fd_in, int fd_out)
 {
