@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 09:21:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:19:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ t_ast	*add_redir_node(t_shell *s, t_ast *left, char *filename, int mode)
 	node->tag = AST_REDIR;
 	node->data.ast_redir.left = left;
 	node->data.ast_redir.mode = mode;
-	//if (mode == HERE_DOC)
-	//{
-	//	if (put_in_heredoc_list(s, filename) != 0)
-	//		return (NULL);
-	//}
 	node->data.ast_redir.filename = ft_strdup(filename);
 	if (!node->data.ast_redir.filename)
 	{

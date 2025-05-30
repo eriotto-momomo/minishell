@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 09:21:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:39:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,16 @@ int	is_delimiter(char *line, char *delimiter)	// 🚨 A TESTER!
 	return (0);
 }
 
-int	handle_heredoc(t_shell *s, t_ast *current_node)
+int	write_heredoc(t_shell *s, t_ast *current_node)
 {
 	char	*ptr;
 
+	printf("%swrite_heredoc | current delimiter%s %s\n", P, RST, current_node->data.ast_redir.filename);
 	ptr = current_node->data.ast_redir.filename;
 	s->fd = open(s->heredoc_tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (s->fd < 0)
 		return (-1);
 	reset_prompt(s, HEREDOC_PROMPT);
-	// 🚨 ON ARRIVE ICI AVEC LE DERNIER HEREDOC DETECTE 🚨
-	// Si: `cat << 1 << 2 << 3 << 4` ---> `s->fd` est égal au fd de 4
-	// Les `EOF` se ferment de gache a droite donc:
-	// ⚪ 1. Récupérer la liste des délimiteurs précédents
-	// ----> Fonction qui recupere tous les `filename`
-	// ⚪ 2. Si l'EOF est appelé dans le bon ordre et que le prochain EOF n'est pas le dernier
-	// le contenu de `heredoc_tmp` est overwrite jusqu'au prochain EOF.
-	// ----> Fonction qui consomme les EOF
-	// ⚪ 3. Si l'EOF appelé correspond au dernier de la liste on `break` et on envoie ce fd.
-	// ----> On free la liste de delimiteurs
 	while (1)
 	{
 		s->line = readline("> ");
@@ -86,12 +77,11 @@ int	handle_heredoc(t_shell *s, t_ast *current_node)
 	w_free((void **)&s->line);
 	if (close(s->fd) < 0)
 		return (-1);
-	printf("handle_heredoc| %shandle_redir SUCCEED!%s\n", G, RST);
 	return (0);
 }
 
 // BACKUP💾
-/*int	handle_heredoc(t_shell *s)
+/*int	write_heredoc(t_shell *s)
 {
 	char	*ptr;
 
@@ -119,3 +109,23 @@ int	handle_heredoc(t_shell *s, t_ast *current_node)
 		return (-1);
 	return (0);
 }*/
+
+int	handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
+{
+	if (current_node->data.ast_redir.left->tag == AST_EXEC)
+		s->root_redir = current_node;
+	if (current_node->data.ast_redir.left->data.ast_redir.mode == HERE_DOC)
+	{
+		if (handle_heredoc(s, current_node->data.ast_redir.left, fd_in, fd_out) < 0)
+			return (-1);
+	}
+	if (write_heredoc(s, current_node) != 0)
+		return (-1);
+	if (redirect_input(s, &(*s->root_redir)) != 0)
+		return (-1);
+	printf("%shandle_heredoc | s->root_redir%s\n", P, RST);
+	print_node(s->root_redir);
+	//if (current_node->data.ast_redir.left->tag == AST_EXEC) // 🚨TEST🚨
+	//	preorder_exec(s, &current_node->data.ast_redir.left, fd_in, fd_out);
+	return (0);
+}
