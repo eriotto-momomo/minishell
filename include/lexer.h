@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/24 16:32:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 10:44:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,6 @@ char *get_sep(char *cmd);
 char	*get_quote(char *cmd);
 int   get_token_id(char *token);
 void	lexer(t_shell *s);
+int   process_quote(char **s);
+char  *get_el(char *cmd);
 #endif
