@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/29 14:09:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 08:53:06 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_ast	*parse_exec(t_shell *s, t_list **tok);
 char	*fill_exec_node(t_list *tok);
 int		get_next_token(t_list **tok);
 int		count_args(t_list *tok);
+int	put_in_heredoc_list(t_shell *s, char *filename);
 void	print_node(t_ast *ast); // 🚮TO REMOVE
 
 // syntax_analysis.c

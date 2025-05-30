@@ -6,11 +6,12 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/27 18:21:31 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 09:17:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
 
 int	count_args(t_list *tok)
 {
