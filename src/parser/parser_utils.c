@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 09:17:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:09:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	print_node(t_ast *ast)
 	t_ast	*left;
 	t_ast	*right;
 	t_ast	*redir;
+	int i = 0;
 
 	if (ast->tag == AST_EXEC)
 	{
@@ -79,7 +80,7 @@ void	print_node(t_ast *ast)
 		printf("%sprint_node%s| args:", B, RST);
 		//for (int i = 0; i < ast->data.ast_exec.argc; i++)
 		//		printf(" [%s%s%s]", C, ast->data.ast_exec.argv[i], RST);
-		int i = 0;
+		i = 0;
 		while (ast->data.ast_exec.argv[i])
 		{
 			printf(" [%s%s%s]", C, ast->data.ast_exec.argv[i], RST);
@@ -128,8 +129,14 @@ void	print_node(t_ast *ast)
 		{
 			printf("%sprint_node%s| L. BRANCH: [%sAST_EXEC%s]\n", B, RST, P, RST);
 			printf("%sprint_node%s| args:", B, RST);
-			for (int i = 0; i < ast->data.ast_redir.left->data.ast_exec.argc; i++)
+			i = 0;
+			while (ast->data.ast_redir.left->data.ast_exec.argv[i])
+			{
 				printf(" [%s%s%s]", C, ast->data.ast_redir.left->data.ast_exec.argv[i], RST);
+				i++;
+			}
+			//for (int i = 0; i < ast->data.ast_redir.left->data.ast_exec.argc; i++)
+			//	printf(" [%s%s%s]", C, ast->data.ast_redir.left->data.ast_exec.argv[i], RST);
 			printf("\n");
 		}
 		else if (left->tag == AST_PIPE)

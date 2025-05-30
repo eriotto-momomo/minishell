@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 12:39:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:03:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,38 +80,10 @@ int	write_heredoc(t_shell *s, t_ast *current_node)
 	return (0);
 }
 
-// BACKUP💾
-/*int	write_heredoc(t_shell *s)
-{
-	char	*ptr;
-
-	ptr = s->root_node->data.ast_redir.filename;
-	s->fd = open(s->heredoc_tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (s->fd < 0)
-		return (-1);
-	reset_prompt(s, HEREDOC_PROMPT);
-	while (1)
-	{
-		s->line = readline("> ");
-		if (!s->line)
-			break;
-		if (is_delimiter(s->line, s->root_node->data.ast_redir.filename))
-			break ;
-		if ((ptr[0] != '\'' && ptr[ft_strlen(ptr)] != '\'')		// 🚨 A TESTER!
-			&& (ptr[0] != '\"' && ptr[ft_strlen(ptr)] != '\"'))	// 🚨 A TESTER!
-			expand(s->env_list, &(s->line));
-		if (put_in_heredoc(s->line, s->fd) != 0)
-			return (-1);
-		w_free((void **)&s->line);
-	}
-	w_free((void **)&s->line);
-	if (close(s->fd) < 0)
-		return (-1);
-	return (0);
-}*/
-
 int	handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 {
+	printf("handle_redir | %scurrent_node%s\n", Y, RST);
+	print_node(current_node);
 	if (current_node->data.ast_redir.left->tag == AST_EXEC)
 		s->root_redir = current_node;
 	if (current_node->data.ast_redir.left->data.ast_redir.mode == HERE_DOC)
@@ -121,11 +93,9 @@ int	handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 	}
 	if (write_heredoc(s, current_node) != 0)
 		return (-1);
+	printf("%shandle_heredoc | HEREDOC WRITEN!%s\n", Y, RST);
 	if (redirect_input(s, &(*s->root_redir)) != 0)
 		return (-1);
-	printf("%shandle_heredoc | s->root_redir%s\n", P, RST);
-	print_node(s->root_redir);
-	//if (current_node->data.ast_redir.left->tag == AST_EXEC) // 🚨TEST🚨
-	//	preorder_exec(s, &current_node->data.ast_redir.left, fd_in, fd_out);
+	printf("%shandle_heredoc | OUTPUT REDIRECTED!%s\n", Y, RST);
 	return (0);
 }

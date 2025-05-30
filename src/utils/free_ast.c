@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/27 18:33:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:35:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ void	free_exec_node(t_ast *node)
 		while (node->data.ast_exec.argv[i])
 		{
 			printf(" %sargv[%d]%s[%s]", B, i, RST, node->data.ast_exec.argv[i]); // PRINT DEBUGGING 📠
-			if (ft_strncmp(node->data.ast_exec.argv[i], "./tmp/heredoc_tmp.txt",
-					ft_strlen(node->data.ast_exec.argv[i])))
-				unlink("./tmp/heredoc_tmp.txt");
+			//if (ft_strncmp(node->data.ast_exec.argv[i], "./tmp/heredoc_tmp.txt",
+			//		ft_strlen(node->data.ast_exec.argv[i])))
+			//{
+			//	w_free((void **)&s->heredoc_tmp);
+			//	unlink("./tmp/heredoc_tmp.txt");
+			//}
 			w_free((void **)&node->data.ast_exec.argv[i]);
 			i++;
 		}
