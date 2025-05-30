@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 16:41:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 08:55:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,4 @@ void init_shell(t_shell *s, char	**envp)
 	s->head = NULL;
 	s->root_node = NULL;
 	s->current_node = NULL;
-	s->heredoc_list = NULL;
-	s->heredoc_count = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/29 17:13:55 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 09:21:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,6 @@ int	handle_heredoc(t_shell *s, t_ast *current_node)
 	// ----> Fonction qui consomme les EOF
 	// ⚪ 3. Si l'EOF appelé correspond au dernier de la liste on `break` et on envoie ce fd.
 	// ----> On free la liste de delimiteurs
-
-	// TEST /////////////////////////////////////
-	int i = 0;
-	while (i < s->heredoc_count)
-	{
-		printf("handle_heredoc| s->heredoc_list[%d][%s]\n", i, s->heredoc_list[s->heredoc_count]);
-		i++;
-	}
-	// TEST /////////////////////////////////////
 	while (1)
 	{
 		s->line = readline("> ");
@@ -95,7 +86,6 @@ int	handle_heredoc(t_shell *s, t_ast *current_node)
 	w_free((void **)&s->line);
 	if (close(s->fd) < 0)
 		return (-1);
-	ft_free_char_array(s->heredoc_list, s->heredoc_count);
 	printf("handle_heredoc| %shandle_redir SUCCEED!%s\n", G, RST);
 	return (0);
 }

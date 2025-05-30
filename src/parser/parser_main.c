@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/29 13:51:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 09:25:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	parser(t_shell *s)
 		//terminate_shell(s, errno);
 		return (1);
 	}
+	s->heredoc_list = NULL;
+	s->heredoc_count = 1;
 	s->root_node = build_ast(s, &temp);
 	if (!s->root_node)
 	{
