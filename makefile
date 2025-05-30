@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/05/24 15:29:21 by timmi            ###   ########.fr        #
+#    Updated: 2025/05/30 15:21:28 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/builtin/ft_export.c\
 			$(CFILES_PATH)/init/init_env.c\
 			$(CFILES_PATH)/init/init_shell.c\
+			$(CFILES_PATH)/expand/word_processing.c\
 			$(CFILES_PATH)/expand/var_expansion.c\
 			$(CFILES_PATH)/expand/var_expansion_utils.c\
 			$(CFILES_PATH)/wrappers/wrappers.c \
