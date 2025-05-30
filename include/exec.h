@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 13:28:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:39:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int		handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out);
 int		handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out);
 
 // redir.c
-int		redirect(t_shell *s, t_ast *current_node);
+int		redirect(t_shell *s, t_ast *current_node, int fd_in, int fd_out);
+int		redirect_input(t_shell *s, t_ast *current_node);
 
 // heredoc.c
-int		handle_heredoc(t_shell *s, t_ast *current_node);
+int		write_heredoc(t_shell *s, t_ast *current_node);
+int		handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out);
 
 #endif

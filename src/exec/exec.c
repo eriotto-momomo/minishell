@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/30 09:34:33 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 12:39:28 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	ft_external(t_env *env, t_ast *current_node, int fd_in, int fd_out)
 
 int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {
-	printf("preorder exec| %scurrent_node:%s\n", Y, RST);
-	print_node((*current_node));
+	//printf("preorder exec| %scurrent_node:%s\n", Y, RST);
+	//print_node((*current_node));
 	if (!(*current_node))
 		return (0);
 	if ((*current_node)->tag == AST_PIPE)
@@ -59,9 +59,13 @@ void	execution(t_shell *s)
 	int	err;
 
 	s->root_fd = -1;
+	s->heredoc_tmp = ft_strdup("./tmp/heredoc_tmp.txt");	// 🚨TEST🚨
+	if (!s->heredoc_tmp)									// 🚨TEST🚨
+		terminate_shell(s, errno);							// 🚨TEST🚨
 	err = preorder_exec(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
 	s->ret_value = err;
 	//if (err != 0)
 	//	terminate_shell(s, errno);
 	free_ast(&(s->root_node));
+	w_free((void **)&s->heredoc_tmp);
 }
