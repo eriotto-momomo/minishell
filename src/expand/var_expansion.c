@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:03:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/30 15:34:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ static char	*replace(t_env *env, char *str, char *value)
 	return (prefix);
 }
 
-void	expand(t_env *env, char **str)
+int	expand(t_env *env, char **str)
 {
 	char	*var;
 	char	*r_str;
 
 	if (!ft_strchr(*str, '$'))
-		return ;
+		return (1);
 	var = get_var(*str);
 	if (is_in_env(env, var))
 		r_str = replace(env, *str, var);
@@ -103,17 +103,7 @@ void	expand(t_env *env, char **str)
 		*str = r_str;
 	}
 	else
-		return ;
+		return (0);
 	expand(env, str);
-}
-
-void	var_expansion(t_shell *s, char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		expand(s->env_list, &args[i++]);
-	}
+	return (1);
 }
