@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 16:03:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:32:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ int	redirect(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 	s->fd = -1;
 	if (current_node->data.ast_redir.mode == HERE_DOC)
 	{
-		printf("%shandle_heredoc |[1] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
+		printf("redirect| %scurrent_node BEFORE handle_heredoc%s\n", Y, RST);
+		print_node(current_node);
 		s->fd = handle_heredoc(s, current_node, fd_in, fd_out);
 		s->root_redir = NULL;
-		printf("%shandle_heredoc |[2] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
+		printf("redirect| %scurrent_node AFTER handle_heredoc%s\n", Y, RST);
+		print_node(current_node);
 	}
 	else if (current_node->data.ast_redir.mode == IN_REDIR)
 		s->fd = redirect_input(s, current_node);
@@ -59,7 +61,7 @@ int	redirect(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 		s->fd = open(current_node->data.ast_redir.filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (s->fd < 0)
 		return (-1);
-	printf("%sredirect |[2] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
+	printf("%sredirect|[2] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 	return (s->fd);
 }
 // 🚩 Le FD des OUT_REDIR est a 'close' apres les redirections 🚩
