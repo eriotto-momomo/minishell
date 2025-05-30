@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/27 09:20:53 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 11:12:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	add_back(t_list **head, char *data)
     t_list	*new_node = create_node(data);
 	t_list	*temp;
 
+	if (ft_strncmp(data, "", 1) == 0)
+		return (1);
 	if (!new_node)
 		return (0);
 	if (*head == NULL)

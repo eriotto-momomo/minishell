@@ -6,24 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/27 09:20:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/29 16:32:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static char	*get_el(char *cmd)
-{
-	char	*to_push;
-
-	if (*cmd == '\'' || *cmd == '\"')
-		to_push = get_quote(cmd);
-	else if (is_sep(*cmd))
-		to_push = get_sep(cmd);
-	else
-		to_push = get_word(cmd);
-	return (to_push);
-}
 
 int	get_token_id(char *token)
 {
