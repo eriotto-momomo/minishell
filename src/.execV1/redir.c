@@ -6,33 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:06:41 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/31 16:27:33 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:54:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-
-int	redirect_output(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
-{
-	fd_out = redirect(s, current_node, fd_in, fd_out);
-	if (fd_out < 0)
-		return (-1);
-	if ((s->root_fd == -1) && fd_out >= 0)
-	{
-		s->root_fd = fd_out;
-		printf("redirect_output | %ss->root_fd = %d | a.k.a. filename[%s]%s\n", Y, s->root_fd, current_node->data.ast_redir.filename, RST);
-	}
-	if (s->root_fd > -1 && fd_out != s->root_fd)
-		if (close(fd_out) < 0)
-			return (-1);
-	fd_out = 1;
-	if (preorder_exec(s, &current_node->data.ast_redir.left, fd_in, s->root_fd) != 0)
-		return (-1);
-	if (close(s->root_fd) < 0)
-		return (-1);
-	return (0);
-}
 
 int	redirect_input(t_shell *s, t_ast *current_node)
 {
@@ -71,7 +49,7 @@ int	redirect_input(t_shell *s, t_ast *current_node)
 
 int	redirect(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 {
-	printf("%sredirect|[1] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
+	printf("%sredirect |[1] fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 	s->fd = -1;
 	if (current_node->data.ast_redir.mode == HERE_DOC)
 	{
