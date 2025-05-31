@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 20:54:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/31 19:55:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 {
 	(void)fd_in;
 	(void)fd_out;
-	printf("handle_redir | %scurrent_node%s\n", Y, RST);
+	printf("handle_heredoc| %scurrent_node%s\n", Y, RST);
 	print_node(current_node);
 	if (current_node->data.ast_redir.left->tag == AST_EXEC)
 		s->root_redir = current_node;
@@ -95,7 +95,7 @@ int	handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 	}
 	if (write_heredoc(s, current_node) != 0)
 		return (-1);
-	if (redirect_input(s, &(*s->root_redir)) != 0)
-		return (-1);
+	//if (redirect_input(s, &(*s->root_redir)) != 0)
+	//	return (-1);
 	return (0);
 }

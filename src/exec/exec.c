@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/31 15:03:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/05/31 19:59:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,19 @@ int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 		return (0);
 	if ((*current_node)->tag == AST_PIPE)
 	{
+		printf("preorder_exec |[AST_PIPE]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 		if (handle_pipe(s, &(*current_node), fd_in, fd_out) != 0)
 			return (1);
 	}
 	else if ((*current_node)->tag == AST_REDIR)
 	{
+		printf("preorder_exec |[AST_REDIR]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 		if (handle_redir(s, &(*current_node), fd_in, fd_out) != 0)
 			return (1);
 	}
 	else if ((*current_node)->tag == AST_EXEC)
 	{
+		printf("preorder_exec |[AST_EXEC]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 		if (handle_exec(s, (*current_node), fd_in, fd_out) != 0)
 			return (1);
 	}
@@ -57,9 +60,9 @@ void	execution(t_shell *s)
 	int	err;
 
 	s->root_fd = -1;
-	s->heredoc_tmp = ft_strdup("./tmp/heredoc_tmp.txt");	// 🚨TEST🚨
-	if (!s->heredoc_tmp)									// 🚨TEST🚨
-		terminate_shell(s, errno);							// 🚨TEST🚨
+	s->heredoc_tmp = ft_strdup("./tmp/heredoc_tmp.txt");
+	if (!s->heredoc_tmp)
+		terminate_shell(s, errno);
 	err = preorder_exec(s, &s->current_node, STDIN_FILENO, STDOUT_FILENO);
 	s->ret_value = err;
 	//if (err != 0)
