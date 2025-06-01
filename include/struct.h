@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/30 11:47:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:00:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ typedef struct s_shell
 	int		heredoc_count;
 	int		fd;
 	int		root_fd;
+	int		stdin_save;
+	int		stdout_save;
 	t_ast	*root_redir;
 	int		pipefd[2]; // 🚨 NORM OK❔ Besoin d'un malloc❔
 }			t_shell;

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/31 20:30:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:41:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,27 @@ int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 
 int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 {
-	int	save_in;
-	int	save_out;
-
 	printf("handle_redir | %ss->fd: %d%s\n", Y, s->fd, RST);
 	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
 		|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
 	{
-		save_out = dup(STDOUT_FILENO);	//📍 Probablement useless
-		if (save_out < 0)				//📍 Probablement useless
-			return (-1);				//📍 Probablement useless
-		printf("handle_redir | %ssave_out: %d%s\n", Y, save_out, RST);
 		if (redirect_output(s, (*current_node), fd_in, fd_out) != 0)
 			return (-1);
-		dup2(save_out, STDOUT_FILENO);	//📍 Probablement useless
-		if (close(save_out))			//📍 Probablement useless
-			return (-1);				//📍 Probablement useless
+		dup2(s->stdout_save, STDOUT_FILENO);
+		if (close(s->stdout_save) < 0)
+			return (-1);
+		s->root_fd = -1;
 	}
 	else
 	{
-		save_in = dup(STDIN_FILENO);
-		if (save_in < 0)
+		s->stdin_save = dup(STDIN_FILENO);
+		if (s->stdin_save < 0)
 			return (-1);
-		printf("handle_redir | %ssave_in: %d%s\n", Y, save_in, RST);
+		printf("handle_redir | %ss->stdin_save: %d%s\n", Y, s->stdin_save, RST);
 		if (redirect_input(s, (*current_node), fd_in, fd_out) != 0)
 			return (-1);
-		dup2(save_in, STDIN_FILENO);
-		if (close(save_in))
+		dup2(s->stdin_save, STDIN_FILENO);
+		if (close(s->stdin_save) < 0)
 			return (-1);
 	}
 	return (0);
