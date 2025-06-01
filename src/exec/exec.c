@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/31 19:59:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:34:17 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,23 @@ int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 		return (0);
 	if ((*current_node)->tag == AST_PIPE)
 	{
-		printf("preorder_exec |[AST_PIPE]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
+		//printf("preorder_exec |[AST_PIPE]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 		if (handle_pipe(s, &(*current_node), fd_in, fd_out) != 0)
 			return (1);
 	}
 	else if ((*current_node)->tag == AST_REDIR)
 	{
-		printf("preorder_exec |[AST_REDIR]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
+		//printf("preorder_exec |[AST_REDIR]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 		if (handle_redir(s, &(*current_node), fd_in, fd_out) != 0)
 			return (1);
 	}
 	else if ((*current_node)->tag == AST_EXEC)
 	{
-		printf("preorder_exec |[AST_EXEC]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
+		//printf("preorder_exec |[AST_EXEC]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 		if (handle_exec(s, (*current_node), fd_in, fd_out) != 0)
 			return (1);
 	}
+	printf("preorder_exec |[EXIT]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);
 	return (0);
 }
 
