@@ -78,6 +78,7 @@ int	string_processing(t_shell *s, char **args)
 	{
 		if (ft_strchr(args[i], '$'))
 		{
+			printf("Processing : %s\n", args[i]);
 			if (!expand(s->env_list, &args[i]))
 				return (0);
 		}
