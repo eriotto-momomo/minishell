@@ -64,6 +64,7 @@ static char	*replace(t_env *env, char *str, char *value)
 	char	*rest;
 
 	prefix = dup_prefix(str);
+	printf("prefix = %s\n", prefix);
 	if (!prefix)
 		return (NULL);
 	if (env)
@@ -77,8 +78,6 @@ static char	*replace(t_env *env, char *str, char *value)
 	rest = ft_substr(str, i + 1, ft_strlen(str));
 	if (rest)
 		prefix = ft_strjoin(join, rest);
-	else
-		free(prefix);
 	free(join);
 	free(rest);
 	return (prefix);
@@ -91,11 +90,14 @@ int	expand(t_env *env, char **str)
 
 	if (!ft_strchr(*str, '$'))
 		return (1);
+	// if (!process_quote(str))
+	//	return (0);
 	var = get_var(*str);
 	if (is_in_env(env, var))
 		r_str = replace(env, *str, var);
 	else
 		r_str = replace(NULL, *str, var);
+	printf("r_str :%s\n", r_str);
 	free(var);
 	if (r_str)
 	{
@@ -107,3 +109,4 @@ int	expand(t_env *env, char **str)
 	expand(env, str);
 	return (1);
 }
+
