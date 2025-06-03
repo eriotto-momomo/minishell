@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/01 15:00:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:49:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_shell
 	char	**heredoc_list;
 	int		heredoc_count;
 	int		fd;
-	int		root_fd;
+	int		final_output_fd;
 	int		stdin_save;
 	int		stdout_save;
 	t_ast	*root_redir;

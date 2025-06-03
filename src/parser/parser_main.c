@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 09:25:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:33:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	parser(t_shell *s)
 		terminate_shell(s, errno);
 		return (1);
 	}
-	//printf("%s%s%s\n", Y, "============ ROOT NODE ============",RST); // 🖨️PRINT💥DEBUGING
-	//print_node(s->root_node); 										// 🖨️PRINT💥DEBUGING
-	//printf("%s%s%s\n", Y, "============ ********* ============",RST); // 🖨️PRINT💥DEBUGING
+	printf("%s%s%s\n", Y, "============ ROOT NODE ============",RST); // 🖨️PRINT💥DEBUGING
+	print_node(s->root_node); 										// 🖨️PRINT💥DEBUGING
+	printf("%s%s%s\n", Y, "============ ********* ============",RST); // 🖨️PRINT💥DEBUGING
 	s->current_node = s->root_node;
 	free_list(&(s->head));
 	return (0);
