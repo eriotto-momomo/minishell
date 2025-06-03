@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:03:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/03 08:12:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static char	*replace(t_env *env, char *str, char *value)
 	char	*rest;
 
 	prefix = dup_prefix(str);
+	printf("prefix = %s\n", prefix);
 	if (!prefix)
 		return (NULL);
 	if (env)
@@ -77,25 +78,24 @@ static char	*replace(t_env *env, char *str, char *value)
 	rest = ft_substr(str, i + 1, ft_strlen(str));
 	if (rest)
 		prefix = ft_strjoin(join, rest);
-	else
-		free(prefix);
 	free(join);
 	free(rest);
 	return (prefix);
 }
 
-void	expand(t_env *env, char **str)
+int	expand(t_env *env, char **str)
 {
 	char	*var;
 	char	*r_str;
 
 	if (!ft_strchr(*str, '$'))
-		return ;
+		return (1);
 	var = get_var(*str);
 	if (is_in_env(env, var))
 		r_str = replace(env, *str, var);
 	else
 		r_str = replace(NULL, *str, var);
+	printf("r_str :%s\n", r_str);
 	free(var);
 	if (r_str)
 	{
@@ -103,17 +103,8 @@ void	expand(t_env *env, char **str)
 		*str = r_str;
 	}
 	else
-		return ;
+		return (0);
 	expand(env, str);
+	return (1);
 }
 
-void	var_expansion(t_shell *s, char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		expand(s->env_list, &args[i++]);
-	}
-}
