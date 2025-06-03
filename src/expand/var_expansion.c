@@ -6,105 +6,105 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/03 08:12:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/03 10:17:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*get_var(char *s)
+static char	*triple_join(char *s1, char *s2, char *s3)
 {
+	char	*tmp;
 	char	*ret;
-	int		start;
-	int		i;
-
-	start = 0;
-	i = 0;
-	while (s[start] && s[start] != '$')
-		start++;
-	i = ++start;
-	while (s[i] && ft_isalnum(s[i]))
-		i++;
-	ret = malloc((i - start + 1) * sizeof(char));
+	
+	if (!s1 || !s2 || !s3)
+		return (NULL);
+	tmp = ft_strjoin(s1, s2);
+	if (!tmp)
+		return (NULL);
+	free(s1);
+	free(s2);
+	ret = ft_strjoin(tmp, s3);
+	free(tmp);
 	if (!ret)
 		return (NULL);
-	i = 0;
-	while (s[start] && !ft_isspace(s[start]) && !is_sep(s[start]))
-		ret[i++] = s[start++];
-	ret[i] = '\0';
 	return (ret);
 }
 
-static char	*dup_prefix(char *str)
+static char	*get_var(t_env *env, char *s)
 {
-	int		i;
-	char	*ret;
+	int		end;
+	char	*var_name;
+	char	*var_val;
 
-	i = 0;
-	while (str[i] && str[i] != '$')
-		i++;
-	ret = malloc(sizeof(char) * i + 1);
-	if (!ret)
+	end = 0;
+	while (s[end] && (ft_isalnum(s[end]) || ft_isalpha(s[end])))
+		end++;
+	var_name = ft_substr(s, 0, end);
+	if (!var_name)
 		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '$')
-	{
-		ret[i] = str[i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
+	var_val = ft_getenv(env, var_name);
+	if (var_val)
+		return (var_val);
+	return ("");
 }
 
-static char	*replace(t_env *env, char *str, char *value)
+int	replace(t_env *env, char *str, int	i)
 {
-	int		i;
+	char	*value;
 	char	*prefix;
-	char	*join;
-	char	*rest;
-
-	prefix = dup_prefix(str);
-	printf("prefix = %s\n", prefix);
-	if (!prefix)
-		return (NULL);
-	if (env)
-		join = ft_strjoin(prefix, ft_getenv(env, value));
-	else
-		join = ft_strjoin(prefix, "");
-	free(prefix);
-	if (!join)
-		return (NULL);
-	i = (int)offset_calc(str) + ft_strlen(value);
-	rest = ft_substr(str, i + 1, ft_strlen(str));
-	if (rest)
-		prefix = ft_strjoin(join, rest);
-	free(join);
-	free(rest);
-	return (prefix);
+	char	*post;
+	char	*ret_s;
+	
+	value = get_var(env, str + i + 1); // Check if the name of the var is in the env and then return its value, if not return an empty string.
+	if (!value)
+		return (0);
+	prefix = ft_substr(str, 0, i);
+	i++; // skip $ sign
+	while (str[i] && (ft_isalnum(str[i]) || ft_isalnum(str[i])))
+		i++;
+	post = ft_substr(str, i, ft_strlen(str));
+	ret_s = triple_join(prefix, value, post);
+	if (!ret_s)
+	{
+		free(prefix);
+		free(post);
+		return (0);
+	}
+	printf("ret :%s\n", ret_s);
+	return (1);
 }
 
 int	expand(t_env *env, char **str)
 {
-	char	*var;
-	char	*r_str;
+	int		i;
+	int		in_quote;
+	char	quote;
+	char	*ptr;
 
-	if (!ft_strchr(*str, '$'))
-		return (1);
-	var = get_var(*str);
-	if (is_in_env(env, var))
-		r_str = replace(env, *str, var);
-	else
-		r_str = replace(NULL, *str, var);
-	printf("r_str :%s\n", r_str);
-	free(var);
-	if (r_str)
+	i = 0;
+	in_quote = 0;
+	ptr = *str;
+	while (ptr[i])
 	{
-		free(*str);
-		*str = r_str;
+		if (ft_isquote(ptr[i]) && !in_quote) // Check si on rentre dans un quote
+		{
+			printf("Entering quote\n");
+			in_quote = 1;
+			quote = ptr[i++]; // sauvegarde le type de quote
+		}
+		else if (ft_isquote(ptr[i]) && in_quote) // Check si on sort d'un quote
+		{
+			printf("Leaving quote\n");
+			in_quote = 0;
+			i++;
+		}
+		while (ptr[i] && quote == '\'' && in_quote) // Skip si on est dans un single quote
+			i++;
+		if (ptr[i] == '$') // Si on rencontre une var -> on remplace
+			replace(env, ptr, i);
+		i++;
 	}
-	else
-		return (0);
-	expand(env, str);
 	return (1);
 }
 
