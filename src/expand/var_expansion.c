@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/30 15:34:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/03 08:12:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int	expand(t_env *env, char **str)
 
 	if (!ft_strchr(*str, '$'))
 		return (1);
-	// if (!process_quote(str))
-	//	return (0);
 	var = get_var(*str);
 	if (is_in_env(env, var))
 		r_str = replace(env, *str, var);
