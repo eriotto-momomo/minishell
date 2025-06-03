@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/03 11:36:32 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/03 12:55:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	string_processing(t_shell *s, char **args)
 	{
 		if (ft_strchr(args[i], '$'))
 		{
-			if (!expand(s->env_list, args[i]))
+			if (!var_expansion(s->env_list, &args[i]))
 				return (0);
 		}
 		if (ft_strchr(args[i], '\'') || ft_strchr(args[i], '\"'))
