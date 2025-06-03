@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 12:05:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:33:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_ast	*parse_pipe(t_shell *s, t_list **tok)
 		left = add_pipe_node(left, right);	// construit node: gauche = left, droite = right
 		if (!left)
 			return (NULL);
-		//print_node(left); // 🖨️PRINT💥DEBUGING
+		print_node(left); // 🖨️PRINT💥DEBUGING
 	}
 	return (left);
 }
@@ -70,7 +70,7 @@ t_ast	*parse_redir(t_shell *s, t_list **tok, t_ast *left)
 				return (NULL);
 			get_next_token(tok);
 			get_next_token(tok);
-			//print_node(left); // 🖨️PRINT💥DEBUGING
+			print_node(left); // 🖨️PRINT💥DEBUGING
 		}
 	}
 	return (left);
@@ -87,7 +87,7 @@ t_ast	*parse_exec(t_shell *s, t_list **tok)
 		exec_node = add_exec_node(tok);
 		if (!exec_node)
 			return (NULL);
-		//print_node(exec_node); // 🖨️PRINT💥DEBUGING
+		print_node(exec_node); // 🖨️PRINT💥DEBUGING
 	}
 	root_ptr = exec_node;
 	while((*tok) && !((*tok)->type == WORD || (*tok)->type == PIPE))
