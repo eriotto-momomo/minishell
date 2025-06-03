@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/03 10:17:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/03 11:48:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*get_var(t_env *env, char *s)
 	return ("");
 }
 
-int	replace(t_env *env, char *str, int	i)
+static char	*attribute_value(t_env *env, char *str, int	i)
 {
 	char	*value;
 	char	*prefix;
@@ -58,7 +58,7 @@ int	replace(t_env *env, char *str, int	i)
 	
 	value = get_var(env, str + i + 1); // Check if the name of the var is in the env and then return its value, if not return an empty string.
 	if (!value)
-		return (0);
+		return (NULL);
 	prefix = ft_substr(str, 0, i);
 	i++; // skip $ sign
 	while (str[i] && (ft_isalnum(str[i]) || ft_isalnum(str[i])))
@@ -69,42 +69,46 @@ int	replace(t_env *env, char *str, int	i)
 	{
 		free(prefix);
 		free(post);
-		return (0);
+		return (NULL);
 	}
-	printf("ret :%s\n", ret_s);
-	return (1);
+	return (ret_s);
 }
 
-int	expand(t_env *env, char **str)
+int	expand(t_env *env, char *str)
 {
 	int		i;
 	int		in_quote;
 	char	quote;
-	char	*ptr;
+	char	*ret;
+	char	*val;
 
 	i = 0;
 	in_quote = 0;
-	ptr = *str;
-	while (ptr[i])
+	ret = ft_calloc(2, 1);
+	while (str[i])
 	{
-		if (ft_isquote(ptr[i]) && !in_quote) // Check si on rentre dans un quote
+		if (ft_isquote(str[i]) && !in_quote) // Check si on rentre dans un quote
 		{
-			printf("Entering quote\n");
 			in_quote = 1;
-			quote = ptr[i++]; // sauvegarde le type de quote
+			quote = str[i++]; // sauvegarde le type de quote
 		}
-		else if (ft_isquote(ptr[i]) && in_quote) // Check si on sort d'un quote
+		else if (ft_isquote(str[i]) && in_quote) // Check si on sort d'un quote
 		{
-			printf("Leaving quote\n");
 			in_quote = 0;
 			i++;
 		}
-		while (ptr[i] && quote == '\'' && in_quote) // Skip si on est dans un single quote
-			i++;
-		if (ptr[i] == '$') // Si on rencontre une var -> on remplace
-			replace(env, ptr, i);
-		i++;
+		if (quote == '\'' && in_quote)
+		{
+			while (str[i] && quote == '\'' && in_quote) // Skip si on est dans un single quote
+				i++;
+		}
+		else if (str[i] == '$') // Si on rencontre une var -> on remplace
+		{
+			val = attribute_value(env, str, i);
+			ret = ft_strjoin(ret, val);
+		}
 	}
+	printf("ret :%s\n", ret);
 	return (1);
 }
 
