@@ -16,7 +16,7 @@ static char	*triple_join(char *s1, char *s2, char *s3)
 {
 	char	*tmp;
 	char	*ret;
-	
+
 	if (!s1 || !s2 || !s3)
 		return (NULL);
 	tmp = ft_strjoin(s1, s2);
@@ -63,12 +63,10 @@ static int	attribute_value(t_env *env, char **str, int i)
 	if (!value)
 		return (0);
 	prefix = ft_substr(*str, 0, i);
-	printf("prefix :%s\n", prefix);
 	i++;
 	while ((*str)[i] && ft_isalnum((*str)[i]))
 		i++;
 	post = ft_substr(*str, i, ft_strlen(*str));
-	printf("post :%s\n", post);
 	ret_s = triple_join(prefix, value, post);
 	if (!ret_s)
 	{
@@ -85,24 +83,14 @@ char	*expand(t_env *env, char *str)
 {
 	int		i;
 	char	*tmp;
-	int		quote;
 
 	i = 0;
-	quote = 0;
 	tmp = ft_strdup(str);
 	if (!tmp)
 		return (NULL);
 	while (tmp[i])
 	{
-		if (ft_isquote(tmp[i]))
-		{
-			if (!quote)
-				quote = tmp[i];
-			else if (quote == tmp[i])
-				quote = 0;
-			i++;
-		}
-		if (tmp[i] == '\'' && quote != '\"')
+		if (tmp[i] == '\'' && !is_in_double_quote(tmp, i))
 		{
 			i++;
 			while (tmp[i] && (tmp[i] != '\'' && tmp[i] != '\"'))
@@ -110,7 +98,8 @@ char	*expand(t_env *env, char *str)
 		}
 		if (tmp[i] == '$')
 		{
-			attribute_value(env, &tmp, i);
+			if (!attribute_value(env, &tmp, i))
+				return (NULL);
 			i = 0;
 		}
 		else
@@ -119,16 +108,13 @@ char	*expand(t_env *env, char *str)
 	return (tmp);
 }
 
-int	var_expansion(t_env * env, char **s)
+int	var_expansion(t_env *env, char **s)
 {
 	char	*expanded;
 
 	expanded = expand(env, *s);
 	if (!expanded)
-	{
-		printf("expanpded is NULL");
-		exit(1);
-	}
+		return (0);
 	free(*s);
 	*s = expanded;
 	return (1);

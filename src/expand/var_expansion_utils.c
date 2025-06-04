@@ -12,3 +12,18 @@
 
 #include "../../include/minishell.h"
 
+int	is_in_double_quote(char *s, int j)
+{
+	int	in_double;
+	int	i;
+
+	in_double = 0;
+	i = 0;
+	while (i < j && s[i])
+	{
+		if (s[i] == '\"')
+			in_double = !in_double;
+		i++;
+	}
+	return (in_double);
+}
