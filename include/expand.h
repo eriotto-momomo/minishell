@@ -15,7 +15,7 @@
 
 char	*expand(t_env *env, char *str);
 int		var_expansion(t_env * env, char **s);
-
+int		is_in_double_quote(char *s, int j);
 
 // Word processing
 int	string_processing(t_shell *s, char **args);
