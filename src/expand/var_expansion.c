@@ -85,17 +85,27 @@ char	*expand(t_env *env, char *str)
 {
 	int		i;
 	char	*tmp;
+	int		quote;
 
 	i = 0;
+	quote = 0;
 	tmp = ft_strdup(str);
 	if (!tmp)
 		return (NULL);
 	while (tmp[i])
 	{
-		if (tmp[i] == '\'')
+		if (ft_isquote(tmp[i]))
+		{
+			if (!quote)
+				quote = tmp[i];
+			else if (quote == tmp[i])
+				quote = 0;
+			i++;
+		}
+		if (tmp[i] == '\'' && quote != '\"')
 		{
 			i++;
-			while (tmp[i] && tmp[i] != '\'')
+			while (tmp[i] && (tmp[i] != '\'' && tmp[i] != '\"'))
 				i++;
 		}
 		if (tmp[i] == '$')
