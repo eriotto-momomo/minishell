@@ -42,11 +42,10 @@ static char	*get_var(t_env *env, char *s)
 	while (s[end] && (ft_isalnum(s[end])))
 		end++;
 	var_name = ft_substr(s, 0, end);
-	printf("var_name :%s\n", var_name);
 	if (!var_name)
 		return (NULL);
 	var_val = ft_strdup(ft_getenv(env, var_name));
-	printf("var_val :%s\n", var_val);
+	free(var_name);
 	if (var_val)
 		return (var_val);
 	free(var_val);
@@ -61,7 +60,6 @@ static int	attribute_value(t_env *env, char **str, int i)
 	char	*ret_s;
 
 	value = get_var(env, *str + i + 1);
-	printf("valie :%s\n", value);
 	if (!value)
 		return (0);
 	prefix = ft_substr(*str, 0, i);
@@ -84,24 +82,26 @@ static int	attribute_value(t_env *env, char **str, int i)
 char	*expand(t_env *env, char *str)
 {
 	int		i;
+	char	*tmp;
 
 	i = 0;
-	while (str[i])
+	tmp = ft_strdup(str);
+	if (!tmp)
+		return (NULL);
+	while (tmp[i])
 	{
-		if (str[i++] == '\'')
-			while (str[i] && str[i] != '\'')
+		if (tmp[i++] == '\'')
+			while (tmp[i] && tmp[i] != '\'')
 				i++;
-		if (str[i] == '$')
+		if (tmp[i] == '$')
 		{
-			attribute_value(env, &str, i);
+			attribute_value(env, &tmp, i);
 			i = 0;
 		}
 		else
 			i++;
 	}
-	printf("%s\n", str);
-	exit(1);
-	return (NULL);
+	return (tmp);
 }
 
 int	var_expansion(t_env * env, char **s)
@@ -110,7 +110,10 @@ int	var_expansion(t_env * env, char **s)
 
 	expanded = expand(env, *s);
 	if (!expanded)
-		return (0);
+	{
+		printf("expanpded is NULL");
+		exit(1);
+	}
 	free(*s);
 	*s = expanded;
 	return (1);
