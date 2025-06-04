@@ -26,6 +26,7 @@ static char	*triple_join(char *s1, char *s2, char *s3)
 	free(s2);
 	ret = ft_strjoin(tmp, s3);
 	free(tmp);
+	free(s3);
 	if (!ret)
 		return (NULL);
 	return (ret);
@@ -41,66 +42,66 @@ static char	*get_var(t_env *env, char *s)
 	while (s[end] && (ft_isalnum(s[end])))
 		end++;
 	var_name = ft_substr(s, 0, end);
+	printf("var_name :%s\n", var_name);
 	if (!var_name)
 		return (NULL);
-	var_val = ft_getenv(env, var_name);
+	var_val = ft_strdup(ft_getenv(env, var_name));
+	printf("var_val :%s\n", var_val);
 	if (var_val)
 		return (var_val);
-	return ("");
+	free(var_val);
+	return (ft_strdup(""));
 }
 
-static char	*attribute_value(t_env *env, char **str, int i)
+static int	attribute_value(t_env *env, char **str, int i)
 {
 	char	*value;
 	char	*prefix;
 	char	*post;
 	char	*ret_s;
-	
+
 	value = get_var(env, *str + i + 1);
+	printf("valie :%s\n", value);
 	if (!value)
-		return (NULL);
+		return (0);
 	prefix = ft_substr(*str, 0, i);
-	while (*str[i] && ft_isalnum(*str[i]))
+	i++;
+	while ((*str)[i] && ft_isalnum((*str)[i]))
 		i++;
-	printf("%s\n", *str+i);
 	post = ft_substr(*str, i, ft_strlen(*str));
 	ret_s = triple_join(prefix, value, post);
 	if (!ret_s)
 	{
 		free(prefix);
 		free(post);
-		return (NULL);
+		return (0);
 	}
-	printf("ret :%s\n", ret_s);
-	return (ret_s);
+	free(*str);
+	*str = ret_s;
+	return (1);
 }
 
 char	*expand(t_env *env, char *str)
 {
 	int		i;
-	char	*ret;
-	// char	*tmp;
 
-	(void)env;
 	i = 0;
-	ret = ft_calloc(2, 1);
 	while (str[i])
 	{
-		if (ft_isquote(str[i])) // Check si on rentre dans un quote
-		{
-			if (str[i++] == '\'')
-				while (str[i] && str[i] != '\'')
-					i++;
-		}
+		if (str[i++] == '\'')
+			while (str[i] && str[i] != '\'')
+				i++;
 		if (str[i] == '$')
 		{
 			attribute_value(env, &str, i);
+			i = 0;
 		}
-		i++;
+		else
+			i++;
 	}
 	printf("%s\n", str);
 	exit(1);
-	return (ret);
+	return (NULL);
 }
 
 int	var_expansion(t_env * env, char **s)

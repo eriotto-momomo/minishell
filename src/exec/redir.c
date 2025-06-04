@@ -68,7 +68,7 @@ int	handle_heredoc(t_shell *s)
 			break ;
 		if ((ptr[0] != '\'' && ptr[ft_strlen(ptr)] != '\'')		// 🚨 A TESTER!
 			&& (ptr[0] != '\"' && ptr[ft_strlen(ptr)] != '\"'))	// 🚨 A TESTER!
-			expand(s->env_list, &(s->line));
+			expand(s->env_list, s->line);
 		if (!put_in_heredoc(s->line, s->fd))
 			return (0);
 		w_free((void **)&s->line);
