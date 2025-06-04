@@ -63,10 +63,12 @@ static int	attribute_value(t_env *env, char **str, int i)
 	if (!value)
 		return (0);
 	prefix = ft_substr(*str, 0, i);
+	printf("prefix :%s\n", prefix);
 	i++;
 	while ((*str)[i] && ft_isalnum((*str)[i]))
 		i++;
 	post = ft_substr(*str, i, ft_strlen(*str));
+	printf("post :%s\n", post);
 	ret_s = triple_join(prefix, value, post);
 	if (!ret_s)
 	{
@@ -90,9 +92,12 @@ char	*expand(t_env *env, char *str)
 		return (NULL);
 	while (tmp[i])
 	{
-		if (tmp[i++] == '\'')
+		if (tmp[i] == '\'')
+		{
+			i++;
 			while (tmp[i] && tmp[i] != '\'')
 				i++;
+		}
 		if (tmp[i] == '$')
 		{
 			attribute_value(env, &tmp, i);
