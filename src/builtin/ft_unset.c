@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:19:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 21:22:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 12:18:38 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	ft_unset(t_shell *s)
 	char	**args;
 	int		i;
 
-	if (s->root_node->data.ast_exec.argc == 1)
+	if (s->root_node->data.exec.argc == 1)
 	{
 		ft_putstr_fd("unset: not enough arguments\n", 2);
 		return (0);
 	}
-	args = s->root_node->data.ast_exec.argv;
+	args = s->root_node->data.exec.argv;
 	i = 0;
 	while (args[i])
 		delenv(s, args[i++]);

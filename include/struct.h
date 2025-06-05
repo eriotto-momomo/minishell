@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/03 16:49:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:14:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ typedef enum e_types
 
 typedef enum	e_tag
 {
-	AST_PIPE,
-	AST_REDIR,
-	AST_EXEC
+	PIPE_NODE,
+	EXEC_NODE
 } 				t_tag;
 
 
@@ -72,9 +71,8 @@ typedef struct s_ast t_ast;
 
 typedef union	u_data
 {
-	struct { t_ast *left; t_ast *right; } ast_pipe;
-	struct { t_ast *left; char *filename; int mode; } ast_redir;
-	struct { int argc; char **argv; } ast_exec;
+	struct { t_ast *left; t_ast *right; } pipe;
+	struct { int argc; char **argv; int fd_in; int fd_out; int heredoc; } exec;
 }				t_data;
 
 typedef struct	s_ast
@@ -124,6 +122,7 @@ typedef struct s_shell
 	int		final_output_fd;
 	int		stdin_save;
 	int		stdout_save;
+	int		node_initialized;
 	t_ast	*root_redir;
 	int		pipefd[2]; // 🚨 NORM OK❔ Besoin d'un malloc❔
 }			t_shell;
