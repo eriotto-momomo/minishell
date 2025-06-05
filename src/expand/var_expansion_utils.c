@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/05 14:02:07 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 15:30:26 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*make_prefix(t_env *env, char *str, int i)
 	free(value);
 	return (ret);
 }
+
 char	*get_var(t_env *env, char *s)
 {
 	int		end;
