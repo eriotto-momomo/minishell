@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/21 09:38:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 16:10:39 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	ft_cd(t_shell *s)
 	char	*curpath;
 
 	curpath = make_curpath(s);
+	if (!curpath)
+		return (-1);
 	if (ft_strlen(curpath) > PATH_MAX)
 	{
 		ft_putstr_fd("curpath too long\n", 2);
