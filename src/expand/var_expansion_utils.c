@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/05 12:06:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 12:55:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*get_var(t_env *env, char *s)
 	int		end;
 	char	*var_name;
 	char	*var_val;
+	char	*tmp;
 
 	end = 0;
 	while (s[end] && (ft_isalnum(s[end])))
@@ -60,10 +61,14 @@ char	*get_var(t_env *env, char *s)
 	var_name = ft_substr(s, 0, end);
 	if (!var_name)
 		return (NULL);
-	var_val = ft_strdup(ft_getenv(env, var_name));
+	tmp = ft_getenv(env, var_name);
 	free(var_name);
-	if (var_val)
+	if (tmp)
+	{
+		var_val = ft_strdup(tmp);
+		free(tmp);
 		return (var_val);
-	free(var_val);
-	return (ft_strdup(""));
+	}
+	else
+		return (ft_strdup(""));
 }
