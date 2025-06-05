@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/05 12:54:51 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 14:07:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	attribute_value(t_env *env, char **str, int i)
 {
+	char	*tmp;
 	char	*prefix;
 	char	*sufix;
 
@@ -29,7 +30,6 @@ static int	attribute_value(t_env *env, char **str, int i)
 		free(prefix);
 		return (0);
 	}
-	free(*str);
 	*str = ft_strjoin(prefix, sufix);
 	free(prefix);
 	free(sufix);
@@ -38,43 +38,38 @@ static int	attribute_value(t_env *env, char **str, int i)
 	return (1);
 }
 
-char	*expand(t_env *env, char *str)
+int	expand(t_env *env, char *str)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
-	tmp = ft_strdup(str);
-	if (!tmp)
-		return (NULL);
-	while (tmp[i])
+	while (str[i])
 	{
-		if (tmp[i] == '\'' && !is_in_double_quote(tmp, i))
+		if (str[i] == '\'' && !is_in_double_quote(str, i))
 		{
 			i++;
-			while (tmp[i] && (tmp[i] != '\'' && tmp[i] != '\"'))
+			while (str[i] && (str[i] != '\'' && str[i] != '\"'))
 				i++;
 		}
-		if (tmp[i] == '$')
+		if (str[i] == '$')
 		{
-			if (!attribute_value(env, &tmp, i))
-				return (NULL);
+			if (!attribute_value(env, &str, i))
+				return (0);
 			i = 0;
 		}
 		else
 			i++;
 	}
-	return (tmp);
+	return (1);
 }
 
 int	var_expansion(t_env *env, char **s)
 {
-	char	*expanded;
+	char	*tmp;
 
-	expanded = expand(env, *s);
-	if (!expanded)
+	tmp = ft_strdup(*s);
+	if (!expand(env, tmp))
 		return (0);
-	free(*s);
-	*s = expanded;
+	*s = tmp;
 	return (1);
 }
