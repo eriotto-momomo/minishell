@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/30 18:48:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 15:29:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	string_processing(t_shell *s, char **args)
 	{
 		if (ft_strchr(args[i], '$'))
 		{
-			printf("Processing : %s\n", args[i]);
 			if (!expand(s->env_list, &args[i]))
 				return (0);
 		}
