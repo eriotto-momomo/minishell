@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/30 08:53:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:03:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define PARSER_H
 
 // parser_add_node.c
-int		put_in_heredoc_list(t_shell *s, char *filename);
-t_ast	*add_pipe_node(t_ast *left, t_ast *right);
-t_ast	*add_redir_node(t_shell *s, t_ast *left, char *filename, int mode);
+int		add_command(t_ast **node, t_list **tok);
+int		add_redir(t_ast **node, t_list **tok);
 t_ast	*add_exec_node(t_list **tok);
-t_ast	*ast_new_node(t_ast node);
+t_ast	*add_pipe_node(t_ast *left, t_ast *right);
+t_ast	*new_ast_node(t_ast node);
 
 // parser_main.c
 /**
@@ -38,20 +38,22 @@ t_ast	*ast_new_node(t_ast node);
  * @note The token list is always freed by this function, regardless of the outcome.
  */
 int		parser(t_shell *s);
-t_ast	*build_ast(t_shell *s, t_list **tok);
+t_ast	*build_ast(t_list **tok);
 void	print_preorder(t_ast *node);
 
 // parser_func.c
-t_ast	*parse_pipe(t_shell *s, t_list **tok);
-t_ast	*parse_line(t_shell *s, t_list **tok);
-t_ast	*parse_redir(t_shell *s, t_list **tok, t_ast *left);
-t_ast	*parse_exec(t_shell *s, t_list **tok);
+t_ast	*parse_pipe(t_list **tok);
+t_ast	*parse_line(t_list **tok);
+t_ast	*parse_exec(t_list **tok);
+void	get_next_pipe(t_list **tok);
+int		get_next_token(t_list **tok);
 
 // parser_utils.c
-char	*fill_exec_node(t_list *tok);
-int		get_next_token(t_list **tok);
-int		count_args(t_list *tok);
-int	put_in_heredoc_list(t_shell *s, char *filename);
+int		redir_out(int redir_mode, char *filename);
+int		redir_in(char *filename);
+int		copy_args(t_list **tok, int argc, char **argv);
+int		count_args(t_list **tok);
+
 void	print_node(t_ast *ast); // 🚮TO REMOVE
 
 // syntax_analysis.c

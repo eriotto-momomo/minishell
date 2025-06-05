@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 21:21:39 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 12:18:38 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int	ft_export(t_shell *s)
 	int		i;
 	char	**args;
 
-	if (s->root_node->data.ast_exec.argc == 1)
+	if (s->root_node->data.exec.argc == 1)
 		return (0);
 	i = 1;
-	args = s->root_node->data.ast_exec.argv;
+	args = s->root_node->data.exec.argv;
 	while (args[i])
 		treat_var(s->env_list, args[i++]);
 	return (0);

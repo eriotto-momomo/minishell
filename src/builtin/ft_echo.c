@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/21 12:27:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:24:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,8 @@ char	**get_args(t_ast *node)
 	args = NULL;
 	if (!node)
 		return (NULL);
-	if (node->tag == AST_EXEC)
-			args = node->data.ast_exec.argv;
-	else if (node->tag == AST_REDIR)
-	{
-		if (node->data.ast_redir.left && node->data.ast_redir.left->tag == AST_EXEC)
-			args = node->data.ast_redir.left->data.ast_exec.argv;
-	}
+	if (node->tag == EXEC_NODE)
+			args = node->data.exec.argv;
 	return (args);
 }
 

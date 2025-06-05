@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/21 09:38:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/05 12:18:38 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*make_curpath(t_shell *s)
 	char	*curpath;
 	char	*temp;
 
-	arg = s->root_node->data.ast_exec.argv[1];
+	arg = s->root_node->data.exec.argv[1];
 	pwd = s->pwd;
 	if (!arg || (arg[0] == '~' && !arg[1]))
 		return (ft_strdup(ft_getenv(s->env_list, "HOME")));
