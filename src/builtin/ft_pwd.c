@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 20:24:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/06 17:59:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_pwd(t_shell *s, int	fd_out)
 	pwd = ft_getenv(s->env_list," PWD");
 	if (!pwd)
 	{
-		pwd = s->pwd;
+		pwd = s->pwd->value;
 		if (!pwd)
 			return (-1);
 	}

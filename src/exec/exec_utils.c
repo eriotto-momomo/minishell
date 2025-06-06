@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/06 14:06:07 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/06 17:59:26 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	handle_pipe(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 {
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], CD, ft_strlen(CD)) == 0)
-		return (ft_cd(s));
+		return (ft_cd(s->pwd, s->old_pwd, s->home, current_node));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
 		return (ft_echo(&current_node, fd_out));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], PWD, ft_strlen(PWD)) == 0)
