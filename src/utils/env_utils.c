@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/06 13:45:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/06 13:51:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	add_var_back(t_env **head, char *name, char *value)
 	new_node->prev = temp;
 	return (1);
 }
+
 
 void	del_var(t_env **head, t_env **target)
 {

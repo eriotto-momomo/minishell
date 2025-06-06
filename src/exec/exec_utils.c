@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/06 08:42:51 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/06 14:06:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], PWD, ft_strlen(PWD)) == 0)
 		return (ft_pwd(s, fd_out));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], ENV, ft_strlen(ENV)) == 0)
-		return (ft_env(s, fd_out));
+		return (ft_env(s->env_list, fd_out));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
 		return (ft_unset(s));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
-		return (ft_export(s->env_list, current_node->data.ast_exec.argv));
+		return (ft_export(s->env_list,current_node->data.ast_exec.argc, current_node->data.ast_exec.argv, fd_out));
 	return (ft_external(s->env_list, current_node, fd_in, fd_out));
 }
 
