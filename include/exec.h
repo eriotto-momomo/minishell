@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/03 16:27:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:38:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,10 @@ int		cmd_execution(t_env *env, char **argv);
 // char	*pathfinder(char *cmd);
 int		setup_pipe(int	fd_in, int fd_out);
 int		handle_pipe(t_shell *s, t_ast **current_node, int fd_in, int fd_out);
-int		handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out);
 int		handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out);
 
-// redir.c
-int		redirect(t_shell *s, t_ast *current_node, int fd_in, int fd_out);
-//int		redirect_input(t_shell *s, t_ast *current_node);
-int		redirect_input(t_shell *s, t_ast *current_node, int fd_in, int fd_out);
-int		redirect_output(t_shell *s, t_ast *current_node, int fd_in);
-
 // heredoc.c
-int		write_heredoc(t_shell *s, t_ast *current_node);
-int		handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out);
+int		write_heredoc(t_shell *s, char *delimiter, int to_expand);
+int		handle_heredoc(t_shell *s, t_ast *node);
 
 #endif

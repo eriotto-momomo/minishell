@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/05 16:21:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:41:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,8 @@ int	is_delimiter(char *line, char *delimiter)	// 🚨 A TESTER!
 	return (0);
 }
 
-int	write_heredoc(t_shell *s, t_ast *current_node)
+int	write_heredoc(t_shell *s, char *delimiter, int to_expand)
 {
-	(void)current_node;
-	//char	*ptr;
-
-	//printf("%swrite_heredoc | current delimiter%s %s\n", P, RST, current_node->data.ast_redir.filename);
-	//ptr = current_node->data.ast_redir.filename;
 	s->fd = open(s->heredoc_tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (s->fd < 0)
 		return (-1);
@@ -66,11 +61,14 @@ int	write_heredoc(t_shell *s, t_ast *current_node)
 		s->line = readline("> ");
 		if (!s->line)
 			break;
-		//if (is_delimiter(s->line, current_node->data.ast_redir.filename))
-		//	break ;
-		//if ((ptr[0] != '\'' && ptr[ft_strlen(ptr)] != '\'')		// 🚨 A TESTER!
-		//	&& (ptr[0] != '\"' && ptr[ft_strlen(ptr)] != '\"'))	// 🚨 A TESTER!
-		//	expand(s->env_list, &(s->line));
+		if (is_delimiter(s->line, delimiter))
+			break ;
+		if (to_expand == 1)
+		{
+			if ((delimiter[0] != '\'' && delimiter[ft_strlen(delimiter)] != '\'')		// 🚨 A TESTER!
+				&& (delimiter[0] != '\"' && delimiter[ft_strlen(delimiter)] != '\"'))	// 🚨 A TESTER!
+				expand(s->env_list, &(s->line));
+		}
 		if (put_in_heredoc(s->line, s->fd) != 0)
 			return (-1);
 		w_free((void **)&s->line);
@@ -81,22 +79,32 @@ int	write_heredoc(t_shell *s, t_ast *current_node)
 	return (0);
 }
 
-int	handle_heredoc(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
+int	handle_heredoc(t_shell *s, t_ast *node)
 {
-	(void)fd_in;
-	(void)fd_out;
-	printf("handle_heredoc| %scurrent_node%s\n", Y, RST);
-	print_node(current_node);
-	//if (current_node->data.ast_redir.left->tag == EXEC_NODE)
-	//	s->root_redir = current_node;
-	//if (current_node->data.ast_redir.left->data.ast_redir.mode == HERE_DOC)
-	//{
-	//	if (handle_heredoc(s, current_node->data.ast_redir.left, fd_in, fd_out) < 0)
-	//		return (-1);
-	//}
-	if (write_heredoc(s, current_node) != 0)
-		return (-1);
-	//if (redirect_input(s, &(*s->root_redir)) != 0)
-	//	return (-1);
-	return (0);
+	int	i;
+	int	fd_in;
+
+	fd_in = 0;
+	i = 0;
+	while (node->data.exec.heredoc_list[i] && i < node->data.exec.heredoc_count)
+	{
+		printf("%shandle_heredoc | current delimiter: %s%s\n", P, node->data.exec.heredoc_list[i], RST);	// 🖨️PRINT💥DEBUGING
+		if (fd_in > 0)
+			if (close(fd_in) < 0)
+				return (-1);
+		s->fd = 0;
+		if (i == node->data.exec.heredoc_count - 1)
+		{
+			if (write_heredoc(s, node->data.exec.heredoc_list[i], 1) != 0)
+				return (-1);
+		}
+		else
+			if (write_heredoc(s, node->data.exec.heredoc_list[i], 0) != 0)
+				return (-1);
+		fd_in = redir_in(s->heredoc_tmp, 0);
+		if (fd_in < 0)
+			return (-1);
+		i++;
+	}
+	return (fd_in);
 }

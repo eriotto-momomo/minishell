@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 14:13:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:59:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,21 @@ t_ast	*parse_pipe(t_list **tok)
 
 	if (!*tok || (*tok)->data == NULL)
 		return (NULL);
-	left = parse_exec(tok);				// on commence par parser le noeud le plus à droite
+	left = parse_exec(tok);
 	if (!left)
 		return (NULL);
 	while (*tok && (*tok)->type == PIPE)
 	{
-		right = parse_exec(tok);			// parse la commande à gauche du pipe
+		if (!get_next_token(tok))
+			return (left);
+		right = parse_exec(tok);
 		if (!right)
 			return (NULL);
-		left = add_pipe_node(left, right);	// construit node: gauche = left, droite = right
+		left = add_pipe_node(left, right);
 		if (!left)
 			return (NULL);
-		print_node(left); // 🖨️PRINT💥DEBUGING
+		//printf("%s%s%s\n", Y, "parse_pipe| NEW PIPE_NODE CREATED!", RST);
+		//print_node(left); // 🖨️PRINT💥DEBUGING
 	}
 	return (left);
 }
@@ -57,6 +60,7 @@ t_ast	*parse_exec(t_list **tok)
 		exec_node = add_exec_node(tok);
 		if (!exec_node)
 			return (NULL);
+		//printf("%s%s%s\n", Y, "parse_exec| NEW EXEC_NODE CREATED!", RST);
 		//print_node(exec_node); // 🖨️PRINT💥DEBUGING
 		get_next_pipe(tok);
 	}

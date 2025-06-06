@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/05 16:15:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:56:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,50 +25,44 @@ int	handle_pipe(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 	return (0);
 }
 
-int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
+int	handle_exec(t_shell *s, t_ast *node, int fd_in, int fd_out)
 {
-	var_expansion(s, current_node->data.exec.argv);
-	if (ft_strncmp(current_node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
+	(void)fd_in;
+	(void)fd_out;
+	var_expansion(s, node->data.exec.argv);
+	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s));
-	if (ft_strncmp(current_node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
-		return (ft_echo(&current_node, fd_out));
-	if (ft_strncmp(current_node->data.exec.argv[0], PWD, ft_strlen(PWD)) == 0)
-		return (ft_pwd(s, fd_out));
-	if (ft_strncmp(current_node->data.exec.argv[0], ENV, ft_strlen(ENV)) == 0)
-		return (ft_env(s, fd_out));
-	if (ft_strncmp(current_node->data.exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
+	if (ft_strncmp(node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
+		return (ft_echo(&node, node->data.exec.fd_out));
+	if (ft_strncmp(node->data.exec.argv[0], PWD, ft_strlen(PWD)) == 0)
+		return (ft_pwd(s, node->data.exec.fd_out));
+	if (ft_strncmp(node->data.exec.argv[0], ENV, ft_strlen(ENV)) == 0)
+		return (ft_env(s, node->data.exec.fd_out));
+	if (ft_strncmp(node->data.exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
 		return (ft_unset(s));
-	if (ft_strncmp(current_node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
+	if (ft_strncmp(node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(s));
-	return (ft_external(s->env_list, current_node, fd_in, fd_out));
+	return (ft_external(s->env_list, node,
+		node->data.exec.fd_in, node->data.exec.fd_out));
 }
 
-//int	handle_redir(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
+//BACKUP 💾
+//int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 //{
-//	printf("handle_redir | %ss->fd: %d%s\n", Y, s->fd, RST);					// 🖨️PRINT💥DEBUGING
-//	if ((*current_node)->data.ast_redir.mode == OUT_REDIR
-//		|| (*current_node)->data.ast_redir.mode == APP_OUT_REDIR)
-//	{
-//		if (redirect_output(s, (*current_node), fd_in) != 0)
-//			return (-1);
-//		dup2(s->stdout_save, STDOUT_FILENO);
-//		if (close(s->stdout_save) < 0)
-//			return (-1);
-//		s->final_output_fd = -1;
-//	}
-//	else
-//	{
-//		//s->stdin_save = dup(STDIN_FILENO);
-//		//if (s->stdin_save < 0)
-//			//return (-1);
-//		printf("handle_redir | %ss->stdin_save: %d%s\n", Y, s->stdin_save, RST);	// 🖨️PRINT💥DEBUGING
-//		if (redirect_input(s, (*current_node), fd_in, fd_out) != 0)
-//			return (-1);
-//		//dup2(s->stdin_save, STDIN_FILENO);
-//		//if (close(s->stdin_save) < 0)
-//			//return (-1);
-//	}
-//	return (0);
+//	var_expansion(s, current_node->data.exec.argv);
+//	if (ft_strncmp(current_node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
+//		return (ft_cd(s));
+//	if (ft_strncmp(current_node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
+//		return (ft_echo(&current_node, fd_out));
+//	if (ft_strncmp(current_node->data.exec.argv[0], PWD, ft_strlen(PWD)) == 0)
+//		return (ft_pwd(s, fd_out));
+//	if (ft_strncmp(current_node->data.exec.argv[0], ENV, ft_strlen(ENV)) == 0)
+//		return (ft_env(s, fd_out));
+//	if (ft_strncmp(current_node->data.exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
+//		return (ft_unset(s));
+//	if (ft_strncmp(current_node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
+//		return (ft_export(s));
+//	return (ft_external(s->env_list, current_node, fd_in, fd_out));
 //}
 
 int	setup_pipe(int	fd_in, int fd_out)
