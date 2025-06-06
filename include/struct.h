@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/05 16:14:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:38:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_ast t_ast;
 typedef union	u_data
 {
 	struct { t_ast *left; t_ast *right; } pipe;
-	struct { int argc; char **argv; int fd_in; int fd_out; int heredoc; } exec;
+	struct { int argc; char **argv; int fd_in; int fd_out; int heredoc_count; char	**heredoc_list; } exec;
 }				t_data;
 
 typedef struct	s_ast

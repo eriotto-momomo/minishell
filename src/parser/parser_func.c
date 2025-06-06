@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/05 16:00:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:13:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ t_ast	*parse_exec(t_list **tok)
 {
 	t_ast	*exec_node;
 
-	if ((*tok) && (*tok)->type == WORD)
+	if ((*tok) && (*tok)->type != PIPE)
 	{
 		exec_node = add_exec_node(tok);
 		if (!exec_node)
 			return (NULL);
-		print_node(exec_node); // 🖨️PRINT💥DEBUGING
+		//print_node(exec_node); // 🖨️PRINT💥DEBUGING
 		get_next_pipe(tok);
 	}
 	return (exec_node);
