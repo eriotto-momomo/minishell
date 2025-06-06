@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:22:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:17:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 
 // Prompt par default utiliser si le custom prompt fail
 # define DEFAULT_PROMPT "minishell-1.0$ "
+# define HEREDOC_FILE_PATH "./tmp/heredoc_tmp.txt"
 
 // Char set de caractere qui peuvent separer des token dans une commande
 # define SEPARATORS "|\"\'<>"

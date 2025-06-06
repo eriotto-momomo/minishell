@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 14:13:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:09:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	add_heredoc(t_ast **node, t_list **tok)
 		malloc(sizeof(char **) * (*node)->data.exec.heredoc_count);
 	if (!(*node)->data.exec.heredoc_list)
 		return (1);
-
 	if (copy_tokens(&(*tok), HERE_DOC, (*node)->data.exec.heredoc_count,
 		(*node)->data.exec.heredoc_list) != 0)
 		return (1);

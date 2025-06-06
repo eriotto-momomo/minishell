@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 14:13:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:10:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ int	redir_out(int redir_mode, char *filename, int current_redir)
 	int	fd_out;
 
 	if (current_redir > 2)
+	{
+		//printf("%sredir_out| closing current_redir: %d%s\n", P, current_redir, RST);
 		if (close(current_redir) < 0)
 			return (-1);
+	}
 	if (redir_mode == OUT_REDIR)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (redir_mode == APP_OUT_REDIR)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	//printf("%sredir_out| filename: %s | fd_out: %d%s\n", P, filename, fd_out, RST);
 	return (fd_out);
 }
 
@@ -33,9 +37,13 @@ int	redir_in(char *filename, int current_redir)
 	int	fd_in;
 
 	if (current_redir > 2)
+	{
+		//printf("%sredir_in | closing current_redir: %d%s\n", P, current_redir, RST);
 		if (close(current_redir) < 0)
 			return (-1);
+	}
 	fd_in = open(filename, O_RDONLY);
+	//printf("%sredir_in | filename: %s | fd_in:  %d%s\n", P, filename, fd_in, RST);
 	return (fd_in);
 }
 
@@ -77,45 +85,6 @@ int	copy_tokens(t_list **tok, int token_type, int size, char **array)
 	}
 	return (0);
 }
-
-//BACKUP
-//int	copy_tokens(t_list **tok, int token_type, int size, char **array)
-//{
-//	t_list	*tmp;
-//	int	i;
-
-//	tmp = *tok;
-//	i = 0;
-//	while (tmp && tmp->type != PIPE && i < size)
-//	{
-//		if (tmp->type == WORD || token_type == HERE_DOC)
-//		{
-//			if (token_type == WORD && (tmp->type == WORD && (tmp->prev == NULL
-//				|| tmp->prev->type == WORD || tmp->prev->type == PIPE)))
-//			{
-//				array[i++] = ft_strdup(tmp->data);
-//				if (!array[i - 1])
-//				{
-//					ft_free_char_array(array, i - 1);
-//					return (1);
-//				}
-//			}
-//			else if (token_type == HERE_DOC && (tmp->type == HERE_DOC && (tmp->prev == NULL
-//				|| tmp->prev->type == WORD || tmp->prev->type == PIPE)))
-//			{
-//				array[i++] = ft_strdup(tmp->next->data);
-//				if (!array[i - 1])
-//				{
-//					ft_free_char_array(array, i - 1);
-//					return (1);
-//				}
-//			}
-//		}
-//		if (!get_next_token(&tmp))
-//			break;
-//	}
-//	return (0);
-//}
 
 int	count_tokens(t_list **tok, int token_type)
 {
@@ -186,15 +155,15 @@ void	print_node(t_ast *ast)
 		printf("%sprint_node%s| %sPIPE NODE%s\n", B, RST, G, RST);
 		if (left->tag == EXEC_NODE)
 		{
-			printf("%sprint_node%s| L. BRANCH:", B, RST);
+			printf("%sprint_node%s| L. BRANCH:\n", B, RST);
 			print_node(ast->data.pipe.left);
 		}
 		else if (left->tag == PIPE_NODE)
 			printf("%sprint_node%s| L. BRANCH: [%spipe%s]\n", B, RST, P, RST);
-
+		printf("%s------------------------------------%s\n", G, RST);
 		if (right->tag == EXEC_NODE)
 		{
-			printf("%sprint_node%s| R. BRANCH:", B, RST);
+			printf("%sprint_node%s| R. BRANCH:\n", B, RST);
 			print_node(ast->data.pipe.right);
 		}
 		else if (right->tag == PIPE_NODE)
