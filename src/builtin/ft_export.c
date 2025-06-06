@@ -6,46 +6,72 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 21:21:39 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/06 10:26:39 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	treat_var(t_env *env, char *arg)
+int	replace_var(t_env **var, char *value)
 {
-	char	*name;
-	char	*value;
+	if (!value)
+		return (0);
+	w_free((void **)&((*var)->value));
+	(*var)->value = value;
+	printf("%s\n", (*var)->value);
+	return (1);
+}
+
+t_env	*var_lookup(t_env *env, char *target)
+{
 	t_env	*ptr;
 
-	if (!ft_strchr(arg, '='))
-		return ;
-	name = get_name(arg);
-	value = get_value(arg);
+	if (!target)
+		return (NULL);
 	ptr = env;
 	while (ptr)
 	{
-		if (ft_strncmp(ptr->name, name, ft_strlen(name)) == 0)
-		{
-			w_free((void **)&(ptr->value));
-			ptr->value = ft_strdup(value);
-			return ;
-		}
+		if (ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
+			return (ptr);
 		ptr = ptr->next;
 	}
-	add_var_back(&env, name, value);
+	return (NULL);
 }
 
-int	ft_export(t_shell *s)
+int	exporter(t_env *env, char *arg)
+{
+	t_env	*var_ptr;
+	char	*name;
+	char	*value;
+	int		ret;
+
+	ret = 1;
+	name = get_name(arg);
+	value = get_value(arg);
+	var_ptr = var_lookup(env, name);
+	if (!var_ptr)
+	{
+		if (!add_var_back(&env, name, value))
+			ret = 0;
+	}
+	else
+		if (!replace_var(&var_ptr, value))
+			ret = 0;
+	free(name);
+	return (ret);
+}
+
+int	ft_export(t_env *env, char **args)
 {
 	int		i;
-	char	**args;
 
-	if (s->root_node->data.ast_exec.argc == 1)
-		return (0);
-	i = 1;
-	args = s->root_node->data.ast_exec.argv;
-	while (args[i])
-		treat_var(s->env_list, args[i++]);
-	return (0);
+	i = 0;
+	while (args[++i])
+	{
+		if (!ft_strchr(args[i], '='))
+			continue ;
+		if (!exporter(env, args[i]))
+			return (-1);
+	}
+	return (1);
 }
