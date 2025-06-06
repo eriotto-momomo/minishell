@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/21 16:22:38 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 08:42:51 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
 		return (ft_unset(s));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
-		return (ft_export(s));
+		return (ft_export(s->env_list, current_node->data.ast_exec.argv));
 	return (ft_external(s->env_list, current_node, fd_in, fd_out));
 }
 

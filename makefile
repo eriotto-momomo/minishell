@@ -47,6 +47,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/builtin/ft_env.c\
 			$(CFILES_PATH)/builtin/ft_unset.c\
 			$(CFILES_PATH)/builtin/ft_export.c\
+			$(CFILES_PATH)/builtin/utils.c\
 			$(CFILES_PATH)/init/init_env.c\
 			$(CFILES_PATH)/init/init_shell.c\
 			$(CFILES_PATH)/expand/word_processing.c\
