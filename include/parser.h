@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/05 16:03:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:13:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ void	get_next_pipe(t_list **tok);
 int		get_next_token(t_list **tok);
 
 // parser_utils.c
-int		redir_out(int redir_mode, char *filename);
-int		redir_in(char *filename);
-int		copy_args(t_list **tok, int argc, char **argv);
-int		count_args(t_list **tok);
+int		redir_out(int redir_mode, char *filename, int current_redir);
+int		redir_in(char *filename, int current_redir);
+t_ast	*new_ast_node(t_ast node);
+int		copy_tokens(t_list **tok, int token_type, int size, char **array);
+//int		copy_tokens(t_list **tok, int argc, char **argv);
+int		count_tokens(t_list **tok, int token_type);
 
 void	print_node(t_ast *ast); // 🚮TO REMOVE
 
