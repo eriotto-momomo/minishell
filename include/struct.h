@@ -92,7 +92,6 @@ Structure pour les token :
 typedef struct s_list
 {
 	char			*data;
-	int				space;
 	t_types			type;
 	struct s_list	*next;
 	struct s_list	*prev;

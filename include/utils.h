@@ -15,8 +15,8 @@
 
 // TO REMOVE
 //////////////////////////////////
-int debug(char *path);
-void print_list(t_list *head);
+void	debug_list(t_list *head);
+void	print_list(t_list *head);
 //////////////////////////////////
 
 // list.c
