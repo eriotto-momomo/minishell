@@ -43,6 +43,11 @@ char	*make_prefix(t_env *env, char *str, int i)
 		free(value);
 		return (NULL);
 	}
+	if (value[0] == '\0')
+	{
+		free(value);
+		return (prefix);
+	}
 	ret = ft_strjoin(prefix, value);
 	free(prefix);
 	free(value);
