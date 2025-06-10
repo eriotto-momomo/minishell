@@ -36,6 +36,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/utils/free_ast.c\
 			$(CFILES_PATH)/utils/list.c\
+			$(CFILES_PATH)/utils/debug.c \
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/exec_utils.c\
