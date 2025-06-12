@@ -20,6 +20,6 @@ char	*get_var(t_env *env, char *s);
 
 
 // Word processing
-int	string_processing(t_shell *s, char **args);
+int	string_processing(t_shell *s,int *ac, char ***args);
 
 #endif
