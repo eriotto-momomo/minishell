@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/06 14:35:23 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/12 09:31:17 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	exporter(t_env *env, char *arg)
 	else
 		if (!replace_var(&var_ptr, value))
 			ret = 0;
+	free(name);
 	return (ret);
 }
 
