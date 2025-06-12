@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 18:41:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:44:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 	i = 0;
 	while (node->data.exec.heredoc_list[i] && i < node->data.exec.heredoc_count)
 	{
-		printf("%shandle_heredoc | current delimiter: %s%s\n", P, node->data.exec.heredoc_list[i], RST);	// 🖨️PRINT💥DEBUGING
+		printf("handle_heredoc | %scurrent delimiter: %s%s\n", P, node->data.exec.heredoc_list[i], RST);	// 🖨️PRINT💥DEBUGING
 		if (fd_in > 0)
 			if (close(fd_in) < 0)
 				return (-1);
