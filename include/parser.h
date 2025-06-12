@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 14:13:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/12 13:53:40 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		copy_tokens(t_list **tok, int token_type, int size, char **array);
 //int		copy_tokens(t_list **tok, int argc, char **argv);
 int		count_tokens(t_list **tok, int token_type);
 
+void 	print_struct(t_shell *s);// 🚮TO REMOVE
 void	print_node(t_ast *ast); // 🚮TO REMOVE
 
 // syntax_analysis.c
