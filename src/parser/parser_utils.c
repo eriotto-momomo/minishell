@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 18:10:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:13:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	redir_out(int redir_mode, char *filename, int current_redir)
 
 	if (current_redir > 2)
 	{
-		//printf("%sredir_out| closing current_redir: %d%s\n", P, current_redir, RST);
+		printf("%sredir_out| closing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
 		if (close(current_redir) < 0)
 			return (-1);
 	}
@@ -27,7 +27,7 @@ int	redir_out(int redir_mode, char *filename, int current_redir)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (redir_mode == APP_OUT_REDIR)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	//printf("%sredir_out| filename: %s | fd_out: %d%s\n", P, filename, fd_out, RST);
+	printf("%sredir_out| filename: %s | fd_out: %d%s\n", P, filename, fd_out, RST);		// 🖨️PRINT💥DEBUGING
 	return (fd_out);
 }
 
@@ -38,12 +38,12 @@ int	redir_in(char *filename, int current_redir)
 
 	if (current_redir > 2)
 	{
-		//printf("%sredir_in | closing current_redir: %d%s\n", P, current_redir, RST);
+		printf("%sredir_in | closing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
 		if (close(current_redir) < 0)
 			return (-1);
 	}
 	fd_in = open(filename, O_RDONLY);
-	//printf("%sredir_in | filename: %s | fd_in:  %d%s\n", P, filename, fd_in, RST);
+	printf("%sredir_in | filename: %s | fd_in:  %d%s\n", P, filename, fd_in, RST);		// 🖨️PRINT💥DEBUGING
 	return (fd_in);
 }
 
@@ -112,6 +112,32 @@ int	count_tokens(t_list **tok, int token_type)
 	return (count);
 }
 
+// 🖨️PRINT💥DEBUGING
+void print_struct(t_shell *s)
+{
+	printf("%sprint_struct%s | s->ret_value %s%d%s\n", G, RST, C, s->ret_value, RST);
+	printf("%sprint_struct%s | s->heredoc_count %s%d%s\n", G, RST, C, s->heredoc_count, RST);
+	printf("%sprint_struct%s | s->fd %s%d%s\n", G, RST, C, s->fd, RST);
+	printf("%sprint_struct%s | s->final_output_fd %s%d%s\n", G, RST, C, s->final_output_fd, RST);
+	printf("%sprint_struct%s | s->stdin_save %s%d%s\n", G, RST, C, s->stdin_save, RST);
+	printf("%sprint_struct%s | s->stdout_save %s%d%s\n", G, RST, C, s->stdout_save, RST);
+	printf("%sprint_struct%s | s->node_initialized %s%d%s\n", G, RST, C, s->node_initialized, RST);
+	printf("%sprint_struct%s | s->pipefd[0] %s%d%s\n", G, RST, C, s->pipefd[0], RST);
+	printf("%sprint_struct%s | s->pipefd[1] %s%d%s\n", G, RST, C, s->pipefd[1], RST);
+	if (s->prompt)
+		printf("%sprint_struct%s | s->prompt [%s%s%s]\n", G, RST, C, s->prompt, RST);
+	if (s->line)
+		printf("%sprint_struct%s | s->line [%s%s%s]\n", G, RST, C,  s->line,RST);
+	if (s->old_pwd)
+		printf("%sprint_struct%s | s->old_pwd [%s%s%s]\n", G, RST, C,  s->old_pwd,RST);
+	if (s->pwd)
+		printf("%sprint_struct%s | s->pwd [%s%s%s]\n", G, RST, C, s->pwd, RST);
+	if (s->heredoc_tmp)
+		printf("%sprint_struct%s | s->heredoc_tmp [%s%s%s]\n", G, RST, C, s->heredoc_tmp, RST);
+	if (s->heredoc_list)
+		for (size_t i = 0; s->heredoc_list[i]; i++)
+			printf("%sprint_struct%s | s->heredoc_list[%ld][%s%s%s]\n", G, RST, i, C, s->heredoc_tmp, RST);
+}
 
 // 🖨️PRINT💥DEBUGING
 void	print_node(t_ast *ast)
