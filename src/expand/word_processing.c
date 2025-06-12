@@ -22,6 +22,7 @@ static size_t	count_quote(char *s)
 	i = 0;
 	in = 0;
 	c = 0;
+	q = '\0';
 	while (s[i])
 	{
 		if (!in && ft_isquote(s[i]))
@@ -68,7 +69,33 @@ static char	*trim_quote(char *s)
 	return (new_s);
 }
 
-int	string_processing(t_shell *s, char **args)
+static char	**shrink_array(char **arr, int ac, int i)
+{
+	int		j;
+	int		k;
+	char	**new_arr;
+
+	free(arr[i]);
+	new_arr = malloc(sizeof(char *) * ac);
+	if (!new_arr)
+		return (NULL);
+	j = 0;
+	k = 0;
+	while (j < ac)
+	{
+		if (j != i)
+		{
+			new_arr[k] = arr[j];
+			k++;
+		}
+		j++;
+	}
+	new_arr[k] = NULL;
+	free(arr);
+	return (new_arr);
+}
+
+int	string_processing(t_shell *s, int *ac, char ***args)
 {
 	int		i;
 	char	*trimmed;
@@ -80,8 +107,18 @@ int	string_processing(t_shell *s, char **args)
 		{
 			if (!expand(s->env_list, &args[i]))
 				return (0);
+			if (args[i][0] == '\0')
+			{
+				args = shrink_array(args, *ac, i);
+				if (!args)
+					return (0);
+				*ac = *ac - 1;
+			}
+
 		}
-		if (ft_strchr(args[i], '\'') || ft_strchr(args[i], '\"'))
+		if (!args[i])
+			continue ;
+		if (args[i] && (ft_strchr(args[i], '\'') || ft_strchr(args[i], '\"')))
 		{
 			trimmed = trim_quote(args[i]);
 			if (!trimmed)
