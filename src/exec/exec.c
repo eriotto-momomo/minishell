@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/12 09:16:15 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/12 09:33:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 			perror("Expansion or quote removal failed");
 			terminate_shell(s);
 		}
-		print_node((*current_node));
-		printf("node printed\n");
 		handle_exec(s, (*current_node), fd_in, fd_out);
 	}
 	return (0);
