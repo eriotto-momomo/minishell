@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/12 09:31:17 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/12 10:16:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	ft_export(t_env *env, int ac, char **args, int fd)
 		ft_env(env, fd);
 	while (args[++i])
 	{
+		printf("Evaluating :%s\n", args[i]);
 		if (!is_valid(args[i]))
 		{
 			ft_putstr_fd("export: invalid identifier\n", 2);
