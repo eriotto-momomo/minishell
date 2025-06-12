@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/12 15:13:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:44:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	redir_out(int redir_mode, char *filename, int current_redir)
 
 	if (current_redir > 2)
 	{
-		printf("%sredir_out| closing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
+		printf("redir_out| %sclosing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
 		if (close(current_redir) < 0)
 			return (-1);
 	}
@@ -27,7 +27,7 @@ int	redir_out(int redir_mode, char *filename, int current_redir)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (redir_mode == APP_OUT_REDIR)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	printf("%sredir_out| filename: %s | fd_out: %d%s\n", P, filename, fd_out, RST);		// 🖨️PRINT💥DEBUGING
+	printf("redir_out| %sfilename: %s | fd_out: %d%s\n", P, filename, fd_out, RST);		// 🖨️PRINT💥DEBUGING
 	return (fd_out);
 }
 
@@ -38,12 +38,12 @@ int	redir_in(char *filename, int current_redir)
 
 	if (current_redir > 2)
 	{
-		printf("%sredir_in | closing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
+		printf("redir_in | %sclosing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
 		if (close(current_redir) < 0)
 			return (-1);
 	}
 	fd_in = open(filename, O_RDONLY);
-	printf("%sredir_in | filename: %s | fd_in:  %d%s\n", P, filename, fd_in, RST);		// 🖨️PRINT💥DEBUGING
+	printf("redir_in | %sfilename: %s | fd_in:  %d%s\n", P, filename, fd_in, RST);		// 🖨️PRINT💥DEBUGING
 	return (fd_in);
 }
 

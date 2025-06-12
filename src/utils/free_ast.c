@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 17:59:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:36:31 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,43 +34,20 @@ void	free_pipe_node(t_ast *node)
 
 void	free_exec_node(t_ast *node)
 {
-	int	i;
-
-
-	//printf("%s🔵FREE EXEC_NODE.|%s %sFREED!%s\n", B, RST, G, RST); // PRINT DEBUGGING 📠
-
-	//🚨REMPLACER PAR FT_FREE_CHAR_ARRAY🚨
-	i = 0;
 	if (node->data.exec.argc > 0)
 	{
-		while (node->data.exec.argv[i] && i < node->data.exec.argc)
-		{
-			//printf("%sargv[%d]%s[%s] ", B, i, RST, node->data.exec.argv[i]); // PRINT DEBUGGING 📠
-			w_free((void **)&node->data.exec.argv[i]);
-			i++;
-		}
-		w_free((void **)&node->data.exec.argv);
+		ft_free_char_array(node->data.exec.argv, node->data.exec.argc);
 		node->data.exec.argc = 0;
-		//printf("\n"); // PRINT DEBUGGING 📠
 	}
-
-	//🚨REMPLACER PAR FT_FREE_CHAR_ARRAY🚨
-	i = 0;
 	if (node->data.exec.heredoc_count > 0)
 	{
-		while (node->data.exec.heredoc_list[i] && i < node->data.exec.heredoc_count)
-		{
-			//printf("%sheredoc_list[%d]%s[%s] ", B, i, RST, node->data.exec.heredoc_list[i]); // PRINT DEBUGGING 📠
-			w_free((void **)&node->data.exec.heredoc_list[i]);
-			i++;
-		}
-		w_free((void **)&node->data.exec.heredoc_list);
+		ft_free_char_array(node->data.exec.heredoc_list, node->data.exec.heredoc_count);
 		node->data.exec.heredoc_count = 0;
-		//printf("\n"); // PRINT DEBUGGING 📠
 	}
 	node->data.exec.fd_in = 0;
 	node->data.exec.fd_out = 0;
 	w_free((void **)&node);
+	//printf("%s🔵FREE EXEC_NODE.|%s %sFREED!%s\n", B, RST, G, RST); // PRINT DEBUGGING 📠
 }
 
 void	free_ast(t_ast **node)
