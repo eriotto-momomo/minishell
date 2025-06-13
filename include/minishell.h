@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:38:40 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:03:25 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define MAX_CMDS 30
 
 # include <stdio.h>
 # include <stdlib.h>

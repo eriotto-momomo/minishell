@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 18:12:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:10:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,27 +173,27 @@ int	count_tokens(t_list **tok, int token_type)
 }
 
 // 🖨️PRINT💥DEBUGING
-void print_struct(t_shell *s)
-{
-	printf("%sprint_struct%s | s->ret_value %s%d%s\n", G, RST, C, s->ret_value, RST);
-	printf("%sprint_struct%s | s->heredoc_count %s%d%s\n", G, RST, C, s->heredoc_count, RST);
-	printf("%sprint_struct%s | s->fd %s%d%s\n", G, RST, C, s->fd, RST);
-	printf("%sprint_struct%s | s->final_output_fd %s%d%s\n", G, RST, C, s->final_output_fd, RST);
-	printf("%sprint_struct%s | s->stdin_save %s%d%s\n", G, RST, C, s->stdin_save, RST);
-	printf("%sprint_struct%s | s->stdout_save %s%d%s\n", G, RST, C, s->stdout_save, RST);
-	printf("%sprint_struct%s | s->node_initialized %s%d%s\n", G, RST, C, s->node_initialized, RST);
-	printf("%sprint_struct%s | s->pipefd[0] %s%d%s\n", G, RST, C, s->pipefd[0], RST);
-	printf("%sprint_struct%s | s->pipefd[1] %s%d%s\n", G, RST, C, s->pipefd[1], RST);
-	if (s->prompt)
-		printf("%sprint_struct%s | s->prompt [%s%s%s]\n", G, RST, C, s->prompt, RST);
-	if (s->line)
-		printf("%sprint_struct%s | s->line [%s%s%s]\n", G, RST, C,  s->line,RST);
-	if (s->heredoc_tmp)
-		printf("%sprint_struct%s | s->heredoc_tmp [%s%s%s]\n", G, RST, C, s->heredoc_tmp, RST);
-	if (s->heredoc_list)
-		for (size_t i = 0; s->heredoc_list[i]; i++)
-			printf("%sprint_struct%s | s->heredoc_list[%ld][%s%s%s]\n", G, RST, i, C, s->heredoc_tmp, RST);
-}
+// void print_struct(t_shell *s)
+// {
+// 	printf("%sprint_struct%s | s->ret_value %s%d%s\n", G, RST, C, s->ret_value, RST);
+// 	printf("%sprint_struct%s | s->heredoc_count %s%d%s\n", G, RST, C, s->heredoc_count, RST);
+// 	printf("%sprint_struct%s | s->fd %s%d%s\n", G, RST, C, s->fd, RST);
+// 	printf("%sprint_struct%s | s->final_output_fd %s%d%s\n", G, RST, C, s->final_output_fd, RST);
+// 	printf("%sprint_struct%s | s->stdin_save %s%d%s\n", G, RST, C, s->stdin_save, RST);
+// 	printf("%sprint_struct%s | s->stdout_save %s%d%s\n", G, RST, C, s->stdout_save, RST);
+// 	printf("%sprint_struct%s | s->node_initialized %s%d%s\n", G, RST, C, s->node_initialized, RST);
+// 	printf("%sprint_struct%s | s->pipefd[0] %s%d%s\n", G, RST, C, s->pipefd[0], RST);
+// 	printf("%sprint_struct%s | s->pipefd[1] %s%d%s\n", G, RST, C, s->pipefd[1], RST);
+// 	if (s->prompt)
+// 		printf("%sprint_struct%s | s->prompt [%s%s%s]\n", G, RST, C, s->prompt, RST);
+// 	if (s->line)
+// 		printf("%sprint_struct%s | s->line [%s%s%s]\n", G, RST, C,  s->line,RST);
+// 	if (s->heredoc_tmp)
+// 		printf("%sprint_struct%s | s->heredoc_tmp [%s%s%s]\n", G, RST, C, s->heredoc_tmp, RST);
+// 	if (s->heredoc_list)
+// 		for (size_t i = 0; s->heredoc_list[i]; i++)
+// 			printf("%sprint_struct%s | s->heredoc_list[%ld][%s%s%s]\n", G, RST, i, C, s->heredoc_tmp, RST);
+// }
 
 // 🖨️PRINT💥DEBUGING
 void	print_node(t_ast *ast)
