@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 18:36:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:14:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ int close_fd(t_ast *node)
 	return (0);
 }
 
-int	ft_external(t_env *env, t_ast *current_node)
+int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
 {
-	//printf("ENTER ft_external | %sfd_in: %d | fd_out: %d%s\n", P, current_node->data.exec.fd_in, current_node->data.exec.fd_out, RST);	// 🖨️PRINT💥DEBUGING
-	//print_node(current_node);
 	pid_t	pid;
 
 	pid = fork();
@@ -50,12 +48,12 @@ int	ft_external(t_env *env, t_ast *current_node)
 		return (1);
 	if (pid == 0)
 	{
-		if (setup_pipe(current_node->data.exec.fd_in, current_node->data.exec.fd_out) == 1)
+		if (setup_pipe(current_node->data.exec.fd_in, current_node->data.exec.fd_out) == -1)
 			return (1);
 		cmd_execution(env, current_node->data.exec.argv);
 	}
-	waitpid(0, NULL, 0);
-	//printf("EXIT ft_external | %sfd_in: %d | fd_out: %d%s\n", P, current_node->data.exec.fd_in, current_node->data.exec.fd_out, RST);	// 🖨️PRINT💥DEBUGING
+	else
+		s->child_pids[s->pid_count++] = pid;
 	return (0);
 }
 
@@ -95,15 +93,18 @@ int	preorder_exec(t_shell *s, t_ast **current_node)
 
 void	execution(t_shell *s)
 {
-	int	err;
+	int	i;
 
+	i = 0;
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
 		terminate_shell(s, errno);
-	err = preorder_exec(s, &s->current_node);
-	s->ret_value = err;
-	//if (err != 0)
-	//	terminate_shell(s, errno);
+	preorder_exec(s, &s->current_node);
+	while (i <s->pid_count)
+	{
+		printf("waiting on pid :%d\n", s->child_pids[i]);
+		waitpid(s->child_pids[i++], NULL, 0);
+	}
 	free_ast(&(s->root_node));
 	w_free((void **)&s->heredoc_tmp);
 	unlink(HEREDOC_FILE_PATH);

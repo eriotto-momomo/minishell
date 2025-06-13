@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 18:36:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:06:32 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,13 @@ int	handle_pipe(t_shell *s, t_ast **current_node)
 {
 	int	pipe_fd[2];
 
-	//fprintf(stderr, "handle_pipe| %s%s%s\n", Y, "ENTERING FUNCTION", RST);						// 🖨️PRINT💥DEBUGING
 	if (pipe(pipe_fd) < 0)
 		return (-1);
-	//printf("pipe_fd[0] :%d\npipe_fd[1] :%d\n", pipe_fd[0], pipe_fd[1]);
 	if (close_fd((*current_node)) != 0)
 		return (1);
 	(*current_node)->data.pipe.left->data.exec.fd_out = pipe_fd[1];
-	(*current_node)->data.pipe.right->data.exec.fd_in = pipe_fd[0];
 	preorder_exec(s, &((*current_node)->data.pipe.left));
-
-	//fprintf(stderr, "handle_pipe| %s%s%s\n", Y, "FIRST EXEC_NODE HANDLED", RST);						// 🖨️PRINT💥DEBUGING
+	(*current_node)->data.pipe.right->data.exec.fd_in = pipe_fd[0];
 	preorder_exec(s, &((*current_node)->data.pipe.right));
 	if (close_fd((*current_node)) != 0)
 		return (1);
@@ -34,13 +30,11 @@ int	handle_pipe(t_shell *s, t_ast **current_node)
 		return (1);
 	if (close(pipe_fd[0]) < 0)
 		return (1);
-	//fprintf(stderr, "handle_pipe | EXIT FUNCTION\n");
 	return (0);
 }
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
-	//var_expansion(s, node->data.exec.argv);
 	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s->pwd, s->old_pwd, s->home, node));
 	if (ft_strncmp(node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
@@ -53,12 +47,11 @@ int	handle_exec(t_shell *s, t_ast *node)
 		return (ft_unset(s));
 	if (ft_strncmp(node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(&s->env_list, node->data.exec.argc, node->data.exec.argv, node->data.exec.fd_out));
-	return (ft_external(s->env_list, node));
+	return (ft_external(s, s->env_list, node));
 }
 
 int	setup_pipe(int	fd_in, int fd_out)
 {
-	//printf("ENTER setup_pipe | %sfd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);	// 🖨️PRINT💥DEBUGING
 	if (fd_in != STDIN_FILENO)
 	{
 		if (dup2(fd_in, STDIN_FILENO) < 0)
@@ -73,7 +66,6 @@ int	setup_pipe(int	fd_in, int fd_out)
 		if (close(fd_out) < 0)
 			return (-1);
 	}
-	//printf("EXIT setup_pipe | %sfd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);	// 🖨️PRINT💥DEBUGING
 	return (0);
 }
 
