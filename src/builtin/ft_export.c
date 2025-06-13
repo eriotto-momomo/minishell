@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/12 10:16:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 10:23:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,24 @@ t_env	*var_lookup(t_env *env, char *target)
 	return (NULL);
 }
 
-int	exporter(t_env *env, char *arg)
+int	exporter(t_env **env, char *arg)
 {
 	t_env	*var_ptr;
 	char	*name;
 	char	*value;
-	int		ret;
 
-	ret = 1;
 	name = get_name(arg);
 	value = get_value(arg);
-	var_ptr = var_lookup(env, name);
+	var_ptr = var_lookup(*env, name);
 	if (!var_ptr)
 	{
-		if (!add_var_back(&env, name, value))
-			ret = 0;
+		if (!add_var_back(env, name, value))
+			return (0);
 	}
 	else
 		if (!replace_var(&var_ptr, value))
-			ret = 0;
-	free(name);
-	return (ret);
+			return (0);
+	return (1);
 }
 
 static int	is_valid(char *s)
@@ -74,14 +71,14 @@ static int	is_valid(char *s)
 	return (1);
 }
 
-int	ft_export(t_env *env, int ac, char **args, int fd)
+int	ft_export(t_env **env, int ac, char **args, int fd)
 {
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (ac == 1)
-		ft_env(env, fd);
-	while (args[++i])
+		ft_env(*env, fd);
+	while (++i < ac)
 	{
 		printf("Evaluating :%s\n", args[i]);
 		if (!is_valid(args[i]))
