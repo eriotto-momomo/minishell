@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 21:34:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 08:36:17 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_ast	*add_exec_node(t_list **tok)
 	node->data.ast_exec.argv[node->data.ast_exec.argc] = '\0';
 	return (node);
 }
-
 t_ast	*ast_new_node(t_ast node)
 {
 	t_ast	*ptr;
