@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 15:03:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:33:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	add_command(t_ast **node, t_list **tok)
 	//if (copy_tokens(&(*tok), WORD, (*node)->data.exec.argc,
 	//	(*node)->data.exec.argv) != 0)
 		//return (1);
-	printf("add_command | EXIT FUNCTION\n");
+	//printf("add_command | EXIT FUNCTION\n");
 	return (0);
 }
 
@@ -44,7 +44,7 @@ int	add_heredoc(t_ast **node, t_list **tok)
 	//if (copy_tokens(&(*tok), HERE_DOC, (*node)->data.exec.heredoc_count,
 	//	(*node)->data.exec.heredoc_list) != 0)
 	//	return (1);
-	printf("add_heredoc | EXIT FUNCTION\n");
+	//printf("add_heredoc | EXIT FUNCTION\n");
 	return (0);
 }
 
