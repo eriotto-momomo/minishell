@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 10:23:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 11:13:57 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	replace_var(t_env **var, char *value)
 {
 	if (!value)
 		return (0);
-	w_free((void **)&((*var)->value));
+	w_free((void **)&(*var)->value);
 	(*var)->value = value;
 	return (1);
 }
@@ -30,7 +30,8 @@ t_env	*var_lookup(t_env *env, char *target)
 	ptr = env;
 	while (ptr)
 	{
-		if (ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
+		if (ft_strlen(ptr->name) == ft_strlen(target) &&
+			ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
 			return (ptr);
 		ptr = ptr->next;
 	}
@@ -52,8 +53,11 @@ int	exporter(t_env **env, char *arg)
 			return (0);
 	}
 	else
+	{
 		if (!replace_var(&var_ptr, value))
 			return (0);
+		free(name);
+	}
 	return (1);
 }
 
