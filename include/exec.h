@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 17:36:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:27:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <sys/wait.h>
 
 // exec.c
+int		close_fd(t_ast *node);
 void	execution(t_shell *s);
 int		ft_external(t_env *env, t_ast *current_node);
 int		preorder_exec(t_shell *s, t_ast **current_node);

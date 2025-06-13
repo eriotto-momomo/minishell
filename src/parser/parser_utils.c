@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 15:28:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:12:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,51 +204,51 @@ void	print_node(t_ast *ast)
 
 	if (ast->tag == EXEC_NODE)
 	{
-		printf("%sprint_node%s| %sEXEC NODE%s\n", B, RST, G, RST);
-		printf("%sprint_node%s| argc: %d\n", B, RST, ast->data.exec.argc);
-		printf("%sprint_node%s| args:", B, RST);
+		fprintf(stderr, "%sprint_node%s| %sEXEC NODE%s\n", B, RST, G, RST);
+		fprintf(stderr, "%sprint_node%s| argc: %d\n", B, RST, ast->data.exec.argc);
+		fprintf(stderr, "%sprint_node%s| args:", B, RST);
 		i = 0;
 		while (i < ast->data.exec.argc)
 		{
-			printf(" [%s%s%s]", C, ast->data.exec.argv[i], RST);
+			fprintf(stderr, " [%s%s%s]", C, ast->data.exec.argv[i], RST);
 			i++;
 		}
-		printf("\n");
-		printf("%sprint_node%s| fd_in:  %d\n", B, RST, ast->data.exec.fd_in);
-		printf("%sprint_node%s| fd_out: %d\n", B, RST, ast->data.exec.fd_out);
+		fprintf(stderr, "\n");
+		fprintf(stderr, "%sprint_node%s| fd_in:  %d\n", B, RST, ast->data.exec.fd_in);
+		fprintf(stderr, "%sprint_node%s| fd_out: %d\n", B, RST, ast->data.exec.fd_out);
 		if (ast->data.exec.heredoc_count == 0)
-			printf("%sprint_node%s| %sNo heredoc to handle!%s\n", B, RST, R, RST);
+			fprintf(stderr, "%sprint_node%s| %sNo heredoc to handle!%s\n", B, RST, R, RST);
 		else if (ast->data.exec.heredoc_count > 0)
 		{
-			printf("%sprint_node%s| heredoc:", B, RST);
+			fprintf(stderr, "%sprint_node%s| heredoc:", B, RST);
 			i = 0;
 			while (i < ast->data.exec.heredoc_count)
 			{
-				printf(" [%s%s%s]", C, ast->data.exec.heredoc_list[i], RST);
+				fprintf(stderr, " [%s%s%s]", C, ast->data.exec.heredoc_list[i], RST);
 				i++;
 			}
-			printf("\n");
+			fprintf(stderr, "\n");
 		}
 	}
 	else if (ast->tag == PIPE_NODE)
 	{
 		left = ast->data.pipe.left;
 		right = ast->data.pipe.right;
-		printf("%sprint_node%s| %sPIPE NODE%s\n", B, RST, G, RST);
+		fprintf(stderr, "%sprint_node%s| %sPIPE NODE%s\n", B, RST, G, RST);
 		if (left->tag == EXEC_NODE)
 		{
-			printf("%sprint_node%s| L. BRANCH:\n", B, RST);
+			fprintf(stderr, "%sprint_node%s| L. BRANCH:\n", B, RST);
 			print_node(ast->data.pipe.left);
 		}
 		else if (left->tag == PIPE_NODE)
-			printf("%sprint_node%s| L. BRANCH: [%spipe%s]\n", B, RST, P, RST);
-		printf("%s------------------------------------%s\n", G, RST);
+			fprintf(stderr, "%sprint_node%s| L. BRANCH: [%spipe%s]\n", B, RST, P, RST);
+		fprintf(stderr, "%s------------------------------------%s\n", G, RST);
 		if (right->tag == EXEC_NODE)
 		{
-			printf("%sprint_node%s| R. BRANCH:\n", B, RST);
+			fprintf(stderr, "%sprint_node%s| R. BRANCH:\n", B, RST);
 			print_node(ast->data.pipe.right);
 		}
 		else if (right->tag == PIPE_NODE)
-			printf("%sprint_node%s| R. BRANCH: [%spipe%s]\n", B, RST, P, RST);
+			fprintf(stderr, "%sprint_node%s| R. BRANCH: [%spipe%s]\n", B, RST, P, RST);
 	}
 }
