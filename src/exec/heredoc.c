@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/12 16:44:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:17:28 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	write_heredoc(t_shell *s, char *delimiter, int to_expand)
 			break ;
 		if (to_expand == 1)
 		{
-			if ((delimiter[0] != '\'' && delimiter[ft_strlen(delimiter)] != '\'')		// 🚨 A TESTER!
-				&& (delimiter[0] != '\"' && delimiter[ft_strlen(delimiter)] != '\"'))	// 🚨 A TESTER!
+			if ((delimiter[0] != '\'' && delimiter[ft_strlen(delimiter) - 1] != '\'')		// 🚨 A TESTER!
+				&& (delimiter[0] != '\"' && delimiter[ft_strlen(delimiter) - 1] != '\"'))	// 🚨 A TESTER!
 				expand(s->env_list, &(s->line));
 		}
 		if (put_in_heredoc(s->line, s->fd) != 0)

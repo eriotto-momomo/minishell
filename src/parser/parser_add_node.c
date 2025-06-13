@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 18:09:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:19:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ int	add_command(t_ast **node, t_list **tok)
 {
 	(*node)->tag = EXEC_NODE;
 	(*node)->data.exec.argc = count_tokens(&(*tok), WORD);
-	(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc)); //📍`+1` au cas ou il y'a un HEREDOC a gerer
+	(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc));
 	if (!(*node)->data.exec.argv)
 		return (1);
 	if (copy_tokens(&(*tok), WORD, (*node)->data.exec.argc,
 		(*node)->data.exec.argv) != 0)
 		return (1);
-	//printf("%sadd_command | BUG!%s\n", R, RST);
 	return (0);
 }
 
@@ -38,7 +37,6 @@ int	add_heredoc(t_ast **node, t_list **tok)
 	if (copy_tokens(&(*tok), HERE_DOC, (*node)->data.exec.heredoc_count,
 		(*node)->data.exec.heredoc_list) != 0)
 		return (1);
-	//printf("%sadd_heredoc | BUG!%s\n", R, RST);
 	return (0);
 }
 
@@ -52,9 +50,11 @@ int	add_redir(t_ast **node, t_list **tok)
 	while (tmp && tmp->type != PIPE)
 	{
 		if (tmp->type == OUT_REDIR || tmp->type == APP_OUT_REDIR)
-			(*node)->data.exec.fd_out = redir_out(tmp->type, tmp->next->data, (*node)->data.exec.fd_out);
+			(*node)->data.exec.fd_out =
+				redir_out(tmp->type, tmp->next->data, (*node)->data.exec.fd_out);
 		else if (tmp->type == IN_REDIR)
-			(*node)->data.exec.fd_in = redir_in(tmp->next->data, (*node)->data.exec.fd_in);
+			(*node)->data.exec.fd_in =
+				redir_in(tmp->next->data, (*node)->data.exec.fd_in);
 		if ((*node)->data.exec.fd_out < 0 || (*node)->data.exec.fd_in < 0)
 			return (1);
 		if (!get_next_token(&tmp))

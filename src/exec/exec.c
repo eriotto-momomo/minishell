@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/12 16:37:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:07:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int close_fd(t_ast *node)
 {
-	//printf("%s%s%s\n", G, "close_fd | ENTER CLOSE_FD", RST);		// 🖨️PRINT💥DEBUGING
 	if(node->tag == EXEC_NODE)
 	{
 		if (node->data.exec.fd_in > 2)
@@ -37,8 +36,6 @@ int close_fd(t_ast *node)
 	}
 	node->data.exec.fd_in = 0;
 	node->data.exec.fd_out = 1;
-	printf("close_fd | %sfd_in: %d | fd_out: %d%s\n", P, node->data.exec.fd_in, node->data.exec.fd_out, RST);	// 🖨️PRINT💥DEBUGING
-	//printf("%s%s%s\n", R, "close_fd | EXIT CLOSE_FD 🚨", RST);	// 🖨️PRINT💥DEBUGING
 	return (0);
 }
 

@@ -6,13 +6,12 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/06 17:59:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:18:40 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// parse_pipe: EXEC [|PIPE]
 t_ast	*parse_pipe(t_list **tok)
 {
 	t_ast	*right;
@@ -33,13 +32,10 @@ t_ast	*parse_pipe(t_list **tok)
 		left = add_pipe_node(left, right);
 		if (!left)
 			return (NULL);
-		//printf("%s%s%s\n", Y, "parse_pipe| NEW PIPE_NODE CREATED!", RST);
-		//print_node(left); // 🖨️PRINT💥DEBUGING
 	}
 	return (left);
 }
 
-// parse_line: PIPE {&} [;LINE]
 t_ast	*parse_line(t_list **tok)
 {
 	t_ast	*node;
@@ -50,7 +46,6 @@ t_ast	*parse_line(t_list **tok)
 	return (node);
 }
 
-// parse_exec: REDIR {aaa REDIR}
 t_ast	*parse_exec(t_list **tok)
 {
 	t_ast	*exec_node;
@@ -60,8 +55,6 @@ t_ast	*parse_exec(t_list **tok)
 		exec_node = add_exec_node(tok);
 		if (!exec_node)
 			return (NULL);
-		//printf("%s%s%s\n", Y, "parse_exec| NEW EXEC_NODE CREATED!", RST);
-		//print_node(exec_node); // 🖨️PRINT💥DEBUGING
 		get_next_pipe(tok);
 	}
 	return (exec_node);
