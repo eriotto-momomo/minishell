@@ -6,29 +6,34 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 15:16:52 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:40:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	handle_pipe(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
+int	handle_pipe(t_shell *s, t_ast **current_node)
 {
-	if (pipe(s->pipefd) == -1)
+	int	pipe_fd[2];
+
+	if (!pipe(pipe_fd))
+		return (-1);
+	printf("pipe_fd[0] :%d\npipe_fd[1] :%d\n", pipe_fd[0], pipe_fd[1]);
+
+	(*current_node)->data.pipe.left->data.exec.fd_out = pipe_fd[0];
+	(*current_node)->data.pipe.right->data.exec.fd_in = pipe_fd[1];
+	preorder_exec(s, &((*current_node)->data.pipe.left));
+	if (close(pipe_fd[1]) < 0)
 		return (1);
-	preorder_exec(s, &((*current_node)->data.pipe.left), fd_in, s->pipefd[1]);
-	if (close(s->pipefd[1]) < 0)
+	preorder_exec(s, &((*current_node)->data.pipe.right));
+	if (close(pipe_fd[0]) < 0)
 		return (1);
-	preorder_exec(s, &((*current_node)->data.pipe.right), s->pipefd[0], fd_out);
-	if (close(s->pipefd[0]) < 0)
-		return (1);
+	printf("handle_pipe | EXIT FUNCTION\n");
 	return (0);
 }
 
-int	handle_exec(t_shell *s, t_ast *node, int fd_in, int fd_out)
+int	handle_exec(t_shell *s, t_ast *node)
 {
-	(void)fd_in;
-	(void)fd_out;
 	//var_expansion(s, node->data.exec.argv);
 	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s->pwd, s->old_pwd, s->home, node));
@@ -42,12 +47,12 @@ int	handle_exec(t_shell *s, t_ast *node, int fd_in, int fd_out)
 		return (ft_unset(s));
 	if (ft_strncmp(node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(&s->env_list, node->data.exec.argc, node->data.exec.argv, node->data.exec.fd_out));
-	return (ft_external(s->env_list, node,
-		node->data.exec.fd_in, node->data.exec.fd_out));
+	return (ft_external(s->env_list, node));
 }
 
 int	setup_pipe(int	fd_in, int fd_out)
 {
+	printf("ENTER setup_pipe | %sfd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);	// 🖨️PRINT💥DEBUGING
 	if (fd_in != STDIN_FILENO)
 	{
 		if (dup2(fd_in, STDIN_FILENO) < 0)
@@ -62,6 +67,7 @@ int	setup_pipe(int	fd_in, int fd_out)
 		if (close(fd_out) < 0)
 			return (-1);
 	}
+	printf("EXIT setup_pipe | %sfd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);	// 🖨️PRINT💥DEBUGING
 	return (0);
 }
 
@@ -79,7 +85,6 @@ char	*pathfinder(t_env *env, char *cmd)
 		temp = ft_strjoin(path[i], "/");
 		full_path = ft_strjoin(temp, cmd);
 		free(temp);
-		printf("full path :%s\n", full_path);
 		if (access(full_path, F_OK) == 0)
 		{
 			ft_free_char_array(path, ft_count_tab(path, 0));
@@ -94,6 +99,8 @@ char	*pathfinder(t_env *env, char *cmd)
 
 int	cmd_execution(t_env *env, char **argv)
 {
+	printf("cmd_execution | %sENTER%s\n", P, RST);	// 🖨️PRINT💥DEBUGING
+
 	char	*cmd_path;
 
 	cmd_path = pathfinder(env, argv[0]);
@@ -108,5 +115,6 @@ int	cmd_execution(t_env *env, char **argv)
 		perror("Command not executable");
 		exit(126);
 	}
+	printf("cmd_execution | %sEXIT%s\n", P, RST);	// 🖨️PRINT💥DEBUGING
 	return (0);
 }
