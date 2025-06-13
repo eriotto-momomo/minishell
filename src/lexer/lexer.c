@@ -6,28 +6,14 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/21 17:01:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:39:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char *get_el(char *cmd, int i)
-{
-	char *to_push;
-
-	if (cmd[i] == '\'' || cmd[i] == '\"')
-		to_push = get_quote(cmd, i);
-	else if (is_sep(cmd[i]))
-		to_push = get_sep(cmd, i);
-	else
-		to_push = get_word(cmd, i);
-	return (to_push);
-}
-
 int	get_token_id(char *token)
 {
-
 	if (token[0] == '>')
 	{
 		if (token[1] == '>')
@@ -45,38 +31,40 @@ int	get_token_id(char *token)
 	return (WORD);
 }
 
-t_list *tokenize(char *cmd)
+int	tokenize(t_list **head, char *cmd)
 {
-	int i;
-	char *el;
-	t_list *head;
+	char	*ptr;
+	char	*el;
 
-	i = 0;
-	head = NULL;
-	while (cmd[i])
+	if (!cmd || !*cmd)
+		return (1);
+	ptr = cmd;
+	while (ptr)
 	{
-		while (cmd[i] && ft_isspace(cmd[i]))
-			i++;
-		el = get_el(cmd, i);
+		while (ft_isspace(*ptr))
+			ptr++;
+		if (!*ptr)
+			return (1);
+		el = get_el(ptr);
 		if (!el)
-		{
-			free_list(&head);
-			return (NULL);
-		}
-		if (add_back(&head, el) == 1)
-		{
-			free_list(&head);
-			return (NULL);
-		}
-		i += ft_strlen(el);
+			return (0);
+		ptr += ft_strlen(el);
+		if (!add_back(head, el))
+			return (0);
 	}
-	return (head);
+	return (1);
 }
 
 void	lexer(t_shell *s)
 {
-	s->head = tokenize(s->line);
-	if (!s->head)
-		terminate_shell(s, errno);
+	t_list	*token;
+
+	token = NULL;
+	s->head = token;
+	if (!tokenize(&(s->head), s->line))
+	{
+		perror("Something went wrong");
+		terminate_shell(s, 0);
+	}
 	exit_check(s);
 }

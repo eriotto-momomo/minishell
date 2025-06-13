@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:20:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:40:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,6 @@ void print_struct(t_shell *s)
 		printf("%sprint_struct%s | s->prompt [%s%s%s]\n", G, RST, C, s->prompt, RST);
 	if (s->line)
 		printf("%sprint_struct%s | s->line [%s%s%s]\n", G, RST, C,  s->line,RST);
-	if (s->old_pwd)
-		printf("%sprint_struct%s | s->old_pwd [%s%s%s]\n", G, RST, C,  s->old_pwd,RST);
-	if (s->pwd)
-		printf("%sprint_struct%s | s->pwd [%s%s%s]\n", G, RST, C, s->pwd, RST);
 	if (s->heredoc_tmp)
 		printf("%sprint_struct%s | s->heredoc_tmp [%s%s%s]\n", G, RST, C, s->heredoc_tmp, RST);
 	if (s->heredoc_list)

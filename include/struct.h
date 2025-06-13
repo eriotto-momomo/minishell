@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/06 11:38:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:38:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ typedef struct s_shell
 	int		ret_value;
 	char	*prompt;
 	char	*line;
-	char	*old_pwd;
-	char	*pwd;
+	t_env	*old_pwd; // !! Holds the adress to the element in the env list
+	t_env	*pwd; // !! Holds the adress to the element in the env list
+	t_env	*home; // !! Holds the adress to the element in the env list
 	t_ast	*current_node;
 	t_ast	*root_node;
 	t_list	*head;

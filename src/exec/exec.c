@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:07:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:42:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 		//printf("preorder_exec |[exec]%s fd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);	// 🖨️PRINT💥DEBUGING
 		if ((*current_node)->data.exec.heredoc_count > 0)
 			(*current_node)->data.exec.fd_in = handle_heredoc(s, (*current_node));
+		if (!string_processing(s, &(*current_node)->data.exec.argc, &(*current_node)->data.exec.argv))
+		{
+			perror("Expansion or quote removal failed");
+			terminate_shell(s, 0);
+		}
 		if (handle_exec(s, (*current_node), fd_in, fd_out) != 0)
 			return (1);
 		if (close_fd((*current_node)) != 0)

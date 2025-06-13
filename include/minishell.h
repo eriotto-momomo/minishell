@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/06 18:17:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:38:40 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,10 @@
 # define HEREDOC_FILE_PATH "./tmp/heredoc_tmp.txt"
 
 // Char set de caractere qui peuvent separer des token dans une commande
-# define SEPARATORS "|\"\'<>"
+# define SEPARATORS "|<>"
 
 // ENV
 t_env	*create_var(char *name, char	*value);
-void	add_var_back(t_env **head, char *name, char *value);
 void	del_var(t_env **head, t_env **target);
 
 #endif

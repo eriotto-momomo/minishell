@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/04/25 12:17:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/05/27 10:44:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
  * @note This function assumes that `is_space`, `get_el`, `ft_strlen`,
  * `add_back`, and `free_list` are implemented elsewhere.
  */
-t_list *tokenize(char *cmd);
+int tokenize(t_list **head, char *cmd);
 
 /**
  * @brief Extracts a word (non-space, non-separator sequence) from the command.
@@ -44,7 +44,7 @@ t_list *tokenize(char *cmd);
  *
  * @note The caller is responsible for freeing the returned string.
  */
-char *get_word(char *cmd, int i);
+char *get_word(char *cmd);
 
 /**
  * @brief Extracts a single character separator from the command.
@@ -59,7 +59,7 @@ char *get_word(char *cmd, int i);
  *
  * @note The caller is responsible for freeing the returned string.
  */
-char *get_sep(char *cmd, int i);
+char *get_sep(char *cmd);
 
 /**
   * @brief Extracts a quoted string from the command.
@@ -75,7 +75,9 @@ char *get_sep(char *cmd, int i);
   *
   * @note The caller is responsible for freeing the returned string.
   */
-char	*get_quote(char *cmd, int i);
-int	get_token_id(char *token);
+char	*get_quote(char *cmd);
+int   get_token_id(char *token);
 void	lexer(t_shell *s);
+int   process_quote(char **s);
+char  *get_el(char *cmd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:07:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:45:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ int	handle_exec(t_shell *s, t_ast *node, int fd_in, int fd_out)
 	(void)fd_out;
 	//var_expansion(s, node->data.exec.argv);
 	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
-		return (ft_cd(s));
+		return (ft_cd(s->pwd, s->old_pwd, s->home, node));
 	if (ft_strncmp(node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
 		return (ft_echo(&node, node->data.exec.fd_out));
 	if (ft_strncmp(node->data.exec.argv[0], PWD, ft_strlen(PWD)) == 0)
 		return (ft_pwd(s, node->data.exec.fd_out));
 	if (ft_strncmp(node->data.exec.argv[0], ENV, ft_strlen(ENV)) == 0)
-		return (ft_env(s, node->data.exec.fd_out));
+		return (ft_env(s->env_list, node->data.exec.fd_out));
 	if (ft_strncmp(node->data.exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
 		return (ft_unset(s));
 	if (ft_strncmp(node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
-		return (ft_export(s));
+		return (ft_export(&s->env_list, node->data.exec.argc, node->data.exec.argv, node->data.exec.fd_out));
 	return (ft_external(s->env_list, node,
 		node->data.exec.fd_in, node->data.exec.fd_out));
 }
