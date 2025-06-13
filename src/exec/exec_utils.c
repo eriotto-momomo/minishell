@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/12 15:25:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:07:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,6 @@ int	handle_exec(t_shell *s, t_ast *node, int fd_in, int fd_out)
 	return (ft_external(s->env_list, node,
 		node->data.exec.fd_in, node->data.exec.fd_out));
 }
-
-//BACKUP 💾
-//int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
-//{
-//	var_expansion(s, current_node->data.exec.argv);
-//	if (ft_strncmp(current_node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
-//		return (ft_cd(s));
-//	if (ft_strncmp(current_node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
-//		return (ft_echo(&current_node, fd_out));
-//	if (ft_strncmp(current_node->data.exec.argv[0], PWD, ft_strlen(PWD)) == 0)
-//		return (ft_pwd(s, fd_out));
-//	if (ft_strncmp(current_node->data.exec.argv[0], ENV, ft_strlen(ENV)) == 0)
-//		return (ft_env(s, fd_out));
-//	if (ft_strncmp(current_node->data.exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
-//		return (ft_unset(s));
-//	if (ft_strncmp(current_node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
-//		return (ft_export(s));
-//	return (ft_external(s->env_list, current_node, fd_in, fd_out));
-//}
 
 int	setup_pipe(int	fd_in, int fd_out)
 {

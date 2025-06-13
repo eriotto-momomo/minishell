@@ -6,20 +6,19 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/12 16:44:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:20:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// 🚨`close` fd_out apres l'exec🚨
 int	redir_out(int redir_mode, char *filename, int current_redir)
 {
 	int	fd_out;
 
 	if (current_redir > 2)
 	{
-		printf("redir_out| %sclosing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
+		//printf("redir_out| %sclosing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
 		if (close(current_redir) < 0)
 			return (-1);
 	}
@@ -27,23 +26,22 @@ int	redir_out(int redir_mode, char *filename, int current_redir)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (redir_mode == APP_OUT_REDIR)
 		fd_out = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	printf("redir_out| %sfilename: %s | fd_out: %d%s\n", P, filename, fd_out, RST);		// 🖨️PRINT💥DEBUGING
+	//printf("redir_out| %sfilename: %s | fd_out: %d%s\n", P, filename, fd_out, RST);		// 🖨️PRINT💥DEBUGING
 	return (fd_out);
 }
 
-// 🚨`close` fd_in apres l'exec🚨
 int	redir_in(char *filename, int current_redir)
 {
 	int	fd_in;
 
 	if (current_redir > 2)
 	{
-		printf("redir_in | %sclosing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
+		//printf("redir_in | %sclosing current_redir: %d%s\n", P, current_redir, RST);	// 🖨️PRINT💥DEBUGING
 		if (close(current_redir) < 0)
 			return (-1);
 	}
 	fd_in = open(filename, O_RDONLY);
-	printf("redir_in | %sfilename: %s | fd_in:  %d%s\n", P, filename, fd_in, RST);		// 🖨️PRINT💥DEBUGING
+	//printf("redir_in | %sfilename: %s | fd_in:  %d%s\n", P, filename, fd_in, RST);		// 🖨️PRINT💥DEBUGING
 	return (fd_in);
 }
 
