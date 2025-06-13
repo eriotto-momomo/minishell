@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/21 16:47:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:39:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 // TO REMOVE
 //////////////////////////////////
-int debug(char *path);
-void print_list(t_list *head);
+void	debug_list(t_list *head);
+void	print_list(t_list *head);
 //////////////////////////////////
 
 // list.c
 t_list	*create_node(char *data);
 int		add_back(t_list **head, char *data);
-//int		add_front(t_list **head, char *data);
+void	add_front(t_list **head, char *data);
 void	free_list(t_list **head);
 size_t	count_cmd(t_list *head);
 size_t	env_len(t_env *h_env);
@@ -60,5 +60,5 @@ void	free_env(t_env **h_env);
 
 // env++
 
-void add_var_back(t_env **head, char *name, char *value);
+int	add_var_back(t_env **head, char *name, char *value);
 #endif

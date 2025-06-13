@@ -16,6 +16,7 @@ ft_calloc.c \
 ft_count_tab.c \
 ft_free_array.c \
 ft_free_char_array.c \
+ft_isquote.c \
 ft_isspace.c \
 ft_isalnum.c \
 ft_isalpha.c \

@@ -6,31 +6,70 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 17:50:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 08:54:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_in_env(t_env	*env, char *var)
+int	is_in_double_quote(char *s, int j)
 {
-	if (!var)
-		return (0);
-	while (env)
+	int	in_double;
+	int	i;
+
+	in_double = 0;
+	i = 0;
+	while (i < j && s[i])
 	{
-		if (ft_strncmp(env->name, var, ft_strlen(env->name)) == 0)
-			return (1);
-		env = env->next;
+		if (s[i] == '\"')
+			in_double = !in_double;
+		i++;
 	}
-	return (0);
+	return (in_double);
 }
 
-size_t	offset_calc(char *str)
+char	*make_prefix(t_env *env, char *str, int i)
 {
-	size_t	offset;
+	char	*value;
+	char	*prefix;
+	char	*ret;
 
-	offset = 0;
-	while (str[offset] && str[offset] != '$')
-		offset++;
-	return (offset);
+	value = get_var(env, str + i + 1);
+	if (!value)
+		return (NULL);
+	prefix = ft_substr(str, 0, i);
+	if (!prefix)
+	{
+		free(value);
+		return (NULL);
+	}
+	if (value[0] == '\0')
+	{
+		free(value);
+		return (prefix);
+	}
+	ret = ft_strjoin(prefix, value);
+	free(prefix);
+	free(value);
+	return (ret);
+}
+
+char	*get_var(t_env *env, char *s)
+{
+	int		end;
+	char	*var_name;
+	char	*tmp;
+
+	end = 0;
+	while (s[end] && (ft_isalnum(s[end])))
+		end++;
+	var_name = ft_substr(s, 0, end);
+	if (!var_name)
+		return (NULL);
+	tmp = ft_getenv(env, var_name);
+	free(var_name);
+	if (tmp)
+		return (ft_strdup(tmp));
+	else
+		return (ft_strdup(""));
 }
