@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/24 16:24:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/06 09:57:24 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 // TO REMOVE
 //////////////////////////////////
-int debug(char *path);
-void print_list(t_list *head);
+void	debug_list(t_list *head);
+void	print_list(t_list *head);
 //////////////////////////////////
 
 // list.c
@@ -60,5 +60,5 @@ void	free_env(t_env **h_env);
 
 // env++
 
-void add_var_back(t_env **head, char *name, char *value);
+int	add_var_back(t_env **head, char *name, char *value);
 #endif

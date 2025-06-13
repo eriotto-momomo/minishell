@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/21 09:15:48 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 11:12:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_env(t_env **h_env)
 	current = *h_env;
 	while (current)
 	{
+		printf("freeing :%s\n", current->name);
 		temp = current->next;
 		w_free((void **)&(current->name));
 		w_free((void **)&(current->value));
@@ -60,23 +61,27 @@ t_env	*create_var(char *name, char	*value)
 	return (new_node);
 }
 
-void	add_var_back(t_env **head, char *name, char *value)
+int	add_var_back(t_env **head, char *name, char *value)
 {
 	t_env	*new_node;
 	t_env	*temp;
 
 	new_node = create_var(name, value);
+	if (!new_node)
+		return (0);
 	if (*head == NULL)
 	{
 		*head = new_node;
-		return ;
+		return (1);
 	}
 	temp = *head;
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new_node;
 	new_node->prev = temp;
+	return (1);
 }
+
 
 void	del_var(t_env **head, t_env **target)
 {

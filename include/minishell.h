@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 16:08:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/06 09:58:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@
 
 // ENV
 t_env	*create_var(char *name, char	*value);
-void	add_var_back(t_env **head, char *name, char *value);
 void	del_var(t_env **head, t_env **target);
 
 #endif

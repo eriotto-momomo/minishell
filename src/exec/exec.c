@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/30 15:41:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/12 09:33:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	preorder_exec(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 	}
 	else if ((*current_node)->tag == AST_EXEC)
 	{
-		if (!string_processing(s, (*current_node)->data.ast_exec.argv))
+		if (!string_processing(s, &(*current_node)->data.ast_exec.argc, &(*current_node)->data.ast_exec.argv))
 		{
 			perror("Expansion or quote removal failed");
 			terminate_shell(s);
