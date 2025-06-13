@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/12 09:18:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/12 13:28:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ static int	shrink_array(char ***arr, int ac, int i)
 	new_arr[k] = NULL;
 	free(*arr);
 	*arr = new_arr;
+	printf("%s\n", new_arr[0]);
 	return (0);
 }
 
@@ -107,6 +108,7 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 		{
 			if (!expand(s->env_list, &(*args)[i]))
 				return (0);
+			printf("args :%s\n", (*args)[i]);
 			if ((*args)[i][0] == '\0')
 			{
 				if (shrink_array(args, *ac, i) == 1)
