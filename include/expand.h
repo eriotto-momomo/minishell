@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:54:52 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/05 15:28:21 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/12 09:15:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ char	*get_var(t_env *env, char *s);
 
 
 // Word processing
-int	string_processing(t_shell *s, char **args);
+int	string_processing(t_shell *s,int *ac, char ***args);
 
 #endif

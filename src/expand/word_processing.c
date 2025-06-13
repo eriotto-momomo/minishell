@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/05 15:29:27 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 09:10:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static size_t	count_quote(char *s)
 	i = 0;
 	in = 0;
 	c = 0;
+	q = '\0';
 	while (s[i])
 	{
 		if (!in && ft_isquote(s[i]))
@@ -68,26 +69,62 @@ static char	*trim_quote(char *s)
 	return (new_s);
 }
 
-int	string_processing(t_shell *s, char **args)
+static int	shrink_array(char ***arr, int ac, int i)
+{
+	int		j;
+	int		k;
+	char	**new_arr;
+
+	new_arr = malloc(sizeof(char *) * ac);
+	if (!new_arr)
+		return (1);
+	j = 0;
+	k = 0;
+	while (j < ac)
+	{
+		if (j != i)
+		{
+			new_arr[k] = (*arr)[j];
+			k++;
+		}
+		else
+			free((*arr)[j]);
+		j++;
+	}
+	new_arr[k] = NULL;
+	free(*arr);
+	*arr = new_arr;
+	return (0);
+}
+
+int	string_processing(t_shell *s, int *ac, char ***args)
 {
 	int		i;
 	char	*trimmed;
 
 	i = 0;
-	while (args[i])
+	while ((*args)[i])
 	{
-		if (ft_strchr(args[i], '$'))
+		if (ft_strchr((*args)[i], '$'))
 		{
-			if (!expand(s->env_list, &args[i]))
+			if (!expand(s->env_list, &(*args)[i]))
 				return (0);
+			if ((*args)[i][0] == '\0')
+			{
+				if (shrink_array(args, *ac, i) == 1)
+					return (0);
+				*ac = *ac - 1;
+			}
 		}
-		if (ft_strchr(args[i], '\'') || ft_strchr(args[i], '\"'))
+		if (!(*args)[i])
+			continue ;
+		if ((*args)[i] && (ft_strchr((*args)[i], '\'') || ft_strchr((*args)[i], '\"')))
 		{
-			trimmed = trim_quote(args[i]);
+			trimmed = trim_quote((*args)[i]);
 			if (!trimmed)
 				return (0);
-			free(args[i]);
-			args[i] = trimmed;
+			free((*args)[i]);
+			(*args)[i] = trimmed;
 		}
 		i++;
 	}

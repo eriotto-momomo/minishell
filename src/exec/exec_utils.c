@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/05/21 16:22:38 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 09:57:44 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ int	handle_pipe(t_shell *s, t_ast **current_node, int fd_in, int fd_out)
 int	handle_exec(t_shell *s, t_ast *current_node, int fd_in, int fd_out)
 {
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], CD, ft_strlen(CD)) == 0)
-		return (ft_cd(s));
+		return (ft_cd(s->pwd, s->old_pwd, s->home, current_node));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
 		return (ft_echo(&current_node, fd_out));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], PWD, ft_strlen(PWD)) == 0)
 		return (ft_pwd(s, fd_out));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], ENV, ft_strlen(ENV)) == 0)
-		return (ft_env(s, fd_out));
+		return (ft_env(s->env_list, fd_out));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
 		return (ft_unset(s));
 	if (ft_strncmp(current_node->data.ast_exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
-		return (ft_export(s));
+		return (ft_export(&s->env_list,current_node->data.ast_exec.argc, current_node->data.ast_exec.argv, fd_out));
 	return (ft_external(s->env_list, current_node, fd_in, fd_out));
 }
 

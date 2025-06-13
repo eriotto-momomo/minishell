@@ -52,6 +52,29 @@ char	*get_sep(char *cmd)
 	return (sep);
 }
 
+static size_t	get_tok_len(char *cmd)
+{
+	size_t	len;
+	int		in_quote;
+	char	quote_type;
+
+	len = 0;
+	in_quote = 0;
+	while (cmd[len] && !is_sep(cmd[len]) && !ft_isspace(cmd[len]))
+	{
+		if (ft_isquote(cmd[len]))
+		{
+			in_quote = !in_quote;
+			quote_type = cmd[len++];
+		}
+		if (in_quote)
+			while (cmd[len] && cmd[len] != quote_type)
+				len++;
+		len++;
+	}
+	return (len);
+}
+
 char	*get_word(char *cmd)
 {
 	size_t	len;
@@ -60,9 +83,7 @@ char	*get_word(char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	len = 0;
-	while (cmd[len] && !is_sep(cmd[len]) && !ft_isspace(cmd[len]))
-		len++;
+	len = get_tok_len(cmd);
 	word = malloc(sizeof(char) * len + 1);
 	if (!word)
 		return (NULL);
