@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/12 13:53:40 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:03:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	get_next_pipe(t_list **tok);
 int		get_next_token(t_list **tok);
 
 // parser_utils.c
+char	**copy_args(t_list *tok, int ac);
+char	**copy_heredocs(t_list *tok, int heredoc_count);
 int		redir_out(int redir_mode, char *filename, int current_redir);
 int		redir_in(char *filename, int current_redir);
 t_ast	*new_ast_node(t_ast node);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 09:10:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 15:12:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 	char	*trimmed;
 
 	i = 0;
-	while ((*args)[i])
+	while (i < *ac)
 	{
 		if (ft_strchr((*args)[i], '$'))
 		{

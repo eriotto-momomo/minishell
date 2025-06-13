@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:36:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:03:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@ int	add_command(t_ast **node, t_list **tok)
 {
 	(*node)->tag = EXEC_NODE;
 	(*node)->data.exec.argc = count_tokens(&(*tok), WORD);
-	(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc));
+	(*node)->data.exec.argv = copy_args(*tok, (*node)->data.exec.argc);
 	if (!(*node)->data.exec.argv)
 		return (1);
-	if (copy_tokens(&(*tok), WORD, (*node)->data.exec.argc,
-		(*node)->data.exec.argv) != 0)
-		return (1);
+	//(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc));
+	//if (!(*node)->data.exec.argv)
+	//	return (1);
+	//if (copy_tokens(&(*tok), WORD, (*node)->data.exec.argc,
+	//	(*node)->data.exec.argv) != 0)
+		//return (1);
+	printf("add_command | EXIT FUNCTION\n");
 	return (0);
 }
 
@@ -30,13 +34,17 @@ int	add_heredoc(t_ast **node, t_list **tok)
 	(*node)->data.exec.heredoc_count = count_tokens(&(*tok), HERE_DOC);
 	if ((*node)->data.exec.heredoc_count == 0)
 		return (0);
-	(*node)->data.exec.heredoc_list =
-		malloc(sizeof(char **) * (*node)->data.exec.heredoc_count);
+	(*node)->data.exec.heredoc_list = copy_heredocs(*tok, (*node)->data.exec.heredoc_count);
 	if (!(*node)->data.exec.heredoc_list)
 		return (1);
-	if (copy_tokens(&(*tok), HERE_DOC, (*node)->data.exec.heredoc_count,
-		(*node)->data.exec.heredoc_list) != 0)
-		return (1);
+	//(*node)->data.exec.heredoc_list =
+	//	malloc(sizeof(char **) * (*node)->data.exec.heredoc_count);
+	//if (!(*node)->data.exec.heredoc_list)
+	//	return (1);
+	//if (copy_tokens(&(*tok), HERE_DOC, (*node)->data.exec.heredoc_count,
+	//	(*node)->data.exec.heredoc_list) != 0)
+	//	return (1);
+	printf("add_heredoc | EXIT FUNCTION\n");
 	return (0);
 }
 

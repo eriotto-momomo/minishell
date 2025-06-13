@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:40:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:28:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,61 @@ t_ast	*new_ast_node(t_ast node)
 	return (ptr);
 }
 
+char	**copy_heredocs(t_list *tok, int heredoc_count)
+{
+	char	**heredoc_list;
+	int		i;
+
+	heredoc_list = malloc(sizeof(char **) * heredoc_count);
+	if (!heredoc_list)
+		return (NULL);
+	i = 0;
+	while (tok && i < heredoc_count)
+	{
+		if (tok->type == HERE_DOC)
+		{
+			heredoc_list[i] = ft_strdup(tok->next->data);
+			if (!heredoc_list[i])
+			{
+				ft_free_char_array(heredoc_list, i);
+				return (NULL);
+			}
+			i++;
+		}
+		tok = tok->next;
+	}
+	return (heredoc_list);
+}
+
+char	**copy_args(t_list *tok, int ac)
+{
+	char	**av;
+	int		i;
+
+	av = malloc(sizeof(char **) * (ac + 1));
+	if (!av)
+		return (NULL);
+	i = 0;
+	while (tok && i < ac)
+	{
+		if (tok->type == WORD)
+		{
+			av[i] = ft_strdup(tok->data);
+			if (!av[i])
+			{
+				ft_free_char_array(av, i);
+				return (NULL);
+			}
+			i++;
+		}
+		tok = tok->next;
+	}
+	av[i] = NULL;
+	return (av);
+}
+
+
+
 int	copy_tokens(t_list **tok, int token_type, int size, char **array)
 {
 	t_list	*tmp;
@@ -69,12 +124,19 @@ int	copy_tokens(t_list **tok, int token_type, int size, char **array)
 			|| tmp->prev->type == WORD || tmp->prev->type == PIPE))
 		{
 			if (tmp->type == WORD && token_type == WORD)
-				array[i++] = ft_strdup(tmp->data);
-			else if (tmp->type == HERE_DOC && token_type == HERE_DOC)
-				array[i++] = ft_strdup(tmp->next->data);
-			if (!array[i - 1])
 			{
-				ft_free_char_array(array, i - 1);
+				array[i] = ft_strdup(tmp->data);
+				i++;
+			}
+			else if (tmp->type == HERE_DOC && token_type == HERE_DOC)
+			{
+				array[i] = ft_strdup(tmp->next->data);
+				i++;
+			}
+
+			if (!array[i])
+			{
+				ft_free_char_array(array, i);
 				return (1);
 			}
 		}

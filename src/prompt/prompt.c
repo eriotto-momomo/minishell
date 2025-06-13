@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:00:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:37:10 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	reset_prompt(t_shell *s, int mode)
 {
-	(void)s;
-
+	w_free((void **)&s->line);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	if (mode == RESET_PROMPT)
