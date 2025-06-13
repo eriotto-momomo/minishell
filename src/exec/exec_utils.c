@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:45:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:16:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	*pathfinder(t_env *env, char *cmd)
 		temp = ft_strjoin(path[i], "/");
 		full_path = ft_strjoin(temp, cmd);
 		free(temp);
+		printf("full path :%s\n", full_path);
 		if (access(full_path, F_OK) == 0)
 		{
 			ft_free_char_array(path, ft_count_tab(path, 0));
