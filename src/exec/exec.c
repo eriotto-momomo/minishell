@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 17:37:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:36:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,13 @@ int	ft_external(t_env *env, t_ast *current_node)
 
 int	preorder_exec(t_shell *s, t_ast **current_node)
 {
-	//printf("%spreorder_exec | current_node:%s\n", P, RST);									// 🖨️PRINT💥DEBUGING
+	//fprintf(stderr, "preorder_exec| %s%s%s\n", Y, "↓current_node↓", RST);						// 🖨️PRINT💥DEBUGING
 	//print_node((*current_node));																// 🖨️PRINT💥DEBUGING
 	if (!(*current_node))
 		return (0);
 	if ((*current_node)->tag == PIPE_NODE)
 	{
+		//fprintf(stderr, "preorder_exec| %s%s%s\n", Y, "current_node is a PIPE_NODE", RST);						// 🖨️PRINT💥DEBUGING
 		if (handle_pipe(s, &(*current_node)) != 0)
 			return (1);
 		//if (close_fd((*current_node)) != 0)
@@ -74,6 +75,7 @@ int	preorder_exec(t_shell *s, t_ast **current_node)
 	}
 	else if ((*current_node)->tag == EXEC_NODE)
 	{
+		//fprintf(stderr, "preorder_exec| %s%s%s\n", Y, "current_node is an EXEC_NODE", RST);						// 🖨️PRINT💥DEBUGING
 		if ((*current_node)->data.exec.heredoc_count > 0)
 			(*current_node)->data.exec.fd_in = handle_heredoc(s, (*current_node));
 		if (!string_processing(s, &(*current_node)->data.exec.argc, &(*current_node)->data.exec.argv))
