@@ -6,11 +6,18 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 09:40:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 12:31:37 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static void	reset(t_shell *s)
+{
+	s->pipe_count = 0;
+	s->pid_count = 0;
+	w_free((void **)&s->line);
+}
 
 void	process_input(t_shell *s)
 {
@@ -18,6 +25,7 @@ void	process_input(t_shell *s)
 	if (parser(s))
 		return ;
 	execution(s);
+	reset(s);
 }
 
 void prompt_loop(t_shell *s)
@@ -30,7 +38,7 @@ void prompt_loop(t_shell *s)
 			add_history(s->line);
 			process_input(s);
 		}
-		w_free((void **)&s->line);
+		reset(s);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 11:12:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 12:30:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,11 @@ int close_fd(t_ast *node)
 	if(node->tag == EXEC_NODE)
 	{
 		if (node->data.exec.fd_in > 2)
-		{
 			if (close(node->data.exec.fd_in) != 0)
 				return (1);
-		}
 		if (node->data.exec.fd_out > 2)
-		{
 			if (close(node->data.exec.fd_out) != 0)
 				return (1);
-		}
 	}
 	else if(node->tag == PIPE_NODE)
 	{
@@ -97,20 +93,15 @@ void	execution(t_shell *s)
 	int	i;
 
 	i = 0;
-	s->pipe_count = 0;
-	s->pid_count = 0;
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
 		terminate_shell(s, errno);
 	preorder_exec(s, &s->current_node);
 	while (i < s->pid_count)
-	{
-		printf("waiting on %d\n", s->child_pids[i]);
 		waitpid(s->child_pids[i++], NULL, 0);
-	}
 	free_ast(&(s->root_node));
-	w_free((void **)&s->heredoc_tmp);
 	unlink(HEREDOC_FILE_PATH);
+	w_free((void **)&s->heredoc_tmp);
 }
 
 
