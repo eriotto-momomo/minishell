@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:39:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:47:06 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // TO REMOVE
 //////////////////////////////////
 void	debug_list(t_list *head);
-void	print_list(t_list *head);
 //////////////////////////////////
 
 // list.c
@@ -40,6 +39,8 @@ void	free_redir_node(t_ast *node);
 void	free_exec_node(t_ast *node);
 void	free_ast(t_ast **node);
 
+// General
+void v_switch(char **s, char *new_s);
 
 // env
 /**

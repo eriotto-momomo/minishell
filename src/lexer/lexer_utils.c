@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 16:43:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:42:13 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static size_t	get_tok_len(char *cmd)
 		if (in_quote)
 			while (cmd[len] && cmd[len] != quote_type)
 				len++;
-		len++;
+		else
+			len++;
 	}
 	return (len);
 }
