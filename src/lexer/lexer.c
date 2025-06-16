@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 08:59:17 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 09:33:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_builtin(t_list *head)
+static int	is_builtin(t_list *head)
 {
 	if (!head->prev || head->prev->type == PIPE)
 	{
@@ -76,10 +76,23 @@ int	tokenize(t_list **head, char *cmd)
 	return (1);
 }
 
+static int	count_external(t_list *head)
+{
+	int	c;
+
+	c = 0;
+	while (head)
+	{
+		if (!is_builtin(head))
+			c++;
+		head = head->next;
+	}
+	return (c);
+}
+
 void	lexer(t_shell *s)
 {
 	t_list	*token;
-	t_list	*tmp;
 
 	token = NULL;
 	s->head = token;
@@ -88,12 +101,6 @@ void	lexer(t_shell *s)
 		perror("Something went wrong");
 		terminate_shell(s, 0);
 	}
-	tmp = s->head;
-	while (tmp)
-	{
-		if (!is_builtin(tmp))
-			s->ext_cmd_count++;
-		tmp = tmp->next;
-	}
+	s->ext_cmd_count = count_external(s->head);
 	exit_check(s);
 }
