@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:38:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:42:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,6 @@ enum	e_mode
 	RESET_PROMPT,
 	HEREDOC_PROMPT
 };
-
-/*
-* L'enum 'e_signal' est utilisee pour indiquer le type de signal recu au shell par la
-* variable globale 'g_sig'
-* CTRLC = 'CTRL + C'
-* CTRLD = 'CTRL + D'
-* CTRLBACK = 'CTRL + \'
-*/
-enum e_signal
-{
-	CTRLC,
-	CTRLD,
-	CTRLBACK
-};
-
-typedef struct	s_signals
-{
-	int	signal;
-}	t_sig;
 
 typedef enum e_types
 {
@@ -54,7 +35,6 @@ typedef enum	e_tag
 	PIPE_NODE,
 	EXEC_NODE
 } 				t_tag;
-
 
 //	NO_ERRORS = 0
 //	UNEXPECTED_TOK = 1
@@ -103,29 +83,36 @@ typedef struct	s_env
 	struct s_env	*prev;
 }					t_env;
 
+// FORWARD DECLARATION (dis au compilateur que "t_sig" existe)
+typedef struct	s_signals t_sig;
+struct	s_termios;
+
 typedef struct s_shell
 {
 	t_env	*env_list;
 	int		ret_value;
 	char	*prompt;
 	char	*line;
-	t_env	*old_pwd; // !! Holds the adress to the element in the env list
-	t_env	*pwd; // !! Holds the adress to the element in the env list
-	t_env	*home; // !! Holds the adress to the element in the env list
+	t_env	*old_pwd;		// !! Holds the adress to the element in the env list
+	t_env	*pwd;			// !! Holds the adress to the element in the env list
+	t_env	*home;			// !! Holds the adress to the element in the env list
 	t_ast	*current_node;
 	t_ast	*root_node;
 	t_list	*head;
-	t_sig	*sig;
+	struct termios	old_termios;	// Sert a catch `CTRL+D`
+	struct termios	new_termios;	// Sert a catch `CTRL+D`
+	int		signal;
+	int		sig_mode;
 	char	*heredoc_tmp;
 	char	**heredoc_list;
 	int		heredoc_count;
 	int		fd;
-	int		final_output_fd;
+	int		final_output_fd;	// 🚨USELESS❔
 	int		stdin_save;
 	int		stdout_save;
 	int		node_initialized;
-	t_ast	*root_redir;
-	int		pipefd[2]; // 🚨 NORM OK❔ Besoin d'un malloc❔
+	t_ast	*root_redir;		// 🚨USELESS❔
+	int		pipefd[2];
 }			t_shell;
 
 #endif

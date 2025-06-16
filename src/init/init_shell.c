@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:37:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:40:07 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void init_shell(t_shell *s, char	**envp)
 	s->root_node = NULL;
 	s->current_node = NULL;
 	s->root_redir = NULL;
+	s->sig_mode = MINISHELL_SIGNALS;
 }

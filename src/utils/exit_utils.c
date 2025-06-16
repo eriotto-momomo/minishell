@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:36:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:51:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	terminate_shell(t_shell *s, int error)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
+	setup_signals(s, DEFAULT_SIGNALS); // 🚨 AJOUTER SAFE CHECKS
 	if (error)
 	{
 		perror(strerror(errno));

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 18:36:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:09:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	execution(t_shell *s)
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
 		terminate_shell(s, errno);
+	setup_signals(s, DEFAULT_SIGNALS);
 	err = preorder_exec(s, &s->current_node);
 	s->ret_value = err;
 	//if (err != 0)
