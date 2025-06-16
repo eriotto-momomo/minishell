@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 12:10:07 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 12:21:59 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	handle_pipe(t_shell *s, t_ast **current_node)
 		(*current_node)->data.pipe.left->data.exec.fd_out = s->pipe_fd[cur_pipe][1];
 	(*current_node)->data.pipe.right->data.exec.fd_in = s->pipe_fd[cur_pipe][0];
 	s->pipe_count++;
-	print_node(*current_node);
 	preorder_exec(s, &((*current_node)->data.pipe.left));
 	preorder_exec(s, &((*current_node)->data.pipe.right));
 	close(s->pipe_fd[cur_pipe][0]);
