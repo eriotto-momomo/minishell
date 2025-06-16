@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:51:38 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:51:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_env	*var_lookup(t_env *env, char *target)
 	{
 		if (ft_strlen(ptr->name) == ft_strlen(target) &&
 			ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
-			return (ptr);
+				return (ptr);
 		ptr = ptr->next;
 	}
 	return (NULL);
