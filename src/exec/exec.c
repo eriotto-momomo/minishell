@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 19:14:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 08:32:41 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
 	{
 		if (setup_pipe(current_node->data.exec.fd_in, current_node->data.exec.fd_out) == -1)
 			return (1);
+		printf("%d\n", s->ext_cmd_count);
 		cmd_execution(env, current_node->data.exec.argv);
 	}
 	else
@@ -100,7 +101,7 @@ void	execution(t_shell *s)
 	if (!s->heredoc_tmp)
 		terminate_shell(s, errno);
 	preorder_exec(s, &s->current_node);
-	while (i <s->pid_count)
+	while (i < s->pid_count)
 	{
 		printf("waiting on pid :%d\n", s->child_pids[i]);
 		waitpid(s->child_pids[i++], NULL, 0);

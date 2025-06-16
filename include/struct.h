@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 19:04:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 08:14:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_shell
 	t_ast	*root_node;
 	t_list	*head;
 	t_sig	*sig;
+	int		ext_cmd_count;
 	pid_t	child_pids[MAX_CMDS];
 	int		pid_count;
 	char	*heredoc_tmp;

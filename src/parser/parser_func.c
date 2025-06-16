@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:18:40 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 08:51:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_ast	*parse_exec(t_list **tok)
 	t_ast	*exec_node;
 
 	if ((*tok) && (*tok)->type != PIPE)
-	{
+	{		
 		exec_node = add_exec_node(tok);
 		if (!exec_node)
 			return (NULL);
