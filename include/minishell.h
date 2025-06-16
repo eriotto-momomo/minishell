@@ -6,14 +6,14 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 19:03:25 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 09:42:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define MAX_CMDS 30
+# define MAX_CMDS 256
 
 # include <stdio.h>
 # include <stdlib.h>

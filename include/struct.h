@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 08:14:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 09:58:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,17 @@ typedef struct s_shell
 	int		ret_value;
 	char	*prompt;
 	char	*line;
-	t_env	*old_pwd; // !! Holds the adress to the element in the env list
-	t_env	*pwd; // !! Holds the adress to the element in the env list
-	t_env	*home; // !! Holds the adress to the element in the env list
+	t_env	*old_pwd; 
+	t_env	*pwd;
+	t_env	*home;
 	t_ast	*current_node;
 	t_ast	*root_node;
 	t_list	*head;
 	t_sig	*sig;
-	int		ext_cmd_count;
 	pid_t	child_pids[MAX_CMDS];
 	int		pid_count;
+	int		pipe_fd[MAX_CMDS][2];
+	int		pipe_count;
 	char	*heredoc_tmp;
 	char	**heredoc_list;
 	int		heredoc_count;

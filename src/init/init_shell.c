@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 08:15:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 09:36:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void init_shell(t_shell *s, char	**envp)
 	if (!s->env_list)
 		terminate_shell(s, errno);
 	s->ret_value = 0;
-	s->ext_cmd_count = 0;
+	s->pipe_count = 0;
 	s->prompt = NULL;
 	s->line = NULL;
 	s->pwd = var_lookup(s->env_list, "PWD");

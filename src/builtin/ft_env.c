@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 17:18:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:02:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	ft_env(t_env *env, int fd_out)
 
 	ptr = env;
 	to_print = ft_strdup("");
-	printf("fd out : %d\n", fd_out);
 	while (ptr)
 	{
 		var = make_var(ptr->name, ptr->value);
