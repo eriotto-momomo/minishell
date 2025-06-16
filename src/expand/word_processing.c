@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 15:12:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:16:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 	i = 0;
 	while (i < *ac)
 	{
+		printf("processing : %s\n", (*args)[i]);
 		if (ft_strchr((*args)[i], '$'))
 		{
 			if (!expand(s->env_list, &(*args)[i]))
@@ -114,10 +115,9 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 				if (shrink_array(args, *ac, i) == 1)
 					return (0);
 				*ac = *ac - 1;
+				continue ;
 			}
 		}
-		if (!(*args)[i])
-			continue ;
 		if ((*args)[i] && (ft_strchr((*args)[i], '\'') || ft_strchr((*args)[i], '\"')))
 		{
 			trimmed = trim_quote((*args)[i]);
