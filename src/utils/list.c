@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:50:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:53:57 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	add_back(t_list **head, char *data)
     t_list	*new_node;
 	t_list	*temp;
 
-	if (ft_strncmp(data, "", 1) == 0)
-		return (1);
+	// if (ft_strncmp(data, "", 1) == 0)
+	// 	return (1);
 	new_node = create_node(data);
 	if (!new_node)
 		return (0);

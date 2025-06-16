@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 16:16:21 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:34:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,36 @@ static size_t	count_quote(char *s)
 	return (c);
 }
 
-static char	*trim_quote(char *s)
+static int trim_quote(char **s)
 {
 	char	quote;
 	int		i;
 	int		j;
 	char	*new_s;
 
+	if (!s || !*s)
+		return (-1);
+	new_s = malloc(sizeof(char) * (ft_strlen(*s) - count_quote(*s) + 1));
+	if (!new_s)
+		return (-1);
 	i = 0;
 	j = 0;
-	new_s = malloc(sizeof(char) * (ft_strlen(s) - count_quote(s) + 1));
-	if (!new_s)
-		return (NULL);
-	while (s[i])
+	while ((*s)[i])
 	{
-		if (s[i] == '\'' || s[i] == '\"')
+		if ((*s)[i] == '\'' || (*s)[i] == '\"')
 		{
-			quote = s[i++];
-			while (s[i] && s[i] != quote)
-				new_s[j++] = s[i++];
+			quote = (*s)[i++];
+			while ((*s)[i] && (*s)[i] != quote)
+				new_s[j++] = (*s)[i++];
 		}
 		else
-			new_s[j++] = s[i];
-		i++;
+			new_s[j++] = (*s)[i++];
 	}
 	new_s[j] = '\0';
-	return (new_s);
+	v_switch(s, new_s);
+	return (0);
 }
+
 
 static int	shrink_array(char ***arr, int ac, int i)
 {
@@ -100,12 +103,10 @@ static int	shrink_array(char ***arr, int ac, int i)
 int	string_processing(t_shell *s, int *ac, char ***args)
 {
 	int		i;
-	char	*trimmed;
 
 	i = 0;
 	while (i < *ac)
 	{
-		printf("processing : %s\n", (*args)[i]);
 		if (ft_strchr((*args)[i], '$'))
 		{
 			if (!expand(s->env_list, &(*args)[i]))
@@ -119,13 +120,8 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 			}
 		}
 		if ((*args)[i] && (ft_strchr((*args)[i], '\'') || ft_strchr((*args)[i], '\"')))
-		{
-			trimmed = trim_quote((*args)[i]);
-			if (!trimmed)
+			if (trim_quote(&(*args)[i]) == -1)
 				return (0);
-			free((*args)[i]);
-			(*args)[i] = trimmed;
-		}
 		i++;
 	}
 	return (1);

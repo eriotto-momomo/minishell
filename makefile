@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
+#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/13 11:38:14 by emonacho         ###   ########.fr        #
+#    Updated: 2025/06/16 16:36:45 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/signals/signals.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/utils/free_ast.c\
+			$(CFILES_PATH)/utils/general.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/debug.c \
 			$(CFILES_PATH)/utils/env_utils.c\
