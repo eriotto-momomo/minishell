@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 16:33:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:30:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	add_command(t_ast **node, t_list **tok)
 	(*node)->tag = EXEC_NODE;
 	(*node)->data.exec.argc = count_tokens(&(*tok), WORD);
 	(*node)->data.exec.argv = copy_args(*tok, (*node)->data.exec.argc);
+	(*node)->data.exec.fd_in = STDIN_FILENO;
+	(*node)->data.exec.fd_out = STDOUT_FILENO;
 	if (!(*node)->data.exec.argv)
 		return (1);
 	//(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc));

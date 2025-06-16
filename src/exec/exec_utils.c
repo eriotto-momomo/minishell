@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 08:33:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 12:10:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 int	handle_pipe(t_shell *s, t_ast **current_node)
 {
-	int	pipe_fd[2];
+	int cur_pipe;
 
-	if (pipe(pipe_fd) < 0)
+	cur_pipe = s->pipe_count;
+	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (-1);
-	if (close_fd((*current_node)) != 0)
-		return (1);
-	(*current_node)->data.pipe.left->data.exec.fd_out = pipe_fd[1];
+	if ((*current_node)->data.pipe.left->tag == PIPE_NODE)
+		(*current_node)->data.pipe.left->data.pipe.right->data.exec.fd_out = s->pipe_fd[cur_pipe][1];
+	else
+		(*current_node)->data.pipe.left->data.exec.fd_out = s->pipe_fd[cur_pipe][1];
+	(*current_node)->data.pipe.right->data.exec.fd_in = s->pipe_fd[cur_pipe][0];
+	s->pipe_count++;
+	print_node(*current_node);
 	preorder_exec(s, &((*current_node)->data.pipe.left));
-	(*current_node)->data.pipe.right->data.exec.fd_in = pipe_fd[0];
 	preorder_exec(s, &((*current_node)->data.pipe.right));
-	if (close_fd((*current_node)) != 0)
-		return (1);
-	if (close(pipe_fd[1]) < 0)
-		return (1);
-	if (close(pipe_fd[0]) < 0)
-		return (1);
+	close(s->pipe_fd[cur_pipe][0]);
+	close(s->pipe_fd[cur_pipe][1]);
 	return (0);
 }
+
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
