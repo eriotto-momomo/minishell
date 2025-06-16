@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 09:36:23 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 14:51:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void init_shell(t_shell *s, char	**envp)
 	s->prompt = NULL;
 	s->line = NULL;
 	s->pwd = var_lookup(s->env_list, "PWD");
-	s->old_pwd = var_lookup(s->env_list, "ODLPWD");
-	s->home = var_lookup(s->env_list, "PWD");
+	s->old_pwd = var_lookup(s->env_list, "PWD");
+	s->home = var_lookup(s->env_list, "HOME");
 	s->pid_count = 0;
 	s->head = NULL;
 	s->root_node = NULL;

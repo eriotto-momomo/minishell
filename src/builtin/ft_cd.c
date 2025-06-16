@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:46:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:55:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,51 +24,61 @@ char	*save_cwd(void)
 	return (ft_strdup(buffer));
 }
 
-static char	*make_curpath(char *pwd, char *oldpwd, char *home, char *arg)
+static char	*make_curpath(t_shell *s, char *arg)
 {
 	char	*curpath;
 	char	*temp;
 
 	if (!arg || (arg[0] == '~' && !arg[1]))
-		return (ft_strdup(home));
+		return (ft_strdup(s->home->value));
 	if ((arg[0] == '-' && !arg[1]))
-		return (ft_strdup(oldpwd));
+		return (ft_strdup(s->old_pwd->value));
 	if (arg[0] == '.' && arg[1] == '/')
 	{
 		arg += 2;
-		if (pwd[ft_strlen(pwd)] == '/')
-			return (ft_strjoin(pwd, arg));
+		if (s->pwd->value[ft_strlen(s->pwd->value)] == '/')
+			return (ft_strjoin(s->pwd->value, arg));
 		temp = ft_strjoin("/", arg);
-		curpath = ft_strjoin(pwd, temp);
+		curpath = ft_strjoin(s->pwd->value, temp);
 		free(temp);
 		return (curpath);
 	}
 	return (ft_strdup(arg));
 }
 
-static int	replace_path(t_env **pwd, t_env **oldpwd, char *tmp)
+static int	updatepath(t_shell *s)
 {
-	w_free((void **)&(*pwd)->value);
-	(*pwd)->value = save_cwd();
-	if (!*pwd)
-		return (0);
-	w_free((void **)&(*oldpwd)->value);
-	(*oldpwd)->value = tmp;
-	return (1);
+	char	*new_pwd;
+	char	*old_pwd;
+
+	old_pwd = ft_strdup(s->pwd->value);
+	new_pwd = save_cwd();
+	if (!old_pwd || !new_pwd)
+	{
+		free(old_pwd);
+		free(new_pwd);
+		return (1);
+	}
+	if (!replace_var(&s->old_pwd, old_pwd))
+	{
+		free(new_pwd);
+		return (1);
+	}
+	if (!replace_var(&s->pwd, new_pwd))
+		return (1);
+	return (0);
 }
 
-int	ft_cd(t_env *pwd, t_env *oldpwd, t_env *home, t_ast *node)
+int	ft_cd(t_shell *s, int ac, char **av)
 {
-	(void)node;
 	char	*curpath;
-	char	*tmp;
 
-	if (node->data.exec.argc > 2)
+	if (ac > 2)
 		ft_putstr_fd("To many arguments\n", 2);
-	curpath = make_curpath(home->value, oldpwd->value, pwd->value, node->data.exec.argv[1]);
+	curpath = make_curpath(s, av[1]);
+	printf("curpath : %s\n", curpath);
 	if (!curpath)
 		return (1);
-	tmp = pwd->value;
 	if (chdir(curpath) == -1)
 	{
 		perror("cd :");
@@ -76,7 +86,6 @@ int	ft_cd(t_env *pwd, t_env *oldpwd, t_env *home, t_ast *node)
 		return (-1);
 	}
 	free(curpath);
-	if (!replace_path(&pwd, &oldpwd, tmp))
-		return (1);
+	updatepath(s);
 	return (0);
 }
