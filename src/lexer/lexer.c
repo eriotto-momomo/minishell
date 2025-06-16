@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:39:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 08:59:17 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	is_builtin(t_list *head)
+{
+	if (!head->prev || head->prev->type == PIPE)
+	{
+		if (ft_strncmp((*head).data, CD, ft_strlen(CD)) == 0)
+			return (1);
+		if (ft_strncmp((*head).data, ECHO, ft_strlen(ECHO)) == 0)
+			return (1);
+		if (ft_strncmp((*head).data, PWD, ft_strlen(PWD)) == 0)
+			return (1);
+		if (ft_strncmp((*head).data, ENV, ft_strlen(ENV)) == 0)
+			return (1);
+		if (ft_strncmp((*head).data, UNSET, ft_strlen(UNSET)) == 0)
+			return (1);
+		if (ft_strncmp((*head).data, EXPORT, ft_strlen(EXPORT)) == 0)
+			return (1);
+		return (0);
+	}
+	return (1);
+}
 
 int	get_token_id(char *token)
 {
@@ -58,6 +79,7 @@ int	tokenize(t_list **head, char *cmd)
 void	lexer(t_shell *s)
 {
 	t_list	*token;
+	t_list	*tmp;
 
 	token = NULL;
 	s->head = token;
@@ -65,6 +87,13 @@ void	lexer(t_shell *s)
 	{
 		perror("Something went wrong");
 		terminate_shell(s, 0);
+	}
+	tmp = s->head;
+	while (tmp)
+	{
+		if (!is_builtin(tmp))
+			s->ext_cmd_count++;
+		tmp = tmp->next;
 	}
 	exit_check(s);
 }
