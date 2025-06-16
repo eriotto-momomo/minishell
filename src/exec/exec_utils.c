@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 13:50:43 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 15:49:57 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	handle_exec(t_shell *s, t_ast *node)
 	if (ft_strncmp(node->data.exec.argv[0], ENV, ft_strlen(ENV)) == 0)
 		return (ft_env(s->env_list, node->data.exec.fd_out));
 	if (ft_strncmp(node->data.exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
-		return (ft_unset(s));
+		return (ft_unset(s, node->data.exec.argc, node->data.exec.argv));
 	if (ft_strncmp(node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(&s->env_list, node->data.exec.argc, node->data.exec.argv, node->data.exec.fd_out));
 	return (ft_external(s, s->env_list, node));
