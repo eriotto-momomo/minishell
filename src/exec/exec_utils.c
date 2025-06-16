@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 18:36:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:54:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	handle_exec(t_shell *s, t_ast *node)
 	//var_expansion(s, node->data.exec.argv);
 	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s->pwd, s->old_pwd, s->home, node));
-	if (ft_strncmp(node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
+	if (ft_strncmp(node->data.exec.argv[0], FT_ECHO, ft_strlen(FT_ECHO)) == 0)
 		return (ft_echo(&node, node->data.exec.fd_out));
 	if (ft_strncmp(node->data.exec.argv[0], PWD, ft_strlen(PWD)) == 0)
 		return (ft_pwd(s, node->data.exec.fd_out));
