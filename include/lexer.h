@@ -78,6 +78,5 @@ char *get_sep(char *cmd);
 char	*get_quote(char *cmd);
 int   get_token_id(char *token);
 void	lexer(t_shell *s);
-int   process_quote(char **s);
 char  *get_el(char *cmd);
 #endif
