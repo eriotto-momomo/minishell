@@ -6,13 +6,12 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:59:11 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 11:08:37 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
-
 
 enum	e_mode
 {
@@ -55,10 +54,6 @@ typedef enum	e_tag
 	EXEC_NODE
 } 				t_tag;
 
-
-//	NO_ERRORS = 0
-//	UNEXPECTED_TOK = 1
-//	UNMATCHED_QUOTE = 2
 typedef enum e_errors_return
 {
 	NO_ERRORS,
@@ -81,12 +76,6 @@ typedef struct	s_ast
 	t_data		data;
 }				t_ast;
 
-/*
-Structure pour les token :
-- data - La string que contien le noeud
-- type - le type du token (word, pipe, redirecton, etc...)
-- next - pointeur vers le prochain noeud
-*/
 typedef struct s_token
 {
 	char			*data;
