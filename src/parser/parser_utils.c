@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 19:10:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_ast	*new_ast_node(t_ast node)
 	return (ptr);
 }
 
-char	**copy_heredocs(t_list *tok, int heredoc_count)
+char	**copy_heredocs(t_token *tok, int heredoc_count)
 {
 	char	**heredoc_list;
 	int		i;
@@ -82,7 +82,7 @@ char	**copy_heredocs(t_list *tok, int heredoc_count)
 	return (heredoc_list);
 }
 
-char	**copy_args(t_list *tok, int ac)
+char	**copy_args(t_token *tok, int ac)
 {
 	char	**av;
 	int		i;
@@ -111,9 +111,9 @@ char	**copy_args(t_list *tok, int ac)
 
 
 
-int	copy_tokens(t_list **tok, int token_type, int size, char **array)
+int	copy_tokens(t_token **tok, int token_type, int size, char **array)
 {
-	t_list	*tmp;
+	t_token	*tmp;
 	int	i;
 
 	tmp = *tok;
@@ -146,9 +146,9 @@ int	copy_tokens(t_list **tok, int token_type, int size, char **array)
 	return (0);
 }
 
-int	count_tokens(t_list **tok, int token_type)
+int	count_tokens(t_token **tok, int token_type)
 {
-	t_list	*tmp;
+	t_token	*tmp;
 	int		count;
 
 	tmp = *tok;

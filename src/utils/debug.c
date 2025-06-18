@@ -1,8 +1,8 @@
 #include "../../include/minishell.h"
 
-void	debug_list(t_list *head)
+void	debug_list(t_token *head)
 {
-	t_list *current = head;
+	t_token *current = head;
 
 	while (current)
 	{

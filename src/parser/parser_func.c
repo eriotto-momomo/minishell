@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/16 08:51:43 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_ast	*parse_pipe(t_list **tok)
+t_ast	*parse_pipe(t_token **tok)
 {
 	t_ast	*right;
 	t_ast	*left;
@@ -36,7 +36,7 @@ t_ast	*parse_pipe(t_list **tok)
 	return (left);
 }
 
-t_ast	*parse_line(t_list **tok)
+t_ast	*parse_line(t_token **tok)
 {
 	t_ast	*node;
 
@@ -46,7 +46,7 @@ t_ast	*parse_line(t_list **tok)
 	return (node);
 }
 
-t_ast	*parse_exec(t_list **tok)
+t_ast	*parse_exec(t_token **tok)
 {
 	t_ast	*exec_node;
 
@@ -60,7 +60,7 @@ t_ast	*parse_exec(t_list **tok)
 	return (exec_node);
 }
 
-void	get_next_pipe(t_list **tok)
+void	get_next_pipe(t_token **tok)
 {
 	while ((*tok) && (*tok)->type != PIPE)
 	{
@@ -69,7 +69,7 @@ void	get_next_pipe(t_list **tok)
 	}
 }
 
-int	get_next_token(t_list **tok)
+int	get_next_token(t_token **tok)
 {
 	if (!(*tok) || !(*tok)->next)
 		return (0);

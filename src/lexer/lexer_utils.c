@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 16:42:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:47:02 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	is_sep(char c)
-{
-	int	i;
-
-	i = 0;
-	while (SEPARATORS[i])
-	{
-		if (c == SEPARATORS[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*get_sep(char *cmd)
-{
-	char	*sep;
-
-	if (!cmd)
-		return (NULL);
-	if ((cmd[0] == '<' && cmd[1] == '<') || (cmd[0] == '>' && cmd[1] == '>'))
-	{
-		sep = malloc(3);
-		if (!sep)
-			return (NULL);
-		sep[0] = cmd[0];
-		sep[1] = cmd[1];
-		sep[2] = '\0';
-	}
-	else
-	{
-		sep = malloc(2);
-		if (!sep)
-			return (NULL);
-		sep[0] = cmd[0];
-		sep[1] = '\0';
-	}
-	return (sep);
-}
 
 static size_t	get_tok_len(char *cmd)
 {
@@ -76,7 +36,52 @@ static size_t	get_tok_len(char *cmd)
 	return (len);
 }
 
-char	*get_word(char *cmd)
+int	get_token_id(char *token)
+{
+	if (token[0] == '>')
+	{
+		if (token[1] == '>')
+			return (APP_OUT_REDIR);
+		return (OUT_REDIR);
+	}
+	if (token[0] == '<')
+	{
+		if (token[1] == '<')
+			return (HERE_DOC);
+		return (IN_REDIR);
+	}
+	if (token[0] == '|')
+		return (PIPE);
+	return (WORD);
+}
+
+static char	*get_sep(char *cmd)
+{
+	char	*sep;
+
+	if (!cmd)
+		return (NULL);
+	if ((cmd[0] == '<' && cmd[1] == '<') || (cmd[0] == '>' && cmd[1] == '>'))
+	{
+		sep = malloc(3);
+		if (!sep)
+			return (NULL);
+		sep[0] = cmd[0];
+		sep[1] = cmd[1];
+		sep[2] = '\0';
+	}
+	else
+	{
+		sep = malloc(2);
+		if (!sep)
+			return (NULL);
+		sep[0] = cmd[0];
+		sep[1] = '\0';
+	}
+	return (sep);
+}
+
+static char	*get_word(char *cmd)
 {
 	size_t	len;
 	char	*word;
