@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 09:34:49 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 09:40:11 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ void prompt_loop(t_shell *s)
 
 int main(int argc, char **argv, char **envp)
 {
-	t_shell s;
+	t_shell shell;
 
 	(void)argc;
 	(void)argv;
-	if (init_shell(&s, envp) == 0)
+	if (init_shell(&shell, envp) == 0)
 	{
-		if (create_prompt(&s) == -1)
-			terminate_shell(&s, 1);
-		prompt_loop(&s);
+		if (create_prompt(&shell) == -1)
+			terminate_shell(&shell, 1);
+		prompt_loop(&shell);
 	}
 	else
 	{
-		perror("Something went wrong at startup.");
+		perror("Initialization failed !");
 		exit(1);
 	}
+	return (0);
 }
