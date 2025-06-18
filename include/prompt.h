@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:35:57 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 09:24:51 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:13:27 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 // FORWARD DECLARATION (dis au compilateur que "t_shell" existe)
 typedef struct s_shell	t_shell;
-
-void	prompt_loop(t_shell *s);
 
 /**
  * @brief	Create a shell prompt using the user's name and the host name.

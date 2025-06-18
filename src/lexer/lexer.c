@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 09:53:01 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 09:55:29 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	tokenize(t_list **head, char *cmd)
 		while (ft_isspace(*ptr))
 			ptr++;
 		if (!*ptr)
-		{
-			printf("caca\n");
 			return (1);
-		}
 		el = get_el(ptr);
 		if (!el)
 			return (0);

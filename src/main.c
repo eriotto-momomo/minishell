@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 09:40:11 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:17:13 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	reset(t_shell *s)
 	w_free((void **)&s->line);
 }
 
-void	process_input(t_shell *s)
+static void	process_input(t_shell *s)
 {
 	lexer(s);
 	if (parser(s))
@@ -28,7 +28,7 @@ void	process_input(t_shell *s)
 	reset(s);
 }
 
-void prompt_loop(t_shell *s)
+static void prompt_loop(t_shell *s)
 {
 	while (1)
 	{
