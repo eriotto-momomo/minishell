@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:27:42 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/21 14:50:05 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 09:30:33 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ char	*get_value(char *s);
 char	*get_name(char	*s);
 
 // Struct
-void init_shell(t_shell *s, char	**envp);
+int     init_shell(t_shell *s, char	**envp);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:35:57 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 19:00:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/18 09:24:51 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	prompt_loop(t_shell *s);
  * @return	A dynamically allocated string containing the full shell prompt.
  *			The caller is responsible for freeing it.
  */
-void	create_prompt(t_shell *s);
+int     create_prompt(t_shell *s);
 void	reset_prompt(t_shell *s, int mode);
 
 #endif
