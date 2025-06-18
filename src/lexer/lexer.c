@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 16:51:47 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 09:47:07 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	tokenize(t_list **head, char *cmd)
 		while (ft_isspace(*ptr))
 			ptr++;
 		if (!*ptr)
+		{
+			printf("caca\n");
 			return (1);
+		}
 		el = get_el(ptr);
 		if (!el)
 			return (0);
@@ -54,20 +57,6 @@ int	tokenize(t_list **head, char *cmd)
 	}
 	return (1);
 }
-
-// static int	count_pipe(t_list *head)
-// {
-// 	int	c_pipe;
-
-// 	c_pipe = 0;
-// 	while (head)
-// 	{
-// 		if (head->type == PIPE)
-// 			c_pipe++;
-// 		head = head->next;
-// 	}
-// 	return (c_pipe);
-// }
 
 void	lexer(t_shell *s)
 {
@@ -80,6 +69,5 @@ void	lexer(t_shell *s)
 		perror("Something went wrong");
 		terminate_shell(s, 0);
 	}
-	// s->pipe_count = count_pipe(s->head);
 	exit_check(s);
 }
