@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:36:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/18 10:16:26 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parser(t_shell *s)
 	temp = s->head;
 	if (syntax_analysis(temp) != 0)
 	{
-		//terminate_shell(s, errno);
+		free_list(&(s->head));
 		return (1);
 	}
 	s->heredoc_list = NULL;
@@ -40,9 +40,6 @@ int	parser(t_shell *s)
 		terminate_shell(s, errno);
 		return (1);
 	}
-	//printf("%s%s%s\n", Y, "============ ROOT NODE ============",RST);	// 🖨️PRINT💥DEBUGING
-	//print_node(s->root_node); 										// 🖨️PRINT💥DEBUGING
-	//printf("%s%s%s\n", Y, "============ ********* ============",RST);	// 🖨️PRINT💥DEBUGING
 	s->current_node = s->root_node;
 	free_list(&(s->head));
 	return (0);

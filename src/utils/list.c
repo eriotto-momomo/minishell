@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 16:53:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:14:17 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ void free_list(t_list **head)
 	t_list *current;
 	t_list *temp;
 
+	printf("freeing -> %s\n", (*head)->data);
 	if (!head || !*head)
 		return ;
 	current = *head;
 	while (current)
 	{
+		// printf("freeing -> %s\n", (*head)->data);
 		temp = current->next;
 		w_free((void **)&(current->data));
 		w_free((void **)&current);

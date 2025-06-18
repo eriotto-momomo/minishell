@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/30 14:24:29 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:03:04 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	quote_check(t_list *tok)
 	int		start;
 
 	start = 0;
+	printf("processing :%s\n", tok->data);
 	while (tok->data[start])
 	{
 		if (ft_isquote(tok->data[start]))
@@ -44,7 +45,7 @@ static int	quote_check(t_list *tok)
 
 static int	syntax_checker(t_list *tok)
 {
-	if (tok->data[0] == '\"' || tok->data[0] == '\'')
+	if (ft_strchr(tok->data, '\'') || ft_strchr(tok->data, '\"'))
 		return (quote_check(tok));
 	if (tok->type == OUT_REDIR || tok->type == IN_REDIR
 		|| tok->type == HERE_DOC || tok->type == APP_OUT_REDIR)
