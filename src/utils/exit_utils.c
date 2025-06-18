@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:36:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:01:56 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exit_check(t_shell *s)
 void	terminate_shell(t_shell *s, int error)
 {
 	if (s->head)
-		free_list(&(s->head));
+		free_token_list(&(s->head));
 	if (s->root_node)
 		free_ast(&(s->root_node));
 	if (s->env_list)

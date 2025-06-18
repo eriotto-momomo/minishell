@@ -6,7 +6,7 @@
 #    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/18 10:38:05 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/06/18 11:06:40 by c4v3d            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/lexer/lexer_utils.c\
 			$(CFILES_PATH)/lexer/lexer.c\
+			$(CFILES_PATH)/lexer/token_list.c\
 			$(CFILES_PATH)/loop/main_loop.c \
 			$(CFILES_PATH)/parser/parser_add_node.c\
 			$(CFILES_PATH)/parser/parser_func.c\
@@ -36,7 +37,6 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/utils/free_ast.c\
 			$(CFILES_PATH)/utils/general.c\
-			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/debug.c \
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/utils/identifier.c\

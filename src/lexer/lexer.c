@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 11:01:26 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	tokenize(t_token **head, char *cmd)
 		if (!el)
 			return (0);
 		ptr += ft_strlen(el);
-		if (!add_back(head, el))
+		if (!add_token_back(head, el))
 			return (0);
 	}
 	return (1);

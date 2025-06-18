@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 11:05:18 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token *create_node(char *data)
+t_token *create_token(char *data)
 {
 	t_token	*new_node;
 
@@ -21,20 +21,19 @@ t_token *create_node(char *data)
 		return (NULL);
 	new_node->data = data;
 	new_node->type = get_token_id(data);
-	/* new_node->type = get_token(new_node->data);  A voir */
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
 }
 
-int	add_back(t_token **head, char *data)
+int	add_token_back(t_token **head, char *data)
 {
     t_token	*new_node;
 	t_token	*temp;
 
 	// if (ft_strncmp(data, "", 1) == 0)
 	// 	return (1);
-	new_node = create_node(data);
+	new_node = create_token(data);
 	if (!new_node)
 		return (0);
 	if (*head == NULL)
@@ -50,7 +49,7 @@ int	add_back(t_token **head, char *data)
 	return (1);
 }
 
-void free_list(t_token **head)
+void free_token_list(t_token **head)
 {
 	t_token *current;
 	t_token *temp;
@@ -67,36 +66,4 @@ void free_list(t_token **head)
 		current = temp;
 	}
 	*head = NULL;
-}
-
-
-size_t count_cmd(t_token *head)
-{
-	size_t	c;
-	t_token	*temp;
-
-	c = 1;
-	temp = head;
-	while (temp)
-	{
-		if (temp->type == PIPE)
-			c++;
-		temp = temp->next;
-	}
-	return (c);
-}
-
-size_t	env_len(t_env *h_env)
-{
-	size_t	len;
-	t_env	*temp;
-
-	len = 0;
-	temp = h_env;
-	while (temp)
-	{
-		len++;
-		temp = temp->next;
-	}
-	return (len);
 }
