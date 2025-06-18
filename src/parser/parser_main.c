@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 11:01:56 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parser(t_shell *s)
 	temp = s->head;
 	if (syntax_analysis(temp) != 0)
 	{
-		free_list(&(s->head));
+		free_token_list(&(s->head));
 		return (1);
 	}
 	s->heredoc_list = NULL;
@@ -41,7 +41,7 @@ int	parser(t_shell *s)
 		return (1);
 	}
 	s->current_node = s->root_node;
-	free_list(&(s->head));
+	free_token_list(&(s->head));
 	return (0);
 }
 

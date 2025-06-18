@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 11:06:09 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@
 //////////////////////////////////
 void	debug_list(t_token *head);
 //////////////////////////////////
-
-// list.c
-t_token	*create_node(char *data);
-int		add_back(t_token **head, char *data);
-void	add_front(t_token **head, char *data);
-void	free_list(t_token **head);
-size_t	count_cmd(t_token *head);
-size_t	env_len(t_env *h_env);
 
 // exit_utils.c
 void exit_check(t_shell *s);
