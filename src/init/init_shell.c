@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 14:51:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 09:32:57 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void init_shell(t_shell *s, char	**envp)
+int	init_shell(t_shell *s, char	**envp)
 {
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
-		terminate_shell(s, errno);
+		return (-1);
 	s->ret_value = 0;
 	s->pipe_count = 0;
 	s->prompt = NULL;
@@ -29,4 +29,5 @@ void init_shell(t_shell *s, char	**envp)
 	s->root_node = NULL;
 	s->current_node = NULL;
 	s->root_redir = NULL;
+	return (0);
 }
