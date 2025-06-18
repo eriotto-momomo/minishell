@@ -6,13 +6,13 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 10:16:26 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_ast	*build_ast(t_list **tok)
+t_ast	*build_ast(t_token **tok)
 {
 	t_ast	*ast;
 
@@ -24,7 +24,7 @@ t_ast	*build_ast(t_list **tok)
 
 int	parser(t_shell *s)
 {
-	t_list *temp;
+	t_token *temp;
 
 	temp = s->head;
 	if (syntax_analysis(temp) != 0)

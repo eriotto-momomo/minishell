@@ -6,7 +6,7 @@
 #    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/18 10:26:23 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/06/18 10:38:05 by c4v3d            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/list.c\
 			$(CFILES_PATH)/utils/debug.c \
 			$(CFILES_PATH)/utils/env_utils.c\
+			$(CFILES_PATH)/utils/identifier.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/exec_utils.c\
 			$(CFILES_PATH)/exec/heredoc.c\

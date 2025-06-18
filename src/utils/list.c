@@ -6,17 +6,17 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:19:25 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_list *create_node(char *data)
+t_token *create_node(char *data)
 {
-	t_list	*new_node;
+	t_token	*new_node;
 
-	new_node = (t_list*)malloc(sizeof(t_list));
+	new_node = (t_token*)malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
 	new_node->data = data;
@@ -27,10 +27,10 @@ t_list *create_node(char *data)
 	return (new_node);
 }
 
-int	add_back(t_list **head, char *data)
+int	add_back(t_token **head, char *data)
 {
-    t_list	*new_node;
-	t_list	*temp;
+    t_token	*new_node;
+	t_token	*temp;
 
 	// if (ft_strncmp(data, "", 1) == 0)
 	// 	return (1);
@@ -50,10 +50,10 @@ int	add_back(t_list **head, char *data)
 	return (1);
 }
 
-void free_list(t_list **head)
+void free_list(t_token **head)
 {
-	t_list *current;
-	t_list *temp;
+	t_token *current;
+	t_token *temp;
 
 	if (!head || !*head)
 		return ;
@@ -70,10 +70,10 @@ void free_list(t_list **head)
 }
 
 
-size_t count_cmd(t_list *head)
+size_t count_cmd(t_token *head)
 {
 	size_t	c;
-	t_list	*temp;
+	t_token	*temp;
 
 	c = 1;
 	temp = head;

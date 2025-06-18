@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 09:58:54 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:59:11 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,13 @@ Structure pour les token :
 - type - le type du token (word, pipe, redirecton, etc...)
 - next - pointeur vers le prochain noeud
 */
-typedef struct s_list
+typedef struct s_token
 {
 	char			*data;
 	t_types			type;
-	struct s_list	*next;
-	struct s_list	*prev;
-}					t_list;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
 
 typedef struct	s_env
 {
@@ -114,7 +114,7 @@ typedef struct s_shell
 	t_env	*home;
 	t_ast	*current_node;
 	t_ast	*root_node;
-	t_list	*head;
+	t_token	*head;
 	t_sig	*sig;
 	pid_t	child_pids[MAX_CMDS];
 	int		pid_count;
