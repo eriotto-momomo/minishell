@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
+#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/16 16:36:45 by timmi            ###   ########.fr        #
+#    Updated: 2025/06/18 10:26:23 by c4v3d            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ CFILES_PATH = src
 CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/lexer/lexer_utils.c\
 			$(CFILES_PATH)/lexer/lexer.c\
+			$(CFILES_PATH)/loop/main_loop.c \
 			$(CFILES_PATH)/parser/parser_add_node.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\

@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:03:04 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:19:40 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	quote_check(t_list *tok)
 	int		start;
 
 	start = 0;
-	printf("processing :%s\n", tok->data);
 	while (tok->data[start])
 	{
 		if (ft_isquote(tok->data[start]))
