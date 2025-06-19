@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 14:56:26 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 16:40:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ static size_t	count_quote(char *s)
 	return (c);
 }
 
+static void get_quote(char *quote, char c, int *i)
+{
+	if (*quote == 0 && (c == '\'' || c == '\"'))
+	{
+		*quote = c;
+		if (c == *quote)
+			(*i)++;	
+	}
+}
+
 static int trim_quote(char **s)
 {
 	char	quote;
@@ -51,20 +61,17 @@ static int trim_quote(char **s)
 	new_s = malloc(sizeof(char) * (ft_strlen(*s) - count_quote(*s) + 1));
 	if (!new_s)
 		return (-1);
+	quote = 0;
 	i = 0;
 	j = 0;
 	while ((*s)[i])
 	{
-		if ((*s)[i] == '\'' || (*s)[i] == '\"')
-		{
-			quote = (*s)[i++];
-			if ((*s)[i - 1] == quote)
-				continue;
-			while ((*s)[i] && (*s)[i] != quote)
-				new_s[j++] = (*s)[i++];
-		}
-		else if ((*s)[i])
+		get_quote(&quote, (*s)[i], &i);
+		while ((*s)[i] && (*s)[i] != quote)
 			new_s[j++] = (*s)[i++];
+		i++;
+		if (quote != 0 && ((*s)[i] == '\'' || (*s)[i] == '\"'))
+			quote = 0;
 	}
 	new_s[j] = '\0';
 	v_switch(s, new_s);
