@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:26:51 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:58:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <string.h>
 # include <sys/ioctl.h>
+# include <termios.h>
 # include <fcntl.h>
 # include <linux/limits.h>
 # include "./error.h"
@@ -46,6 +47,8 @@
 
 // Char set de caractere qui peuvent separer des token dans une commande
 # define SEPARATORS "|<>"
+
+extern volatile sig_atomic_t	g_status;
 
 // ENV
 t_env	*create_var(char *name, char	*value);
