@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/19 23:08:36 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	syntax_analysis(t_token *current_tok)
 		err = syntax_checker(current_tok);
 		if (err)
 		{
-			print_error(err);
+			ft_putstr_fd("Syntax", err);
 			return (1);
 		}
 		current_tok = current_tok->next;
