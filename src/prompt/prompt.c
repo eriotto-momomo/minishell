@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:03:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 19:00:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/18 09:27:51 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	reset_prompt(t_shell *s, int mode)
 {
-	(void)s;
-
+	w_free((void **)&s->line);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	if (mode == RESET_PROMPT)
@@ -51,7 +50,7 @@ static char	*join_prompt(char *usr, char *hostname)
 	return (full_prompt);
 }
 
-void	create_prompt(t_shell *s)
+int	create_prompt(t_shell *s)
 {
 	char	*usr;
 	char	*host_name;
@@ -69,5 +68,8 @@ void	create_prompt(t_shell *s)
 		full_prompt = join_prompt(usr, host_name);
 	else
 		full_prompt = ft_strdup(DEFAULT_PROMPT);
+	if (!full_prompt)
+		return (-1);
 	s->prompt = full_prompt;
+	return (0);
 }

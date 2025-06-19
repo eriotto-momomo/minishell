@@ -6,42 +6,29 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:19:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/08 21:22:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:04:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	delenv(t_shell *s, char *target)
+int	ft_unset(t_shell *s, int ac, char **av)
 {
-	t_env	*temp;
-
-	temp = s->env_list;
-	while (temp)
-	{
-		if (ft_strncmp(target, temp->name, ft_strlen(target)) == 0)
-		{
-			del_var(&(s->env_list), &temp);
-			return (0);
-		}
-		temp = temp->next;
-	}
-	return (1);
-}
-
-int	ft_unset(t_shell *s)
-{
-	char	**args;
 	int		i;
+	t_env	*tmp;
 
-	if (s->root_node->data.ast_exec.argc == 1)
+	if (ac == 1)
 	{
 		ft_putstr_fd("unset: not enough arguments\n", 2);
 		return (0);
 	}
-	args = s->root_node->data.ast_exec.argv;
-	i = 0;
-	while (args[i])
-		delenv(s, args[i++]);
+	i = 1;
+	while (i < ac)
+	{
+		tmp = var_lookup(s->env_list, av[i]);
+		if (tmp)
+			del_var(&s->env_list, &tmp);
+		i++;
+	}
 	return (0);
 }

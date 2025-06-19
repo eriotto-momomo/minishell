@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:47:01 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:00:53 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 15:49:21 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 # define EXPORT "export"
 
 // BUILTINS
-int	ft_cd(t_env *pwd, t_env *oldowd, t_env *home, t_ast *node);
+int	ft_cd(t_shell *s, int ac, char **av);
 int	ft_echo(t_ast **current_node, int fd_out);
 int	ft_pwd(t_shell *s, int	fd_out);
 int	ft_env(t_env *env, int fd_out);
-int	ft_unset(t_shell *s);
+int	ft_unset(t_shell *s, int ac, char **av);
 int	ft_export(t_env **env, int ac, char **args, int fd);
 // UTILS
 char	*save_cwd(void);

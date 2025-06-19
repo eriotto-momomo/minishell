@@ -3,81 +3,111 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 08:36:17 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+int	add_command(t_ast **node, t_token **tok)
+{
+	(*node)->tag = EXEC_NODE;
+	(*node)->data.exec.argc = count_tokens(&(*tok), WORD);
+	(*node)->data.exec.argv = copy_args(*tok, (*node)->data.exec.argc);
+	(*node)->data.exec.fd_in = STDIN_FILENO;
+	(*node)->data.exec.fd_out = STDOUT_FILENO;
+	if (!(*node)->data.exec.argv)
+		return (1);
+	//(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc));
+	//if (!(*node)->data.exec.argv)
+	//	return (1);
+	//if (copy_tokens(&(*tok), WORD, (*node)->data.exec.argc,
+	//	(*node)->data.exec.argv) != 0)
+		//return (1);
+	//printf("add_command | EXIT FUNCTION\n");
+	return (0);
+}
+
+int	add_heredoc(t_ast **node, t_token **tok)
+{
+	(*node)->data.exec.heredoc_count = count_tokens(&(*tok), HERE_DOC);
+	if ((*node)->data.exec.heredoc_count == 0)
+		return (0);
+	(*node)->data.exec.heredoc_list = copy_heredocs(*tok, (*node)->data.exec.heredoc_count);
+	if (!(*node)->data.exec.heredoc_list)
+		return (1);
+	//(*node)->data.exec.heredoc_list =
+	//	malloc(sizeof(char **) * (*node)->data.exec.heredoc_count);
+	//if (!(*node)->data.exec.heredoc_list)
+	//	return (1);
+	//if (copy_tokens(&(*tok), HERE_DOC, (*node)->data.exec.heredoc_count,
+	//	(*node)->data.exec.heredoc_list) != 0)
+	//	return (1);
+	//printf("add_heredoc | EXIT FUNCTION\n");
+	return (0);
+}
+
+int	add_redir(t_ast **node, t_token **tok)
+{
+	t_token	*tmp;
+
+	(*node)->data.exec.fd_in = 0;
+	(*node)->data.exec.fd_out = 1;
+	tmp = *tok;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == OUT_REDIR || tmp->type == APP_OUT_REDIR)
+			(*node)->data.exec.fd_out =
+				redir_out(tmp->type, tmp->next->data, (*node)->data.exec.fd_out);
+		else if (tmp->type == IN_REDIR)
+			(*node)->data.exec.fd_in =
+				redir_in(tmp->next->data, (*node)->data.exec.fd_in);
+		if ((*node)->data.exec.fd_out < 0 || (*node)->data.exec.fd_in < 0)
+			return (1);
+		if (!get_next_token(&tmp))
+			break;
+	}
+	return (0);
+}
+
+t_ast	*add_exec_node(t_token **tok)
+{
+	t_ast	*node;
+
+	node = new_ast_node((t_ast){0});
+	if (!node)
+		return (NULL);
+	if (add_command(&node, tok) != 0)
+		return (NULL);
+	if (add_heredoc(&node, tok) != 0)
+	{
+		ft_free_char_array(node->data.exec.argv, node->data.exec.argc);
+		return (NULL);
+	}
+	if (add_redir(&node, tok) != 0)
+	{
+		ft_free_char_array(node->data.exec.argv, node->data.exec.argc);
+		ft_free_char_array(node->data.exec.heredoc_list,
+			node->data.exec.heredoc_count);
+		return (NULL);
+	}
+	return (node);
+}
+
 t_ast	*add_pipe_node(t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 
-	node = ast_new_node((t_ast){0});
+	if (!left || !right)
+		return (NULL);
+	node = new_ast_node((t_ast){0});
 	if (!node)
 		return (NULL);
-	node->tag = AST_PIPE;
-	node->data.ast_pipe.left = left;
-	node->data.ast_pipe.right = right;
+	node->tag = PIPE_NODE;
+	node->data.pipe.left = left;
+	node->data.pipe.right = right;
 	return (node);
-}
-
-
-// '>'	fd = 1, O_WRONLY | O_CREATE | O_TRUNC	-> mode = 1 (redir output)(creating / overwriting)
-// '>>'	fd = 1, O_WRONLY | O_CREATE				-> mode = 2 (redir output)(appending)
-// '<'	fd = 0, O_RDONLY						-> mode = 3 (redir input)(reading)
-// '<<'	fd = 0, O_RDONLY | ... ?				-> mode = 4 (redir input)(here doc)
-t_ast	*add_redir_node(t_ast *left, char *filename, int mode)
-{
-	t_ast	*node;
-
-	node = ast_new_node((t_ast){0});
-	if (!node)
-		return (NULL);
-	node->tag = AST_REDIR;
-	node->data.ast_redir.left = left;
-	node->data.ast_redir.mode = mode;
-	node->data.ast_redir.filename = ft_strdup(filename);
-	if (!node->data.ast_redir.filename)
-	{
-		errno = ENOMEM;
-		ft_puterror("add_redir_node", strerror(errno));
-		exit(1); // // 🗯️ Ou on "catch" errno dans le main pour quit clean ❔
-	}
-	return (node);
-}
-
-t_ast	*add_exec_node(t_list **tok)
-{
-	t_ast	*node;
-
-	node = ast_new_node((t_ast){0});
-	if (!node)
-		return (NULL);
-	node->tag = AST_EXEC;
-	node->data.ast_exec.argc = 0;
-	w_malloc((void**)&node->data.ast_exec.argv, (sizeof(char**) * 10)); // 🗯️ Nombre d'args max à gérer ❔
-	while (*tok && (*tok)->type == WORD)
-	{
-		node->data.ast_exec.argv[node->data.ast_exec.argc++]
-			= fill_exec_node(*tok);
-		if (!tok || !(*tok)->next)
-			break ;
-		else
-			get_next_token(tok);
-	}
-	node->data.ast_exec.argv[node->data.ast_exec.argc] = '\0';
-	return (node);
-}
-t_ast	*ast_new_node(t_ast node)
-{
-	t_ast	*ptr;
-
-	w_malloc((void **)&ptr, sizeof(t_ast));
-	if (ptr)
-		*ptr = node;
-	return (ptr);
 }

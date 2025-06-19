@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handling.c                                   :+:      :+:    :+:   */
+/*   identifier.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 13:56:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/16 14:00:25 by timmi            ###   ########.fr       */
+/*   Created: 2025/06/18 10:35:44 by c4v3d             #+#    #+#             */
+/*   Updated: 2025/06/18 10:40:49 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	syntax_failed(s)
+int	is_sep(char c)
 {
-	free_list(&s);
+	int	i;
+
+	i = 0;
+	while (SEPARATORS[i])
+	{
+		if (c == SEPARATORS[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

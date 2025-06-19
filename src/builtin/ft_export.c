@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:13:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 14:51:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_env	*var_lookup(t_env *env, char *target)
 	{
 		if (ft_strlen(ptr->name) == ft_strlen(target) &&
 			ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
-			return (ptr);
+				return (ptr);
 		ptr = ptr->next;
 	}
 	return (NULL);
@@ -84,7 +84,6 @@ int	ft_export(t_env **env, int ac, char **args, int fd)
 		ft_env(*env, fd);
 	while (++i < ac)
 	{
-		printf("Evaluating :%s\n", args[i]);
 		if (!is_valid(args[i]))
 		{
 			ft_putstr_fd("export: invalid identifier\n", 2);

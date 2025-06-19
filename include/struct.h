@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/12 09:28:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 11:08:37 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
-
 
 enum	e_mode
 {
@@ -51,15 +50,10 @@ typedef enum e_types
 
 typedef enum	e_tag
 {
-	AST_PIPE,
-	AST_REDIR,
-	AST_EXEC
+	PIPE_NODE,
+	EXEC_NODE
 } 				t_tag;
 
-
-//	NO_ERRORS = 0
-//	UNEXPECTED_TOK = 1
-//	UNMATCHED_QUOTE = 2
 typedef enum e_errors_return
 {
 	NO_ERRORS,
@@ -72,9 +66,8 @@ typedef struct s_ast t_ast;
 
 typedef union	u_data
 {
-	struct { t_ast *left; t_ast *right; } ast_pipe;
-	struct { t_ast *left; char *filename; int mode; } ast_redir;
-	struct { int argc; char **argv; } ast_exec;
+	struct { t_ast *left; t_ast *right; } pipe;
+	struct { int argc; char **argv; int fd_in; int fd_out; int heredoc_count; char	**heredoc_list; } exec;
 }				t_data;
 
 typedef struct	s_ast
@@ -83,19 +76,13 @@ typedef struct	s_ast
 	t_data		data;
 }				t_ast;
 
-/*
-Structure pour les token :
-- data - La string que contien le noeud
-- type - le type du token (word, pipe, redirecton, etc...)
-- next - pointeur vers le prochain noeud
-*/
-typedef struct s_list
+typedef struct s_token
 {
 	char			*data;
 	t_types			type;
-	struct s_list	*next;
-	struct s_list	*prev;
-}					t_list;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
 
 typedef struct	s_env
 {
@@ -111,17 +98,26 @@ typedef struct s_shell
 	int		ret_value;
 	char	*prompt;
 	char	*line;
-	t_env	*old_pwd; // !! Holds the adress to the element in the env list
-	t_env	*pwd; // !! Holds the adress to the element in the env list
-	t_env	*home; // !! Holds the adress to the element in the env list
+	t_env	*old_pwd; 
+	t_env	*pwd;
+	t_env	*home;
 	t_ast	*current_node;
 	t_ast	*root_node;
-	t_list	*head;
+	t_token	*head;
 	t_sig	*sig;
+	pid_t	child_pids[MAX_CMDS];
+	int		pid_count;
+	int		pipe_fd[MAX_CMDS][2];
+	int		pipe_count;
 	char	*heredoc_tmp;
+	char	**heredoc_list;
+	int		heredoc_count;
 	int		fd;
-	int		root_fd;
-	int		pipefd[2]; // 🚨 NORM OK❔ Besoin d'un malloc❔
+	int		final_output_fd;
+	int		stdin_save;
+	int		stdout_save;
+	int		node_initialized;
+	t_ast	*root_redir;
 }			t_shell;
 
 #endif

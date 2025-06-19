@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/12 10:08:15 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/16 15:27:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,50 +19,43 @@ char	**get_args(t_ast *node)
 	args = NULL;
 	if (!node)
 		return (NULL);
-	if (node->tag == AST_EXEC)
-			args = node->data.ast_exec.argv;
-	else if (node->tag == AST_REDIR)
-	{
-		if (node->data.ast_redir.left && node->data.ast_redir.left->tag == AST_EXEC)
-			args = node->data.ast_redir.left->data.ast_exec.argv;
-	}
+	if (node->tag == EXEC_NODE)
+		args = node->data.exec.argv;
 	return (args);
 }
 
-static size_t	len_calc(char **tab)
+static size_t	len_calc(int ac, char **tab)
 {
 	size_t	total_len;
 	int		i;
 
 	i = 1;
 	total_len = 0;
-	while (tab[i])
-	{
-		total_len += ft_strlen(tab[i]);
-		if (tab[i + 1])
-			total_len += 1;
-		i++;
-	}
-	return (total_len);
+	while (i < ac)
+		total_len += ft_strlen(tab[i++]);
+	return (total_len + ac - 1);
 }
 
-static char	*tab_to_string(char **tab, int i)
+static char	*tab_to_string(int ac, char **tab, int offset)
 {
+	int		i;
 	char	*ptr;
 	char	*ret;
 	size_t	len;
 
-	ret = NULL;
-	len = len_calc(tab);
-	ret = malloc(len + 1);
+	i = 0;
+	len = len_calc(ac, tab);
+	if (offset)
+		len++;
+	ret = malloc(len);
 	if (!ret)
 		return (NULL);
 	ptr = ret;
-	while (tab[++i])
+	while (++i < ac)
 	{
 		ft_memcpy(ptr, tab[i], ft_strlen(tab[i]));
 		ptr += ft_strlen(tab[i]);
-		if (tab[i + 1])
+		if (i != ac - 1)
 		{
 			*ptr = ' ';
 			ptr++;
@@ -100,7 +93,7 @@ int	ft_echo(t_ast **current_node, int fd_out)
 	{
 		if (flag_check(args[1]))
 			offset = 1;
-		str = tab_to_string(args, offset);
+		str = tab_to_string((*current_node)->data.exec.argc, args, offset);
 		if (!str)
 			return (-1);
 		ft_putstr_fd(str, fd_out);
