@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 11:06:09 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/19 18:32:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	debug_list(t_token *head);
 //////////////////////////////////
 
 // exit_utils.c
-void exit_check(t_shell *s);
-void terminate_shell(t_shell *s, int error);
+int		ft_exit(t_shell *s, int ac, char **av);
+void	terminate_shell(t_shell *s, int error);
 
 // free_ast.c
 void	free_pipe_node(t_ast *node);

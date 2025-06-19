@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:44:15 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/21 16:53:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:46:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-void	print_error(int err);
+int	print_error(int err, char *f);
 
 #endif

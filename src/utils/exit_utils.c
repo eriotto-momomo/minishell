@@ -3,20 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 14:11:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:06:30 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_check(t_shell *s)
+int	ft_exit(t_shell *s, int ac, char **av)
 {
-	if (ft_strlen(s->head->data) == ft_strlen("exit"))
-		if (ft_strncmp(s->head->data, "exit", ft_strlen("exit")) == 0)
-			terminate_shell(s, 0);
+	int	i;
+
+	i = 0;
+	errno = 0;
+	if (ac > 2)
+		errno = E2BIG;
+	while (av[1][i])
+	{
+		if (!ft_isdigit(av[1][i]))
+		{
+			errno = EINVAL;
+			break;
+		}
+		i++;
+	}
+	if (errno)
+	{
+		perror("exit");
+		return (1);
+	}
+	terminate_shell(s, (uint8_t)ft_atoi(av[1]));
+	return (0);
 }
 
 void	terminate_shell(t_shell *s, int error)
@@ -33,7 +52,7 @@ void	terminate_shell(t_shell *s, int error)
 	if (error)
 	{
 		perror(strerror(errno));
-		exit(EXIT_FAILURE);
+		exit(error);
 	}
 	exit(EXIT_SUCCESS);
 }

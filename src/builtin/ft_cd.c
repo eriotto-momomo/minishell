@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 09:26:32 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 18:46:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,14 @@ int	ft_cd(t_shell *s, int ac, char **av)
 	char	*curpath;
 
 	if (ac > 2)
-		ft_putstr_fd("To many arguments\n", 2);
+		return (print_error(E2BIG, "cd"));
 	curpath = make_curpath(s, av[1]);
 	if (!curpath)
-		return (1);
+		return (print_error(ENOMEM, "cd"));
 	if (chdir(curpath) == -1)
 	{
-		perror("cd :");
 		free(curpath);
-		return (-1);
+		return (print_error(errno, "cd"));
 	}
 	free(curpath);
 	updatepath(s);

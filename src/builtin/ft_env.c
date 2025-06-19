@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 10:02:43 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 18:49:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_env(t_env *env, int fd_out)
 
 	ptr = env;
 	to_print = ft_strdup("");
+	if (!to_print)
+		return (print_error(ENOMEM, "env"));
 	while (ptr)
 	{
 		var = make_var(ptr->name, ptr->value);
@@ -53,7 +55,7 @@ int	ft_env(t_env *env, int fd_out)
 		if (!to_print)
 		{
 			free(tmp);
-			return (-1);
+			return (print_error(ENOMEM, "env"));
 		}
 		free(tmp);
 		ptr = ptr->next;
