@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 15:49:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:15:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	handle_pipe(t_shell *s, t_ast **current_node)
 int	handle_exec(t_shell *s, t_ast *node)
 {
 	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
-		return (ft_cd(s, node->data.exec.argc, node->data.exec.argv));
-	if (ft_strncmp(node->data.exec.argv[0], ECHO, ft_strlen(ECHO)) == 0)
+		return (ft_cd(s, (*node).data.exec.argc, (*node).data.exec.argv));
+	if (ft_strncmp(node->data.exec.argv[0], FT_ECHO, ft_strlen(FT_ECHO)) == 0)
 		return (ft_echo(&node, node->data.exec.fd_out));
 	if (ft_strncmp(node->data.exec.argv[0], PWD, ft_strlen(PWD)) == 0)
 		return (ft_pwd(s, node->data.exec.fd_out));
