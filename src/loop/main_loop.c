@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 13:07:58 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:14:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ static void	process_input(t_shell *s)
 
 void prompt_loop(t_shell *s)
 {
+	setup_signals(s, MINISHELL_SIGNALS);
 	while (1)
 	{
+		if (s->sig_mode == DEFAULT_SIGNALS)
+			setup_signals(s, MINISHELL_SIGNALS);
 		s->line = (readline(s->prompt));
+		if (s->line == NULL)
+			terminate_shell(s, 0);
 		if (s->line && *s->line)
 		{
 			add_history(s->line);
