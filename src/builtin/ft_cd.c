@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 14:59:23 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 09:26:32 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	ft_cd(t_shell *s, int ac, char **av)
 	if (ac > 2)
 		ft_putstr_fd("To many arguments\n", 2);
 	curpath = make_curpath(s, av[1]);
-	printf("curpath : %s\n", curpath);
 	if (!curpath)
 		return (1);
 	if (chdir(curpath) == -1)
