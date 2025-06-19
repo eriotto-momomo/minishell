@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 10:47:02 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/19 13:19:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static size_t	get_tok_len(char *cmd)
 			in_quote = !in_quote;
 			quote_type = cmd[len++];
 		}
+		if (!cmd[len] || ft_isspace(cmd[len]))
+			return (len);
 		if (in_quote)
 			while (cmd[len] && cmd[len] != quote_type)
 				len++;
