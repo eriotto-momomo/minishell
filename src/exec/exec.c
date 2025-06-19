@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 13:12:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:28:25 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int	preorder_exec(t_shell *s, t_ast **current_node)
 	}
 	else if ((*current_node)->tag == EXEC_NODE)
 	{
-		printf("args :%d\n", (*current_node)->data.exec.argc);
 		if ((*current_node)->data.exec.heredoc_count > 0)
 			(*current_node)->data.exec.fd_in = handle_heredoc(s, (*current_node));
 		if (!string_processing(s, &(*current_node)->data.exec.argc, &(*current_node)->data.exec.argv))

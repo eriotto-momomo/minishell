@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 13:59:46 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:56:26 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static size_t	count_quote(char *s)
 		}
 		i++;
 	}
-	printf("c = %ld\n", c);
 	return (c);
 }
 
@@ -49,8 +48,6 @@ static int trim_quote(char **s)
 	int		j;
 	char	*new_s;
 
-	if (!s || !*s)
-		return (-1);
 	new_s = malloc(sizeof(char) * (ft_strlen(*s) - count_quote(*s) + 1));
 	if (!new_s)
 		return (-1);
@@ -61,10 +58,12 @@ static int trim_quote(char **s)
 		if ((*s)[i] == '\'' || (*s)[i] == '\"')
 		{
 			quote = (*s)[i++];
+			if ((*s)[i - 1] == quote)
+				continue;
 			while ((*s)[i] && (*s)[i] != quote)
 				new_s[j++] = (*s)[i++];
 		}
-		else
+		else if ((*s)[i])
 			new_s[j++] = (*s)[i++];
 	}
 	new_s[j] = '\0';
