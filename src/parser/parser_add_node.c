@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 16:33:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	add_command(t_ast **node, t_list **tok)
+int	add_command(t_ast **node, t_token **tok)
 {
 	(*node)->tag = EXEC_NODE;
 	(*node)->data.exec.argc = count_tokens(&(*tok), WORD);
 	(*node)->data.exec.argv = copy_args(*tok, (*node)->data.exec.argc);
+	(*node)->data.exec.fd_in = STDIN_FILENO;
+	(*node)->data.exec.fd_out = STDOUT_FILENO;
 	if (!(*node)->data.exec.argv)
 		return (1);
 	//(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc));
@@ -29,7 +31,7 @@ int	add_command(t_ast **node, t_list **tok)
 	return (0);
 }
 
-int	add_heredoc(t_ast **node, t_list **tok)
+int	add_heredoc(t_ast **node, t_token **tok)
 {
 	(*node)->data.exec.heredoc_count = count_tokens(&(*tok), HERE_DOC);
 	if ((*node)->data.exec.heredoc_count == 0)
@@ -48,9 +50,9 @@ int	add_heredoc(t_ast **node, t_list **tok)
 	return (0);
 }
 
-int	add_redir(t_ast **node, t_list **tok)
+int	add_redir(t_ast **node, t_token **tok)
 {
-	t_list	*tmp;
+	t_token	*tmp;
 
 	(*node)->data.exec.fd_in = 0;
 	(*node)->data.exec.fd_out = 1;
@@ -71,7 +73,7 @@ int	add_redir(t_ast **node, t_list **tok)
 	return (0);
 }
 
-t_ast	*add_exec_node(t_list **tok)
+t_ast	*add_exec_node(t_token **tok)
 {
 	t_ast	*node;
 

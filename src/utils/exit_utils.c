@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 10:51:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:11:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exit_check(t_shell *s)
 void	terminate_shell(t_shell *s, int error)
 {
 	if (s->head)
-		free_list(&(s->head));
+		free_token_list(&(s->head));
 	if (s->root_node)
 		free_ast(&(s->root_node));
 	if (s->env_list)

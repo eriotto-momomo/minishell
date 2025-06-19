@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:39:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:06:09 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,8 @@
 
 // TO REMOVE
 //////////////////////////////////
-void	debug_list(t_list *head);
-void	print_list(t_list *head);
+void	debug_list(t_token *head);
 //////////////////////////////////
-
-// list.c
-t_list	*create_node(char *data);
-int		add_back(t_list **head, char *data);
-void	add_front(t_list **head, char *data);
-void	free_list(t_list **head);
-size_t	count_cmd(t_list *head);
-size_t	env_len(t_env *h_env);
-
-// lexer_utils.c
-int is_sep(char c);
 
 // exit_utils.c
 void exit_check(t_shell *s);
@@ -40,6 +28,8 @@ void	free_redir_node(t_ast *node);
 void	free_exec_node(t_ast *node);
 void	free_ast(t_ast **node);
 
+// General
+void v_switch(char **s, char *new_s);
 
 // env
 /**
@@ -61,4 +51,7 @@ void	free_env(t_env **h_env);
 // env++
 
 int	add_var_back(t_env **head, char *name, char *value);
+
+// identifier
+int	is_sep(char c);
 #endif

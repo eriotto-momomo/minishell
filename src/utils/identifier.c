@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   identifier.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 11:06:02 by c4v3d            ###   ########.fr       */
+/*   Created: 2025/06/18 10:35:44 by c4v3d             #+#    #+#             */
+/*   Updated: 2025/06/18 10:40:49 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-#define LEXER_H
+#include "../../include/minishell.h"
 
-void	  lexer(t_shell *s);
-int     get_token_id(char *token);
-char    *get_el(char *cmd);
+int	is_sep(char c)
+{
+	int	i;
 
-t_token	*create_token(char *data);
-int		  add_token_back(t_token **head, char *data);
-void	  add_front(t_token **head, char *data);
-void	  free_token_list(t_token **head);
-
-
-#endif
+	i = 0;
+	while (SEPARATORS[i])
+	{
+		if (c == SEPARATORS[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}

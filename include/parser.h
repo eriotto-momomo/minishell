@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 15:03:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define PARSER_H
 
 // parser_add_node.c
-int		add_command(t_ast **node, t_list **tok);
-int		add_redir(t_ast **node, t_list **tok);
-t_ast	*add_exec_node(t_list **tok);
+int		add_command(t_ast **node, t_token **tok);
+int		add_redir(t_ast **node, t_token **tok);
+t_ast	*add_exec_node(t_token **tok);
 t_ast	*add_pipe_node(t_ast *left, t_ast *right);
 t_ast	*new_ast_node(t_ast node);
 
@@ -38,30 +38,30 @@ t_ast	*new_ast_node(t_ast node);
  * @note The token list is always freed by this function, regardless of the outcome.
  */
 int		parser(t_shell *s);
-t_ast	*build_ast(t_list **tok);
+t_ast	*build_ast(t_token **tok);
 void	print_preorder(t_ast *node);
 
 // parser_func.c
-t_ast	*parse_pipe(t_list **tok);
-t_ast	*parse_line(t_list **tok);
-t_ast	*parse_exec(t_list **tok);
-void	get_next_pipe(t_list **tok);
-int		get_next_token(t_list **tok);
+t_ast	*parse_pipe(t_token **tok);
+t_ast	*parse_line(t_token **tok);
+t_ast	*parse_exec(t_token **tok);
+void	get_next_pipe(t_token **tok);
+int		get_next_token(t_token **tok);
 
 // parser_utils.c
-char	**copy_args(t_list *tok, int ac);
-char	**copy_heredocs(t_list *tok, int heredoc_count);
+char	**copy_args(t_token *tok, int ac);
+char	**copy_heredocs(t_token *tok, int heredoc_count);
 int		redir_out(int redir_mode, char *filename, int current_redir);
 int		redir_in(char *filename, int current_redir);
 t_ast	*new_ast_node(t_ast node);
-int		copy_tokens(t_list **tok, int token_type, int size, char **array);
-//int		copy_tokens(t_list **tok, int argc, char **argv);
-int		count_tokens(t_list **tok, int token_type);
+int		copy_tokens(t_token **tok, int token_type, int size, char **array);
+//int		copy_tokens(t_token **tok, int argc, char **argv);
+int		count_tokens(t_token **tok, int token_type);
 
 void 	print_struct(t_shell *s);// 🚮TO REMOVE
 void	print_node(t_ast *ast); // 🚮TO REMOVE
 
 // syntax_analysis.c
-int		syntax_analysis(t_list *tok);
+int		syntax_analysis(t_token *tok);
 
 #endif
