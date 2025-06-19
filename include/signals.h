@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:13:43 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/19 13:47:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:57:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 */
 enum e_signal
 {
-	DEFAULT_SIGNALS,	// Set `signals` to default usage
-	MINISHELL_SIGNALS,	// Set `signals` related to minishell project
+	READY,
 	CLEAN_EXIT,
+	DEFAULT_SIGNALS,
+	MINISHELL_SIGNALS
 };
 
 // signals.c
