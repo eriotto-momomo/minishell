@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 16:08:45 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 18:25:17 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,4 @@ void	lexer(t_shell *s)
 		perror("Something went wrong");
 		terminate_shell(s, 0);
 	}
-	exit_check(s);
 }

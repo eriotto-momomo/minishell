@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 17:23:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 18:35:06 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	handle_pipe(t_shell *s, t_ast **current_node)
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
+	if (ft_strncmp(node->data.exec.argv[0], "exit", ft_strlen("exit")) == 0)
+		return (ft_exit(s, (*node).data.exec.argc, (*node).data.exec.argv));
 	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s, (*node).data.exec.argc, (*node).data.exec.argv));
 	if (ft_strncmp(node->data.exec.argv[0], FT_ECHO, ft_strlen(FT_ECHO)) == 0)
@@ -95,7 +97,7 @@ char	*pathfinder(t_env *env, char *cmd)
 	return (NULL);
 }
 
-int	cmd_execution(t_env *env, char **argv)
+int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
 	char	*cmd_path;
 
@@ -103,13 +105,13 @@ int	cmd_execution(t_env *env, char **argv)
 	if (!cmd_path)
 	{
 		perror("Command not found");
-		exit(127);
+		terminate_shell(s, 127);
 	}
 	if (execve(cmd_path, argv, NULL) == -1)
 	{
 		w_free((void **)&cmd_path);
 		perror("Command not executable");
-		exit(126);
+		terminate_shell(s, 126);
 	}
 	return (0);
 }

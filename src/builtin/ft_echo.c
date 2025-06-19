@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 15:27:54 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 18:48:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ft_echo(t_ast **current_node, int fd_out)
 			offset = 1;
 		str = tab_to_string((*current_node)->data.exec.argc, args, offset);
 		if (!str)
-			return (-1);
+			return (print_error(ENOMEM, "echo"));
 		ft_putstr_fd(str, fd_out);
 		free(str);
 	}
