@@ -1,33 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 11:34:38 by timmi            ###   ########.fr       */
+/*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
+/*   Updated: 2025/06/19 13:07:58 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+static void	reset(t_shell *s)
 {
-	t_shell shell;
+	s->pipe_count = 0;
+	s->pid_count = 0;
+	w_free((void **)&s->line);
+}
 
-	(void)argc;
-	(void)argv;
-	if (init_shell(&shell, envp) == 0)
+static void	process_input(t_shell *s)
+{
+	lexer(s);
+	if (parser(s))
+		return ;
+	execution(s);
+	reset(s);
+}
+
+void prompt_loop(t_shell *s)
+{
+	while (1)
 	{
-		if (create_prompt(&shell) == -1)
-			terminate_shell(&shell, 1);
-		prompt_loop(&shell);
+		s->line = (readline(s->prompt));
+		if (s->line && *s->line)
+		{
+			add_history(s->line);
+			process_input(s);
+		}
+		reset(s);
 	}
-	else
-	{
-		perror("Initialization failed !");
-		exit(1);
-	}
-	return (0);
 }

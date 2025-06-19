@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isquote.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:42:58 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 16:49:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 11:47:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_isquote(int c)
 {

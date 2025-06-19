@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/06 09:58:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/18 10:26:51 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define MAX_CMDS 256
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -26,6 +28,7 @@
 # include "./error.h"
 # include "./init.h"
 # include "./struct.h"
+# include "./loop.h"
 # include "./lexer.h"
 # include "./parser.h"
 # include "./prompt.h"
@@ -39,6 +42,7 @@
 
 // Prompt par default utiliser si le custom prompt fail
 # define DEFAULT_PROMPT "minishell-1.0$ "
+# define HEREDOC_FILE_PATH "./tmp/heredoc_tmp.txt"
 
 // Char set de caractere qui peuvent separer des token dans une commande
 # define SEPARATORS "|<>"

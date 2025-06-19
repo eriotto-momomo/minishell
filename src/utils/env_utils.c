@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:13:49 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:12:54 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/13 11:51:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_env(t_env **h_env)
 	current = *h_env;
 	while (current)
 	{
-		printf("freeing :%s\n", current->name);
 		temp = current->next;
 		w_free((void **)&(current->name));
 		w_free((void **)&(current->value));
