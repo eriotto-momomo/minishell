@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 11:09:33 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:44:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void	execution(t_shell *s)
 	setup_signals(s, DEFAULT_SIGNALS);
 	err = preorder_exec(s, &s->current_node);
 	s->ret_value = err;
+	printf("%s%s%s\n", C, "execution | `sleep(5)` for testing 🚨", RST);
+	sleep(5);
 	//if (err != 0)
 	//	terminate_shell(s, errno);
 	free_ast(&(s->root_node));

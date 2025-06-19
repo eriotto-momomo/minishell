@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 10:38:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:59:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 
 // Char set de caractere qui peuvent separer des token dans une commande
 # define SEPARATORS "|<>"
+
+extern volatile sig_atomic_t	g_status;
 
 // ENV
 t_env	*create_var(char *name, char	*value);
