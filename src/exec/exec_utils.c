@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 18:35:06 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 23:37:26 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,45 +57,21 @@ int	setup_pipe(int	fd_in, int fd_out)
 	if (fd_in != STDIN_FILENO)
 	{
 		if (dup2(fd_in, STDIN_FILENO) < 0)
-			return (-1);
+			return (print_error(errno, "setup_pipe"));
 		if (close(fd_in) < 0)
-			return (-1);
+			return (print_error(errno, "setup_pipe"));
 	}
 	if (fd_out != STDOUT_FILENO)
 	{
 		if (dup2(fd_out, STDOUT_FILENO) < 0)
-			return (-1);
+			return (print_error(errno, "setup_pipe"));
 		if (close(fd_out) < 0)
-			return (-1);
+			return (print_error(errno, "setup_pipe"));
 	}
 	return (0);
 }
 
-char	*pathfinder(t_env *env, char *cmd)
-{
-	int		i;
-	char	**path;
-	char	*full_path;
-	char	*temp;
 
-	i = 0;
-	path = ft_split(ft_getenv(env, "PATH"), ':');
-	while (path[i])
-	{
-		temp = ft_strjoin(path[i], "/");
-		full_path = ft_strjoin(temp, cmd);
-		free(temp);
-		if (access(full_path, F_OK) == 0)
-		{
-			ft_free_char_array(path, ft_count_tab(path, 0));
-			return (full_path);
-		}
-		free (full_path);
-		i++;
-	}
-	ft_free_char_array(path, ft_count_tab(path, 0));
-	return (NULL);
-}
 
 int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {

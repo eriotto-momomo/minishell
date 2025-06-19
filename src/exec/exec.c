@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 19:06:59 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 23:05:53 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
 	i = -1;
 	pid = fork();
 	if (pid < 0)
-		return (1);
+		return (print_error(EPIPE, "pipe"));
 	if (pid == 0)
 	{
 		if (setup_pipe(current_node->data.exec.fd_in, current_node->data.exec.fd_out) == -1)
