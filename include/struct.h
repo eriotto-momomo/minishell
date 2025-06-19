@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 11:08:37 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:10:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,6 @@ enum	e_mode
 	RESET_PROMPT,
 	HEREDOC_PROMPT
 };
-
-/*
-* L'enum 'e_signal' est utilisee pour indiquer le type de signal recu au shell par la
-* variable globale 'g_sig'
-* CTRLC = 'CTRL + C'
-* CTRLD = 'CTRL + D'
-* CTRLBACK = 'CTRL + \'
-*/
-enum e_signal
-{
-	CTRLC,
-	CTRLD,
-	CTRLBACK
-};
-
-typedef struct	s_signals
-{
-	int	signal;
-}	t_sig;
 
 typedef enum e_types
 {
@@ -92,13 +73,17 @@ typedef struct	s_env
 	struct s_env	*prev;
 }					t_env;
 
+// FORWARD DECLARATION (dis au compilateur que "t_sig" existe)
+typedef struct	s_signals t_sig;
+struct	s_termios;
+
 typedef struct s_shell
 {
 	t_env	*env_list;
 	int		ret_value;
 	char	*prompt;
 	char	*line;
-	t_env	*old_pwd; 
+	t_env	*old_pwd;
 	t_env	*pwd;
 	t_env	*home;
 	t_ast	*current_node;
@@ -113,7 +98,8 @@ typedef struct s_shell
 	char	**heredoc_list;
 	int		heredoc_count;
 	int		fd;
-	int		final_output_fd;
+	int		final_output_fd;	// 🚨USELESS❔
+	int		sig_mode;
 	int		stdin_save;
 	int		stdout_save;
 	int		node_initialized;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 13:13:34 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:20:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	tokenize(t_token **head, char *cmd)
 		if (!*ptr)
 			return (1);
 		el = get_el(ptr);
-		printf("el : %s\n", el);
 		if (!el)
 			return (0);
 		ptr += ft_strlen(el);
@@ -48,7 +47,5 @@ void	lexer(t_shell *s)
 		perror("Something went wrong");
 		terminate_shell(s, 0);
 	}
-	for (t_token *tmp = s->head; tmp; tmp = tmp->next)
-		printf("tmp :%s\n", tmp->data);
 	exit_check(s);
 }

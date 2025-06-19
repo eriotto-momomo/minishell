@@ -6,23 +6,31 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/16 13:17:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:04:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	sigint_rst_prompt(int signal)
+volatile sig_atomic_t	g_status = READY;
+
+void	clean_exit_handler(int signal)
 {
 	(void)signal;
-	write(1, "\n", 1);
-	/* COMMENTED FOR MACos
+	g_status = CLEAN_EXIT;
+}
+
+// 'CTRL + C' = SIGINT
+void	sigint_handler(int signal)
+{
+	(void)signal;
+	ft_putstr_fd("\n", STDERR_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	*/
 }
 
+// 'CTRL + \' = SIGQUIT
 void	sigquit_ignore(void)
 {
 	struct sigaction	act;
@@ -35,13 +43,24 @@ void	sigquit_ignore(void)
 // 'CTRL + C' = SIGINT
 // 'CTRL + \' = SIGQUIT
 // 'CTRL + D' = EOF(pas vrmt un signal)
-void	sig_setup(void)
+// 🚨 AJOUTER SAFE CHECKS
+void	setup_signals(t_shell *s, int mode)
 {
-	struct sigaction	sa;
+		struct sigaction	act;
 
-	//sigquit_ignore();
-	ft_memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = &sigint_rst_prompt;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	ft_memset(&act, 0, sizeof(act));
+	if (mode == MINISHELL_SIGNALS)
+	{
+		sigquit_ignore();
+		act.sa_handler = &sigint_handler;
+		sigaction(SIGINT, &act, NULL);
+		s->sig_mode = MINISHELL_SIGNALS;
+	}
+	else if (mode == DEFAULT_SIGNALS)
+	{
+		act.sa_handler = &clean_exit_handler;
+		sigaction(SIGINT, &act, NULL);
+		sigaction(SIGQUIT, &act, NULL);
+		s->sig_mode = DEFAULT_SIGNALS;
+	}
 }

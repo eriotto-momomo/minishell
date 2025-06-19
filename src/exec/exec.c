@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 13:12:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:52:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
 }
 
 int	preorder_exec(t_shell *s, t_ast **current_node)
-{													
+{
 	if (!(*current_node))
 		return (0);
 	if ((*current_node)->tag == PIPE_NODE)
@@ -75,7 +75,6 @@ int	preorder_exec(t_shell *s, t_ast **current_node)
 	}
 	else if ((*current_node)->tag == EXEC_NODE)
 	{
-		printf("args :%d\n", (*current_node)->data.exec.argc);
 		if ((*current_node)->data.exec.heredoc_count > 0)
 			(*current_node)->data.exec.fd_in = handle_heredoc(s, (*current_node));
 		if (!string_processing(s, &(*current_node)->data.exec.argc, &(*current_node)->data.exec.argv))
@@ -93,13 +92,25 @@ void	execution(t_shell *s)
 {
 	int	i;
 
+	g_status = READY;
 	i = 0;
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
 		terminate_shell(s, errno);
+	setup_signals(s, DEFAULT_SIGNALS);
 	preorder_exec(s, &s->current_node);
 	while (i < s->pid_count)
-		waitpid(s->child_pids[i++], NULL, 0);
+	{
+		if (g_status == CLEAN_EXIT)
+		{
+			if (kill(s->child_pids[i], SIGINT) < 0)
+				terminate_shell(s, 0);
+			g_status = 130;
+			break;
+		}
+		waitpid(s->child_pids[i], NULL, 0);
+		i++;
+	}
 	free_ast(&(s->root_node));
 	unlink(HEREDOC_FILE_PATH);
 	w_free((void **)&s->heredoc_tmp);

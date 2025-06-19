@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 09:32:57 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/19 14:07:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int	init_shell(t_shell *s, char	**envp)
 	s->root_node = NULL;
 	s->current_node = NULL;
 	s->root_redir = NULL;
+	s->sig_mode = MINISHELL_SIGNALS;
 	return (0);
 }
