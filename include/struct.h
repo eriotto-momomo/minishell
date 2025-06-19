@@ -6,13 +6,19 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 10:42:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:35:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
+
+typedef enum e_exit_status
+{
+	EXIT_READY,
+	EXIT_CTRLD,
+} t_exit_status;
 
 enum	e_mode
 {
