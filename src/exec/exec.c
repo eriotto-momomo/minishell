@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 17:18:41 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 17:30:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	preorder_exec(t_shell *s, t_ast **current_node)
 void	execution(t_shell *s)
 {
 	int	i;
+	int	status;
 
 	i = 0;
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
@@ -100,7 +101,7 @@ void	execution(t_shell *s)
 	preorder_exec(s, &s->current_node);
 	while (i < s->pid_count)
 	{
-		waitpid(s->child_pids[i], NULL, 0);
+		waitpid(s->child_pids[i], &status, 0);
 		if (g_status == CLEAN_EXIT)
 		{
 			if (kill(s->child_pids[i], SIGINT) < 0)
@@ -108,6 +109,7 @@ void	execution(t_shell *s)
 			g_status = 130;
 			break;
 		}
+		g_status = WEXITSTATUS(status);
 		i++;
 	}
 	free_ast(&(s->root_node));
