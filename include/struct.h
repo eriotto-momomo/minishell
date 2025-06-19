@@ -6,19 +6,12 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/16 13:35:50 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:10:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
-
-
-typedef enum e_exit_status
-{
-	EXIT_READY,
-	EXIT_CTRLD,
-} t_exit_status;
 
 enum	e_mode
 {
@@ -42,9 +35,6 @@ typedef enum	e_tag
 	EXEC_NODE
 } 				t_tag;
 
-//	NO_ERRORS = 0
-//	UNEXPECTED_TOK = 1
-//	UNMATCHED_QUOTE = 2
 typedef enum e_errors_return
 {
 	NO_ERRORS,
@@ -67,19 +57,13 @@ typedef struct	s_ast
 	t_data		data;
 }				t_ast;
 
-/*
-Structure pour les token :
-- data - La string que contien le noeud
-- type - le type du token (word, pipe, redirecton, etc...)
-- next - pointeur vers le prochain noeud
-*/
-typedef struct s_list
+typedef struct s_token
 {
 	char			*data;
 	t_types			type;
-	struct s_list	*next;
-	struct s_list	*prev;
-}					t_list;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
 
 typedef struct	s_env
 {
@@ -99,26 +83,27 @@ typedef struct s_shell
 	int		ret_value;
 	char	*prompt;
 	char	*line;
-	t_env	*old_pwd;		// !! Holds the adress to the element in the env list
-	t_env	*pwd;			// !! Holds the adress to the element in the env list
-	t_env	*home;			// !! Holds the adress to the element in the env list
+	t_env	*old_pwd;
+	t_env	*pwd;
+	t_env	*home;
 	t_ast	*current_node;
 	t_ast	*root_node;
-	t_list	*head;
-	struct termios	old_termios;	// Sert a catch `CTRL+D`
-	struct termios	new_termios;	// Sert a catch `CTRL+D`
-	int		signal;
-	int		sig_mode;
+	t_token	*head;
+	t_sig	*sig;
+	pid_t	child_pids[MAX_CMDS];
+	int		pid_count;
+	int		pipe_fd[MAX_CMDS][2];
+	int		pipe_count;
 	char	*heredoc_tmp;
 	char	**heredoc_list;
 	int		heredoc_count;
 	int		fd;
 	int		final_output_fd;	// 🚨USELESS❔
+	int		sig_mode;
 	int		stdin_save;
 	int		stdout_save;
 	int		node_initialized;
-	t_ast	*root_redir;		// 🚨USELESS❔
-	int		pipefd[2];
+	t_ast	*root_redir;
 }			t_shell;
 
 #endif

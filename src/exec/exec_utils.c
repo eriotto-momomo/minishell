@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/16 10:54:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:05:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,27 @@
 
 int	handle_pipe(t_shell *s, t_ast **current_node)
 {
-	int	pipe_fd[2];
+	int cur_pipe;
 
-	//fprintf(stderr, "handle_pipe| %s%s%s\n", Y, "ENTERING FUNCTION", RST);						// 🖨️PRINT💥DEBUGING
-	if (pipe(pipe_fd) < 0)
+	cur_pipe = s->pipe_count;
+	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (-1);
-	//printf("pipe_fd[0] :%d\npipe_fd[1] :%d\n", pipe_fd[0], pipe_fd[1]);
-	if (close_fd((*current_node)) != 0)
-		return (1);
-	(*current_node)->data.pipe.left->data.exec.fd_out = pipe_fd[1];
-	(*current_node)->data.pipe.right->data.exec.fd_in = pipe_fd[0];
+	if ((*current_node)->data.pipe.left->tag == PIPE_NODE)
+		(*current_node)->data.pipe.left->data.pipe.right->data.exec.fd_out = s->pipe_fd[cur_pipe][1];
+	else
+		(*current_node)->data.pipe.left->data.exec.fd_out = s->pipe_fd[cur_pipe][1];
+	(*current_node)->data.pipe.right->data.exec.fd_in = s->pipe_fd[cur_pipe][0];
+	s->pipe_count++;
 	preorder_exec(s, &((*current_node)->data.pipe.left));
-
-	//fprintf(stderr, "handle_pipe| %s%s%s\n", Y, "FIRST EXEC_NODE HANDLED", RST);						// 🖨️PRINT💥DEBUGING
 	preorder_exec(s, &((*current_node)->data.pipe.right));
-	if (close_fd((*current_node)) != 0)
-		return (1);
-	if (close(pipe_fd[1]) < 0)
-		return (1);
-	if (close(pipe_fd[0]) < 0)
-		return (1);
-	//fprintf(stderr, "handle_pipe | EXIT FUNCTION\n");
+	close(s->pipe_fd[cur_pipe][0]);
+	close(s->pipe_fd[cur_pipe][1]);
 	return (0);
 }
 
+
 int	handle_exec(t_shell *s, t_ast *node)
 {
-	//var_expansion(s, node->data.exec.argv);
 	if (ft_strncmp(node->data.exec.argv[0], CD, ft_strlen(CD)) == 0)
 		return (ft_cd(s->pwd, s->old_pwd, s->home, node));
 	if (ft_strncmp(node->data.exec.argv[0], FT_ECHO, ft_strlen(FT_ECHO)) == 0)
@@ -50,15 +44,14 @@ int	handle_exec(t_shell *s, t_ast *node)
 	if (ft_strncmp(node->data.exec.argv[0], ENV, ft_strlen(ENV)) == 0)
 		return (ft_env(s->env_list, node->data.exec.fd_out));
 	if (ft_strncmp(node->data.exec.argv[0], UNSET, ft_strlen(UNSET)) == 0)
-		return (ft_unset(s));
+		return (ft_unset(s, node->data.exec.argc, node->data.exec.argv));
 	if (ft_strncmp(node->data.exec.argv[0], EXPORT, ft_strlen(EXPORT)) == 0)
 		return (ft_export(&s->env_list, node->data.exec.argc, node->data.exec.argv, node->data.exec.fd_out));
-	return (ft_external(s->env_list, node));
+	return (ft_external(s, s->env_list, node));
 }
 
 int	setup_pipe(int	fd_in, int fd_out)
 {
-	//printf("ENTER setup_pipe | %sfd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);	// 🖨️PRINT💥DEBUGING
 	if (fd_in != STDIN_FILENO)
 	{
 		if (dup2(fd_in, STDIN_FILENO) < 0)
@@ -73,7 +66,6 @@ int	setup_pipe(int	fd_in, int fd_out)
 		if (close(fd_out) < 0)
 			return (-1);
 	}
-	//printf("EXIT setup_pipe | %sfd_in: %d | fd_out: %d%s\n", P, fd_in, fd_out, RST);	// 🖨️PRINT💥DEBUGING
 	return (0);
 }
 

@@ -3,35 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 11:39:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:13:34 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	get_token_id(char *token)
-{
-	if (token[0] == '>')
-	{
-		if (token[1] == '>')
-			return (APP_OUT_REDIR);
-		return (OUT_REDIR);
-	}
-	if (token[0] == '<')
-	{
-		if (token[1] == '<')
-			return (HERE_DOC);
-		return (IN_REDIR);
-	}
-	if (token[0] == '|')
-		return (PIPE);
-	return (WORD);
-}
-
-int	tokenize(t_list **head, char *cmd)
+static int	tokenize(t_token **head, char *cmd)
 {
 	char	*ptr;
 	char	*el;
@@ -46,10 +27,11 @@ int	tokenize(t_list **head, char *cmd)
 		if (!*ptr)
 			return (1);
 		el = get_el(ptr);
+		printf("el : %s\n", el);
 		if (!el)
 			return (0);
 		ptr += ft_strlen(el);
-		if (!add_back(head, el))
+		if (!add_token_back(head, el))
 			return (0);
 	}
 	return (1);
@@ -57,7 +39,7 @@ int	tokenize(t_list **head, char *cmd)
 
 void	lexer(t_shell *s)
 {
-	t_list	*token;
+	t_token	*token;
 
 	token = NULL;
 	s->head = token;
@@ -66,5 +48,7 @@ void	lexer(t_shell *s)
 		perror("Something went wrong");
 		terminate_shell(s, 0);
 	}
+	for (t_token *tmp = s->head; tmp; tmp = tmp->next)
+		printf("tmp :%s\n", tmp->data);
 	exit_check(s);
 }

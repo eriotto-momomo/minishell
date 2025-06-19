@@ -6,27 +6,58 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/05/29 16:43:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 13:19:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	is_sep(char c)
+static size_t	get_tok_len(char *cmd)
 {
-	int	i;
+	size_t	len;
+	int		in_quote;
+	char	quote_type;
 
-	i = 0;
-	while (SEPARATORS[i])
+	len = 0;
+	in_quote = 0;
+	while (cmd[len] && !is_sep(cmd[len]) && !ft_isspace(cmd[len]))
 	{
-		if (c == SEPARATORS[i])
-			return (1);
-		i++;
+		if (ft_isquote(cmd[len]))
+		{
+			in_quote = !in_quote;
+			quote_type = cmd[len++];
+		}
+		if (!cmd[len] || ft_isspace(cmd[len]))
+			return (len);
+		if (in_quote)
+			while (cmd[len] && cmd[len] != quote_type)
+				len++;
+		else
+			len++;
 	}
-	return (0);
+	return (len);
 }
 
-char	*get_sep(char *cmd)
+int	get_token_id(char *token)
+{
+	if (token[0] == '>')
+	{
+		if (token[1] == '>')
+			return (APP_OUT_REDIR);
+		return (OUT_REDIR);
+	}
+	if (token[0] == '<')
+	{
+		if (token[1] == '<')
+			return (HERE_DOC);
+		return (IN_REDIR);
+	}
+	if (token[0] == '|')
+		return (PIPE);
+	return (WORD);
+}
+
+static char	*get_sep(char *cmd)
 {
 	char	*sep;
 
@@ -52,30 +83,7 @@ char	*get_sep(char *cmd)
 	return (sep);
 }
 
-static size_t	get_tok_len(char *cmd)
-{
-	size_t	len;
-	int		in_quote;
-	char	quote_type;
-
-	len = 0;
-	in_quote = 0;
-	while (cmd[len] && !is_sep(cmd[len]) && !ft_isspace(cmd[len]))
-	{
-		if (ft_isquote(cmd[len]))
-		{
-			in_quote = !in_quote;
-			quote_type = cmd[len++];
-		}
-		if (in_quote)
-			while (cmd[len] && cmd[len] != quote_type)
-				len++;
-		len++;
-	}
-	return (len);
-}
-
-char	*get_word(char *cmd)
+static char	*get_word(char *cmd)
 {
 	size_t	len;
 	char	*word;

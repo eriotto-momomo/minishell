@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/13 11:30:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:27:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**get_args(t_ast *node)
 	if (!node)
 		return (NULL);
 	if (node->tag == EXEC_NODE)
-			args = node->data.exec.argv;
+		args = node->data.exec.argv;
 	return (args);
 }
 

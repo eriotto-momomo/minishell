@@ -6,12 +6,14 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 13:59:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:03:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define MAX_CMDS 256
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -27,6 +29,7 @@
 # include "./error.h"
 # include "./init.h"
 # include "./struct.h"
+# include "./loop.h"
 # include "./lexer.h"
 # include "./parser.h"
 # include "./prompt.h"
