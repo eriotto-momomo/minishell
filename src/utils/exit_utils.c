@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/20 10:13:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 10:45:53 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ int	ft_exit(t_shell *s, int ac, char **av)
 			if (!ft_isdigit(av[1][i++]))
 				return (print_error(&s->numerr, EINVAL, "exit"));
 		s->numerr = (uint8_t)ft_atoi(av[1]);
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		terminate_shell(s);
 	}
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	terminate_shell(s);
 	return (0);
 }
