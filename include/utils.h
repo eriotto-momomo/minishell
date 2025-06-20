@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/20 10:11:53 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 11:00:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	debug_list(t_token *head);
 //////////////////////////////////
 
 // exit_utils.c
+void	reset_free(t_shell *s);
 void	clean_free(t_shell *s);
 int		ft_exit(t_shell *s, int ac, char **av);
 void	terminate_shell(t_shell *s);

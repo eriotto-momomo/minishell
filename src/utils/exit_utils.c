@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/20 10:45:53 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 10:58:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ int	ft_exit(t_shell *s, int ac, char **av)
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	terminate_shell(s);
 	return (0);
+}
+
+void	reset_free(t_shell *s)
+{
+	if (s->head)
+		free_token_list(&(s->head));
+	if (s->root_node)
+		free_ast(&(s->root_node));
+	w_free((void **)&(s->line));
 }
 
 void	clean_free(t_shell *s)
