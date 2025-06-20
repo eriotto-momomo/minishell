@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 09:14:34 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 11:19:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ typedef enum	e_tag
 	PIPE_NODE,
 	EXEC_NODE
 } 				t_tag;
-
-typedef enum e_errors_return
-{
-	NO_ERRORS,
-	UNEXPECTED_TOK,
-	UNMATCHED_QUOTE,
-}				t_errors;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
 typedef struct s_ast t_ast;
