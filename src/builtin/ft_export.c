@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 20:20:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 21:00:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ int	exporter(t_env **env, char *arg)
 	if (!var_ptr)
 	{
 		if (!add_var_back(env, name, value))
-			return (0);
+			return (1);
 	}
 	else
 	{
 		if (!replace_var(&var_ptr, value))
-			return (0);
+			return (1);
 		free(name);
 	}
-	return (1);
+	return (0);
 }
 
 static int	is_valid(char *s)
@@ -66,10 +66,17 @@ static int	is_valid(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] && s[i] != '=')
 	{
+		if (s[i] == '$')
+			continue;
+		if (ft_isquote(s[i]))
+			continue ;
 		if (!ft_isalnum(s[i]) && s[i] != '=')
-				return (0);
+		{
+			printf("%c : is an invalid argment \n", s[i]);
+			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -91,7 +98,7 @@ int	ft_export(t_shell *s, t_env **env, int ac, char **args, int fd)
 		}
 		if (!ft_strchr(args[i], '='))
 			continue ;
-		if (!exporter(env, args[i]))
+		if (exporter(env, args[i]) != 0)
 			return (print_error(&s->numerr, ENOMEM, "export"));
 	}
 	return (0);
