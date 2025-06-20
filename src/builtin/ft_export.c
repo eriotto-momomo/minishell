@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 10:28:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 20:20:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_export(t_shell *s, t_env **env, int ac, char **args, int fd)
 		ft_env(s, *env, fd);
 	while (++i < ac)
 	{
-		if (!is_valid(args[i]))
+		if (!is_valid(args[i]) || ft_strncmp(args[i], "=", 2) == 0)
 		{
 			print_error(&s->numerr, EINVAL, "export");
 			continue ;
