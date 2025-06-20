@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/20 10:32:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 10:43:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,15 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{
-		print_error(&s->numerr, errno, "Command not found");
+		s->numerr = 127;
+		perror("Command not found");
 		terminate_shell(s);
 	}
 	if (execve(cmd_path, argv, NULL) == -1)
 	{
 		w_free((void **)&cmd_path);
-		print_error(&s->numerr, errno, "Command not executable");
+		s->numerr = 126;
+		(perror("Command not executable"));
 		terminate_shell(s);
 	}
 	return (0);
