@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 17:27:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 09:26:02 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdint.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>

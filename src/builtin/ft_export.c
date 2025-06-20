@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 19:07:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 10:28:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int	replace_var(t_env **var, char *value)
 {
 	if (!value)
-		return (0);
+		return (1);
 	w_free((void **)&(*var)->value);
 	(*var)->value = value;
-	return (1);
+	return (0);
 }
 
 t_env	*var_lookup(t_env *env, char *target)
@@ -75,24 +75,24 @@ static int	is_valid(char *s)
 	return (1);
 }
 
-int	ft_export(t_env **env, int ac, char **args, int fd)
+int	ft_export(t_shell *s, t_env **env, int ac, char **args, int fd)
 {
 	int		i;
 
 	i = -1;
 	if (ac == 1)
-		ft_env(*env, fd);
+		ft_env(s, *env, fd);
 	while (++i < ac)
 	{
 		if (!is_valid(args[i]))
 		{
-			print_error(EINVAL, "export");
+			print_error(&s->numerr, EINVAL, "export");
 			continue ;
 		}
 		if (!ft_strchr(args[i], '='))
 			continue ;
 		if (!exporter(env, args[i]))
-			return (print_error(ENOMEM, "export"));
+			return (print_error(&s->numerr, ENOMEM, "export"));
 	}
-	return (1);
+	return (0);
 }
