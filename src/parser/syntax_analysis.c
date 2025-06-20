@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 11:12:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 11:15:58 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	syntax_analysis(t_shell *s, t_token *current_tok)
 			s->numerr = err;
 			if (err == 2)
 				ft_putstr_fd("Unmatched quote !\n", STDERR_FILENO);
-			else if (err == 1)
-				ft_putstr_fd("Unexpected token found !", STDERR_FILENO);
+			else if (err == 3)
+				ft_putstr_fd("Unexpected token found !\n", STDERR_FILENO);
 			return (1);
 		}
 		current_tok = current_tok->next;
