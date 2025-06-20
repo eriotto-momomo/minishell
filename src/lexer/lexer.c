@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 15:28:54 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 18:03:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int	lexer(t_shell *s)
 	s->head = token;
 	if (!tokenize(&(s->head), s->line))
 		return (print_error(&s->numerr, ENOMEM, "tokenize"));
+	for (t_token *tmp = s->head; tmp; tmp = tmp->next)
+		printf("tmp :%s\n", tmp->data);
 	return (0);
 }
