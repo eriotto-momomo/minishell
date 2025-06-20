@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 23:39:55 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/20 11:12:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	quote_check(t_token *tok)
 		{
 			start = check_match_quote(tok->data, start);
 			if (!start)
-				return (UNMATCHED_QUOTE);
+				return (2);
 		}
 		start++;
 	}
@@ -50,28 +50,31 @@ static int	syntax_checker(t_token *tok)
 		|| tok->type == HERE_DOC || tok->type == APP_OUT_REDIR)
 	{
 		if (!tok->next)
-			return (UNEXPECTED_TOK);
+			return (3);
 	}
 	if (tok->type == PIPE)
 	{
 		if (!tok->prev || !tok->next || tok->prev->type != WORD)
-			return (UNEXPECTED_TOK);
+			return (3);
 		else if (tok->next->type == PIPE)
-			return (UNEXPECTED_TOK);
+			return (3);
 	}
 	return (0);
 }
 
-int	syntax_analysis(t_token *current_tok)
+int	syntax_analysis(t_shell *s, t_token *current_tok)
 {
-	int		err;
-
+	int err;
 	while (current_tok)
 	{
 		err = syntax_checker(current_tok);
 		if (err)
 		{
-			ft_putstr_fd("Syntax", err);
+			s->numerr = err;
+			if (err == 2)
+				ft_putstr_fd("Unmatched quote !\n", STDERR_FILENO);
+			else if (err == 1)
+				ft_putstr_fd("Unexpected token found !", STDERR_FILENO);
 			return (1);
 		}
 		current_tok = current_tok->next;
