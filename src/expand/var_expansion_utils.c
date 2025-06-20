@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 08:54:07 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/19 17:18:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ char	*make_prefix(t_env *env, char *str, int i)
 	char	*prefix;
 	char	*ret;
 
-	value = get_var(env, str + i + 1);
+	if (str[1] == '?')
+		value = ft_itoa(g_status);
+	else
+		value = get_var(env, str + i + 1);
 	if (!value)
 		return (NULL);
 	prefix = ft_substr(str, 0, i);

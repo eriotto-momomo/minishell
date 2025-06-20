@@ -3,23 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 14:11:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/20 10:58:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_check(t_shell *s)
+int	ft_exit(t_shell *s, int ac, char **av)
 {
-	if (ft_strlen(s->head->data) == ft_strlen("exit"))
-		if (ft_strncmp(s->head->data, "exit", ft_strlen("exit")) == 0)
-			terminate_shell(s, 0);
+	int	i;
+
+	i = 0;
+	errno = 0;
+	if (ac > 2)
+		return (print_error(&s->numerr, E2BIG, "exit"));
+	if (ac > 1)
+	{
+		while (av[1][i])
+			if (!ft_isdigit(av[1][i++]))
+				return (print_error(&s->numerr, EINVAL, "exit"));
+		s->numerr = (uint8_t)ft_atoi(av[1]);
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		terminate_shell(s);
+	}
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	terminate_shell(s);
+	return (0);
 }
 
-void	terminate_shell(t_shell *s, int error)
+void	reset_free(t_shell *s)
+{
+	if (s->head)
+		free_token_list(&(s->head));
+	if (s->root_node)
+		free_ast(&(s->root_node));
+	w_free((void **)&(s->line));
+}
+
+void	clean_free(t_shell *s)
 {
 	if (s->head)
 		free_token_list(&(s->head));
@@ -30,10 +54,12 @@ void	terminate_shell(t_shell *s, int error)
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
 	setup_signals(s, DEFAULT_SIGNALS); // 🚨 AJOUTER SAFE CHECKS
-	if (error)
-	{
-		perror(strerror(errno));
-		exit(EXIT_FAILURE);
-	}
+}
+
+void	terminate_shell(t_shell *s)
+{
+	clean_free(s);
+	if (s->numerr)
+		exit(s->numerr);
 	exit(EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 14:58:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:26:02 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdint.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
 # include <signal.h>
 # include <string.h>
 # include <sys/ioctl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <termios.h>
 # include <fcntl.h>
 # include <linux/limits.h>
