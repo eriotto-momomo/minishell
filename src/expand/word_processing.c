@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 09:57:40 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 18:26:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,68 +16,66 @@ static size_t	count_quote(char *s)
 {
 	size_t	c;
 	int		i;
-	int		in;
 	char	q;
 
 	i = 0;
-	in = 0;
 	c = 0;
 	q = '\0';
 	while (s[i])
 	{
-		if (!in && ft_isquote(s[i]))
+		if (q == 0 && (s[i] == '\'' || s[i] == '\"'))
 		{
+			q = s[i++];
 			c++;
-			in = 1;
-			q = s[i];
 		}
-		else if (in && s[i] == q)
+		if (s[i] == q)
 		{
 			c++;
-			in = 0;
+			q = '\0';
 		}
 		i++;
 	}
 	return (c);
 }
 
-static void get_quote(char *quote, char c, int *i)
-{
-	if (*quote == 0 && (c == '\'' || c == '\"'))
-	{
-		*quote = c;
-		if (c == *quote)
-			(*i)++;	
-	}
-}
-
-static int trim_quote(char **s)
+static int trim_quote(char **s, int i, int j)
 {
 	char	quote;
-	int		i;
-	int		j;
 	char	*new_s;
 
 	new_s = malloc(sizeof(char) * (ft_strlen(*s) - count_quote(*s) + 1));
+	printf("len : %ld\n", sizeof(char) * (ft_strlen(*s) - count_quote(*s) + 1));
 	if (!new_s)
 		return (1);
-	quote = 0;
-	i = 0;
-	j = 0;
-	while ((*s)[i])
+	quote = '\0';
+	while((*s)[i])
 	{
-		get_quote(&quote, (*s)[i], &i);
-		while ((*s)[i] && (*s)[i] != quote)
-			new_s[j++] = (*s)[i++];
-		i++;
-		if (quote != 0 && ((*s)[i] == '\'' || (*s)[i] == '\"'))
-			quote = 0;
+		if (quote == '\0' && ((*s)[i] == '\'' || (*s)[i] == '\"'))
+		{
+			quote = (*s)[i];
+			i++;
+		}
+		if ((*s)[i] != quote)
+		{
+			new_s[j] = (*s)[i];
+			i++;
+			j++;
+		}
+		else
+			i++;
+		if (!new_s[j])
+			break;
+		if ((*s)[i] && (*s)[i] == quote)
+		{
+			quote = '\0';
+			i++;
+		}
 	}
-	new_s[j] = '\0';
+	new_s[i] = '\0';
+	printf("new_s %s\n", new_s);
 	v_switch(s, new_s);
 	return (0);
 }
-
 
 static int	shrink_array(char ***arr, int ac, int i)
 {
@@ -127,7 +125,7 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 			}
 		}
 		if ((*args)[i] && (ft_strchr((*args)[i], '\'') || ft_strchr((*args)[i], '\"')))
-			if (trim_quote(&(*args)[i]) != 0)
+			if (trim_quote(&(*args)[i], 0 ,0) != 0)
 				return (print_error(&s->numerr, errno, "trim_quote"));
 		i++;
 	}
