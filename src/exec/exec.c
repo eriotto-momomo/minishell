@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 23:05:53 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/20 10:15:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
 	i = -1;
 	pid = fork();
 	if (pid < 0)
-		return (print_error(EPIPE, "pipe"));
+		return (print_error(&s->numerr, EPIPE, "fork"));
 	if (pid == 0)
 	{
 		if (setup_pipe(current_node->data.exec.fd_in, current_node->data.exec.fd_out) == -1)
-			return (1);
+			return (print_error(&s->numerr, errno, "setup_pipe"));
 		while (++i < s->pipe_count)
 		{
 			if (s->pipe_fd[i][0] != current_node->data.exec.fd_in
@@ -65,9 +65,7 @@ int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
 }
 
 int	preorder_exec(t_shell *s, t_ast **current_node)
-{
-	// int	error;
-	
+{	
 	if (!(*current_node))
 		return (0);
 	if ((*current_node)->tag == PIPE_NODE)
@@ -79,41 +77,41 @@ int	preorder_exec(t_shell *s, t_ast **current_node)
 	{
 		if ((*current_node)->data.exec.heredoc_count > 0)
 			(*current_node)->data.exec.fd_in = handle_heredoc(s, (*current_node));
-		if (!string_processing(s, &(*current_node)->data.exec.argc, &(*current_node)->data.exec.argv))
-			return (print_error(ENOMEM, "string_processing"));
+		if (string_processing(s, &(*current_node)->data.exec.argc, &(*current_node)->data.exec.argv) != 0)
+			return (1);
 		if (handle_exec(s, (*current_node)) != 0)
 			return (1);
 	}
 	return (0);
 }
 
-void	execution(t_shell *s)
+int	execution(t_shell *s)
 {
 	int	i;
 	int	status;
 
-	i = 0;
+	i = -1;
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
-		terminate_shell(s, errno);
+		return (print_error(&s->numerr, ENOMEM, "ft_strdup"));
 	setup_signals(s, DEFAULT_SIGNALS);
-	preorder_exec(s, &s->current_node);
-	while (i < s->pid_count)
+	if (preorder_exec(s, &s->current_node) != 0)
+		return (1);
+	while (++i < s->pid_count)
 	{
 		waitpid(s->child_pids[i], &status, 0);
 		if (g_status == CLEAN_EXIT)
 		{
 			if (kill(s->child_pids[i], SIGINT) < 0)
-				terminate_shell(s, errno);
-			g_status = 130;
+				return (print_error(&s->numerr, errno, "kill"));
 			break;
 		}
 		g_status = WEXITSTATUS(status);
-		i++;
 	}
 	free_ast(&(s->root_node));
 	unlink(HEREDOC_FILE_PATH);
 	w_free((void **)&s->heredoc_tmp);
+	return (0);
 }
 
 

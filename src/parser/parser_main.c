@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/19 13:12:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 09:40:08 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ int	parser(t_shell *s)
 	s->heredoc_count = 1;
 	s->root_node = build_ast(&temp);
 	if (!s->root_node)
-	{
-		terminate_shell(s, errno);
-		return (1);
-	}
+		return (print_error(&s->numerr, ENOMEM, "build_ast"));
 	s->current_node = s->root_node;
 	free_token_list(&(s->head));
 	return (0);

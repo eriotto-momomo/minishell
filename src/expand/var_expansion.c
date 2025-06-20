@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 17:08:59 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 09:55:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	attribute_value(t_env *env, char **str, int i)
 
 	prefix = make_prefix(env, *str, i);
 	if (!prefix)
-		return (0);
+		return (1);
 	i++;
 	while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '?'))
 		i++;
@@ -28,16 +28,16 @@ static int	attribute_value(t_env *env, char **str, int i)
 	if (!sufix)
 	{
 		free(prefix);
-		return (0);
+		return (1);
 	}
 	tmp = ft_strjoin(prefix, sufix);
 	free(prefix);
 	free(sufix);
 	if (!tmp)
-		return (0);
+		return (1);
 	free(*str);
 	*str = tmp;
-	return (1);
+	return (0);
 }
 
 int	expand(t_env *env, char **str)
@@ -55,12 +55,12 @@ int	expand(t_env *env, char **str)
 		}
 		if ((*str)[i] == '$')
 		{
-			if (!attribute_value(env, str, i))
-				return (0);
+			if (attribute_value(env, str, i) != 0)
+				return (1);
 			i = 0;
 		}
 		else
 			i++;
 	}
-	return (1);
+	return (0);
 }

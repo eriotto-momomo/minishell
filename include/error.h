@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:44:15 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 18:46:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 09:26:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-int	print_error(int err, char *f);
+int	print_error(uint8_t *numerr, int err, char *f);
 
 #endif

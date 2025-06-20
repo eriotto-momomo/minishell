@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 16:40:10 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 09:57:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int trim_quote(char **s)
 
 	new_s = malloc(sizeof(char) * (ft_strlen(*s) - count_quote(*s) + 1));
 	if (!new_s)
-		return (-1);
+		return (1);
 	quote = 0;
 	i = 0;
 	j = 0;
@@ -116,8 +116,8 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 	{
 		if (ft_strchr((*args)[i], '$'))
 		{
-			if (!expand(s->env_list, &(*args)[i]))
-				return (0);
+			if (expand(s->env_list, &(*args)[i]) != 0)
+				return (print_error(&s->numerr, errno, "expand"));
 			if ((*args)[i][0] == '\0')
 			{
 				if (shrink_array(args, *ac, i) == 1)
@@ -127,9 +127,9 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 			}
 		}
 		if ((*args)[i] && (ft_strchr((*args)[i], '\'') || ft_strchr((*args)[i], '\"')))
-			if (trim_quote(&(*args)[i]) == -1)
-				return (0);
+			if (trim_quote(&(*args)[i]) != 0)
+				return (print_error(&s->numerr, errno, "trim_quote"));
 		i++;
 	}
-	return (1);
+	return (0);
 }
