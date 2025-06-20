@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 14:20:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:21:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,15 @@ static int	tokenize(t_token **head, char *cmd)
 	return (1);
 }
 
-void	lexer(t_shell *s)
+int	lexer(t_shell *s)
 {
 	t_token	*token;
 
 	token = NULL;
 	s->head = token;
 	if (!tokenize(&(s->head), s->line))
-	{
-		perror("Something went wrong");
-		terminate_shell(s, 0);
-	}
-	exit_check(s);
+		return (print_error(&s->numerr, ENOMEM, "tokenize"));
+	//for (t_token *tmp = s->head; tmp; tmp = tmp->next)
+	//	printf("tmp :%s\n", tmp->data);						//PRINT TOKENS
+	return (0);
 }

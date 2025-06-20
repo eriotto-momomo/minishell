@@ -6,32 +6,44 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 13:19:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 15:28:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static int	to_sep(int in_quote, char c)
+{
+	if (!in_quote && ft_isspace(c))
+		return (1);
+	if (!in_quote && is_sep(c))
+		return (1);
+	return (0);
+}
+
 static size_t	get_tok_len(char *cmd)
 {
-	size_t	len;
-	int		in_quote;
-	char	quote_type;
+    size_t	len;
+    int		in_quote;
+    char	quote_type;
 
 	len = 0;
 	in_quote = 0;
-	while (cmd[len] && !is_sep(cmd[len]) && !ft_isspace(cmd[len]))
-	{
-		if (ft_isquote(cmd[len]))
+	quote_type = '\0';
+    while (cmd[len])
+    {
+		if (!in_quote && ft_isquote(cmd[len]))
 		{
-			in_quote = !in_quote;
+			in_quote = 1;
 			quote_type = cmd[len++];
 		}
-		if (!cmd[len] || ft_isspace(cmd[len]))
-			return (len);
-		if (in_quote)
-			while (cmd[len] && cmd[len] != quote_type)
-				len++;
+		else if (in_quote && cmd[len] == quote_type)
+		{
+			in_quote = 0;
+			len++;
+		}
+		else if (to_sep(in_quote, cmd[len]) != 0)
+			break;
 		else
 			len++;
 	}

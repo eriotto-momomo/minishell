@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 14:10:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:19:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ typedef enum	e_tag
 	PIPE_NODE,
 	EXEC_NODE
 } 				t_tag;
-
-typedef enum e_errors_return
-{
-	NO_ERRORS,
-	UNEXPECTED_TOK,
-	UNMATCHED_QUOTE,
-}				t_errors;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
 typedef struct s_ast t_ast;
@@ -104,6 +97,7 @@ typedef struct s_shell
 	int		stdout_save;
 	int		node_initialized;
 	t_ast	*root_redir;
+	uint8_t	numerr;
 }			t_shell;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 09:26:32 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 10:21:44 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ char	*save_cwd(void)
 	char	buffer[PATH_MAX];
 
 	if (getcwd(buffer, PATH_MAX) == NULL)
-	{
-		perror("getwcd failed: ");
 		return (NULL);
-	}
 	return (ft_strdup(buffer));
 }
 
@@ -52,20 +49,21 @@ static int	updatepath(t_shell *s)
 	char	*old_pwd;
 
 	old_pwd = ft_strdup(s->pwd->value);
+	if (!old_pwd)
+		return (print_error(&s->numerr, errno, "ft_strdup"));
 	new_pwd = save_cwd();
-	if (!old_pwd || !new_pwd)
+	if (!new_pwd)
 	{
 		free(old_pwd);
-		free(new_pwd);
-		return (1);
+		return (print_error(&s->numerr, errno, "save_cwd"));
 	}
 	if (!replace_var(&s->old_pwd, old_pwd))
 	{
 		free(new_pwd);
-		return (1);
+		return (print_error(&s->numerr, ENOMEM, "save_cwd"));
 	}
 	if (!replace_var(&s->pwd, new_pwd))
-		return (1);
+		return (print_error(&s->numerr, ENOMEM, "save_cwd"));
 	return (0);
 }
 
@@ -74,15 +72,14 @@ int	ft_cd(t_shell *s, int ac, char **av)
 	char	*curpath;
 
 	if (ac > 2)
-		ft_putstr_fd("To many arguments\n", 2);
+		return (print_error(&s->numerr, E2BIG, "cd"));
 	curpath = make_curpath(s, av[1]);
 	if (!curpath)
-		return (1);
+		return (print_error(&s->numerr, ENOMEM, "cd"));
 	if (chdir(curpath) == -1)
 	{
-		perror("cd :");
 		free(curpath);
-		return (-1);
+		return (print_error(&s->numerr, errno, "cd"));
 	}
 	free(curpath);
 	updatepath(s);

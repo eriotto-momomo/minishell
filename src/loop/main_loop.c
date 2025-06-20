@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 14:14:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:00:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ static void	reset(t_shell *s)
 {
 	s->pipe_count = 0;
 	s->pid_count = 0;
-	w_free((void **)&s->line);
+	s->numerr = 0;
+	reset_free(s);
 }
 
 static void	process_input(t_shell *s)
 {
-	lexer(s);
-	if (parser(s))
+	if (lexer(s) != 0)
 		return ;
-	execution(s);
-	reset(s);
+	if (parser(s) != 0)
+		return ;	
+	if (execution(s) != 0)
+		return ;
 }
 
 void prompt_loop(t_shell *s)
@@ -37,11 +39,12 @@ void prompt_loop(t_shell *s)
 			setup_signals(s, MINISHELL_SIGNALS);
 		s->line = (readline(s->prompt));
 		if (s->line == NULL)
-			terminate_shell(s, 0);
+			terminate_shell(s);
 		if (s->line && *s->line)
 		{
 			add_history(s->line);
 			process_input(s);
+			reset(s);
 		}
 		reset(s);
 	}
