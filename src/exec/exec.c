@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 14:52:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:29:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int close_fd(t_ast *node)
 	return (0);
 }
 
-int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
+int	ft_external(t_shell *s, t_env *env, t_ast *node)
 {
 	int		i;
 	pid_t	pid;
@@ -46,44 +46,45 @@ int	ft_external(t_shell *s, t_env *env, t_ast *current_node)
 		return (1);
 	if (pid == 0)
 	{
-		if (setup_pipe(current_node->data.exec.fd_in, current_node->data.exec.fd_out) == -1)
+		if (setup_pipe(node->data.exec.fd_in, node->data.exec.fd_out) == -1)
 			return (1);
 		while (++i < s->pipe_count)
 		{
-			if (s->pipe_fd[i][0] != current_node->data.exec.fd_in
-				&& s->pipe_fd[i][0] != current_node->data.exec.fd_out)
+			if (s->pipe_fd[i][0] != node->data.exec.fd_in
+				&& s->pipe_fd[i][0] != node->data.exec.fd_out)
 				close(s->pipe_fd[i][0]);
-			if (s->pipe_fd[i][1] != current_node->data.exec.fd_in
-				&& s->pipe_fd[i][1] != current_node->data.exec.fd_out)
+			if (s->pipe_fd[i][1] != node->data.exec.fd_in
+				&& s->pipe_fd[i][1] != node->data.exec.fd_out)
 				close(s->pipe_fd[i][1]);
 		}
-		cmd_execution(env, current_node->data.exec.argv);
+		cmd_execution(env, node->data.exec.argv);
 	}
 	else
 		s->child_pids[s->pid_count++] = pid;
 	return (0);
 }
 
-int	preorder_exec(t_shell *s, t_ast **current_node)
+int	preorder_exec(t_shell *s, t_ast **node)
 {
-	if (!(*current_node))
+	if (!(*node))
 		return (0);
-	if ((*current_node)->tag == PIPE_NODE)
+	if ((*node)->tag == PIPE_NODE)
 	{
-		if (handle_pipe(s, &(*current_node)) != 0)
+		if (handle_pipe(s, &(*node)) != 0)
 			return (1);
 	}
-	else if ((*current_node)->tag == EXEC_NODE)
+	else if ((*node)->tag == EXEC_NODE)
 	{
-		if ((*current_node)->data.exec.heredoc_count > 0)
-			(*current_node)->data.exec.fd_in = handle_heredoc(s, (*current_node));
-		if (!string_processing(s, &(*current_node)->data.exec.argc, &(*current_node)->data.exec.argv))
+		if ((*node)->data.exec.heredoc_count > 0)
+			(*node)->data.exec.fd_in = handle_heredoc(s, (*node));
+		if (!string_processing(s, &(*node)->data.exec.argc, &(*node)->data.exec.argv))
 		{
 			perror("Expansion or quote removal failed");
 			terminate_shell(s, 0);
 		}
-		if (handle_exec(s, (*current_node)) != 0)
-			return (1);
+		if((*node)->data.exec.argc > 0)
+			if (handle_exec(s, (*node)) != 0)
+				return (1);
 	}
 	return (0);
 }
