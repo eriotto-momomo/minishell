@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 21:00:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/20 21:01:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ static int	is_valid(char *s)
 		if (ft_isquote(s[i]))
 			continue ;
 		if (!ft_isalnum(s[i]) && s[i] != '=')
-		{
-			printf("%c : is an invalid argment \n", s[i]);
 			return (0);
-		}
 		i++;
 	}
 	return (1);
