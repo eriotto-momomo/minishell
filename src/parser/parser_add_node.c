@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/21 18:44:38 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,13 @@ int	add_command(t_ast **node, t_token **tok)
 {
 	(*node)->tag = EXEC_NODE;
 	(*node)->data.exec.argc = count_tokens(&(*tok), WORD);
+	if ((*node)->data.exec.argc < 0)
+		return (1);
 	(*node)->data.exec.argv = copy_args(*tok, (*node)->data.exec.argc);
-	(*node)->data.exec.fd_in = STDIN_FILENO;
-	(*node)->data.exec.fd_out = STDOUT_FILENO;
 	if (!(*node)->data.exec.argv)
 		return (1);
-	//(*node)->data.exec.argv = malloc(sizeof(char **) * ((*node)->data.exec.argc));
-	//if (!(*node)->data.exec.argv)
-	//	return (1);
-	//if (copy_tokens(&(*tok), WORD, (*node)->data.exec.argc,
-	//	(*node)->data.exec.argv) != 0)
-		//return (1);
-	//printf("add_command | EXIT FUNCTION\n");
+	(*node)->data.exec.fd_in = STDIN_FILENO;
+	(*node)->data.exec.fd_out = STDOUT_FILENO;
 	return (0);
 }
 
@@ -39,14 +34,6 @@ int	add_heredoc(t_ast **node, t_token **tok)
 	(*node)->data.exec.heredoc_list = copy_heredocs(*tok, (*node)->data.exec.heredoc_count);
 	if (!(*node)->data.exec.heredoc_list)
 		return (1);
-	//(*node)->data.exec.heredoc_list =
-	//	malloc(sizeof(char **) * (*node)->data.exec.heredoc_count);
-	//if (!(*node)->data.exec.heredoc_list)
-	//	return (1);
-	//if (copy_tokens(&(*tok), HERE_DOC, (*node)->data.exec.heredoc_count,
-	//	(*node)->data.exec.heredoc_list) != 0)
-	//	return (1);
-	//printf("add_heredoc | EXIT FUNCTION\n");
 	return (0);
 }
 
@@ -66,7 +53,10 @@ int	add_redir(t_ast **node, t_token **tok)
 			(*node)->data.exec.fd_in =
 				redir_in(tmp->next->data, (*node)->data.exec.fd_in);
 		if ((*node)->data.exec.fd_out < 0 || (*node)->data.exec.fd_in < 0)
+		{
+			errno = EBADF;
 			return (1);
+		}
 		if (!get_next_token(&tmp))
 			break;
 	}

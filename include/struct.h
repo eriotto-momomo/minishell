@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 11:19:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/21 19:13:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ typedef struct s_shell
 	int		node_initialized;
 	t_ast	*root_redir;
 	uint8_t	numerr;
+	int		tok_rdir;
+	int		tok_pipe;
+	int		tok_word;
 }			t_shell;
 
 #endif
