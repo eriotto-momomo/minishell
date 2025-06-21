@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/20 11:10:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/21 19:13:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ int	parser(t_shell *s)
 	s->heredoc_count = 1;
 	s->root_node = build_ast(&tmp);
 	if (!s->root_node)
-		return (print_error(&s->numerr, ENOMEM, "build_ast"));
+	{
+		if (errno != EBADF)
+			errno = ENOMEM;
+		return (print_error(&s->numerr, errno, "parser"));
+	}
 	s->current_node = s->root_node;
 	free_token_list(&(s->head));
 	return (0);
