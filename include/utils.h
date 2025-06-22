@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/20 11:00:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 14:16:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	free_env(t_env **h_env);
 
 int	add_var_back(t_env **head, char *name, char *value);
 
-// identifier
+// general
 int	is_sep(char c);
+size_t	count_var(t_env *head);
+char	**ltotable(t_env *env);
 #endif

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/20 14:42:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 14:27:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,26 @@ int	setup_pipe(int	fd_in, int fd_out)
 int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
 	char	*cmd_path;
+	char	**env_table;
 
 	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{
-		s->numerr = 127;
-		perror("Command not found");
+		print_custom_error(&s->numerr, 127, "Command not found: No such file or directory\n");
 		terminate_shell(s);
 	}
-	if (execve(cmd_path, argv, NULL) == -1)
+	env_table = ltotable(env);
+	if (!env_table)
 	{
 		w_free((void **)&cmd_path);
-		s->numerr = 126;
-		(perror("Command not executable"));
+		print_error(&s->numerr, ENOMEM, "cmd_execution");
+		terminate_shell(s);
+	}
+	if (execve(cmd_path, argv, env_table) == -1)
+	{
+		w_free((void **)&cmd_path);
+		ft_free_char_array(env_table, count_var(env));
+		print_custom_error(&s->numerr, 126, "Command not executable: Permission denied\n");
 		terminate_shell(s);
 	}
 	return (0);
