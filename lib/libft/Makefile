@@ -40,6 +40,7 @@ ft_puterror.c \
 ft_putnbr_fd.c \
 ft_putstr_fd.c \
 ft_split.c \
+ft_str3join.c \
 ft_strchr.c \
 ft_strdup.c \
 ft_striteri.c \
