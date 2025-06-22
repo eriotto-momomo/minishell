@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 16:40:10 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:12:41 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_env	*var_lookup(t_env *env, char *target)
 	ptr = env;
 	while (ptr)
 	{
-		if (ft_strlen(ptr->name) == ft_strlen(target) &&
-			ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
-				return (ptr);
+		if (ft_strlen(ptr->name) == ft_strlen(target)
+			&& ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
+			return (ptr);
 		ptr = ptr->next;
 	}
 	return (NULL);
@@ -69,7 +69,7 @@ static int	is_valid(char *s)
 	while (s[i] && s[i] != '=')
 	{
 		if (s[i] == '$')
-			continue;
+			continue ;
 		if (ft_isquote(s[i]))
 			continue ;
 		if (!ft_isalnum(s[i]) && s[i] != '=')
@@ -85,10 +85,10 @@ int	ft_export(t_shell *s, t_env **env, t_ast *node)
 	char	**args;
 
 	i = -1;
-	args = node->data.exec.argv;
-	if (node->data.exec.argc == 1)
-		ft_env(s, *env, node->data.exec.fd_out);
-	while (++i < node->data.exec.argc)
+	args = node->data.s_exec.av;
+	if (node->data.s_exec.ac == 1)
+		ft_env(s, *env, node->data.s_exec.fd_out);
+	while (++i < node->data.s_exec.ac)
 	{
 		if (!is_valid(args[i]) || ft_strncmp(args[i], "=", 2) == 0)
 		{

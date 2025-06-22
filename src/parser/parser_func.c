@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/18 10:57:35 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:07:07 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	get_next_pipe(t_token **tok)
 	while ((*tok) && (*tok)->type != PIPE)
 	{
 		if (!get_next_token(tok))
-			break;
+			break ;
 	}
 }
 

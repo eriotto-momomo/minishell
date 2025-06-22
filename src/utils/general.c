@@ -6,13 +6,13 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:34:21 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 14:27:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:15:18 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void v_switch(char **s, char *new_s)
+void	v_switch(char **s, char *new_s)
 {
 	w_free((void **)s);
 	*s = new_s;
@@ -37,7 +37,7 @@ char	**ltotable(t_env *head)
 	char	**env_table;
 	char	*tmp;
 	size_t	len;
-	
+
 	i = 0;
 	len = count_var(head);
 	env_table = malloc(sizeof(char *) * (len + 1));

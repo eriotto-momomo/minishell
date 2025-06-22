@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 16:49:15 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:21:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 # include "./signals.h"
 # include "./utils.h"
 # include "./builtin.h"
-# include "./wrappers.h"
 # include "./expand.h"
 # include "./exec.h"
 # include "../lib/libft/libft.h"

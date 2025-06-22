@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 14:32:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:19:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	clean_free(t_shell *s)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
-	setup_signals(s, DEFAULT_SIGNALS); // 🚨 AJOUTER SAFE CHECKS
+	setup_signals(s, DEFAULT_SIGNALS);
 }
 
 void	terminate_shell(t_shell *s)

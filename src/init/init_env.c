@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 21:26:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/13 10:19:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:36:47 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*get_name(char *s)
 
 void	free_env_list(t_env **head)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while (*head)
 	{
@@ -86,4 +86,3 @@ t_env	*table_to_ll(char **env)
 	}
 	return (head);
 }
-
