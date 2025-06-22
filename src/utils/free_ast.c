@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:14:11 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:25:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_pipe_node(t_ast *node)
 		if (node->data.s_pipe.left->tag == EXEC_NODE)
 			free_exec_node(node->data.s_pipe.left);
 		else if (node->data.s_pipe.left->tag == PIPE_NODE)
-			free_s_pipe_node(node->data.s_pipe.left);
+			free_pipe_node(node->data.s_pipe.left);
 	}
 	if (node->data.s_pipe.right)
 	{

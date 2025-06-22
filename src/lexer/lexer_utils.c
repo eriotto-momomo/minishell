@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 17:57:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:24:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	get_token_id(char *token)
 	return (WORD);
 }
 
-static char	*get_sep(char *cmd)
+char	*get_sep(char *cmd)
 {
 	char	*sep;
 
@@ -95,7 +95,7 @@ static char	*get_sep(char *cmd)
 	return (sep);
 }
 
-static char	*get_word(char *cmd)
+char	*get_word(char *cmd)
 {
 	size_t	len;
 	char	*word;

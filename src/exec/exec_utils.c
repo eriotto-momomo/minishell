@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 17:34:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:25:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{
-		print_custom_error(&s->numerr, 127, strerror(perror));
+		print_custom_error(&s->numerr, 127, strerror(errno));
 		terminate_shell(s);
 	}
 	env_table = ltotable(env);
@@ -100,7 +100,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	{
 		w_free((void **)&cmd_path);
 		ft_free_char_array(env_table, count_var(env));
-		print_custom_error(&s->numerr, 126, strerror(perror));
+		print_custom_error(&s->numerr, 126, strerror(errno));
 		terminate_shell(s);
 	}
 	return (0);
