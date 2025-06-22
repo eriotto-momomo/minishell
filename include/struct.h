@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 13:48:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:08:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,36 @@ typedef enum e_types
 	APP_OUT_REDIR,
 	HERE_DOC,
 	PIPE,
-} t_types;
+}	t_types;
 
-typedef enum	e_tag
+typedef enum e_tag
 {
 	PIPE_NODE,
 	EXEC_NODE
-} 				t_tag;
+}	t_tag;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
-typedef struct s_ast t_ast;
+typedef struct s_ast	t_ast;
 
-typedef union	u_data
+typedef union u_data
 {
-	struct { t_ast *left; t_ast *right; } pipe;
-	struct { int argc; char **argv; int fd_in; int fd_out; int heredoc_count; char	**heredoc_list; } exec;
-}				t_data;
+	struct
+	{
+		t_ast	*left;
+		t_ast	*right;
+	}	s_pipe;
+	struct
+	{
+		int		ac;
+		char	**av;
+		int		fd_in;
+		int		fd_out;
+		int		heredoc_count;
+		char	**heredoc_list;
+	}	s_exec;
+}	t_data;
 
-typedef struct	s_ast
+typedef struct s_ast
 {
 	t_tag		tag;
 	t_data		data;
@@ -58,17 +70,13 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*name;
 	char			*value;
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;
-
-// FORWARD DECLARATION (dis au compilateur que "t_sig" existe)
-typedef struct	s_signals t_sig;
-struct	s_termios;
 
 typedef struct s_shell
 {
@@ -82,7 +90,6 @@ typedef struct s_shell
 	t_ast	*current_node;
 	t_ast	*root_node;
 	t_token	*head;
-	t_sig	*sig;
 	pid_t	child_pids[MAX_CMDS];
 	int		pid_count;
 	int		pipe_fd[MAX_CMDS][2];
@@ -91,13 +98,13 @@ typedef struct s_shell
 	char	**heredoc_list;
 	int		heredoc_count;
 	int		fd;
-	int		final_output_fd;	// 🚨USELESS❔
+	int		final_output_fd;
 	int		sig_mode;
 	int		stdin_save;
 	int		stdout_save;
 	int		node_initialized;
 	t_ast	*root_redir;
 	uint8_t	numerr;
-}			t_shell;
+}	t_shell;
 
 #endif

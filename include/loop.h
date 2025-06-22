@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loop.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/22 16:45:07 by timmi             #+#    #+#             */
+/*   Updated: 2025/06/22 17:09:32 by timmi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LOOP_H
-#define LOOP_H
+# define LOOP_H
 /**
  * @brief Initializes and runs the main loop of the shell.
  *
@@ -13,5 +25,6 @@
  *          containing prompt string, input line, and context
  *          needed for parsing and execution.
  */
-void prompt_loop(t_shell *s);
+void	prompt_loop(t_shell *s);
+
 #endif

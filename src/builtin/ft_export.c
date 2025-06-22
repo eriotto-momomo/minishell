@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 21:01:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 16:40:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,16 @@ static int	is_valid(char *s)
 	return (1);
 }
 
-int	ft_export(t_shell *s, t_env **env, int ac, char **args, int fd)
+int	ft_export(t_shell *s, t_env **env, t_ast *node)
 {
 	int		i;
+	char	**args;
 
 	i = -1;
-	if (ac == 1)
-		ft_env(s, *env, fd);
-	while (++i < ac)
+	args = node->data.exec.argv;
+	if (node->data.exec.argc == 1)
+		ft_env(s, *env, node->data.exec.fd_out);
+	while (++i < node->data.exec.argc)
 	{
 		if (!is_valid(args[i]) || ft_strncmp(args[i], "=", 2) == 0)
 		{
