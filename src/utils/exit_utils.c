@@ -6,11 +6,18 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 14:52:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:09:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	reset_termios(t_shell *s)
+{
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &s->termios.old) == -1)
+		return (print_error(&s->numerr, ENOMEM, "reset_termios"));
+	return (0);
+}
 
 int	ft_exit(t_shell *s, int ac, char **av)
 {
@@ -53,6 +60,8 @@ void	clean_free(t_shell *s)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
+	w_free((void **)&s->heredoc_tmp);
+	reset_termios(s);
 	setup_signals(s, DEFAULT_SIGNALS); // 🚨 AJOUTER SAFE CHECKS
 }
 

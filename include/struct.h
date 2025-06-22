@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/21 19:13:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:00:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ typedef struct	s_env
 	struct s_env	*prev;
 }					t_env;
 
-// FORWARD DECLARATION (dis au compilateur que "t_sig" existe)
-typedef struct	s_signals t_sig;
-struct	s_termios;
+typedef struct	s_termios
+{
+	struct termios	old;
+	struct termios	new;
+}				t_term;
+
 
 typedef struct s_shell
 {
@@ -82,21 +85,14 @@ typedef struct s_shell
 	t_ast	*current_node;
 	t_ast	*root_node;
 	t_token	*head;
-	t_sig	*sig;
+	t_term	termios;
 	pid_t	child_pids[MAX_CMDS];
 	int		pid_count;
 	int		pipe_fd[MAX_CMDS][2];
 	int		pipe_count;
 	char	*heredoc_tmp;
-	char	**heredoc_list;
-	int		heredoc_count;
 	int		fd;
-	int		final_output_fd;	// 🚨USELESS❔
 	int		sig_mode;
-	int		stdin_save;
-	int		stdout_save;
-	int		node_initialized;
-	t_ast	*root_redir;
 	uint8_t	numerr;
 	int		tok_rdir;
 	int		tok_pipe;

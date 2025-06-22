@@ -6,17 +6,26 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 14:51:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:53:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+
+
+static void	update_numerr(t_shell *s)
+{
+	if (g_sig == SIGINT)
+		s->numerr = 130;
+	if (g_sig == SIGQUIT)
+		s->numerr = 131;
+}
+
 static void	reset(t_shell *s)
 {
 	s->pipe_count = 0;
 	s->pid_count = 0;
-	//s->numerr = 0;
 	s->tok_rdir = 0;
 	s->tok_pipe = 0;
 	s->tok_word = 0;
@@ -36,22 +45,21 @@ static void	process_input(t_shell *s)
 void prompt_loop(t_shell *s)
 {
 	setup_signals(s, MINISHELL_SIGNALS);
-	//reset(s);
 	while (1)
 	{
-		printf("%sprompt_loop | 1 g_sig: %d%s\n", Y, g_sig, RST);
-		check_signals(s);
+		if (s->sig_mode == DEFAULT_SIGNALS)
+			setup_signals(s, MINISHELL_SIGNALS);
 		s->line = (readline(s->prompt));
 		if (s->line == NULL)
 			terminate_shell(s);
 		if (s->line && *s->line)
 		{
+			update_numerr(s);
 			add_history(s->line);
 			process_input(s);
-			//fprintf(stderr, "%sprompt_loop | s->numerr: %d%s\n", C, s->numerr, RST);
 			reset(s);
 		}
+		update_numerr(s);
 		reset(s);
-		printf("%sprompt_loop | 2 g_sig: %d%s\n", Y, g_sig, RST);
 	}
 }
