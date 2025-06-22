@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 14:57:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 15:00:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,29 +89,28 @@ int	execution(t_shell *s)
 {
 	int	i;
 	int	status;
+	int	pid;
 
-	i = 0;
+	i = -1;
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
 		return (print_error(&s->numerr, ENOMEM, "ft_strdup"));
 	setup_signals(s, DEFAULT_SIGNALS);
 	if (preorder_exec(s, &s->current_node) != 0)
 		return (1);
-	while (i < s->pid_count)
+	while (++i < s->pid_count)
 	{
-		waitpid(s->child_pids[i], &status, 0);
-		if (g_status == CLEAN_EXIT)
-		{
-			if (kill(s->child_pids[i], SIGKILL) < 0)
-				return (print_error(&s->numerr, errno, "kill"));
-			break;
-		}
-		i++;
+		pid = waitpid(s->child_pids[i], &status, 0);
+		if (pid == -1)
+			continue;
+		if (WIFEXITED(status))
+			s->numerr = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			s->numerr = WTERMSIG(status);
 	}
+	printf("numerr :%d\n", s->numerr);
 	free_ast(&(s->root_node));
 	unlink(HEREDOC_FILE_PATH);
 	w_free((void **)&s->heredoc_tmp);
 	return (0);
 }
-
-

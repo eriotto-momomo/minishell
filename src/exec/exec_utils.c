@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 14:27:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 14:30:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	handle_pipe(t_shell *s, t_ast **current_node)
 	close(s->pipe_fd[cur_pipe][1]);
 	return (0);
 }
-
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
@@ -77,8 +76,6 @@ int	setup_pipe(int	fd_in, int fd_out)
 	}
 	return (0);
 }
-
-
 
 int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
