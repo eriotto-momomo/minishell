@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:26:05 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 16:44:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:24:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@ char	*get_el(char *cmd);
 t_token	*create_token(char *data);
 int		add_token_back(t_token **head, char *data);
 void	free_token_list(t_token **head);
+char	*get_word(char *cmd);
+char	*get_sep(char *cmd);
 
 #endif
