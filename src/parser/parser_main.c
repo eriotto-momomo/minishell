@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 13:26:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:41:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ int	parser(t_shell *s)
 	tmp = s->head;
 	if (syntax_analysis(s, tmp) != 0)
 		return (1);
-	printf("%sparser | s->tok_pipe: %d | s->tok_rdir: %d | s->tok_word: %d%s\n", C, s->tok_pipe, s->tok_rdir, s->tok_word, RST);
-	s->heredoc_list = NULL;
-	s->heredoc_count = 1;
 	s->root_node = build_ast(&tmp);
 	if (!s->root_node)
 	{

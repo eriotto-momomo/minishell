@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 14:51:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:13:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			if (handle_exec(s, (*node)) != 0)
 				return (1);
 	}
+	close_fd((*node));
 	return (0);
 }
 
@@ -101,7 +102,7 @@ int	execution(t_shell *s)
 	while (i < s->pid_count)
 	{
 		waitpid(s->child_pids[i], &status, 0);
-		if (g_sig == CLEAN_EXIT)
+		if (g_sig == SIGINT || g_sig == SIGQUIT)
 		{
 			if (kill(s->child_pids[i], SIGKILL) < 0)
 				return (print_error(&s->numerr, errno, "kill"));
