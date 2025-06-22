@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 13:48:39 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 16:49:15 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,16 @@
 # include "./exec.h"
 # include "../lib/libft/libft.h"
 
-// Prompt par default utiliser si le custom prompt fail
+// Default prompt, used when custom prompt fails
 # define DEFAULT_PROMPT "minishell-1.0$ "
+
+// Default location of all the temporary files created by minishell
 # define HEREDOC_FILE_PATH "./tmp/heredoc_tmp.txt"
 
-// Char set de caractere qui peuvent separer des token dans une commande
+// Char set of characters that minishell interpret as operators
 # define SEPARATORS "|<>"
 
+// Global variable used by minishell to transmits signals
 extern volatile sig_atomic_t	g_status;
-
-// ENV
-t_env	*create_var(char *name, char	*value);
-void	del_var(t_env **head, t_env **target);
 
 #endif
