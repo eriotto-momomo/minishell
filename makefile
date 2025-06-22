@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
+#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/19 23:02:54 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/06/22 18:20:45 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,6 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/expand/word_processing.c\
 			$(CFILES_PATH)/expand/var_expansion.c\
 			$(CFILES_PATH)/expand/var_expansion_utils.c\
-			$(CFILES_PATH)/wrappers/wrappers.c \
-
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 

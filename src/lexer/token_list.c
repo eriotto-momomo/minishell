@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:00:27 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/18 11:08:53 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:38:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_token *create_token(char *data)
+t_token	*create_token(char *data)
 {
 	t_token	*new_node;
 
-	new_node = (t_token*)malloc(sizeof(t_token));
+	new_node = (t_token *)malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
 	new_node->data = data;
@@ -28,7 +28,7 @@ t_token *create_token(char *data)
 
 int	add_token_back(t_token **head, char *data)
 {
-    t_token	*new_node;
+	t_token	*new_node;
 	t_token	*temp;
 
 	new_node = create_token(data);
@@ -36,9 +36,9 @@ int	add_token_back(t_token **head, char *data)
 		return (0);
 	if (*head == NULL)
 	{
-        *head = new_node;
-        return 1;
-    }
+		*head = new_node;
+		return (1);
+	}
 	temp = *head;
 	while (temp->next != NULL)
 		temp = temp->next;
@@ -47,10 +47,10 @@ int	add_token_back(t_token **head, char *data)
 	return (1);
 }
 
-void free_token_list(t_token **head)
+void	free_token_list(t_token **head)
 {
-	t_token *current;
-	t_token *temp;
+	t_token	*current;
+	t_token	*temp;
 
 	if (!head || !*head)
 		return ;

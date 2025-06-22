@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 20:05:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:36:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static size_t	count_quote(char *s)
 	return (c);
 }
 
-static int trim_quote(char **s, int i, int j)
+static int	trim_quote(char **s, int i, int j)
 {
 	char	quote;
 	char	*new_s;
@@ -47,7 +47,7 @@ static int trim_quote(char **s, int i, int j)
 	if (!new_s)
 		return (1);
 	quote = '\0';
-	while((*s)[i])
+	while ((*s)[i])
 	{
 		if (quote == '\0' && ((*s)[i] == '\'' || (*s)[i] == '\"'))
 			quote = (*s)[i++];
@@ -113,8 +113,9 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 				continue ;
 			}
 		}
-		if ((*args)[i] && (ft_strchr((*args)[i], '\'') || ft_strchr((*args)[i], '\"')))
-			if (trim_quote(&(*args)[i], 0 ,0) != 0)
+		if ((*args)[i] && (ft_strchr((*args)[i], '\'')
+			|| ft_strchr((*args)[i], '\"')))
+			if (trim_quote(&(*args)[i], 0, 0) != 0)
 				return (print_error(&s->numerr, errno, "trim_quote"));
 		i++;
 	}

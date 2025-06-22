@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pathfinder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:00:57 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/19 23:36:26 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:34:24 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char *make_path(char *path, char *cmd)
+static char	*make_path(char *path, char *cmd)
 {
 	char	*tmp;
 	char	*full_path;

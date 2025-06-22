@@ -6,11 +6,18 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 20:11:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:56:34 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*get_el(char *cmd)
+{
+	if (is_sep(*cmd))
+		return (get_sep(cmd));
+	return (get_word(cmd));
+}
 
 static int	tokenize(t_token **head, char *cmd)
 {

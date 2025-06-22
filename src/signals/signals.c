@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/19 17:18:48 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:11:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	sigquit_ignore(void)
 // 🚨 AJOUTER SAFE CHECKS
 void	setup_signals(t_shell *s, int mode)
 {
-		struct sigaction	act;
+	struct sigaction	act;
 
 	ft_memset(&act, 0, sizeof(act));
 	if (mode == MINISHELL_SIGNALS)
