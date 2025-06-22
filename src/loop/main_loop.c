@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/20 11:00:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 15:00:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	reset(t_shell *s)
 {
 	s->pipe_count = 0;
 	s->pid_count = 0;
-	s->numerr = 0;
+	// s->numerr = 0;
 	reset_free(s);
 }
 
