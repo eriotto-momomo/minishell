@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 09:26:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 14:51:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 // Char set de caractere qui peuvent separer des token dans une commande
 # define SEPARATORS "|<>"
 
-extern volatile sig_atomic_t	g_status;
+extern volatile sig_atomic_t	g_sig;
 
 // ENV
 t_env	*create_var(char *name, char	*value);

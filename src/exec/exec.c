@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/21 19:14:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:51:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	execution(t_shell *s)
 	while (i < s->pid_count)
 	{
 		waitpid(s->child_pids[i], &status, 0);
-		if (g_status == CLEAN_EXIT)
+		if (g_sig == CLEAN_EXIT)
 		{
 			if (kill(s->child_pids[i], SIGKILL) < 0)
 				return (print_error(&s->numerr, errno, "kill"));
