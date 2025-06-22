@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/16 10:03:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 14:13:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	write_heredoc(t_shell *s, char *delimiter, int to_expand)
 		{
 			if ((delimiter[0] != '\'' && delimiter[ft_strlen(delimiter) - 1] != '\'')		// 🚨 A TESTER!
 				&& (delimiter[0] != '\"' && delimiter[ft_strlen(delimiter) - 1] != '\"'))	// 🚨 A TESTER!
-				expand(s->env_list, &(s->line));
+				expand(s, s->env_list, &(s->line));
 		}
 		if (put_in_heredoc(s->line, s->fd) != 0)
 			return (-1);

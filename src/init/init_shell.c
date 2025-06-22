@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 17:03:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 14:51:45 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	init_shell(t_shell *s, char	**envp)
 {
-	g_status = READY;
+	g_sig = READY;
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
 		return (-1);
@@ -30,6 +30,10 @@ int	init_shell(t_shell *s, char	**envp)
 	s->root_node = NULL;
 	s->current_node = NULL;
 	s->root_redir = NULL;
+	s->numerr = 0;
+	s->tok_rdir = 0;
+	s->tok_pipe = 0;
+	s->tok_word = 0;
 	s->sig_mode = MINISHELL_SIGNALS;
 	return (0);
 }

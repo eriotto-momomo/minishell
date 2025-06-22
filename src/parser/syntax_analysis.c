@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/21 19:16:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 13:59:55 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,14 @@ int	syntax_analysis(t_shell *s, t_token *current_tok)
 		if (err)
 		{
 			s->numerr = err;
-			if (err == 2)
-				ft_puterror("syntax_analysis", "Unmatched quote !\n");
-			else if (err == 3)
-				ft_putstr_fd("Unexpected token found !\n", STDERR_FILENO);
+			if (err == 2 || err == 3)
+			{
+				if (err == 2)
+					ft_puterror("syntax_analysis", "Unmatched quote !");
+				else if (err == 3)
+					ft_puterror("syntax_analysis", "Unexpected token found !");
+				s->numerr = EINVAL;
+			}
 			else if (err == 4)
 				print_error(&s->numerr, errno, "syntax_analysis");
 			return (1);
