@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:48:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 15:28:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:24:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ static int	to_sep(int in_quote, char c)
 
 static size_t	get_tok_len(char *cmd)
 {
-    size_t	len;
-    int		in_quote;
-    char	quote_type;
+	size_t	len;
+	int		in_quote;
+	char	quote_type;
 
 	len = 0;
 	in_quote = 0;
 	quote_type = '\0';
-    while (cmd[len])
-    {
+	while (cmd[len])
+	{
 		if (!in_quote && ft_isquote(cmd[len]))
 		{
 			in_quote = 1;
@@ -43,7 +43,7 @@ static size_t	get_tok_len(char *cmd)
 			len++;
 		}
 		else if (to_sep(in_quote, cmd[len]) != 0)
-			break;
+			break ;
 		else
 			len++;
 	}
@@ -69,7 +69,7 @@ int	get_token_id(char *token)
 	return (WORD);
 }
 
-static char	*get_sep(char *cmd)
+char	*get_sep(char *cmd)
 {
 	char	*sep;
 
@@ -95,7 +95,7 @@ static char	*get_sep(char *cmd)
 	return (sep);
 }
 
-static char	*get_word(char *cmd)
+char	*get_word(char *cmd)
 {
 	size_t	len;
 	char	*word;
@@ -115,11 +115,4 @@ static char	*get_word(char *cmd)
 	}
 	word[i] = '\0';
 	return (word);
-}
-
-char	*get_el(char *cmd)
-{
-	if (is_sep(*cmd))
-		return (get_sep(cmd));
-	return (get_word(cmd));
 }

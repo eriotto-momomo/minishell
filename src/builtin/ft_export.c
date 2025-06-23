@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 10:28:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 17:12:41 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_env	*var_lookup(t_env *env, char *target)
 	ptr = env;
 	while (ptr)
 	{
-		if (ft_strlen(ptr->name) == ft_strlen(target) &&
-			ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
-				return (ptr);
+		if (ft_strlen(ptr->name) == ft_strlen(target)
+			&& ft_strncmp(ptr->name, target, ft_strlen(target)) == 0)
+			return (ptr);
 		ptr = ptr->next;
 	}
 	return (NULL);
@@ -50,15 +50,15 @@ int	exporter(t_env **env, char *arg)
 	if (!var_ptr)
 	{
 		if (!add_var_back(env, name, value))
-			return (0);
+			return (1);
 	}
 	else
 	{
 		if (!replace_var(&var_ptr, value))
-			return (0);
+			return (1);
 		free(name);
 	}
-	return (1);
+	return (0);
 }
 
 static int	is_valid(char *s)
@@ -66,32 +66,38 @@ static int	is_valid(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] && s[i] != '=')
 	{
+		if (s[i] == '$')
+			continue ;
+		if (ft_isquote(s[i]))
+			continue ;
 		if (!ft_isalnum(s[i]) && s[i] != '=')
-				return (0);
+			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int	ft_export(t_shell *s, t_env **env, int ac, char **args, int fd)
+int	ft_export(t_shell *s, t_env **env, t_ast *node)
 {
 	int		i;
+	char	**args;
 
 	i = -1;
-	if (ac == 1)
-		ft_env(s, *env, fd);
-	while (++i < ac)
+	args = node->data.s_exec.av;
+	if (node->data.s_exec.ac == 1)
+		ft_env(s, *env, node->data.s_exec.fd_out);
+	while (++i < node->data.s_exec.ac)
 	{
-		if (!is_valid(args[i]))
+		if (!is_valid(args[i]) || ft_strncmp(args[i], "=", 2) == 0)
 		{
 			print_error(&s->numerr, EINVAL, "export");
 			continue ;
 		}
 		if (!ft_strchr(args[i], '='))
 			continue ;
-		if (!exporter(env, args[i]))
+		if (exporter(env, args[i]) != 0)
 			return (print_error(&s->numerr, ENOMEM, "export"));
 	}
 	return (0);

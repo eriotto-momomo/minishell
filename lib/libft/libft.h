@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/13 11:38:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/22 14:10:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ void *w_calloc(size_t nmemb, size_t size);
 char *dupnewline(char *str);
 char *conc(char *stach, char *buffer);
 char *get_next_line(int fd);
+char	*ft_str3join(const char *s1, const char *s2, const char *s3);
 
 #endif

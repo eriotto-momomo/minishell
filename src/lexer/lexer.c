@@ -6,11 +6,18 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 20:21:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 10:09:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*get_el(char *cmd)
+{
+	if (is_sep(*cmd))
+		return (get_sep(cmd));
+	return (get_word(cmd));
+}
 
 static int	tokenize(t_token **head, char *cmd)
 {
@@ -44,7 +51,5 @@ int	lexer(t_shell *s)
 	s->head = token;
 	if (!tokenize(&(s->head), s->line))
 		return (print_error(&s->numerr, ENOMEM, "tokenize"));
-	//for (t_token *tmp = s->head; tmp; tmp = tmp->next)
-	//	printf("tmp :%s\n", tmp->data);						//PRINT TOKENS
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 17:41:53 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 10:10:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast	*build_ast(t_token **tok)
 
 int	parser(t_shell *s)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = s->head;
 	if (syntax_analysis(s, tmp) != 0)
@@ -40,4 +40,3 @@ int	parser(t_shell *s)
 	free_token_list(&(s->head));
 	return (0);
 }
-
