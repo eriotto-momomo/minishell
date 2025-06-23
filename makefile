@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+         #
+#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/19 23:02:54 by c4v3d            ###   ########.fr        #
+#    Updated: 2025/06/23 11:10:48 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\
 			$(CFILES_PATH)/parser/parser_main.c\
+			$(CFILES_PATH)/parser/redir.c\
 			$(CFILES_PATH)/parser/syntax_analysis.c\
 			$(CFILES_PATH)/prompt/prompt.c\
 			$(CFILES_PATH)/signals/signals.c\
@@ -56,8 +57,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/expand/word_processing.c\
 			$(CFILES_PATH)/expand/var_expansion.c\
 			$(CFILES_PATH)/expand/var_expansion_utils.c\
-			$(CFILES_PATH)/wrappers/wrappers.c \
-
+			$(CFILES_PATH)/print_node.c\
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 

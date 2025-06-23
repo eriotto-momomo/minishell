@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/20 10:24:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/22 18:26:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**get_args(t_ast *node)
 	if (!node)
 		return (NULL);
 	if (node->tag == EXEC_NODE)
-		args = node->data.exec.argv;
+		args = node->data.s_exec.av;
 	return (args);
 }
 
@@ -95,7 +95,7 @@ int	ft_echo(t_shell *s, t_ast **current_node, int fd_out)
 	{
 		if (flag_check(args[1]))
 			offset = 1;
-		str = tab_to_string((*current_node)->data.exec.argc, args, offset);
+		str = tab_to_string((*current_node)->data.s_exec.ac, args, offset);
 		if (!str)
 			return (print_error(&s->numerr, ENOMEM, "echo"));
 		ft_putstr_fd(str, fd_out);

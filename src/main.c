@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 14:51:45 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 10:05:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 volatile sig_atomic_t	g_sig;
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_shell shell;
+	t_shell	shell;
 
 	(void)argc;
 	(void)argv;

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 18:00:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:33:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,36 @@ typedef enum e_types
 	APP_OUT_REDIR,
 	HERE_DOC,
 	PIPE,
-} t_types;
+}	t_types;
 
-typedef enum	e_tag
+typedef enum e_tag
 {
 	PIPE_NODE,
 	EXEC_NODE
-} 				t_tag;
+}	t_tag;
 
 // FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
-typedef struct s_ast t_ast;
+typedef struct s_ast	t_ast;
 
-typedef union	u_data
+typedef union u_data
 {
-	struct { t_ast *left; t_ast *right; } pipe;
-	struct { int argc; char **argv; int fd_in; int fd_out; int heredoc_count; char	**heredoc_list; } exec;
-}				t_data;
+	struct
+	{
+		t_ast	*left;
+		t_ast	*right;
+	}	s_pipe;
+	struct
+	{
+		int		ac;
+		char	**av;
+		int		fd_in;
+		int		fd_out;
+		int		heredoc_count;
+		char	**heredoc_list;
+	}	s_exec;
+}	t_data;
 
-typedef struct	s_ast
+typedef struct s_ast
 {
 	t_tag		tag;
 	t_data		data;
@@ -58,7 +70,7 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*name;
 	char			*value;

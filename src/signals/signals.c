@@ -6,11 +6,16 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 17:54:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:59:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	heredoc_handler(int signal)
+{
+	g_sig = signal;
+}
 
 void	clean_exit_handler(int signal)
 {
@@ -33,9 +38,6 @@ void	sigquit_handler(int signal)
 	rl_redisplay();
 }
 
-// 'CTRL + \' = SIGQUIT
-// 'CTRL + D' = EOF(pas vrmt un signal)
-// 🚨 AJOUTER SAFE CHECKS
 void	setup_signals(t_shell *s, int mode)
 {
 	struct sigaction	act;
@@ -55,5 +57,12 @@ void	setup_signals(t_shell *s, int mode)
 		sigaction(SIGINT, &act, NULL);
 		sigaction(SIGQUIT, &act, NULL);
 		s->sig_mode = DEFAULT_SIGNALS;
+	}
+	else if (mode == HEREDOC_SIGNALS)
+	{
+		act.sa_handler = &heredoc_handler;
+		sigaction(SIGINT, &act, NULL);
+		sigaction(SIGQUIT, &act, NULL);
+		s->sig_mode = HEREDOC_SIGNALS;
 	}
 }
