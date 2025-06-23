@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 17:58:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:08:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,6 @@ typedef struct s_env
 	struct s_env	*prev;
 }					t_env;
 
-typedef struct s_termios
-{
-	struct termios	old;
-	struct termios	new;
-}				t_term;
-
 typedef struct s_shell
 {
 	t_env	*env_list;
@@ -96,7 +90,6 @@ typedef struct s_shell
 	t_ast	*current_node;
 	t_ast	*root_node;
 	t_token	*head;
-	t_term	termios;
 	pid_t	child_pids[MAX_CMDS];
 	int		pid_count;
 	int		pipe_fd[MAX_CMDS][2];

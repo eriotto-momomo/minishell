@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 10:08:40 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 20:04:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,13 @@ int	is_in_double_quote(char *s, int j)
 	return (in_double);
 }
 
-char	*make_prefix(t_shell *s, t_env *env, char *str, int i)
+char	*make_prefix(uint8_t numerr, t_env *env, char *str, int i)
 {
 	char	*value;
 	char	*prefix;
 	char	*ret;
 
-	if (str[1] == '?')
-		value = ft_itoa(s->numerr);
-	else
-		value = get_var(env, str + i + 1);
+	value = get_var(numerr, env, str + i + 1);
 	if (!value)
 		return (NULL);
 	prefix = ft_substr(str, 0, i);
@@ -57,13 +54,15 @@ char	*make_prefix(t_shell *s, t_env *env, char *str, int i)
 	return (ret);
 }
 
-char	*get_var(t_env *env, char *s)
+char	*get_var(uint8_t numerr, t_env *env, char *s)
 {
 	int		end;
 	char	*var_name;
 	char	*tmp;
 
 	end = 0;
+	if (s[0] == '?')
+		return (ft_itoa((int)numerr));
 	while (s[end] && (ft_isalnum(s[end])))
 		end++;
 	var_name = ft_substr(s, 0, end);
