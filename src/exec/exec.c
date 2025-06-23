@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 09:02:46 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 19:47:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,6 @@ int	execution(t_shell *s)
 	int	i;
 
 	i = 0;
-	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
-	if (!s->heredoc_tmp)
-		return (print_error(&s->numerr, ENOMEM, "ft_strdup"));
 	setup_signals(s, DEFAULT_SIGNALS);
 	if (preorder_exec(s, &s->current_node) != 0)
 		return (1);
@@ -130,6 +127,5 @@ int	execution(t_shell *s)
 	waiton(&s->numerr, s->child_pids, s->pid_count);
 	free_ast(&(s->root_node));
 	unlink(HEREDOC_FILE_PATH);
-	w_free((void **)&s->heredoc_tmp);
 	return (0);
 }
