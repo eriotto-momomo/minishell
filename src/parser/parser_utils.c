@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 20:16:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 22:56:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**copy_args(t_token *tok, int ac)
 	while (tok && i < ac)
 	{
 		if (tok->type == WORD && (tok->prev == NULL
-			|| tok->prev->type == WORD || tok->prev->type == PIPE))
+				|| tok->prev->type == WORD || tok->prev->type == PIPE))
 		{
 			av[i] = ft_strdup(tok->data);
 			if (!av[i])
