@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 17:07:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 19:40:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**copy_heredocs(t_token *tok, int heredoc_count);
 int		redir_out(int redir_mode, char *filename, int current_redir);
 int		redir_in(char *filename, int current_redir);
 t_ast	*new_ast_node(t_ast node);
-int		copy_tokens(t_token **tok, int token_type, int size, char **array);
 int		count_tokens(t_token **tok, int token_type);
 int		syntax_analysis(t_shell *s, t_token *tok);
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
+#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/22 18:20:45 by timmi            ###   ########.fr        #
+#    Updated: 2025/06/23 19:40:42 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\
 			$(CFILES_PATH)/parser/parser_main.c\
+			$(CFILES_PATH)/parser/redir.c\
 			$(CFILES_PATH)/parser/syntax_analysis.c\
 			$(CFILES_PATH)/prompt/prompt.c\
 			$(CFILES_PATH)/signals/signals.c\

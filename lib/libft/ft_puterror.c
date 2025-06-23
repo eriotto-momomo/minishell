@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:32:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/05/15 16:03:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:38:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_puterror(char *error_location, char *error_msg)
 {
 	ft_putstr_fd(Y, 2);
 	ft_putstr_fd(error_location, 2);
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd(" ", 2);
 	ft_putstr_fd(R, 2);
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(error_msg, 2);
