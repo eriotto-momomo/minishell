@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 17:01:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:02:32 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	preorder_exec(t_shell *s, t_ast **node)
 		if (string_processing(s, &(*node)->data.s_exec.ac,
 				&(*node)->data.s_exec.av) != 0)
 			return (1);
-		if((*node)->data.s_exec.ac > 0)
+		if ((*node)->data.s_exec.ac > 0)
 			if (handle_exec(s, (*node)) != 0)
 				return (1);
 	}

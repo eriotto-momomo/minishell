@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 15:59:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:03:57 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	prompt_loop(t_shell *s)
 	reset(s);
 	while (1)
 	{
-		//reset(s);
 		if (s->sig_mode != MINISHELL_SIGNALS)
 			setup_signals(s, MINISHELL_SIGNALS);
 		s->line = (readline(s->prompt));
