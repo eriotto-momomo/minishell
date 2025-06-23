@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:06:43 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 11:09:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int	add_command(t_ast **node, t_token **tok)
 {
 	(*node)->tag = EXEC_NODE;
 	(*node)->data.s_exec.ac = count_tokens(&(*tok), WORD);
+	if ((*node)->data.s_exec.ac < 0)
+		return (1);
 	(*node)->data.s_exec.av = copy_args(*tok, (*node)->data.s_exec.ac);
-	(*node)->data.s_exec.fd_in = STDIN_FILENO;
-	(*node)->data.s_exec.fd_out = STDOUT_FILENO;
 	if (!(*node)->data.s_exec.av)
 		return (1);
+	(*node)->data.s_exec.fd_in = STDIN_FILENO;
+	(*node)->data.s_exec.fd_out = STDOUT_FILENO;
 	return (0);
 }
 
@@ -50,11 +52,13 @@ int	add_redir(t_ast **node, t_token **tok)
 				= redir_out(tmp->type, tmp->next->data,
 					(*node)->data.s_exec.fd_out);
 		else if (tmp->type == IN_REDIR)
-			(*node)->data.s_exec.fd_in
-				= redir_in(tmp->next->data,
-					(*node)->data.s_exec.fd_in);
+			(*node)->data.s_exec.fd_in =
+				redir_in(tmp->next->data, (*node)->data.s_exec.fd_in);
 		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
+		{
+			errno = EBADF;
 			return (1);
+		}
 		if (!get_next_token(&tmp))
 			break ;
 	}
