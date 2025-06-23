@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 17:09:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:03:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 int	handle_heredoc(t_shell *s, t_ast *node)
 {
 	pid_t	heredoc_pid;
-	int		status;
 
 	setup_signals(s, HEREDOC_SIGNALS);
 	signal(SIGINT, SIG_IGN);
@@ -100,15 +99,11 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 		signal(SIGINT, SIG_DFL);
 		if (heredoc_loop(s, node) == -1)
 			return (-1);
-		terminate_shell(s);
+		clean_free(s);
+		exit(0);
 	}
-	waitpid(heredoc_pid, &status, 0);
-	if (WIFSIGNALED(status))
-		s->numerr = 128 + WTERMSIG(status);
-	else if (WIFEXITED(status))
-		s->numerr = WEXITSTATUS(status);
-	else
-		s->numerr = 1;
+	waitheredoc(&s->numerr, heredoc_pid);
 	setup_signals(s, DEFAULT_SIGNALS);
+	s->heredoc_fd = redir_in(s->heredoc_tmp, 0);
 	return (s->heredoc_fd);
 }

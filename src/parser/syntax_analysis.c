@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 16:08:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:00:53 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_limits(t_shell *s, t_token *tok)
 		s->tok_rdir++;
 	if (s->tok_rdir > 1024 || s->tok_pipe > 256 || s->tok_word > ARG_MAX)
 	{
-		if (s->tok_rdir > 1024 )
+		if (s->tok_rdir > 1024)
 			errno = EMFILE;
 		if (s->tok_pipe > 256)
 			errno = EAGAIN;
@@ -88,7 +88,7 @@ static int	syntax_checker(t_shell *s, t_token *tok)
 
 int	syntax_analysis(t_shell *s, t_token *current_tok)
 {
-	int err;
+	int	err;
 
 	while (current_tok)
 	{

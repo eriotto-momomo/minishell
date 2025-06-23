@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 11:09:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:59:25 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	add_redir(t_ast **node, t_token **tok)
 				= redir_out(tmp->type, tmp->next->data,
 					(*node)->data.s_exec.fd_out);
 		else if (tmp->type == IN_REDIR)
-			(*node)->data.s_exec.fd_in =
-				redir_in(tmp->next->data, (*node)->data.s_exec.fd_in);
+			(*node)->data.s_exec.fd_in
+				= redir_in(tmp->next->data, (*node)->data.s_exec.fd_in);
 		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
 		{
 			errno = EBADF;

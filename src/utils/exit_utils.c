@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 17:08:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:01:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	clean_free(t_shell *s)
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
 	w_free((void **)&s->heredoc_tmp);
-	setup_signals(s, DEFAULT_SIGNALS); // 🚨 AJOUTER SAFE CHECKS
+	setup_signals(s, DEFAULT_SIGNALS);
 }
 
 void	terminate_shell(t_shell *s)

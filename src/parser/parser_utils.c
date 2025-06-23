@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 11:10:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 18:00:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,15 @@ int	count_tokens(t_token **tok, int token_type)
 
 	tmp = *tok;
 	count = 0;
-	while (tmp && tmp->type !=  PIPE)
+	while (tmp && tmp->type != PIPE)
 	{
 		if (token_type == WORD && (tmp->type == WORD && (tmp->prev == NULL
-			|| tmp->prev->type == WORD || tmp->prev->type == PIPE)))
+					|| tmp->prev->type == WORD || tmp->prev->type == PIPE)))
 			count++;
 		else if (token_type == HERE_DOC && tmp->type == HERE_DOC)
 			count++;
 		if (!get_next_token(&tmp))
-			break;
+			break ;
 	}
 	if (count > ARG_MAX)
 	{

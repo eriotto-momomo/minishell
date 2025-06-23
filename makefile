@@ -6,7 +6,7 @@
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/23 16:56:14 by timmi            ###   ########.fr        #
+#    Updated: 2025/06/23 18:08:27 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 MAKEFLAGS += --no-print-directory
 
 CC = gcc
-CFLAGS = -g -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 BUILD_PATH = build
 
@@ -38,7 +38,6 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/utils/free_ast.c\
 			$(CFILES_PATH)/utils/general.c\
-			$(CFILES_PATH)/utils/debug.c \
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/utils/identifier.c\
 			$(CFILES_PATH)/exec/exec.c\
@@ -58,7 +57,6 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/expand/word_processing.c\
 			$(CFILES_PATH)/expand/var_expansion.c\
 			$(CFILES_PATH)/expand/var_expansion_utils.c\
-			$(CFILES_PATH)/print_node.c\
 
 OBJ = $(CFILES:$(CFILES_PATH)/%.c=$(BUILD_PATH)/%.o)
 

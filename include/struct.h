@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 17:00:22 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:58:31 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_env
 	struct s_env	*prev;
 }					t_env;
 
-typedef struct	s_termios
+typedef struct s_termios
 {
 	struct termios	old;
 	struct termios	new;

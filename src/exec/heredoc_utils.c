@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 16:58:48 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:04:25 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	heredoc_loop(t_shell *s, t_ast *node)
 {
 	int	i;
-	
+
 	s->heredoc_fd = 0;
 	i = -1;
 	while (++i < node->data.s_exec.heredoc_count)
@@ -34,9 +34,22 @@ int	heredoc_loop(t_shell *s, t_ast *node)
 			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
 				return (-1);
 		}
-		s->heredoc_fd = redir_in(s->heredoc_tmp, 0);				
+		s->heredoc_fd = redir_in(s->heredoc_tmp, 0);
 		if (s->heredoc_fd < 0)
 			return (-1);
 	}
-	return (s->heredoc_fd);
+	return (0);
+}
+
+void	waitheredoc(uint8_t *numerr, pid_t pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+		*numerr = 128 + WTERMSIG(status);
+	else if (WIFEXITED(status))
+		*numerr = WEXITSTATUS(status);
+	else
+		*numerr = 1;
 }

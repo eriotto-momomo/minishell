@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 16:07:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:02:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 
 int	interrupt_heredoc(t_shell *s)
 {
-	//if (g_sig == SIGINT || g_sig == SIGQUIT)
-	//{
-	//	fprintf(stderr, "g_sig: %d\n", g_sig);
-	//	//rl_on_new_line();
-	//	//rl_redisplay();
-	//	//update_numerr(s);
-	//	//g_sig = 0;
-	//	return (1);
-	//}
 	if (access(HEREDOC_FILE_PATH, F_OK) < 0)
 	{
 		w_free((void **)&s->line);
