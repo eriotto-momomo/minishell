@@ -6,3 +6,4 @@ echo Hello > 1.txt > 2.txt > 3.txt > 4.txt
 cat << 1 << 2 << 3 << 4
 cat << 1 << 2
 cat < 1 | cat < 2 | cat < 3 | cat < 4 >> 5
+echo hi < ./test_file/infile bye bye

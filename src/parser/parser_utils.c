@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:09:20 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 19:40:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	redir_out(int redir_mode, char *filename, int current_redir)
-{
-	int	fd_out;
-
-	if (current_redir > 2)
-	{
-		if (close(current_redir) < 0)
-			return (-1);
-	}
-	if (redir_mode == OUT_REDIR)
-		fd_out = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (redir_mode == APP_OUT_REDIR)
-		fd_out = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	return (fd_out);
-}
-
-int	redir_in(char *filename, int current_redir)
-{
-	int	fd_in;
-
-	if (current_redir > 2)
-	{
-		if (close(current_redir) < 0)
-			return (-1);
-	}
-	fd_in = open(filename, O_RDONLY);
-	return (fd_in);
-}
 
 t_ast	*new_ast_node(t_ast node)
 {
@@ -89,7 +60,8 @@ char	**copy_args(t_token *tok, int ac)
 	i = 0;
 	while (tok && i < ac)
 	{
-		if (tok->type == WORD)
+		if (tok->type == WORD && (tok->prev == NULL
+			|| tok->prev->type == WORD || tok->prev->type == PIPE))
 		{
 			av[i] = ft_strdup(tok->data);
 			if (!av[i])
@@ -103,41 +75,6 @@ char	**copy_args(t_token *tok, int ac)
 	}
 	av[i] = NULL;
 	return (av);
-}
-
-int	copy_tokens(t_token **tok, int token_type, int size, char **array)
-{
-	t_token	*tmp;
-	int	i;
-
-	tmp = *tok;
-	i = 0;
-	while (tmp && tmp->type != PIPE && i < size)
-	{
-		if ((tmp->type == WORD || tmp->type == HERE_DOC) && (tmp->prev == NULL
-			|| tmp->prev->type == WORD || tmp->prev->type == PIPE))
-		{
-			if (tmp->type == WORD && token_type == WORD)
-			{
-				array[i] = ft_strdup(tmp->data);
-				i++;
-			}
-			else if (tmp->type == HERE_DOC && token_type == HERE_DOC)
-			{
-				array[i] = ft_strdup(tmp->next->data);
-				i++;
-			}
-
-			if (!array[i])
-			{
-				ft_free_char_array(array, i);
-				return (1);
-			}
-		}
-		if (!get_next_token(&tmp))
-			break;
-	}
-	return (0);
 }
 
 int	count_tokens(t_token **tok, int token_type)
