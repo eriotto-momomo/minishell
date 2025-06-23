@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 13:35:51 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 14:01:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{
-		print_custom_error(&s->numerr, 127,  "Comand not found: No such file or directory\n");
+		print_custom_error(&s->numerr, 127,
+			"Comand not found: No such file or directory\n");
 		terminate_shell(s);
 	}
 	env_table = ltotable(env);
