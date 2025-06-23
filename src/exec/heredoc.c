@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 09:56:06 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:32:56 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 		{
 			if ((del[0] != '\'' && del[ft_strlen(del) - 1] != '\'')
 				&& (del[0] != '\"' && del[ft_strlen(del) - 1] != '\"'))
-				expand(s->env_list, &(s->line));
+				expand(s->numerr, s->env_list, &(s->line));
 		}
 		if (put_in_heredoc(s->line, s->fd) != 0)
 			return (-1);

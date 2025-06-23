@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/19 17:03:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 18:53:29 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	init_shell(t_shell *s, char	**envp)
 	if (!s->env_list)
 		return (-1);
 	s->ret_value = 0;
+	s->numerr = 0;
 	s->pipe_count = 0;
 	s->prompt = NULL;
 	s->line = NULL;
