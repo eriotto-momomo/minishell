@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/23 19:40:17 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 20:02:40 by emonacho         ###   ########.fr       */
+/*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
+/*   Updated: 2025/06/23 20:21:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	redir_in(char *filename, int current_redir)
 		if (close(current_redir) < 0)
 			return (-1);
 	}
-	fprintf(stderr, "redir_in | %s\n", filename);
 	fd_in = open(filename, O_RDONLY);
 	return (fd_in);
 }

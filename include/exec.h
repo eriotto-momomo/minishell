@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 17:05:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:56:57 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/wait.h>
 
 int		close_fd(t_ast *node);
+int		interrupt_heredoc(t_shell *s);
 int		execution(t_shell *s);
 int		ft_external(t_shell *s, t_env *env, t_ast *current_node);
 int		preorder_exec(t_shell *s, t_ast **current_node);
@@ -27,5 +28,6 @@ int		handle_pipe(t_shell *s, t_ast **current_node);
 int		handle_exec(t_shell *s, t_ast *current_node);
 int		write_heredoc(t_shell *s, char *delimiter, int to_expand);
 int		handle_heredoc(t_shell *s, t_ast *node);
-
+int		heredoc_loop(t_shell *s, t_ast *node);
+void	waitheredoc(uint8_t *numerr, pid_t pid);
 #endif

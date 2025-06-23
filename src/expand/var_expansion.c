@@ -6,23 +6,24 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 17:32:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:04:49 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	attribute_value(t_env *env, char **str, int i)
+static int	attribute_value(uint8_t numerr, t_env *env, char **str, int i)
 {
 	char	*prefix;
 	char	*sufix;
 	char	*tmp;
 
-	prefix = make_prefix(env, *str, i);
+	prefix = make_prefix(numerr, env, *str, i++);
 	if (!prefix)
 		return (1);
-	i++;
-	while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '?'))
+	while ((*str)[i] && (ft_isalnum((*str)[i])))
+		i++;
+	if ((*str)[i] == '?')
 		i++;
 	sufix = ft_substr(*str, i, ft_strlen(*str));
 	if (!sufix)
@@ -40,7 +41,7 @@ static int	attribute_value(t_env *env, char **str, int i)
 	return (0);
 }
 
-int	expand(t_env *env, char **str)
+int	expand(uint8_t numerr, t_env *env, char **str)
 {
 	int		i;
 
@@ -53,9 +54,9 @@ int	expand(t_env *env, char **str)
 			while ((*str)[i] && ((*str)[i] != '\''))
 				i++;
 		}
-		if ((*str)[i] == '$')
+		if ((*str)[i] == '$' && !(ft_isspace((*str)[i + 1]) || !(*str)[i + 1]))
 		{
-			if (attribute_value(env, str, i) != 0)
+			if (attribute_value(numerr, env, str, i) != 0)
 				return (1);
 			i = 0;
 		}

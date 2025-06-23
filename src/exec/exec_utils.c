@@ -6,11 +6,22 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 08:54:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:03:30 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	interrupt_heredoc(t_shell *s)
+{
+	if (access(HEREDOC_FILE_PATH, F_OK) < 0)
+	{
+		w_free((void **)&s->line);
+		print_error(&s->numerr, errno, "write_heredoc");
+		return (1);
+	}
+	return (0);
+}
 
 int	handle_pipe(t_shell *s, t_ast **node)
 {
@@ -42,19 +53,19 @@ int	handle_pipe(t_shell *s, t_ast **node)
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
-	if (ft_strncmp(node->data.s_exec.av[0], "exit", ft_strlen("exit")) == 0)
+	if (perfect_match(node->data.s_exec.av[0], "exit"))
 		return (ft_exit(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
-	if (ft_strncmp(node->data.s_exec.av[0], CD, ft_strlen(CD)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], CD))
 		return (ft_cd(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
-	if (ft_strncmp(node->data.s_exec.av[0], FT_ECHO, ft_strlen(FT_ECHO)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], FT_ECHO))
 		return (ft_echo(s, &node, node->data.s_exec.fd_out));
-	if (ft_strncmp(node->data.s_exec.av[0], PWD, ft_strlen(PWD)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], PWD))
 		return (ft_pwd(s, node->data.s_exec.fd_out));
-	if (ft_strncmp(node->data.s_exec.av[0], ENV, ft_strlen(ENV)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], ENV))
 		return (ft_env(s, s->env_list, node->data.s_exec.fd_out));
-	if (ft_strncmp(node->data.s_exec.av[0], UNSET, ft_strlen(UNSET)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], UNSET))
 		return (ft_unset(s, node->data.s_exec.ac, node->data.s_exec.av));
-	if (ft_strncmp(node->data.s_exec.av[0], EXPORT, ft_strlen(EXPORT)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], EXPORT))
 		return (ft_export(s, &s->env_list, node));
 	return (ft_external(s, s->env_list, node));
 }
@@ -86,7 +97,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	cmd_path = pathfinder(env, argv[0]);
 	if (!cmd_path)
 	{
-		print_custom_error(&s->numerr, 127, strerror(errno));
+		print_custom_error(&s->numerr, 127, "No such file or directory\n");
 		terminate_shell(s);
 	}
 	env_table = ltotable(env);

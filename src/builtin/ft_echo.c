@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 18:26:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 13:29:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*tab_to_string(int ac, char **tab, int offset)
 	char	*ret;
 	size_t	len;
 
-	i = 0;
+	i = offset;
 	len = len_calc(ac, tab);
 	if (offset)
 		len++;

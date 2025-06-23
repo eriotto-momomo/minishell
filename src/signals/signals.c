@@ -6,42 +6,42 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:11:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:09:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	clean_exit_handler(int signal)
+void	heredoc_handler(int signal)
 {
-	(void)signal;
-	g_status = CLEAN_EXIT;
+	g_sig = signal;
+	rl_replace_line("", 0);
+	rl_done = 1;
+	close(STDIN_FILENO);
+	write(1, "\n", 1);
 }
 
-// 'CTRL + C' = SIGINT
+void	clean_exit_handler(int signal)
+{
+	g_sig = signal;
+}
+
 void	sigint_handler(int signal)
 {
-	(void)signal;
+	g_sig = signal;
 	ft_putstr_fd("\n", STDERR_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-// 'CTRL + \' = SIGQUIT
-void	sigquit_ignore(void)
+void	sigquit_handler(int signal)
 {
-	struct sigaction	act;
-
-	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &act, NULL);
+	g_sig = signal;
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-// 'CTRL + C' = SIGINT
-// 'CTRL + \' = SIGQUIT
-// 'CTRL + D' = EOF(pas vrmt un signal)
-// 🚨 AJOUTER SAFE CHECKS
 void	setup_signals(t_shell *s, int mode)
 {
 	struct sigaction	act;
@@ -49,9 +49,10 @@ void	setup_signals(t_shell *s, int mode)
 	ft_memset(&act, 0, sizeof(act));
 	if (mode == MINISHELL_SIGNALS)
 	{
-		sigquit_ignore();
 		act.sa_handler = &sigint_handler;
 		sigaction(SIGINT, &act, NULL);
+		act.sa_handler = &sigquit_handler;
+		sigaction(SIGQUIT, &act, NULL);
 		s->sig_mode = MINISHELL_SIGNALS;
 	}
 	else if (mode == DEFAULT_SIGNALS)
@@ -60,5 +61,12 @@ void	setup_signals(t_shell *s, int mode)
 		sigaction(SIGINT, &act, NULL);
 		sigaction(SIGQUIT, &act, NULL);
 		s->sig_mode = DEFAULT_SIGNALS;
+	}
+	else if (mode == HEREDOC_SIGNALS)
+	{
+		act.sa_handler = &heredoc_handler;
+		sigaction(SIGINT, &act, NULL);
+		signal(SIGQUIT, SIG_DFL);
+		s->sig_mode = HEREDOC_SIGNALS;
 	}
 }

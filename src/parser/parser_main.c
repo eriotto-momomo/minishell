@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:07:20 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:06:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ int	parser(t_shell *s)
 	tmp = s->head;
 	if (syntax_analysis(s, tmp) != 0)
 		return (1);
-	s->heredoc_list = NULL;
-	s->heredoc_count = 1;
 	s->root_node = build_ast(&tmp);
 	if (!s->root_node)
-		return (print_error(&s->numerr, ENOMEM, "build_ast"));
+	{
+		if (errno == 0)
+			errno = ENOMEM;
+		return (print_error(&s->numerr, errno, "build_ast"));
+	}
 	s->current_node = s->root_node;
 	free_token_list(&(s->head));
 	return (0);

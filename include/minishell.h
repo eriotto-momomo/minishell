@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 18:21:23 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:08:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <termios.h>
 # include <fcntl.h>
 # include <linux/limits.h>
 # include "./error.h"
@@ -47,12 +46,15 @@
 # define DEFAULT_PROMPT "minishell-1.0$ "
 
 // Default location of all the temporary files created by minishell
-# define HEREDOC_FILE_PATH "./tmp/heredoc_tmp.txt"
+# define HEREDOC_FILE_PATH "./.tmp/heredoc_tmp.txt"
 
 // Char set of characters that minishell interpret as operators
 # define SEPARATORS "|<>"
 
-// Global variable used by minishell to transmits signals
-extern volatile sig_atomic_t	g_status;
+extern volatile sig_atomic_t	g_sig;
+
+// ENV
+t_env	*create_var(char *name, char	*value);
+void	del_var(t_env **head, t_env **target);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:25:01 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 11:14:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,8 @@ void	free_pipe_node(t_ast *node)
 
 void	free_exec_node(t_ast *node)
 {
-	if (node->data.s_exec.ac > 0)
-	{
-		ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
-		node->data.s_exec.ac = 0;
-	}
+	ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
+	node->data.s_exec.ac = 0;
 	if (node->data.s_exec.heredoc_count > 0)
 	{
 		ft_free_char_array(node->data.s_exec.heredoc_list,
