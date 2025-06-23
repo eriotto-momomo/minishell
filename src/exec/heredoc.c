@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 17:25:36 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 09:10:32 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 	s->fd = open(s->heredoc_tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (s->fd < 0)
 		return (-1);
+	printf("test\n");
 	reset_prompt(s, HEREDOC_PROMPT);
 	while (1)
 	{
