@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:34:21 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 13:38:05 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 15:49:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	**ltotable(t_env *head)
 
 int	perfect_match(char *s1, char *s2)
 {
+	if (!s1 || !s2)
+		return (0);
 	if ((ft_strlen(s1) == ft_strlen(s2))
 		&& ft_strncmp(s1, s2, ft_strlen(s2)) == 0)
 		return (1);

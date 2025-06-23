@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 09:56:06 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 15:55:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,43 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 {
 	int	i;
 	int	fd_in;
+	pid_t	heredoc_pid;
+	int		status;
 
 	fd_in = 0;
 	i = 0;
-	while (i < node->data.s_exec.heredoc_count)
+	heredoc_pid = fork();
+	if (heredoc_pid < 0)
+		return (print_error(&s->numerr, EPIPE, "fork"));
+	if (heredoc_pid == 0)
 	{
-		if (fd_in > 0)
-			if (close(fd_in) < 0)
-				return (-1);
-		s->fd = 0;
-		if (i == node->data.s_exec.heredoc_count - 1)
+		while (i < node->data.s_exec.heredoc_count)
 		{
-			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 1) != 0)
+			if (fd_in > 0)
+				if (close(fd_in) < 0)
+					return (-1);
+			s->fd = 0;
+			if (i == node->data.s_exec.heredoc_count - 1)
+			{
+				if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 1) != 0)
+					return (-1);
+			}
+			else
+			{
+				if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
+					return (-1);
+			}
+			fd_in = redir_in(s->heredoc_tmp, 0);				
+			if (fd_in < 0)
 				return (-1);
+			i++;
 		}
-		else
-			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
-				return (-1);
-		fd_in = redir_in(s->heredoc_tmp, 0);
-		if (fd_in < 0)
-			return (-1);
-		i++;
+		terminate_shell(s);
 	}
+	waitpid(0, &status, 0);
+	if (WIFEXITED(status))
+		s->numerr = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		s->numerr = WTERMSIG(status);
 	return (fd_in);
 }
