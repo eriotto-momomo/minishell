@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 18:13:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:57:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ int	execution(t_shell *s)
 	int	status;
 
 	i = 0;
-	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
-	if (!s->heredoc_tmp)
-		return (print_error(&s->numerr, ENOMEM, "ft_strdup"));
 	setup_signals(s, DEFAULT_SIGNALS);
 	if (preorder_exec(s, &s->current_node) != 0)
 		return (1);
@@ -112,7 +109,6 @@ int	execution(t_shell *s)
 	}
 	free_ast(&(s->root_node));
 	unlink(HEREDOC_FILE_PATH);
-	w_free((void **)&s->heredoc_tmp);
 	return (0);
 }
 

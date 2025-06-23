@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 18:00:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:57:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	init_shell(t_shell *s, char	**envp)
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
 		return (-1);
+	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
+	if (!s->heredoc_tmp)
+		return (-1);
 	s->ret_value = 0;
 	s->pipe_count = 0;
 	s->prompt = NULL;
@@ -43,9 +46,6 @@ int	init_shell(t_shell *s, char	**envp)
 	s->root_node = NULL;
 	s->current_node = NULL;
 	s->numerr = 0;
-	s->tok_rdir = 0;
-	s->tok_pipe = 0;
-	s->tok_word = 0;
 	s->sig_mode = MINISHELL_SIGNALS;
 	return (0);
 }
