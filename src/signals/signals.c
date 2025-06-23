@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:11:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 15:52:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 void	clean_exit_handler(int signal)
 {
-	(void)signal;
-	g_status = CLEAN_EXIT;
+	g_status = signal;
 }
 
 // 'CTRL + C' = SIGINT
 void	sigint_handler(int signal)
 {
-	(void)signal;
+	g_status = signal;
 	ft_putstr_fd("\n", STDERR_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
