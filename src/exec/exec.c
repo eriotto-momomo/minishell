@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 15:33:15 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:01:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 }
 
 int	preorder_exec(t_shell *s, t_ast **node)
-{	
+{
 	if (!(*node))
 		return (0);
 	if ((*node)->tag == PIPE_NODE)
@@ -80,9 +80,11 @@ int	preorder_exec(t_shell *s, t_ast **node)
 		if (string_processing(s, &(*node)->data.s_exec.ac,
 				&(*node)->data.s_exec.av) != 0)
 			return (1);
-		if (handle_exec(s, (*node)) != 0)
-			return (1);
+		if((*node)->data.s_exec.ac > 0)
+			if (handle_exec(s, (*node)) != 0)
+				return (1);
 	}
+	close_fd((*node));
 	return (0);
 }
 
@@ -112,13 +114,10 @@ int	execution(t_shell *s)
 	int	i;
 
 	i = 0;
-	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
-	if (!s->heredoc_tmp)
-		return (print_error(&s->numerr, ENOMEM, "ft_strdup"));
 	setup_signals(s, DEFAULT_SIGNALS);
 	if (preorder_exec(s, &s->current_node) != 0)
 		return (1);
-	if (g_status == CLEAN_EXIT)
+	if (g_sig == SIGINT || g_sig == SIGQUIT)
 	{
 		while (i < s->pid_count)
 		{
@@ -130,6 +129,5 @@ int	execution(t_shell *s)
 	waiton(&s->numerr, s->child_pids, s->pid_count);
 	free_ast(&(s->root_node));
 	unlink(HEREDOC_FILE_PATH);
-	w_free((void **)&s->heredoc_tmp);
 	return (0);
 }

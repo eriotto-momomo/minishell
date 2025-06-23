@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 15:00:53 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 10:08:40 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	is_in_double_quote(char *s, int j)
 	return (in_double);
 }
 
-char	*make_prefix(t_env *env, char *str, int i)
+char	*make_prefix(t_shell *s, t_env *env, char *str, int i)
 {
 	char	*value;
 	char	*prefix;
 	char	*ret;
 
 	if (str[1] == '?')
-		value = ft_itoa(g_status);
+		value = ft_itoa(s->numerr);
 	else
 		value = get_var(env, str + i + 1);
 	if (!value)
