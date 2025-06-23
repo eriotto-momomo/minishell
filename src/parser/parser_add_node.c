@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 20:05:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:49:13 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,14 @@ t_ast	*add_exec_node(t_token **tok)
 	if (!node)
 		return (NULL);
 	if (add_command(&node, tok) != 0)
+	{
+		w_free((void **)&node);
 		return (NULL);
+	}
 	if (add_heredoc(&node, tok) != 0)
 	{
 		ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
+		w_free((void **)&node);
 		return (NULL);
 	}
 	if (add_redir(&node, tok) != 0)
@@ -84,6 +88,7 @@ t_ast	*add_exec_node(t_token **tok)
 		ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
 		ft_free_char_array(node->data.s_exec.heredoc_list,
 			node->data.s_exec.heredoc_count);
+		w_free((void **)&node);
 		return (NULL);
 	}
 	return (node);
