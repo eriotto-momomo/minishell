@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 18:04:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:08:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <termios.h>
 # include <fcntl.h>
 # include <linux/limits.h>
 # include "./error.h"
