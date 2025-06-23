@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 17:58:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 19:29:00 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	prompt_loop(t_shell *s)
 		{
 			add_history(s->line);
 			process_input(s);
-			reset(s);
 		}
 		reset(s);
 	}

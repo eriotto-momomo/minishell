@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 18:06:43 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 19:24:09 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	add_redir(t_ast **node, t_token **tok)
 				= redir_in(tmp->next->data,
 					(*node)->data.s_exec.fd_in);
 		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
+		{
+			errno = 2;
 			return (1);
+		}
 		if (!get_next_token(&tmp))
 			break ;
 	}
