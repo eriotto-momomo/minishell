@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 09:56:06 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:03:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,17 @@ int	is_delimiter(char *line, char *delimiter)
 	return (0);
 }
 
-int	write_heredoc(t_shell *s, char *del, int to_expand)
+int	open_heredoc(t_shell *s)
 {
 	s->fd = open(s->heredoc_tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (s->fd < 0)
+		terminate_shell(s);
+	return (s->fd);
+}
+
+int	write_heredoc(t_shell *s, char *del, int to_expand)
+{
+	if (open_heredoc(s) < 0)
 		return (-1);
 	reset_prompt(s, HEREDOC_PROMPT);
 	while (1)
@@ -65,7 +72,7 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 		{
 			if ((del[0] != '\'' && del[ft_strlen(del) - 1] != '\'')
 				&& (del[0] != '\"' && del[ft_strlen(del) - 1] != '\"'))
-				expand(s->env_list, &(s->line));
+				expand(s->numerr, s->env_list, &(s->line));
 		}
 		if (put_in_heredoc(s->line, s->fd) != 0)
 			return (-1);
@@ -79,29 +86,24 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 
 int	handle_heredoc(t_shell *s, t_ast *node)
 {
-	int	i;
-	int	fd_in;
+	pid_t	heredoc_pid;
 
-	fd_in = 0;
-	i = 0;
-	while (i < node->data.s_exec.heredoc_count)
+	setup_signals(s, HEREDOC_SIGNALS);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	heredoc_pid = fork();
+	if (heredoc_pid < 0)
+		return (print_error(&s->numerr, EPIPE, "fork"));
+	if (heredoc_pid == 0)
 	{
-		if (fd_in > 0)
-			if (close(fd_in) < 0)
-				return (-1);
-		s->fd = 0;
-		if (i == node->data.s_exec.heredoc_count - 1)
-		{
-			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 1) != 0)
-				return (-1);
-		}
-		else
-			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
-				return (-1);
-		fd_in = redir_in(s->heredoc_tmp, 0);
-		if (fd_in < 0)
+		signal(SIGINT, SIG_DFL);
+		if (heredoc_loop(s, node) == -1)
 			return (-1);
-		i++;
+		clean_free(s);
+		exit(0);
 	}
-	return (fd_in);
+	waitheredoc(&s->numerr, heredoc_pid);
+	setup_signals(s, DEFAULT_SIGNALS);
+	s->heredoc_fd = redir_in(s->heredoc_tmp, 0);
+	return (s->heredoc_fd);
 }

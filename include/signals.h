@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:13:43 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 17:06:37 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:57:58 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 enum e_signal
 {
-	READY,
-	CLEAN_EXIT,
 	DEFAULT_SIGNALS,
-	MINISHELL_SIGNALS
+	MINISHELL_SIGNALS,
+	HEREDOC_SIGNALS,
 };
 
 void	setup_signals(t_shell *s, int mode);
+void	heredoc_handler(int signal);
 
 #endif

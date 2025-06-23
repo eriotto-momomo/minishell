@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 17:08:54 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:08:28 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,13 @@ typedef struct s_shell
 	int		pipe_fd[MAX_CMDS][2];
 	int		pipe_count;
 	char	*heredoc_tmp;
-	char	**heredoc_list;
-	int		heredoc_count;
+	int		heredoc_fd;
 	int		fd;
-	int		final_output_fd;
 	int		sig_mode;
-	int		stdin_save;
-	int		stdout_save;
-	int		node_initialized;
-	t_ast	*root_redir;
 	uint8_t	numerr;
-}	t_shell;
+	int		tok_rdir;
+	int		tok_pipe;
+	int		tok_word;
+}			t_shell;
 
 #endif

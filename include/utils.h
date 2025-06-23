@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 17:04:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 13:33:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ size_t	count_var(t_env *head);
 char	**ltotable(t_env *env);
 t_env	*create_var(char *name, char	*value);
 void	del_var(t_env **head, t_env **target);
+int		perfect_match(char *s1, char *s2);
+
 #endif

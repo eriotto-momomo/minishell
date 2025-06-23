@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 19:40:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 20:16:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,102 +84,20 @@ int	count_tokens(t_token **tok, int token_type)
 
 	tmp = *tok;
 	count = 0;
-	while (tmp && tmp->type !=  PIPE)
+	while (tmp && tmp->type != PIPE)
 	{
 		if (token_type == WORD && (tmp->type == WORD && (tmp->prev == NULL
-			|| tmp->prev->type == WORD || tmp->prev->type == PIPE)))
+					|| tmp->prev->type == WORD || tmp->prev->type == PIPE)))
 			count++;
 		else if (token_type == HERE_DOC && tmp->type == HERE_DOC)
 			count++;
 		if (!get_next_token(&tmp))
-			break;
+			break ;
 	}
-	if (count >= ARG_MAX)
+	if (count > ARG_MAX)
 	{
 		errno = E2BIG;
-		ft_puterror("count_tokens", strerror(errno));
 		return (-1);
 	}
 	return (count);
 }
-
-// 🖨️PRINT💥DEBUGING
-// void print_struct(t_shell *s)
-// {
-// 	printf("%sprint_struct%s | s->ret_value %s%d%s\n", G, RST, C, s->ret_value, RST);
-// 	printf("%sprint_struct%s | s->heredoc_count %s%d%s\n", G, RST, C, s->heredoc_count, RST);
-// 	printf("%sprint_struct%s | s->fd %s%d%s\n", G, RST, C, s->fd, RST);
-// 	printf("%sprint_struct%s | s->final_output_fd %s%d%s\n", G, RST, C, s->final_output_fd, RST);
-// 	printf("%sprint_struct%s | s->stdin_save %s%d%s\n", G, RST, C, s->stdin_save, RST);
-// 	printf("%sprint_struct%s | s->stdout_save %s%d%s\n", G, RST, C, s->stdout_save, RST);
-// 	printf("%sprint_struct%s | s->node_initialized %s%d%s\n", G, RST, C, s->node_initialized, RST);
-// 	printf("%sprint_struct%s | s->pipefd[0] %s%d%s\n", G, RST, C, s->pipefd[0], RST);
-// 	printf("%sprint_struct%s | s->pipefd[1] %s%d%s\n", G, RST, C, s->pipefd[1], RST);
-// 	if (s->prompt)
-// 		printf("%sprint_struct%s | s->prompt [%s%s%s]\n", G, RST, C, s->prompt, RST);
-// 	if (s->line)
-// 		printf("%sprint_struct%s | s->line [%s%s%s]\n", G, RST, C,  s->line,RST);
-// 	if (s->heredoc_tmp)
-// 		printf("%sprint_struct%s | s->heredoc_tmp [%s%s%s]\n", G, RST, C, s->heredoc_tmp, RST);
-// 	if (s->heredoc_list)
-// 		for (size_t i = 0; s->heredoc_list[i]; i++)
-// 			printf("%sprint_struct%s | s->heredoc_list[%ld][%s%s%s]\n", G, RST, i, C, s->heredoc_tmp, RST);
-// }
-
-// 🖨️PRINT💥DEBUGING
-// void	print_node(t_ast *ast)
-// {
-// 	t_ast	*left;
-// 	t_ast	*right;
-// 	int i = 0;
-
-// 	if (ast->tag == EXEC_NODE)
-// 	{
-// 		fprintf(stderr, "%sprint_node%s| %sEXEC NODE%s\n", B, RST, G, RST);
-// 		fprintf(stderr, "%sprint_node%s| argc: %d\n", B, RST, ast->data.exec.argc);
-// 		fprintf(stderr, "%sprint_node%s| args:", B, RST);
-// 		i = 0;
-// 		while (i < ast->data.exec.argc)
-// 		{
-// 			fprintf(stderr, " [%s%s%s]", C, ast->data.exec.argv[i], RST);
-// 			i++;
-// 		}
-// 		fprintf(stderr, "\n");
-// 		fprintf(stderr, "%sprint_node%s| fd_in:  %d\n", B, RST, ast->data.exec.fd_in);
-// 		fprintf(stderr, "%sprint_node%s| fd_out: %d\n", B, RST, ast->data.exec.fd_out);
-// 		if (ast->data.exec.heredoc_count == 0)
-// 			fprintf(stderr, "%sprint_node%s| %sNo heredoc to handle!%s\n", B, RST, R, RST);
-// 		else if (ast->data.exec.heredoc_count > 0)
-// 		{
-// 			fprintf(stderr, "%sprint_node%s| heredoc:", B, RST);
-// 			i = 0;
-// 			while (i < ast->data.exec.heredoc_count)
-// 			{
-// 				fprintf(stderr, " [%s%s%s]", C, ast->data.exec.heredoc_list[i], RST);
-// 				i++;
-// 			}
-// 			fprintf(stderr, "\n");
-// 		}
-// 	}
-// 	else if (ast->tag == PIPE_NODE)
-// 	{
-// 		left = ast->data.pipe.left;
-// 		right = ast->data.pipe.right;
-// 		fprintf(stderr, "%sprint_node%s| %sPIPE NODE%s\n", B, RST, G, RST);
-// 		if (left->tag == EXEC_NODE)
-// 		{
-// 			fprintf(stderr, "%sprint_node%s| L. BRANCH:\n", B, RST);
-// 			print_node(ast->data.pipe.left);
-// 		}
-// 		else if (left->tag == PIPE_NODE)
-// 			fprintf(stderr, "%sprint_node%s| L. BRANCH: [%spipe%s]\n", B, RST, P, RST);
-// 		fprintf(stderr, "%s------------------------------------%s\n", G, RST);
-// 		if (right->tag == EXEC_NODE)
-// 		{
-// 			fprintf(stderr, "%sprint_node%s| R. BRANCH:\n", B, RST);
-// 			print_node(ast->data.pipe.right);
-// 		}
-// 		else if (right->tag == PIPE_NODE)
-// 			fprintf(stderr, "%sprint_node%s| R. BRANCH: [%spipe%s]\n", B, RST, P, RST);
-// 	}
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:45:07 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/22 17:09:32 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 12:06:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
  *          needed for parsing and execution.
  */
 void	prompt_loop(t_shell *s);
+void	update_numerr(t_shell *s);
 
 #endif
