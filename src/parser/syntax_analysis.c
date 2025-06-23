@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/20 15:29:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 14:02:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_match_quote(char *s, int i)
 {
 	char	quote;
-	
+
 	quote = s[i++];
 	while (s[i] && s[i] != quote)
 		i++;
@@ -64,7 +64,8 @@ static int	syntax_checker(t_token *tok)
 
 int	syntax_analysis(t_shell *s, t_token *current_tok)
 {
-	int err;
+	int	err;
+
 	while (current_tok)
 	{
 		err = syntax_checker(current_tok);
