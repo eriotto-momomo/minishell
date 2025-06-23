@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 20:05:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 20:20:26 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static size_t	count_quote(char *s)
 	return (c);
 }
 
-static int	trim_quote(char **s, int i, int j)
+int	trim_quote(char **s, int i, int j)
 {
 	char	quote;
 	char	*new_s;
@@ -117,6 +117,7 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 			|| ft_strchr((*args)[i], '\"')))
 			if (trim_quote(&(*args)[i], 0, 0) != 0)
 				return (print_error(&s->numerr, errno, "trim_quote"));
+		printf("%s\n", (*args)[i]);
 		i++;
 	}
 	return (0);
