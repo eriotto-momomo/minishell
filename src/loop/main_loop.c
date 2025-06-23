@@ -6,13 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 12:06:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:59:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-
 
 void	update_numerr(t_shell *s)
 {
@@ -46,10 +44,10 @@ static void	process_input(t_shell *s)
 void	prompt_loop(t_shell *s)
 {
 	setup_signals(s, MINISHELL_SIGNALS);
-	//reset(s);
+	reset(s);
 	while (1)
 	{
-		reset(s);
+		//reset(s);
 		if (s->sig_mode != MINISHELL_SIGNALS)
 			setup_signals(s, MINISHELL_SIGNALS);
 		s->line = (readline(s->prompt));
@@ -63,6 +61,6 @@ void	prompt_loop(t_shell *s)
 			reset(s);
 		}
 		update_numerr(s);
-		//reset(s);
+		reset(s);
 	}
 }

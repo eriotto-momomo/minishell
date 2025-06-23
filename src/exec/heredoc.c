@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 12:07:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:58:28 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 
 	fd_in = 0;
 	i = 0;
+	//rl_catch_signals = 0;
 	while (i < node->data.s_exec.heredoc_count)
 	{
 		if (fd_in > 0)
@@ -112,5 +113,6 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 			return (-1);
 		i++;
 	}
+	//rl_catch_signals = 1;
 	return (fd_in);
 }

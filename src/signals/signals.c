@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 11:59:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:57:41 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void	heredoc_handler(int signal)
 void	clean_exit_handler(int signal)
 {
 	g_sig = signal;
+	ft_putstr_fd("\n", STDERR_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	//close(STDIN_FILENO);
+	//printf("clean_exit_handler\n");
 }
 
 void	sigint_handler(int signal)
