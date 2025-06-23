@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 11:34:37 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 13:26:38 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	init_shell(t_shell *s, char	**envp)
 		return (-1);
 	s->ret_value = 0;
 	s->pipe_count = 0;
+	s->numerr = 0;
 	s->prompt = NULL;
 	s->line = NULL;
 	s->pwd = var_lookup(s->env_list, "PWD");

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 11:44:00 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 13:35:51 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ int	handle_pipe(t_shell *s, t_ast **node)
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
-	if (ft_strncmp(node->data.s_exec.av[0], "exit", ft_strlen("exit")) == 0)
+	if (perfect_match(node->data.s_exec.av[0], "exit"))
 		return (ft_exit(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
-	if (ft_strncmp(node->data.s_exec.av[0], CD, ft_strlen(CD)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], CD))
 		return (ft_cd(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
-	if (ft_strncmp(node->data.s_exec.av[0], FT_ECHO, ft_strlen(FT_ECHO)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], FT_ECHO))
 		return (ft_echo(s, &node, node->data.s_exec.fd_out));
-	if (ft_strncmp(node->data.s_exec.av[0], PWD, ft_strlen(PWD)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], PWD))
 		return (ft_pwd(s, node->data.s_exec.fd_out));
-	if (ft_strncmp(node->data.s_exec.av[0], ENV, ft_strlen(ENV)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], ENV))
 		return (ft_env(s, s->env_list, node->data.s_exec.fd_out));
-	if (ft_strncmp(node->data.s_exec.av[0], UNSET, ft_strlen(UNSET)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], UNSET))
 		return (ft_unset(s, node->data.s_exec.ac, node->data.s_exec.av));
-	if (ft_strncmp(node->data.s_exec.av[0], EXPORT, ft_strlen(EXPORT)) == 0)
+	if (perfect_match(node->data.s_exec.av[0], EXPORT))
 		return (ft_export(s, &s->env_list, node));
 	return (ft_external(s, s->env_list, node));
 }
