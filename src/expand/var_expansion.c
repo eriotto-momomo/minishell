@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 19:00:11 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/23 19:31:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ static int	attribute_value(uint8_t numerr, t_env *env, char **str, int i)
 	char	*sufix;
 	char	*tmp;
 
-	prefix = make_prefix(numerr, env, *str, i);
+	prefix = make_prefix(numerr, env, *str, i++);
 	if (!prefix)
 		return (1);
-	i++;
 	while ((*str)[i] && (ft_isalnum((*str)[i])))
 		i++;
 	if ((*str)[i] == '?')
