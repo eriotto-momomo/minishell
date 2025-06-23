@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 17:53:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/23 09:57:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	process_input(t_shell *s)
 void prompt_loop(t_shell *s)
 {
 	setup_signals(s, MINISHELL_SIGNALS);
+	reset(s);
 	while (1)
 	{
 		if (s->sig_mode == DEFAULT_SIGNALS)
