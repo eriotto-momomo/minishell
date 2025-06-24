@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/24 10:26:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:03:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,12 @@
 int	ft_pwd(t_shell *s, int fd_out)
 {
 	char	*pwd;
+	char	buff[PATH_MAX];
 	char	*tmp;
 
-	pwd = ft_getenv(s->env_list, "PWD");
+	pwd = getcwd(buff, PATH_MAX);
 	if (!pwd)
-	{
-		pwd = s->pwd->value;
-		if (!pwd)
 			return (print_error(&s->numerr, ENOMEM));
-	}
 	tmp = ft_strjoin(pwd, "\n");
 	if (!tmp)
 		return (print_error(&s->numerr, ENOMEM));

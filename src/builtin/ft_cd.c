@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/24 10:25:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:09:18 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static char	*make_curpath(t_shell *s, char *arg)
 		temp = ft_strjoin("/", arg);
 		curpath = ft_strjoin(s->pwd->value, temp);
 		free(temp);
+		printf("curpath %s\n", curpath);
 		return (curpath);
 	}
 	return (ft_strdup(arg));
@@ -49,9 +50,11 @@ static int	updatepath(t_shell *s)
 	char	*old_pwd;
 
 	old_pwd = ft_strdup(s->pwd->value);
+	printf("old_pwd: %s\n", old_pwd);
 	if (!old_pwd)
 		return (print_error(&s->numerr, errno));
 	new_pwd = save_cwd();
+	printf("new_pwd: %s\n", new_pwd);
 	if (!new_pwd)
 	{
 		free(old_pwd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 10:26:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:58:18 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exporter(t_env **env, char *arg)
 	}
 	else
 	{
-		if (!replace_var(&var_ptr, value))
+		if (replace_var(&var_ptr, value) != 0)
 			return (1);
 		free(name);
 	}
