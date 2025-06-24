@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/24 10:29:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:40:26 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,21 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	{
 		print_custom_error(&s->numerr, 127, "No such file or directory\n");
 		terminate_shell(s);
+		kill_children(s);
 	}
 	env_table = ltotable(env);
 	if (!env_table)
 	{
 		w_free((void **)&cmd_path);
 		print_error(&s->numerr, ENOMEM);
-		terminate_shell(s);
+		kill_children(s);
 	}
 	if (execve(cmd_path, argv, env_table) == -1)
 	{
 		w_free((void **)&cmd_path);
 		ft_free_char_array(env_table, count_var(env));
 		print_custom_error(&s->numerr, 126, strerror(errno));
-		terminate_shell(s);
+		kill_children(s);
 	}
 	return (0);
 }

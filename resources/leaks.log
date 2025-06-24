@@ -1,122 +1,114 @@
-==1471336== Memcheck, a memory error detector
-==1471336== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1471336== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1471336== Command: ./minishell
-==1471336== Parent PID: 1471335
-==1471336== 
-==1471341== 
-==1471341== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==1471341== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
-==1471341==    <inherited from parent>
-==1471341== 
-==1471341== 
-==1471341== HEAP SUMMARY:
-==1471341==     in use at exit: 213,593 bytes in 444 blocks
-==1471341==   total heap usage: 695 allocs, 251 frees, 234,913 bytes allocated
-==1471341== 
-==1471341== 14 bytes in 1 blocks are still reachable in loss record 10 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10EEC5: ft_strdup (in /home/timmi/Documents/common-core/projects/minishell/minishell)
-==1471341==    by 0x10A5CE: copy_args (parser_utils.c:98)
-==1471341==    by 0x109D63: add_command (parser_add_node.c:19)
-==1471341==    by 0x10A003: add_exec_node (parser_add_node.c:83)
-==1471341==    by 0x10A29B: parse_exec (parser_func.c:55)
-==1471341==    by 0x10A1A4: parse_pipe (parser_func.c:22)
-==1471341==    by 0x10A24C: parse_line (parser_func.c:43)
-==1471341==    by 0x10AD49: build_ast (parser_main.c:19)
-==1471341==    by 0x10ADDC: parser (parser_main.c:37)
-==1471341==    by 0x109C23: process_input (main_loop.c:25)
-==1471341==    by 0x109CF3: prompt_loop (main_loop.c:44)
-==1471341== 
-==1471341== 15 bytes in 1 blocks are still reachable in loss record 11 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10EF5C: ft_strjoin (in /home/timmi/Documents/common-core/projects/minishell/minishell)
-==1471341==    by 0x10B1C7: join_prompt (prompt.c:47)
-==1471341==    by 0x10B28B: create_prompt (prompt.c:68)
-==1471341==    by 0x109546: main (main.c:25)
-==1471341== 
-==1471341== 16 bytes in 1 blocks are still reachable in loss record 15 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10A580: copy_args (parser_utils.c:90)
-==1471341==    by 0x109D63: add_command (parser_add_node.c:19)
-==1471341==    by 0x10A003: add_exec_node (parser_add_node.c:83)
-==1471341==    by 0x10A29B: parse_exec (parser_func.c:55)
-==1471341==    by 0x10A1A4: parse_pipe (parser_func.c:22)
-==1471341==    by 0x10A24C: parse_line (parser_func.c:43)
-==1471341==    by 0x10AD49: build_ast (parser_main.c:19)
-==1471341==    by 0x10ADDC: parser (parser_main.c:37)
-==1471341==    by 0x109C23: process_input (main_loop.c:25)
-==1471341==    by 0x109CF3: prompt_loop (main_loop.c:44)
-==1471341==    by 0x10956E: main (main.c:27)
-==1471341== 
-==1471341== 22 bytes in 1 blocks are still reachable in loss record 17 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10EEC5: ft_strdup (in /home/timmi/Documents/common-core/projects/minishell/minishell)
-==1471341==    by 0x10BF89: execution (exec.c:97)
-==1471341==    by 0x109C33: process_input (main_loop.c:27)
-==1471341==    by 0x109CF3: prompt_loop (main_loop.c:44)
-==1471341==    by 0x10956E: main (main.c:27)
-==1471341== 
-==1471341== 48 bytes in 1 blocks are still reachable in loss record 24 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10A42D: new_ast_node (parser_utils.c:52)
-==1471341==    by 0x109FD5: add_exec_node (parser_add_node.c:80)
-==1471341==    by 0x10A29B: parse_exec (parser_func.c:55)
-==1471341==    by 0x10A1A4: parse_pipe (parser_func.c:22)
-==1471341==    by 0x10A24C: parse_line (parser_func.c:43)
-==1471341==    by 0x10AD49: build_ast (parser_main.c:19)
-==1471341==    by 0x10ADDC: parser (parser_main.c:37)
-==1471341==    by 0x109C23: process_input (main_loop.c:25)
-==1471341==    by 0x109CF3: prompt_loop (main_loop.c:44)
-==1471341==    by 0x10956E: main (main.c:27)
-==1471341== 
-==1471341== 916 bytes in 71 blocks are still reachable in loss record 36 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10D8F2: get_name (init_env.c:43)
-==1471341==    by 0x10DA01: table_to_ll (init_env.c:75)
-==1471341==    by 0x10DAE4: init_shell (init_shell.c:18)
-==1471341==    by 0x109533: main (main.c:23)
-==1471341== 
-==1471341== 2,272 bytes in 71 blocks are still reachable in loss record 49 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10BA10: create_var (env_utils.c:53)
-==1471341==    by 0x10BA82: add_var_back (env_utils.c:68)
-==1471341==    by 0x10DA7C: table_to_ll (init_env.c:84)
-==1471341==    by 0x10DAE4: init_shell (init_shell.c:18)
-==1471341==    by 0x109533: main (main.c:23)
-==1471341== 
-==1471341== 2,967 bytes in 71 blocks are still reachable in loss record 50 of 75
-==1471341==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==1471341==    by 0x10D860: get_value (init_env.c:28)
-==1471341==    by 0x10DA24: table_to_ll (init_env.c:76)
-==1471341==    by 0x10DAE4: init_shell (init_shell.c:18)
-==1471341==    by 0x109533: main (main.c:23)
-==1471341== 
-==1471341== LEAK SUMMARY:
-==1471341==    definitely lost: 0 bytes in 0 blocks
-==1471341==    indirectly lost: 0 bytes in 0 blocks
-==1471341==      possibly lost: 0 bytes in 0 blocks
-==1471341==    still reachable: 6,270 bytes in 218 blocks
-==1471341==         suppressed: 207,323 bytes in 226 blocks
-==1471341== 
-==1471341== For lists of detected and suppressed errors, rerun with: -s
-==1471341== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1471336== 
-==1471336== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==1471336== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
-==1471336==    <inherited from parent>
-==1471336== 
-==1471336== 
-==1471336== HEAP SUMMARY:
-==1471336==     in use at exit: 207,350 bytes in 228 blocks
-==1471336==   total heap usage: 674 allocs, 446 frees, 234,483 bytes allocated
-==1471336== 
-==1471336== LEAK SUMMARY:
-==1471336==    definitely lost: 0 bytes in 0 blocks
-==1471336==    indirectly lost: 0 bytes in 0 blocks
-==1471336==      possibly lost: 0 bytes in 0 blocks
-==1471336==    still reachable: 0 bytes in 0 blocks
-==1471336==         suppressed: 207,350 bytes in 228 blocks
-==1471336== 
-==1471336== For lists of detected and suppressed errors, rerun with: -s
-==1471336== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==513017== Memcheck, a memory error detector
+==513017== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==513017== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==513017== Command: ./minishell
+==513017== Parent PID: 513016
+==513017== 
+==513017== Invalid free() / delete / delete[] / realloc()
+==513017==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==513017==    by 0x10FA58: w_free (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A902: redir_out (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109EF9: add_redir (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A0B0: add_exec_node (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2FC: parse_exec (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A205: parse_pipe (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2AD: parse_line (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A71C: build_ast (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A789: parser (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109C28: process_input (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109D04: prompt_loop (in /home/emonacho/Documents/minishell/minishell)
+==513017==  Address 0x7c is not stack'd, malloc'd or (recently) free'd
+==513017== 
+==513017== Invalid write of size 8
+==513017==    at 0x10FA5D: w_free (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A902: redir_out (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109EF9: add_redir (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A0B0: add_exec_node (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2FC: parse_exec (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A205: parse_pipe (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2AD: parse_line (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A71C: build_ast (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A789: parser (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109C28: process_input (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109D04: prompt_loop (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109503: main (in /home/emonacho/Documents/minishell/minishell)
+==513017==  Address 0x4b70ce0 is 0 bytes inside a block of size 2 alloc'd
+==513017==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==513017==    by 0x10E2DD: trim_quote (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A86B: redir_out (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109EF9: add_redir (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A0B0: add_exec_node (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2FC: parse_exec (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A205: parse_pipe (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2AD: parse_line (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A71C: build_ast (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A789: parser (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109C28: process_input (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109D04: prompt_loop (in /home/emonacho/Documents/minishell/minishell)
+==513017== 
+==513087== 
+==513087== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==513087== Open file descriptor 3: /home/emonacho/Documents/minishell/resources/leaks.log
+==513087==    <inherited from parent>
+==513087== 
+==513087== 
+==513087== HEAP SUMMARY:
+==513087==     in use at exit: 207,968 bytes in 244 blocks
+==513087==   total heap usage: 790 allocs, 547 frees, 300,971 bytes allocated
+==513087== 
+==513087== 2 bytes in 1 blocks are definitely lost in loss record 1 of 73
+==513087==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==513087==    by 0x10E2DD: trim_quote (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x10A86B: redir_out (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x109EF9: add_redir (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x10A0B0: add_exec_node (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x10A2FC: parse_exec (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x10A205: parse_pipe (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x10A2AD: parse_line (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x10A71C: build_ast (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x10A789: parser (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x109C28: process_input (in /home/emonacho/Documents/minishell/minishell)
+==513087==    by 0x109D04: prompt_loop (in /home/emonacho/Documents/minishell/minishell)
+==513087== 
+==513087== LEAK SUMMARY:
+==513087==    definitely lost: 2 bytes in 1 blocks
+==513087==    indirectly lost: 0 bytes in 0 blocks
+==513087==      possibly lost: 0 bytes in 0 blocks
+==513087==    still reachable: 0 bytes in 0 blocks
+==513087==         suppressed: 207,966 bytes in 243 blocks
+==513087== 
+==513087== For lists of detected and suppressed errors, rerun with: -s
+==513087== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==513017== 
+==513017== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==513017== Open file descriptor 3: /home/emonacho/Documents/minishell/resources/leaks.log
+==513017==    <inherited from parent>
+==513017== 
+==513017== 
+==513017== HEAP SUMMARY:
+==513017==     in use at exit: 208,464 bytes in 278 blocks
+==513017==   total heap usage: 1,067 allocs, 791 frees, 305,557 bytes allocated
+==513017== 
+==513017== 4 bytes in 2 blocks are definitely lost in loss record 2 of 76
+==513017==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==513017==    by 0x10E2DD: trim_quote (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A86B: redir_out (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109EF9: add_redir (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A0B0: add_exec_node (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2FC: parse_exec (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A205: parse_pipe (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A2AD: parse_line (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A71C: build_ast (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x10A789: parser (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109C28: process_input (in /home/emonacho/Documents/minishell/minishell)
+==513017==    by 0x109D04: prompt_loop (in /home/emonacho/Documents/minishell/minishell)
+==513017== 
+==513017== LEAK SUMMARY:
+==513017==    definitely lost: 4 bytes in 2 blocks
+==513017==    indirectly lost: 0 bytes in 0 blocks
+==513017==      possibly lost: 0 bytes in 0 blocks
+==513017==    still reachable: 0 bytes in 0 blocks
+==513017==         suppressed: 208,460 bytes in 276 blocks
+==513017== 
+==513017== For lists of detected and suppressed errors, rerun with: -s
+==513017== ERROR SUMMARY: 5 errors from 3 contexts (suppressed: 0 from 0)

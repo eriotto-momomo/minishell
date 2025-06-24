@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 13:33:40 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 12:40:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	reset_free(t_shell *s);
 void	clean_free(t_shell *s);
 int		ft_exit(t_shell *s, int ac, char **av);
 void	terminate_shell(t_shell *s);
+void	kill_children(t_shell *s);
 void	free_pipe_node(t_ast *node);
 void	free_exec_node(t_ast *node);
 void	free_ast(t_ast **node);
