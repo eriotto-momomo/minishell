@@ -6,7 +6,7 @@
 #    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/23 20:16:22 by emonacho         ###   ########.fr        #
+#    Updated: 2025/06/24 13:10:55 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 MAKEFLAGS += --no-print-directory
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 
 BUILD_PATH = build
 

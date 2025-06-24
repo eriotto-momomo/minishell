@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 10:27:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:49:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,37 +35,28 @@ int	close_fd(t_ast *node)
 	return (0);
 }
 
-int	ft_external(t_shell *s, t_env *env, t_ast *node)
+int	handle_exec(t_shell *s, t_ast *node)
 {
-	int		i;
-	pid_t	pid;
-
-	i = -1;
-	pid = fork();
-	if (pid < 0)
-		return (print_error(&s->numerr, EPIPE));
-	if (pid == 0)
-	{
-		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
-			return (print_error(&s->numerr, errno));
-		while (++i < s->pipe_count)
-		{
-			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][0] != node->data.s_exec.fd_out)
-				close(s->pipe_fd[i][0]);
-			if (s->pipe_fd[i][1] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][1] != node->data.s_exec.fd_out)
-				close(s->pipe_fd[i][1]);
-		}
-		cmd_execution(s, env, node->data.s_exec.av);
-	}
-	else
-		s->child_pids[s->pid_count++] = pid;
-	return (0);
+	if (perfect_match(node->data.s_exec.av[0], "exit"))
+		return (ft_exit(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
+	if (perfect_match(node->data.s_exec.av[0], CD))
+		return (ft_cd(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
+	if (perfect_match(node->data.s_exec.av[0], FT_ECHO))
+		return (ft_echo(s, &node, node->data.s_exec.fd_out));
+	if (perfect_match(node->data.s_exec.av[0], PWD))
+		return (ft_pwd(s, node->data.s_exec.fd_out));
+	if (perfect_match(node->data.s_exec.av[0], ENV))
+		return (ft_env(s, s->env_list, node->data.s_exec.fd_out));
+	if (perfect_match(node->data.s_exec.av[0], UNSET))
+		return (ft_unset(s, node->data.s_exec.ac, node->data.s_exec.av));
+	if (perfect_match(node->data.s_exec.av[0], EXPORT))
+		return (ft_export(s, &s->env_list, node));
+	return (ft_external(s, s->env_list, node));
 }
 
 int	preorder_exec(t_shell *s, t_ast **node)
 {
+	//print_node((*node));
 	if (!(*node))
 		return (0);
 	if ((*node)->tag == PIPE_NODE)
