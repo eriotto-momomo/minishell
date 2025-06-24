@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 20:08:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 16:43:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define DEFAULT_PROMPT "minishell-1.0$ "
 
 // Default location of all the temporary files created by minishell
-# define HEREDOC_FILE_PATH "./.tmp/heredoc_tmp.txt"
+# define HEREDOC_FILE_PATH "./.tmp/.heredoc_tmp.txt"
 
 // Char set of characters that minishell interpret as operators
 # define SEPARATORS "|<>"

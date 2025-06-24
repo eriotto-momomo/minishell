@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 15:49:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 17:22:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ int	handle_exec(t_shell *s, t_ast *node)
 		return (ft_unset(s, node->data.s_exec.ac, node->data.s_exec.av));
 	if (perfect_match(node->data.s_exec.av[0], EXPORT))
 		return (ft_export(s, &s->env_list, node));
-	return (ft_external(s, s->env_list, node));
+	else
+	{
+		g_sig = 1;
+		s->child_exit = 1;
+		return (ft_external(s, s->env_list, node));
+	}
 }
 
 int	preorder_exec(t_shell *s, t_ast **node)
@@ -119,6 +124,7 @@ int	execution(t_shell *s)
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
 	free_ast(&(s->root_node));
-	unlink(HEREDOC_FILE_PATH);
+	if (s->heredoc_fd > -1)
+		unlink(HEREDOC_FILE_PATH);
 	return (0);
 }

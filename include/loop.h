@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:45:07 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 15:42:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:15:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@
  *          needed for parsing and execution.
  */
 void	prompt_loop(t_shell *s);
-void	update_numerr(uint8_t *numerr);
+void	update_numerr(int *child_exit, uint8_t *numerr, int mode);
 
 #endif
