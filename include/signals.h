@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:13:43 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 17:57:58 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 18:07:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ enum e_signal
 	DEFAULT_SIGNALS,
 	MINISHELL_SIGNALS,
 	HEREDOC_SIGNALS,
+	UPDATE_ERRNO,
+	UPDATE_SIGNALS,
 };
 
 void	setup_signals(t_shell *s, int mode);

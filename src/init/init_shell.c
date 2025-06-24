@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 15:49:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:45:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	init_shell(t_shell *s, char	**envp)
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
 		return (print_error(&s->numerr, ENOMEM));
+	s->heredoc_fd = -1;
 	s->sig_mode = -1;
 	s->ret_value = 0;
 	s->pipe_count = 0;

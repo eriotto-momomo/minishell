@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/24 15:49:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 15:56:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	sigint_handler(int signal)
 	rl_redisplay();
 }
 
+void	sigquit_handler(int signal)
+{
+	g_sig = signal;
+}
+
 void	setup_signals(t_shell *s, int mode)
 {
 	struct sigaction	act;
@@ -45,7 +50,8 @@ void	setup_signals(t_shell *s, int mode)
 	{
 		act.sa_handler = &sigint_handler;
 		sigaction(SIGINT, &act, NULL);
-		signal(SIGQUIT, SIG_IGN);
+		act.sa_handler = &sigquit_handler;
+		sigaction(SIGQUIT, &act, NULL);
 		s->sig_mode = MINISHELL_SIGNALS;
 	}
 	else if (mode == DEFAULT_SIGNALS)
