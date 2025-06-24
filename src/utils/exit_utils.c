@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/24 10:28:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:40:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ void	terminate_shell(t_shell *s)
 {
 	clean_free(s);
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	if (s->numerr)
+		exit(s->numerr);
+	exit(EXIT_SUCCESS);
+}
+
+void	kill_children(t_shell *s)
+{
+	clean_free(s);
 	if (s->numerr)
 		exit(s->numerr);
 	exit(EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/24 10:27:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:41:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 	{
 		signal(SIGINT, SIG_DFL);
 		if (heredoc_loop(s, node) == -1)
-			return (-1);
+			kill_children(s);
 		clean_free(s);
 		exit(0);
 	}
