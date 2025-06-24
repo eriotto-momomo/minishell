@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 20:05:39 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 15:49:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	update_numerr(t_shell *s)
+void	update_numerr(uint8_t *numerr)
 {
+	//printf("gsig :%d\n", g_sig);
 	if (g_sig == SIGINT)
-		s->numerr = 130;
+		*numerr = 130;
 	if (g_sig == SIGQUIT)
-		s->numerr = 131;
+		*numerr = 131;
 }
 
 static void	reset(t_shell *s)
 {
 	g_sig = 0;
+	errno = 0;
 	s->pipe_count = 0;
 	s->pid_count = 0;
 	s->tok_rdir = 0;
@@ -43,10 +45,10 @@ static void	process_input(t_shell *s)
 
 void	prompt_loop(t_shell *s)
 {
-	setup_signals(s, MINISHELL_SIGNALS);
-	reset(s);
+	rl_catch_signals = 0;
 	while (1)
 	{
+		reset(s);
 		if (s->sig_mode != MINISHELL_SIGNALS)
 			setup_signals(s, MINISHELL_SIGNALS);
 		s->line = (readline(s->prompt));
@@ -54,11 +56,10 @@ void	prompt_loop(t_shell *s)
 			terminate_shell(s);
 		if (s->line && *s->line)
 		{
-			update_numerr(s);
 			add_history(s->line);
 			process_input(s);
 		}
-		update_numerr(s);
-		reset(s);
+		update_numerr(&s->numerr);
 	}
+	rl_catch_signals = 1;
 }

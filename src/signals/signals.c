@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 17:09:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 15:49:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,15 @@ void	heredoc_handler(int signal)
 void	clean_exit_handler(int signal)
 {
 	g_sig = signal;
+	write(1, "\n", 1);
 }
 
 void	sigint_handler(int signal)
 {
 	g_sig = signal;
-	ft_putstr_fd("\n", STDERR_FILENO);
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	sigquit_handler(int signal)
-{
-	g_sig = signal;
-	rl_on_new_line();
 	rl_redisplay();
 }
 
@@ -51,8 +45,7 @@ void	setup_signals(t_shell *s, int mode)
 	{
 		act.sa_handler = &sigint_handler;
 		sigaction(SIGINT, &act, NULL);
-		act.sa_handler = &sigquit_handler;
-		sigaction(SIGQUIT, &act, NULL);
+		signal(SIGQUIT, SIG_IGN);
 		s->sig_mode = MINISHELL_SIGNALS;
 	}
 	else if (mode == DEFAULT_SIGNALS)
