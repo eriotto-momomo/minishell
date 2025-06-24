@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 20:03:46 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:27:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 	signal(SIGQUIT, SIG_IGN);
 	heredoc_pid = fork();
 	if (heredoc_pid < 0)
-		return (print_error(&s->numerr, EPIPE, "fork"));
+		return (print_error(&s->numerr, EPIPE));
 	if (heredoc_pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);

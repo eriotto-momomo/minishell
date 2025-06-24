@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 14:07:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:24:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		ft_toupper(int c);
 // libft custom
 int		ft_atoi_safe(const char *str, int *error);
 int		ft_isspace(char c);
-int		ft_puterror(char *error_location, char *error_msg);
+int		ft_puterror(char *error_msg);
 void	*ft_free_array(void *array, int size, char mode);
 void	*ft_free_char_array(char **array, int size);
 size_t	ft_count_tab(void *tab, int mode);
@@ -83,8 +83,6 @@ int		ft_isquote(int c);
 
 // wrapperss
 void	w_free(void **ptr);
-void	w_malloc(void **ptr, size_t size);
-void	*w_calloc(size_t nmemb, size_t size);
 
 // GNL
 char	*dupnewline(char *str);

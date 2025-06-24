@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 11:36:09 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:25:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,20 @@ static int	updatepath(t_shell *s)
 
 	old_pwd = ft_strdup(s->pwd->value);
 	if (!old_pwd)
-		return (print_error(&s->numerr, errno, "ft_strdup"));
+		return (print_error(&s->numerr, errno));
 	new_pwd = save_cwd();
 	if (!new_pwd)
 	{
 		free(old_pwd);
-		return (print_error(&s->numerr, errno, "save_cwd"));
+		return (print_error(&s->numerr, errno));
 	}
 	if (!replace_var(&s->old_pwd, old_pwd))
 	{
 		free(new_pwd);
-		return (print_error(&s->numerr, ENOMEM, "save_cwd"));
+		return (print_error(&s->numerr, ENOMEM));
 	}
 	if (!replace_var(&s->pwd, new_pwd))
-		return (print_error(&s->numerr, ENOMEM, "save_cwd"));
+		return (print_error(&s->numerr, ENOMEM));
 	return (0);
 }
 
@@ -72,14 +72,14 @@ int	ft_cd(t_shell *s, int ac, char **av)
 	char	*curpath;
 
 	if (ac > 2)
-		return (print_error(&s->numerr, E2BIG, "cd"));
+		return (print_error(&s->numerr, E2BIG));
 	curpath = make_curpath(s, av[1]);
 	if (!curpath)
-		return (print_error(&s->numerr, ENOMEM, "cd"));
+		return (print_error(&s->numerr, ENOMEM));
 	if (chdir(curpath) == -1)
 	{
 		free(curpath);
-		return (print_error(&s->numerr, errno, "cd"));
+		return (print_error(&s->numerr, errno));
 	}
 	free(curpath);
 	updatepath(s);

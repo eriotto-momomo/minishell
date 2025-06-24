@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 13:29:14 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:25:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ int	ft_echo(t_shell *s, t_ast **current_node, int fd_out)
 	offset = 0;
 	args = get_args(*current_node);
 	if (!args)
-		return (print_error(&s->numerr, ENOMEM, "get_args"));
+		return (print_error(&s->numerr, ENOMEM));
 	if (args[1])
 	{
 		if (flag_check(args[1]))
 			offset = 1;
 		str = tab_to_string((*current_node)->data.s_exec.ac, args, offset);
 		if (!str)
-			return (print_error(&s->numerr, ENOMEM, "echo"));
+			return (print_error(&s->numerr, ENOMEM));
 		ft_putstr_fd(str, fd_out);
 		free(str);
 	}

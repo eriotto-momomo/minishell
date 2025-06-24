@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:49:18 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 20:28:30 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:25:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (create_prompt(&shell) == -1)
 		{
-			print_error(&shell.numerr, ENOMEM, "create_prompt");
+			print_error(&shell.numerr, ENOMEM);
 			terminate_shell(&shell);
 		}
 		prompt_loop(&shell);
 	}
 	else
 	{
-		print_error(&shell.numerr, ENOMEM, "init_shell");
+		print_error(&shell.numerr, ENOMEM);
 		exit(shell.numerr);
 	}
 	return (0);

@@ -58,10 +58,7 @@ ft_tolower.c \
 ft_toupper.c \
 get_next_line.c \
 get_next_line_utils.c \
-w_calloc.c \
 w_free.c \
-w_kill.c \
-w_malloc.c
 
 OBJS = $(SRCS:%.c=$(BUILD_PATH)/%.o)
 
