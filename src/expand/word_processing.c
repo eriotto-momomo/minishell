@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 14:34:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 22:50:22 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:27:33 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 		if (ft_strchr((*args)[i], '$'))
 		{
 			if (expand(s->numerr, s->env_list, &(*args)[i]) != 0)
-				return (print_error(&s->numerr, errno, "expand"));
+				return (print_error(&s->numerr, errno));
 			if ((*args)[i][0] == '\0')
 			{
 				if (shrink_array(args, *ac, i) == 1)
@@ -116,7 +116,7 @@ int	string_processing(t_shell *s, int *ac, char ***args)
 		if ((*args)[i] && (ft_strchr((*args)[i], '\'')
 			|| ft_strchr((*args)[i], '\"')))
 			if (trim_quote(&(*args)[i], 0, 0) != 0)
-				return (print_error(&s->numerr, errno, "trim_quote"));
+				return (print_error(&s->numerr, errno));
 		i++;
 	}
 	return (0);

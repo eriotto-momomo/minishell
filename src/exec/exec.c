@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 20:03:55 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:27:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	i = -1;
 	pid = fork();
 	if (pid < 0)
-		return (print_error(&s->numerr, EPIPE, "fork"));
+		return (print_error(&s->numerr, EPIPE));
 	if (pid == 0)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
-			return (print_error(&s->numerr, errno, "setup_pipe"));
+			return (print_error(&s->numerr, errno));
 		while (++i < s->pipe_count)
 		{
 			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
@@ -122,7 +122,7 @@ int	execution(t_shell *s)
 		while (i < s->pid_count)
 		{
 			if (kill(s->child_pids[i], SIGKILL) != 0)
-				return (print_error(&s->numerr, errno, "kill"));
+				return (print_error(&s->numerr, errno));
 			i++;
 		}
 	}

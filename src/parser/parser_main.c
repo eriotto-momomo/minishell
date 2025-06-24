@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 20:06:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:27:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parser(t_shell *s)
 	{
 		if (errno == 0)
 			errno = ENOMEM;
-		return (print_error(&s->numerr, errno, "build_ast"));
+		return (print_error(&s->numerr, errno));
 	}
 	s->current_node = s->root_node;
 	free_token_list(&(s->head));

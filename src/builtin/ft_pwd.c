@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/22 17:13:10 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:26:32 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	ft_pwd(t_shell *s, int fd_out)
 	{
 		pwd = s->pwd->value;
 		if (!pwd)
-			return (print_error(&s->numerr, ENOMEM, "ft_pwd"));
+			return (print_error(&s->numerr, ENOMEM));
 	}
 	tmp = ft_strjoin(pwd, "\n");
 	if (!tmp)
-		return (print_error(&s->numerr, ENOMEM, "ft_pwd"));
+		return (print_error(&s->numerr, ENOMEM));
 	ft_putstr_fd(tmp, fd_out);
 	free(tmp);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/23 20:03:30 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:29:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	interrupt_heredoc(t_shell *s)
 	if (access(HEREDOC_FILE_PATH, F_OK) < 0)
 	{
 		w_free((void **)&s->line);
-		print_error(&s->numerr, errno, "write_heredoc");
+		print_error(&s->numerr, errno);
 		return (1);
 	}
 	return (0);
@@ -30,7 +30,7 @@ int	handle_pipe(t_shell *s, t_ast **node)
 
 	cur_pipe = s->pipe_count;
 	if (pipe(s->pipe_fd[cur_pipe]) < 0)
-		return (print_error(&s->numerr, errno, "handle_pipe"));
+		return (print_error(&s->numerr, errno));
 	if ((*node)->data.s_pipe.left->tag == PIPE_NODE)
 	{
 		right = (*node)->data.s_pipe.left->data.s_pipe.right;
@@ -104,7 +104,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	if (!env_table)
 	{
 		w_free((void **)&cmd_path);
-		print_error(&s->numerr, ENOMEM, "cmd_execution");
+		print_error(&s->numerr, ENOMEM);
 		terminate_shell(s);
 	}
 	if (execve(cmd_path, argv, env_table) == -1)
