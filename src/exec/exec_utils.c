@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 17:01:21 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 21:11:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	close_pipes(int pipe_fd[][2], int pipe_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipe_count)
+	{
+		if (close(pipe_fd[i][0]) != 0)
+			return (1);
+		if (close(pipe_fd[i][1]) != 0)
+			return (1);
+	}
+	return (0);
+}
 
 int	handle_pipe(t_shell *s, t_ast **node)
 {
@@ -72,6 +87,9 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			return (print_error(&s->numerr, errno));
+		//if (close_pipes(s->pipe_fd, s->pipe_count) != 0)	// FFFFFFFF marche pas
+		//	return (print_error(&s->numerr, errno));		// FFFFFFFF marche pas
+		// `close_pipes` c'est pour wrapper la loop qui suit
 		while (++i < s->pipe_count)
 		{
 			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in

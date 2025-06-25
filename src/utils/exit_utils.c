@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 12:25:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 20:17:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	reset_free(t_shell *s)
 
 void	clean_free(t_shell *s)
 {
+	if (s->fd >= 0)
+		close(s->fd);
+	if (s->heredoc_fd >= 0)
+		close(s->heredoc_fd);
 	if (s->head)
 		free_token_list(&(s->head));
 	if (s->root_node)
