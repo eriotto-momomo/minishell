@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 20:04:49 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 09:38:12 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	expand(uint8_t numerr, t_env *env, char **str)
 			while ((*str)[i] && ((*str)[i] != '\''))
 				i++;
 		}
-		if ((*str)[i] == '$' && !(ft_isspace((*str)[i + 1]) || !(*str)[i + 1]))
+		if ((*str)[i] == '$' && is_valid_var_start((*str)[i + 1]))
 		{
 			if (attribute_value(numerr, env, str, i) != 0)
 				return (1);
