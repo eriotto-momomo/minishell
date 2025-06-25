@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:19:46 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 12:32:13 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 13:56:42 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_exit(t_shell *s, int ac, char **av)
 		if (is_all_digit(av[1]))
 			s->numerr = (uint8_t)ft_atoi(av[1]);
 		else
-			print_custom_error(&s->numerr, 2, "numeric argument required");	
+			print_custom_error(&s->numerr, 2, "numeric argument required");
 	}
 	terminate_shell(s);
 	return (0);

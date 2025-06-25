@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/24 15:56:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:25:39 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	heredoc_handler(int signal)
 {
 	g_sig = signal;
+	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_done = 1;
-	close(STDIN_FILENO);
-	write(1, "\n", 1);
 }
+
 
 void	clean_exit_handler(int signal)
 {

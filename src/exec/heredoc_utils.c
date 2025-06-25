@@ -6,22 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 12:28:27 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 14:25:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	interrupt_heredoc(t_shell *s)
-{
-	if (access(HEREDOC_FILE_PATH, F_OK) < 0)
-	{
-		w_free((void **)&s->line);
-		print_error(&s->numerr, errno);
-		return (1);
-	}
-	return (0);
-}
 
 int	heredoc_loop(t_shell *s, t_ast *node)
 {
