@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 17:22:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:32:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	handle_exec(t_shell *s, t_ast *node)
 		return (ft_export(s, &s->env_list, node));
 	else
 	{
-		g_sig = 1;
+		g_sig = 0;
 		s->child_exit = 1;
 		return (ft_external(s, s->env_list, node));
 	}
