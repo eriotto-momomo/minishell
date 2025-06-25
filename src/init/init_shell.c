@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 08:52:33 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 10:45:52 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	init_shell(t_shell *s, char	**envp)
 	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
 	if (!s->heredoc_tmp)
 		return (print_error(&s->numerr, ENOMEM));
+	s->heredoc_fd = -1;
 	s->sig_mode = -1;
+	s->child_exit = 0;
 	s->ret_value = 0;
 	s->pipe_count = 0;
 	s->numerr = 0;
