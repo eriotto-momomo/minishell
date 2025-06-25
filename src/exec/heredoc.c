@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 12:02:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:13:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 {
 	pid_t	heredoc_pid;
 
+	g_sig = 0;
+	s->child_exit = 1;
 	setup_signals(s, HEREDOC_SIGNALS);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

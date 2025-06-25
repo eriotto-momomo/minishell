@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/24 15:56:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:28:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	heredoc_handler(int signal)
 void	clean_exit_handler(int signal)
 {
 	g_sig = signal;
+	if (signal == SIGQUIT)
+		write(2, "Quit (core dumped)", 18);
 	write(1, "\n", 1);
 }
 
@@ -36,11 +38,6 @@ void	sigint_handler(int signal)
 	rl_redisplay();
 }
 
-void	sigquit_handler(int signal)
-{
-	g_sig = signal;
-}
-
 void	setup_signals(t_shell *s, int mode)
 {
 	struct sigaction	act;
@@ -50,8 +47,7 @@ void	setup_signals(t_shell *s, int mode)
 	{
 		act.sa_handler = &sigint_handler;
 		sigaction(SIGINT, &act, NULL);
-		act.sa_handler = &sigquit_handler;
-		sigaction(SIGQUIT, &act, NULL);
+		signal(SIGQUIT, SIG_IGN);
 		s->sig_mode = MINISHELL_SIGNALS;
 	}
 	else if (mode == DEFAULT_SIGNALS)
