@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/24 15:49:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 09:28:37 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,27 +99,60 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	return (0);
 }
 
+int	is_path(const char *cmd)
+{
+	if (!cmd)
+		return (0);
+	return (cmd[0] == '/' || (cmd[0] == '.' && (cmd[1] == '/'
+		|| (cmd[1] == '.' && cmd[2] == '/'))));
+}
+
+char	*path_making(t_env *env, char *cmd)
+{
+	char *cmd_path;
+
+	if (is_path(cmd))
+	{
+		cmd_path = ft_strdup(cmd);
+		if (!cmd_path)
+			return (NULL);
+		if (access(cmd_path, F_OK) == -1)
+		{
+			w_free((void **)&cmd_path);
+			return (NULL);
+		}
+	}
+	else
+	{
+		cmd_path = pathfinder(env, cmd);
+		if (!cmd_path)
+			return (NULL);
+	}
+	return (cmd_path);
+}
+
 int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
-	char	*cmd_path;
 	char	**env_table;
-
-	cmd_path = pathfinder(env, argv[0]);
-	if (!cmd_path)
+	char	*path;
+	
+	path = path_making(env, argv[0]);
+	if (!path)
 	{
-		print_custom_error(&s->numerr, 127, "No such file or directory\n");
+		w_free((void **)&path);
+		print_custom_error(&s->numerr, 127, "Command not found\n");
 		kill_children(s);
 	}
 	env_table = ltotable(env);
 	if (!env_table)
 	{
-		w_free((void **)&cmd_path);
+		w_free((void **)&path);
 		print_error(&s->numerr, ENOMEM);
 		kill_children(s);
 	}
-	if (execve(cmd_path, argv, env_table) == -1)
+	if (execve(path, argv, env_table) == -1)
 	{
-		w_free((void **)&cmd_path);
+		w_free((void **)&path);
 		ft_free_char_array(env_table, count_var(env));
 		print_custom_error(&s->numerr, 126, strerror(errno));
 		kill_children(s);
