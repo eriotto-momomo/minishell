@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 17:56:57 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 12:30:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		ft_external(t_shell *s, t_env *env, t_ast *current_node);
 int		preorder_exec(t_shell *s, t_ast **current_node);
 int		cmd_execution(t_shell *s, t_env *env, char **argv);
 char	*pathfinder(t_env *env, char *cmd);
+char	*path_making(t_env *env, char *cmd);
 int		setup_pipe(int fd_in, int fd_out);
 int		handle_pipe(t_shell *s, t_ast **current_node);
 int		handle_exec(t_shell *s, t_ast *current_node);

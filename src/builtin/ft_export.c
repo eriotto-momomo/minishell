@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 08:22:05 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 12:35:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	replace_var(t_env **var, char *value)
 {
-	printf("vat :%s\n", (*var)->value);
-	printf("value :%s\n", value);
 	if (!value)
 		return (1);
 	w_free((void **)&(*var)->value);

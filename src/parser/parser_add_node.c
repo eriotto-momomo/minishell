@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/24 16:39:53 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:53:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	add_heredoc(t_ast **node, t_token **tok)
 	return (0);
 }
 
-int	add_redir(t_ast **node, t_token **tok)
+int	add_redir(t_shell *s, t_ast **node, t_token **tok)
 {
 	t_token	*tmp;
 
@@ -49,11 +49,11 @@ int	add_redir(t_ast **node, t_token **tok)
 	{
 		if (tmp->type == OUT_REDIR || tmp->type == APP_OUT_REDIR)
 			(*node)->data.s_exec.fd_out
-				= redir_out(tmp->type, tmp->next->data,
+				= redir_out(s, tmp->type, tmp->next->data,
 					(*node)->data.s_exec.fd_out);
 		else if (tmp->type == IN_REDIR)
 			(*node)->data.s_exec.fd_in
-				= redir_in(tmp->next->data, (*node)->data.s_exec.fd_in);
+				= redir_in(s, tmp->next->data, (*node)->data.s_exec.fd_in);
 		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
 		{
 			errno = 2;
@@ -65,7 +65,35 @@ int	add_redir(t_ast **node, t_token **tok)
 	return (0);
 }
 
-t_ast	*add_exec_node(t_token **tok)
+// FIRST VERSION
+//int	add_redir(t_ast **node, t_token **tok)
+//{
+//	t_token	*tmp;
+//
+//	(*node)->data.s_exec.fd_in = 0;
+//	(*node)->data.s_exec.fd_out = 1;
+//	tmp = *tok;
+//	while (tmp && tmp->type != PIPE)
+//	{
+//		if (tmp->type == OUT_REDIR || tmp->type == APP_OUT_REDIR)
+//			(*node)->data.s_exec.fd_out
+//				= redir_out(tmp->type, tmp->next->data,
+//					(*node)->data.s_exec.fd_out);
+//		else if (tmp->type == IN_REDIR)
+//			(*node)->data.s_exec.fd_in
+//				= redir_in(tmp->next->data, (*node)->data.s_exec.fd_in);
+//		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
+//		{
+//			errno = 2;
+//			return (1);
+//		}
+//		if (!get_next_token(&tmp))
+//			break ;
+//	}
+//	return (0);
+//}
+
+t_ast	*add_exec_node(t_shell *s, t_token **tok)
 {
 	t_ast	*node;
 
@@ -83,7 +111,7 @@ t_ast	*add_exec_node(t_token **tok)
 		w_free((void **)&node);
 		return (NULL);
 	}
-	if (add_redir(&node, tok) != 0)
+	if (add_redir(s, &node, tok) != 0)
 	{
 		ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
 		ft_free_char_array(node->data.s_exec.heredoc_list,

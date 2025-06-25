@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 23:00:57 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/22 17:34:24 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 12:30:22 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,38 @@ static char	*make_path(char *path, char *cmd)
 		return (NULL);
 	free(tmp);
 	return (full_path);
+}
+
+static int	is_path(const char *cmd)
+{
+	if (!cmd)
+		return (0);
+	return (cmd[0] == '/' || (cmd[0] == '.' && (cmd[1] == '/'
+				|| (cmd[1] == '.' && cmd[2] == '/'))));
+}
+
+char	*path_making(t_env *env, char *cmd)
+{
+	char	*cmd_path;
+
+	if (is_path(cmd))
+	{
+		cmd_path = ft_strdup(cmd);
+		if (!cmd_path)
+			return (NULL);
+		if (access(cmd_path, F_OK) == -1)
+		{
+			w_free((void **)&cmd_path);
+			return (NULL);
+		}
+	}
+	else
+	{
+		cmd_path = pathfinder(env, cmd);
+		if (!cmd_path)
+			return (NULL);
+	}
+	return (cmd_path);
 }
 
 char	*pathfinder(t_env *env, char *cmd)
