@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:13:43 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 14:16:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:10:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ enum e_signal
 
 void	setup_signals(t_shell *s, int mode);
 void	heredoc_handler(int signal);
+int	handle_termios(t_shell *s, int mode);
 
 #endif

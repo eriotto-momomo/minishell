@@ -3,14 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 12:28:27 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 15:09:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	put_in_heredoc(char *line, int fd)
+{
+	char	*new_line;
+
+	new_line = ft_strjoin(line, "\n");
+	if (!new_line)
+		return (1);
+	ft_putstr_fd(new_line, fd);
+	free(new_line);
+	return (0);
+}
+
+int	is_delimiter(char *line, char *delimiter)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (delimiter[j] && (delimiter[j] == '\'' || delimiter[j] == '\"'))
+		j++;
+	if (line[i] == delimiter[j])
+	{
+		while (line[i] && delimiter[j]
+			&& (line[i] == delimiter[j]))
+		{
+			i++;
+			j++;
+		}
+		if (line[i] == '\0' && (delimiter[j] == '\0'
+				|| delimiter[j] == '\'' || delimiter[j] == '\"'))
+			return (1);
+	}
+	return (0);
+}
+
+int	open_heredoc(t_shell *s)
+{
+	s->fd = open(s->heredoc_tmp, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (s->fd < 0)
+		terminate_shell(s);
+	return (s->fd);
+}
 
 int	interrupt_heredoc(t_shell *s)
 {
@@ -21,46 +65,4 @@ int	interrupt_heredoc(t_shell *s)
 		return (1);
 	}
 	return (0);
-}
-
-int	heredoc_loop(t_shell *s, t_ast *node)
-{
-	int	i;
-
-	s->heredoc_fd = 0;
-	i = -1;
-	while (++i < node->data.s_exec.heredoc_count)
-	{
-		if (s->heredoc_fd > 0)
-			if (close(s->heredoc_fd) < 0)
-				return (-1);
-		s->fd = 0;
-		if (i == node->data.s_exec.heredoc_count - 1)
-		{
-			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 1) != 0)
-				return (-1);
-		}
-		else
-		{
-			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
-				return (-1);
-		}
-		s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
-		if (s->heredoc_fd < 0)
-			return (-1);
-	}
-	return (0);
-}
-
-void	waitheredoc(uint8_t *numerr, pid_t pid)
-{
-	int	status;
-
-	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-		*numerr = 128 + WTERMSIG(status);
-	else if (WIFEXITED(status))
-		*numerr = WEXITSTATUS(status);
-	else
-		*numerr = 1;
 }

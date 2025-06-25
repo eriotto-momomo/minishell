@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 17:06:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:03:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_shell
 	t_ast	*root_node;
 	t_token	*head;
 	pid_t	child_pids[MAX_CMDS];
+	struct termios	term_backup;
 	int		pid_count;
 	int		pipe_fd[MAX_CMDS][2];
 	int		pipe_count;

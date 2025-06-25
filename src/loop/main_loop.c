@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 14:28:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:42:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 
 static void	reset(t_shell *s)
 {
-	s->numerr = 0;
+	if (!s->child_exit)
+		s->numerr = 0;
 	s->pipe_count = 0;
 	s->pid_count = 0;
 	s->tok_rdir = 0;
