@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 18:04:25 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 12:02:38 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	heredoc_loop(t_shell *s, t_ast *node)
 			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
 				return (-1);
 		}
-		s->heredoc_fd = redir_in(s->heredoc_tmp, 0);
+		s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
 		if (s->heredoc_fd < 0)
 			return (-1);
 	}
