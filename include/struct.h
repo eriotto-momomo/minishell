@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 15:03:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:34:29 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,30 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	t_env	*env_list;
-	int		ret_value;
-	char	*prompt;
-	char	*line;
-	t_env	*old_pwd;
-	t_env	*pwd;
-	t_env	*home;
-	t_ast	*current_node;
-	t_ast	*root_node;
-	t_token	*head;
-	pid_t	child_pids[MAX_CMDS];
+	t_env			*env_list;
+	int				ret_value;
+	char			*prompt;
+	char			*line;
+	t_env			*old_pwd;
+	t_env			*pwd;
+	t_env			*home;
+	t_ast			*current_node;
+	t_ast			*root_node;
+	t_token			*head;
+	pid_t			child_pids[MAX_CMDS];
 	struct termios	term_backup;
-	int		pid_count;
-	int		pipe_fd[MAX_CMDS][2];
-	int		pipe_count;
-	char	*heredoc_tmp;
-	int		heredoc_fd;
-	int		child_exit;
-	int		fd;
-	int		sig_mode;
-	uint8_t	numerr;
-	int		tok_rdir;
-	int		tok_pipe;
-	int		tok_word;
+	int				pid_count;
+	int				pipe_fd[MAX_CMDS][2];
+	int				pipe_count;
+	char			*heredoc_tmp;
+	int				heredoc_fd;
+	int				child_exit;
+	int				fd;
+	int				sig_mode;
+	uint8_t			numerr;
+	int				tok_rdir;
+	int				tok_pipe;
+	int				tok_word;
 }			t_shell;
 
 #endif
