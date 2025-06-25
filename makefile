@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
+#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/24 13:10:55 by emonacho         ###   ########.fr        #
+#    Updated: 2025/06/25 11:20:57 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/builtin/ft_env.c\
 			$(CFILES_PATH)/builtin/ft_unset.c\
 			$(CFILES_PATH)/builtin/ft_export.c\
+			$(CFILES_PATH)/builtin/ft_exit.c\
 			$(CFILES_PATH)/init/init_env.c\
 			$(CFILES_PATH)/init/init_shell.c\
 			$(CFILES_PATH)/expand/word_processing.c\
