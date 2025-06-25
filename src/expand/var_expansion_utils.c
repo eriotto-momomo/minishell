@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:18:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 09:37:08 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 12:29:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*get_var(uint8_t numerr, t_env *env, char *s)
 	else
 		return (ft_strdup(""));
 }
+
 int	is_valid_var_start(char c)
 {
 	return (ft_isalpha(c) || c == '_' || c == '?');

@@ -6,22 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 10:38:43 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 12:29:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	interrupt_heredoc(t_shell *s)
-{
-	if (access(HEREDOC_FILE_PATH, F_OK) < 0)
-	{
-		w_free((void **)&s->line);
-		print_error(&s->numerr, errno);
-		return (1);
-	}
-	return (0);
-}
 
 int	handle_pipe(t_shell *s, t_ast **node)
 {
@@ -99,43 +88,11 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	return (0);
 }
 
-int	is_path(const char *cmd)
-{
-	if (!cmd)
-		return (0);
-	return (cmd[0] == '/' || (cmd[0] == '.' && (cmd[1] == '/'
-		|| (cmd[1] == '.' && cmd[2] == '/'))));
-}
-
-char	*path_making(t_env *env, char *cmd)
-{
-	char *cmd_path;
-
-	if (is_path(cmd))
-	{
-		cmd_path = ft_strdup(cmd);
-		if (!cmd_path)
-			return (NULL);
-		if (access(cmd_path, F_OK) == -1)
-		{
-			w_free((void **)&cmd_path);
-			return (NULL);
-		}
-	}
-	else
-	{
-		cmd_path = pathfinder(env, cmd);
-		if (!cmd_path)
-			return (NULL);
-	}
-	return (cmd_path);
-}
-
 int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
 	char	**env_table;
 	char	*path;
-	
+
 	path = path_making(env, argv[0]);
 	if (!path)
 	{

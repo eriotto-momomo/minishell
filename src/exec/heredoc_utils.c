@@ -6,11 +6,22 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 18:04:25 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 12:28:27 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	interrupt_heredoc(t_shell *s)
+{
+	if (access(HEREDOC_FILE_PATH, F_OK) < 0)
+	{
+		w_free((void **)&s->line);
+		print_error(&s->numerr, errno);
+		return (1);
+	}
+	return (0);
+}
 
 int	heredoc_loop(t_shell *s, t_ast *node)
 {
@@ -34,7 +45,7 @@ int	heredoc_loop(t_shell *s, t_ast *node)
 			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
 				return (-1);
 		}
-		s->heredoc_fd = redir_in(s->heredoc_tmp, 0);
+		s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
 		if (s->heredoc_fd < 0)
 			return (-1);
 	}
