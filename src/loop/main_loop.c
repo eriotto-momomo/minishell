@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 10:43:46 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 15:42:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 {
-	if (mode == UPDATE_SIGNALS)
+	if (mode == UPDATE_SIGNALS || mode == UPDATE_SIG_ERR)
 	{
 		if (g_sig == SIGINT)
 			*numerr = 130;
 		else if (g_sig == SIGQUIT)
 			*numerr = 131;
 	}
-	else if (mode == UPDATE_ERRNO)
+	if (mode == UPDATE_ERRNO || mode == UPDATE_SIG_ERR)
 	{
 		if (*child_exit == 1)
 		{
@@ -36,7 +36,8 @@ void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 
 static void	reset(t_shell *s)
 {
-	s->numerr = 0;
+	if (!s->child_exit)
+		s->numerr = 0;
 	s->pipe_count = 0;
 	s->pid_count = 0;
 	s->tok_rdir = 0;
@@ -62,7 +63,7 @@ void	prompt_loop(t_shell *s)
 	reset(s);
 	while (1)
 	{
-		update_numerr(&s->child_exit, &s->numerr, UPDATE_ERRNO);
+		update_numerr(&s->child_exit, &s->numerr, UPDATE_SIG_ERR);
 		if (s->sig_mode != MINISHELL_SIGNALS)
 			setup_signals(s, MINISHELL_SIGNALS);
 		s->line = (readline(s->prompt));

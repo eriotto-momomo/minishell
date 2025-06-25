@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 12:30:45 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 15:20:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ char	*path_making(t_env *env, char *cmd);
 int		setup_pipe(int fd_in, int fd_out);
 int		handle_pipe(t_shell *s, t_ast **current_node);
 int		handle_exec(t_shell *s, t_ast *current_node);
+int		interrupt_heredoc(t_shell *s);
+int		open_heredoc(t_shell *s);
+int		is_delimiter(char *line, char *delimiter);
+int		put_in_heredoc(char *line, int fd);
+int		heredoc_loop(t_shell *s, t_ast *node);
 int		write_heredoc(t_shell *s, char *delimiter, int to_expand);
 int		handle_heredoc(t_shell *s, t_ast *node);
 int		heredoc_loop(t_shell *s, t_ast *node);

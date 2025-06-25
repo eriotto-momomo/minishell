@@ -1,55 +1,82 @@
-==506466== Memcheck, a memory error detector
-==506466== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==506466== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==506466== Command: ./minishell
-==506466== Parent PID: 506465
-==506466== 
-==506484== 
-==506484== FILE DESCRIPTORS: 5 open (3 std) at exit.
-==506484== Open file descriptor 4: ./.tmp/.heredoc_tmp.txt
-==506484==    at 0x49DB53B: open (open64.c:41)
-==506484==    by 0x10AB4D: redir_in (redir.c:68)
-==506484==    by 0x10CDA0: heredoc_loop (heredoc_utils.c:48)
-==506484==    by 0x10CBB3: handle_heredoc (heredoc.c:100)
-==506484==    by 0x10C01D: preorder_exec (exec.c:74)
-==506484==    by 0x10C199: execution (exec.c:113)
-==506484==    by 0x109CA9: process_input (main_loop.c:55)
-==506484==    by 0x109DAC: prompt_loop (main_loop.c:75)
-==506484==    by 0x109503: main (main.c:30)
-==506484== 
-==506484== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
-==506484==    <inherited from parent>
-==506484== 
-==506484== 
-==506484== HEAP SUMMARY:
-==506484==     in use at exit: 207,281 bytes in 225 blocks
-==506484==   total heap usage: 697 allocs, 472 frees, 234,688 bytes allocated
-==506484== 
-==506484== LEAK SUMMARY:
-==506484==    definitely lost: 0 bytes in 0 blocks
-==506484==    indirectly lost: 0 bytes in 0 blocks
-==506484==      possibly lost: 0 bytes in 0 blocks
-==506484==    still reachable: 0 bytes in 0 blocks
-==506484==         suppressed: 207,281 bytes in 225 blocks
-==506484== 
-==506484== For lists of detected and suppressed errors, rerun with: -s
-==506484== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==506466== 
-==506466== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==506466== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
-==506466==    <inherited from parent>
-==506466== 
-==506466== 
-==506466== HEAP SUMMARY:
-==506466==     in use at exit: 207,346 bytes in 228 blocks
-==506466==   total heap usage: 687 allocs, 459 frees, 234,684 bytes allocated
-==506466== 
-==506466== LEAK SUMMARY:
-==506466==    definitely lost: 0 bytes in 0 blocks
-==506466==    indirectly lost: 0 bytes in 0 blocks
-==506466==      possibly lost: 0 bytes in 0 blocks
-==506466==    still reachable: 0 bytes in 0 blocks
-==506466==         suppressed: 207,346 bytes in 228 blocks
-==506466== 
-==506466== For lists of detected and suppressed errors, rerun with: -s
-==506466== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==533746== Memcheck, a memory error detector
+==533746== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==533746== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==533746== Command: ./minishell
+==533746== Parent PID: 533745
+==533746== 
+==533750== 
+==533750== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==533750== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
+==533750==    <inherited from parent>
+==533750== 
+==533750== 
+==533750== HEAP SUMMARY:
+==533750==     in use at exit: 207,276 bytes in 225 blocks
+==533750==   total heap usage: 662 allocs, 437 frees, 234,187 bytes allocated
+==533750== 
+==533750== LEAK SUMMARY:
+==533750==    definitely lost: 0 bytes in 0 blocks
+==533750==    indirectly lost: 0 bytes in 0 blocks
+==533750==      possibly lost: 0 bytes in 0 blocks
+==533750==    still reachable: 0 bytes in 0 blocks
+==533750==         suppressed: 207,276 bytes in 225 blocks
+==533750== 
+==533750== For lists of detected and suppressed errors, rerun with: -s
+==533750== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==533754== 
+==533754== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==533754== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
+==533754==    <inherited from parent>
+==533754== 
+==533754== 
+==533754== HEAP SUMMARY:
+==533754==     in use at exit: 207,364 bytes in 231 blocks
+==533754==   total heap usage: 695 allocs, 464 frees, 234,748 bytes allocated
+==533754== 
+==533754== LEAK SUMMARY:
+==533754==    definitely lost: 0 bytes in 0 blocks
+==533754==    indirectly lost: 0 bytes in 0 blocks
+==533754==      possibly lost: 0 bytes in 0 blocks
+==533754==    still reachable: 0 bytes in 0 blocks
+==533754==         suppressed: 207,364 bytes in 231 blocks
+==533754== 
+==533754== For lists of detected and suppressed errors, rerun with: -s
+==533754== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==533759== 
+==533759== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==533759== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
+==533759==    <inherited from parent>
+==533759== 
+==533759== 
+==533759== HEAP SUMMARY:
+==533759==     in use at exit: 207,452 bytes in 237 blocks
+==533759==   total heap usage: 741 allocs, 504 frees, 235,395 bytes allocated
+==533759== 
+==533759== LEAK SUMMARY:
+==533759==    definitely lost: 0 bytes in 0 blocks
+==533759==    indirectly lost: 0 bytes in 0 blocks
+==533759==      possibly lost: 0 bytes in 0 blocks
+==533759==    still reachable: 0 bytes in 0 blocks
+==533759==         suppressed: 207,452 bytes in 237 blocks
+==533759== 
+==533759== For lists of detected and suppressed errors, rerun with: -s
+==533759== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==533746== 
+==533746== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==533746== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
+==533746==    <inherited from parent>
+==533746== 
+==533746== 
+==533746== HEAP SUMMARY:
+==533746==     in use at exit: 207,759 bytes in 255 blocks
+==533746==   total heap usage: 877 allocs, 622 frees, 238,013 bytes allocated
+==533746== 
+==533746== LEAK SUMMARY:
+==533746==    definitely lost: 0 bytes in 0 blocks
+==533746==    indirectly lost: 0 bytes in 0 blocks
+==533746==      possibly lost: 0 bytes in 0 blocks
+==533746==    still reachable: 0 bytes in 0 blocks
+==533746==         suppressed: 207,759 bytes in 255 blocks
+==533746== 
+==533746== For lists of detected and suppressed errors, rerun with: -s
+==533746== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
