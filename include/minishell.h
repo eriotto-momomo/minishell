@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 16:43:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:58:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <termios.h>
 # include <fcntl.h>
 # include <linux/limits.h>
 # include "./error.h"

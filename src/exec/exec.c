@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 14:14:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:05:50 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,12 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	else if ((*node)->tag == EXEC_NODE)
 	{
 		if ((*node)->data.s_exec.heredoc_count > 0)
+		{
+			s->child_exit = 1;
 			(*node)->data.s_exec.fd_in = handle_heredoc(s, (*node));
+			if ((*node)->data.s_exec.fd_in < 0)
+				return (1);
+		}
 		if (string_processing(s, &(*node)->data.s_exec.ac,
 				&(*node)->data.s_exec.av) != 0)
 			return (1);

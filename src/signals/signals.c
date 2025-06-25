@@ -6,19 +6,31 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 14:28:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:04:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+int	handle_termios(t_shell *s, int mode)
+{
+	if (mode == 0)
+	{
+		if (tcgetattr(STDIN_FILENO, &s->term_backup) == -1)
+			return (print_error(&s->numerr, errno));
+	}
+	else if (mode == 1)
+	{
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &s->term_backup) == -1)
+			return (print_error(&s->numerr, errno));
+	}
+	return (0);
+}
+
 void	heredoc_handler(int signal)
 {
 	g_sig = signal;
-	rl_replace_line("", 0);
-	rl_done = 1;
 	close(STDIN_FILENO);
-	write(1, "\n", 1);
 }
 
 void	clean_exit_handler(int signal)
@@ -61,7 +73,7 @@ void	setup_signals(t_shell *s, int mode)
 	{
 		act.sa_handler = &heredoc_handler;
 		sigaction(SIGINT, &act, NULL);
-		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		s->sig_mode = HEREDOC_SIGNALS;
 	}
 }
