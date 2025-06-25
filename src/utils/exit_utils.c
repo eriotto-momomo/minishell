@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/24 15:07:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:20:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	ft_exit(t_shell *s, int ac, char **av)
-{
-	int	tmp;
-
-	errno = 0;
-	if (ac > 2)
-		return (print_error(&s->numerr, E2BIG));
-	if (ac > 1)
-	{
-		tmp = ft_atoi(av[1]);
-		if (!tmp)
-			print_error(&s->numerr, errno);
-		s->numerr = (uint8_t)tmp;
-	}
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	terminate_shell(s);
-	return (0);
-}
 
 void	reset_free(t_shell *s)
 {
