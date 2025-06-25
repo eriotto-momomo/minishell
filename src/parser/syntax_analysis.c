@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 10:28:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 09:45:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	syntax_analysis(t_shell *s, t_token *current_tok)
 					ft_puterror("Unmatched quote !");
 				else if (err == 3)
 					ft_puterror("Unexpected token found !");
-				s->numerr = EINVAL;
+				s->numerr = 2;
 			}
 			else if (err == 4)
 				print_error(&s->numerr, errno);

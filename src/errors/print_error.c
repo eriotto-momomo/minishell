@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:24:21 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 10:24:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 09:42:00 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int	print_custom_error(uint8_t *numerr, int err, char *error_m)
 {
 	*numerr = (uint8_t)err;
 	ft_putstr_fd(error_m, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	return (err);
 }
