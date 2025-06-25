@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 16:08:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:33:37 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 	waitheredoc(&s->numerr, heredoc_pid);
 	if (handle_termios(s, 1) != 0)
 		return (-1);
-	s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
+	// s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
+	s->heredoc_fd = open(HEREDOC_FILE_PATH, O_RDONLY);
 	setup_signals(s, DEFAULT_SIGNALS);
 	return (s->heredoc_fd);
 }

@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 15:42:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:33:23 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static int	is_blank_line(char *line)
+{
+	while (*line)
+	{
+		if (!isspace((unsigned char)*line))
+			return (0);
+		line++;
+	}
+	return (1);
+}
 
 void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 {
@@ -70,7 +81,7 @@ void	prompt_loop(t_shell *s)
 		update_numerr(&s->child_exit, &s->numerr, UPDATE_SIGNALS);
 		if (s->line == NULL)
 			terminate_shell(s);
-		if (s->line && *s->line)
+		if (s->line && !is_blank_line(s->line))
 		{
 			add_history(s->line);
 			process_input(s);

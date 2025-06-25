@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 16:05:50 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:23:13 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	close_fd(t_ast *node)
 {
+	if (errno == 9)
+	{
+		errno = 0;
+		return (0);
+	}
 	if (node->tag == EXEC_NODE)
 	{
 		if (node->data.s_exec.fd_in > 2)
@@ -22,6 +27,7 @@ int	close_fd(t_ast *node)
 		if (node->data.s_exec.fd_out > 2)
 			if (close(node->data.s_exec.fd_out) != 0)
 				return (1);
+		return (0);
 	}
 	else if (node->tag == PIPE_NODE)
 	{
