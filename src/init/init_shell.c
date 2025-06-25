@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 15:49:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 08:52:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_shell(t_shell *s, char	**envp)
 	s->prompt = NULL;
 	s->line = NULL;
 	s->pwd = var_lookup(s->env_list, "PWD");
-	s->old_pwd = var_lookup(s->env_list, "PWD");
+	s->old_pwd = var_lookup(s->env_list, "OLDPWD");
 	s->home = var_lookup(s->env_list, "HOME");
 	s->pid_count = 0;
 	s->head = NULL;

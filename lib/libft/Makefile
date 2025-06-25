@@ -42,6 +42,7 @@ ft_putstr_fd.c \
 ft_split.c \
 ft_str3join.c \
 ft_strchr.c \
+ft_strcmp.c \
 ft_strdup.c \
 ft_striteri.c \
 ft_strjoin.c \
