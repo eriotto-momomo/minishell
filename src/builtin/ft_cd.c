@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 08:54:21 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 09:42:16 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_cd(t_shell *s, int ac, char **av)
 	if (chdir(curpath) == -1)
 	{
 		free(curpath);
-		return (print_error(&s->numerr, errno));
+		return (print_custom_error(&s->numerr, 1, strerror(errno)));
 	}
 	w_free((void **)&curpath);
 	new_pwd = save_cwd();

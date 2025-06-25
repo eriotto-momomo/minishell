@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 09:18:38 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 09:43:36 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ int	execution(t_shell *s)
 	waiton(&s->numerr, s->child_pids, s->pid_count);
 	free_ast(&(s->root_node));
 	unlink(HEREDOC_FILE_PATH);
+	s->numerr = 0;
 	return (0);
 }

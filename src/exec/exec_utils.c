@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 09:28:37 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 09:42:43 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 	if (!path)
 	{
 		w_free((void **)&path);
-		print_custom_error(&s->numerr, 127, "Command not found\n");
+		print_custom_error(&s->numerr, 127, "Command not found");
 		kill_children(s);
 	}
 	env_table = ltotable(env);
