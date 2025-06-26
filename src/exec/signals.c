@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 16:36:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/26 17:51:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	handle_termios(t_shell *s, int mode)
 {
+	fprintf(stderr, "%s%s%s\n", P, "handle_termios | ENTER FUNCTION", RST);
 	if (mode == 0)
 	{
 		if (tcgetattr(STDIN_FILENO, &s->term_backup) == -1)

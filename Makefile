@@ -6,7 +6,7 @@
 #    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/25 20:19:45 by emonacho         ###   ########.fr        #
+#    Updated: 2025/06/26 20:19:02 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,17 +32,17 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\
 			$(CFILES_PATH)/parser/parser_main.c\
-			$(CFILES_PATH)/parser/redir.c\
 			$(CFILES_PATH)/parser/syntax_analysis.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/utils/free_ast.c\
 			$(CFILES_PATH)/utils/general.c\
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/utils/identifier.c\
+			$(CFILES_PATH)/heredoc_redir/redir.c\
+			$(CFILES_PATH)/heredoc_redir/heredoc_write.c\
+			$(CFILES_PATH)/heredoc_redir/heredoc_utils.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/exec_utils.c\
-			$(CFILES_PATH)/exec/heredoc.c\
-			$(CFILES_PATH)/exec/heredoc_utils.c\
 			$(CFILES_PATH)/exec/pathfinder.c\
 			$(CFILES_PATH)/exec/signals.c\
 			$(CFILES_PATH)/errors/print_error.c\

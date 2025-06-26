@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   V1_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/26 16:24:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:26:57 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	heredoc_loop(t_shell *s, t_ast *node)
 {
+	fprintf(stderr, "[%d] heredoc starting\n", getpid());
 	int	i;
 
 	s->heredoc_fd = 0;
@@ -39,6 +40,7 @@ int	heredoc_loop(t_shell *s, t_ast *node)
 		if (s->heredoc_fd < 0)
 			return (-1);
 	}
+	fprintf(stderr, "[%d] heredoc exiting\n", getpid());
 	return (0);
 }
 
@@ -54,7 +56,7 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 		s->line = readline("> ");
 		if (!s->line)
 			break ;
-		if (is_delimiter(s->line, del))
+		if (is_eof(s->line, del))
 			break ;
 		if (to_expand == 1)
 			if ((del[0] != '\'' && del[ft_strlen(del) - 1] != '\'')
@@ -72,48 +74,79 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 
 int	handle_heredoc(t_shell *s, t_ast *node)
 {
-	if (handle_termios(s, 0) != 0)
-		return (-1);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	s->heredoc_pid = fork();
-	if (s->heredoc_pid < 0)
-		return (print_error(&s->numerr, EPIPE));
-	if (s->heredoc_pid == 0)
+	int	i;
+	int	fd_in;
+
+	fd_in = 0;
+	i = 0;
+	while (i < node->data.s_exec.heredoc_count)
 	{
-
-		if (close_fd(s->root_node) != 0) // FONCTIONNE SEUL
+		if (fd_in > 0)
+			if (close(fd_in) < 0)
+				return (-1);
+		s->fd = 0;
+		if (i == node->data.s_exec.heredoc_count - 1)
+		{
+			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 1) != 0)
+				return (-1);
+		}
+		else
+			if (write_heredoc(s, node->data.s_exec.heredoc_list[i], 0) != 0)
+				return (-1);
+		//fd_in = redir_in(s->heredoc_tmp, 0);
+		fd_in = open(s->heredoc_tmp, O_RDONLY);
+		if (fd_in < 0)
 			return (-1);
-		//if (close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
-		//	return (-1);
-
-		///////////////////////////
-		//int i = 0;
-		//while (i < s->pipe_count)
-		//{
-		//	if (close(s->pipe_fd[i][0]) != 0)
-		//			return (1);
-		//	if (close(s->pipe_fd[i][1]) != 0)
-		//			return (1);
-		//	i++;
-		//}
-		////////////////////////
-
-		setup_signals(s, HEREDOC_SIGNALS);
-		if (heredoc_loop(s, node) == -1)
-			kill_children(s);
-		clean_free(s);
-		if (g_sig == SIGINT)
-			exit(130);
-		exit(s->numerr);
+		i++;
 	}
-	waitheredoc(&s->numerr, s->heredoc_pid);
-	if (handle_termios(s, 1) != 0)
-		return (-1);
-	s->heredoc_fd = open(HEREDOC_FILE_PATH, O_RDONLY);
-	setup_signals(s, DEFAULT_SIGNALS);
-	return (s->heredoc_fd);
+	return (fd_in);
 }
+
+//int	handle_heredoc(t_shell *s, t_ast *node)
+//{
+//	//if (handle_termios(s, 0) != 0)
+//	//	return (-1);
+//	signal(SIGINT, SIG_IGN);
+//	signal(SIGQUIT, SIG_IGN);
+//	s->heredoc_pid = fork();
+//	if (s->heredoc_pid < 0)
+//		return (print_error(&s->numerr, EPIPE));
+//	if (s->heredoc_pid == 0)
+//	{
+
+//		if (close_fd(s->root_node) != 0) // FONCTIONNE SEUL
+//			return (-1);
+//		//if (close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
+//		//	return (-1);
+
+//		///////////////////////////
+//		//int i = 0;
+//		//while (i < s->pipe_count)
+//		//{
+//		//	if (close(s->pipe_fd[i][0]) != 0)
+//		//			return (1);
+//		//	if (close(s->pipe_fd[i][1]) != 0)
+//		//			return (1);
+//		//	i++;
+//		//}
+//		////////////////////////
+
+//		//setup_signals(s, HEREDOC_SIGNALS);
+//		if (heredoc_loop(s, node) == -1)
+//			kill_children(s);
+//		//clean_free(s);
+//		if (g_sig == SIGINT)
+//			exit(130);
+//		exit(s->numerr);
+//	}
+//	waitheredoc(&s->numerr, s->heredoc_pid);
+//	//if (handle_termios(s, 1) != 0)
+//	//	return (-1);
+//	s->heredoc_fd = open(HEREDOC_FILE_PATH, O_RDONLY);
+//	setup_signals(s, DEFAULT_SIGNALS);
+//	fprintf(stderr,"%shandle_heredoc | heredoc handled! | s->heredoc_fd: %d%s\n",Y, s->heredoc_fd, RST);
+//	return (s->heredoc_fd);
+//}
 
 void	waitheredoc(uint8_t *numerr, pid_t pid)
 {
