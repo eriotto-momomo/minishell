@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/26 16:21:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:13:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,6 @@ int	preorder_exec(t_shell *s, t_ast **node)
 {
 	if (!(*node))
 		return (0);
-	/////////////////////////////////////
-	if ((*node)->data.s_exec.heredoc_count > 0)
-	{
-		s->child_exit = 1;
-		(*node)->data.s_exec.fd_in = handle_heredoc(s, (*node));
-		if ((*node)->data.s_exec.fd_in < 0)
-			return (1);
-	}
-	//////////////////////////////////////
 	if ((*node)->tag == PIPE_NODE)
 	{
 		if (handle_pipe(s, &(*node)) != 0)
@@ -87,19 +78,20 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	}
 	else if ((*node)->tag == EXEC_NODE)
 	{
-		//if ((*node)->data.s_exec.heredoc_count > 0)
-		//{
-		//	s->child_exit = 1;
-		//	(*node)->data.s_exec.fd_in = handle_heredoc(s, (*node));
-		//	if ((*node)->data.s_exec.fd_in < 0)
-		//		return (1);
-		//}
+		if ((*node)->data.s_exec.heredoc_count > 0)
+		{
+			s->child_exit = 1;
+			(*node)->data.s_exec.fd_in = write_heredoc(s, (*node));
+			if ((*node)->data.s_exec.fd_in < 0)
+				return (1);
+		}
 		if (string_processing(s, &(*node)->data.s_exec.ac,
 				&(*node)->data.s_exec.av) != 0)
 			return (1);
 		if ((*node)->data.s_exec.ac > 0)
 			if (handle_exec(s, (*node)) != 0)
 				return (1);
+		//fprintf(stderr,"%spreoreder_exec | EXEC_NODE handled! %s\n",Y, RST);
 	}
 	close_fd((*node));
 	return (0);
@@ -147,5 +139,6 @@ int	execution(t_shell *s)
 	free_ast(&(s->root_node));
 	if (s->heredoc_fd > -1)
 		unlink(HEREDOC_FILE_PATH);
+	//fprintf(stderr,"%sexecution | EXECUTION DONE %s\n",B, RST);
 	return (0);
 }
