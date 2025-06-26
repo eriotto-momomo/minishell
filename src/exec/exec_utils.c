@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/26 12:11:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:09:28 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,24 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			return (print_error(&s->numerr, errno));
-		if (close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
-			return (print_error(&s->numerr, errno));
+		//if (close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
+		//	return (print_error(&s->numerr, errno));
+
+		//////////////////////////////////////////////
+		int i = -1;
+		while (++i < s->pipe_count - 2)
+		{
+			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
+				&& s->pipe_fd[i][0] != node->data.s_exec.fd_out)
+				if (close(s->pipe_fd[i][0]) != 0)
+					return (1);
+			if (s->pipe_fd[i][1] != node->data.s_exec.fd_in
+				&& s->pipe_fd[i][1] != node->data.s_exec.fd_out)
+				if (close(s->pipe_fd[i][1]) != 0)
+					return (1);
+		}
+		///////////////////////////////////////////////
+
 		cmd_execution(s, env, node->data.s_exec.av);
 	}
 	else
