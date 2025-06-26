@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/26 20:17:05 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:35:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static int	put_in_heredoc(char *line, int fd)
 
 	new_line = ft_strjoin(line, "\n");
 	if (!new_line)
+	{
+		w_free((void **)&line);
 		return (1);
+	}
 	ft_putstr_fd(new_line, fd);
 	free(new_line);
 	return (0);

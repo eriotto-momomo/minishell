@@ -4,6 +4,7 @@ valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 🔍PARSER
 echo Hello > 1.txt > 2.txt > 3.txt > 4.txt
 cat << 1 << 2 << 3 << 4
+cat << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9
 cat << 1 << 2
 cat < 1 | cat < 2 | cat < 3 | cat < 4 >> 5
 echo "yoyoyoyoo" > 1 lol "fcckin cmd" | echo Hello | cat << 1
