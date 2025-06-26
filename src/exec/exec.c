@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/26 11:49:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 15:40:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	close_fd(t_ast *node)
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
+	//fprintf(stderr, "%s%s%s\n", P, "handle_exec node:", RST);
+	//print_node(node);
 	if (perfect_match(node->data.s_exec.av[0], "exit"))
 		return (ft_exit(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
 	if (perfect_match(node->data.s_exec.av[0], CD))
@@ -69,6 +71,15 @@ int	preorder_exec(t_shell *s, t_ast **node)
 {
 	if (!(*node))
 		return (0);
+	/////////////////////////////////////
+	if ((*node)->data.s_exec.heredoc_count > 0)
+	{
+		s->child_exit = 1;
+		(*node)->data.s_exec.fd_in = handle_heredoc(s, (*node));
+		if ((*node)->data.s_exec.fd_in < 0)
+			return (1);
+	}
+	//////////////////////////////////////
 	if ((*node)->tag == PIPE_NODE)
 	{
 		if (handle_pipe(s, &(*node)) != 0)
@@ -76,13 +87,13 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	}
 	else if ((*node)->tag == EXEC_NODE)
 	{
-		if ((*node)->data.s_exec.heredoc_count > 0)
-		{
-			s->child_exit = 1;
-			(*node)->data.s_exec.fd_in = handle_heredoc(s, (*node));
-			if ((*node)->data.s_exec.fd_in < 0)
-				return (1);
-		}
+		//if ((*node)->data.s_exec.heredoc_count > 0)
+		//{
+		//	s->child_exit = 1;
+		//	(*node)->data.s_exec.fd_in = handle_heredoc(s, (*node));
+		//	if ((*node)->data.s_exec.fd_in < 0)
+		//		return (1);
+		//}
 		if (string_processing(s, &(*node)->data.s_exec.ac,
 				&(*node)->data.s_exec.av) != 0)
 			return (1);
