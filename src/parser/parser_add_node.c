@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 18:15:50 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/26 11:47:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int	add_redir(t_shell *s, t_ast **node, t_token **tok)
 				= redir_in(s, tmp->next->data, (*node)->data.s_exec.fd_in);
 		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
 		{
-			errno = 2;
-			return (1);
+			(*node)->data.s_exec.fd_in = 0;
+			(*node)->data.s_exec.fd_out = 1;
 		}
 		if (!get_next_token(&tmp))
 			break ;
 	}
+	if (errno)
+		ft_puterror(strerror(errno));
 	return (0);
 }
 
