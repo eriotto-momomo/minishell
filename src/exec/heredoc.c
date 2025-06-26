@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 17:05:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/26 11:42:57 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,22 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 		return (print_error(&s->numerr, EPIPE));
 	if (heredoc_pid == 0)
 	{
+
+		////////////////////////////////
+		close_fd(node);
+		//close_pipes(s->pipe_fd, s->pipe_count); // FFFFFFFF marche pas
+		int i = -1;
+		while (++i < s->pipe_count)
+		{
+			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
+				&& s->pipe_fd[i][0] != node->data.s_exec.fd_out)
+				close(s->pipe_fd[i][0]);
+			if (s->pipe_fd[i][1] != node->data.s_exec.fd_in
+				&& s->pipe_fd[i][1] != node->data.s_exec.fd_out)
+				close(s->pipe_fd[i][1]);
+		}
+		////////////////////////////////////
+
 		setup_signals(s, HEREDOC_SIGNALS);
 		if (heredoc_loop(s, node) == -1)
 			kill_children(s);
@@ -93,7 +109,8 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 	waitheredoc(&s->numerr, heredoc_pid);
 	if (handle_termios(s, 1) != 0)
 		return (-1);
-	s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
+	// s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
+	s->heredoc_fd = open(HEREDOC_FILE_PATH, O_RDONLY);
 	setup_signals(s, DEFAULT_SIGNALS);
 	return (s->heredoc_fd);
 }

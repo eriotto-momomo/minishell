@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:19:46 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 13:56:42 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/26 11:44:30 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	is_all_digit(char *s)
 
 int	ft_exit(t_shell *s, int ac, char **av)
 {
+	s->numerr = 0;
 	if (ac > 2)
 		return (print_custom_error(&s->numerr, 1, "too many arguments"));
 	if (ac > 1)

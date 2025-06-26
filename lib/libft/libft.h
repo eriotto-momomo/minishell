@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 11:08:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 08:48:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/25 17:31:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include "ft_printf/ft_printf.h"
 
 # define R "\033[1;31m"
 # define G "\033[1;32m"

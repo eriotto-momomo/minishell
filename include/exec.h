@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 15:20:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 20:53:06 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		cmd_execution(t_shell *s, t_env *env, char **argv);
 char	*pathfinder(t_env *env, char *cmd);
 char	*path_making(t_env *env, char *cmd);
 int		setup_pipe(int fd_in, int fd_out);
+int		close_pipes(int pipe_fd[][2], int pipe_count);
 int		handle_pipe(t_shell *s, t_ast **current_node);
 int		handle_exec(t_shell *s, t_ast *current_node);
 int		interrupt_heredoc(t_shell *s);

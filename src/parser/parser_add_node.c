@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 11:53:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:15:50 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,34 +64,6 @@ int	add_redir(t_shell *s, t_ast **node, t_token **tok)
 	}
 	return (0);
 }
-
-// FIRST VERSION
-//int	add_redir(t_ast **node, t_token **tok)
-//{
-//	t_token	*tmp;
-//
-//	(*node)->data.s_exec.fd_in = 0;
-//	(*node)->data.s_exec.fd_out = 1;
-//	tmp = *tok;
-//	while (tmp && tmp->type != PIPE)
-//	{
-//		if (tmp->type == OUT_REDIR || tmp->type == APP_OUT_REDIR)
-//			(*node)->data.s_exec.fd_out
-//				= redir_out(tmp->type, tmp->next->data,
-//					(*node)->data.s_exec.fd_out);
-//		else if (tmp->type == IN_REDIR)
-//			(*node)->data.s_exec.fd_in
-//				= redir_in(tmp->next->data, (*node)->data.s_exec.fd_in);
-//		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
-//		{
-//			errno = 2;
-//			return (1);
-//		}
-//		if (!get_next_token(&tmp))
-//			break ;
-//	}
-//	return (0);
-//}
 
 t_ast	*add_exec_node(t_shell *s, t_token **tok)
 {
