@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/26 15:40:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:21:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	close_fd(t_ast *node)
 		if (node->data.s_exec.fd_out > 2)
 			if (close(node->data.s_exec.fd_out) != 0)
 				return (1);
-		//return (0);
+		node->data.s_exec.fd_in = 0;
+		node->data.s_exec.fd_out = 1;
+		return (0);
 	}
 	else if (node->tag == PIPE_NODE)
 	{
@@ -36,8 +38,6 @@ int	close_fd(t_ast *node)
 		if (close_fd(node->data.s_pipe.right) != 0)
 			return (1);
 	}
-	//node->data.s_exec.fd_in = 0;
-	//node->data.s_exec.fd_out = 1;
 	return (0);
 }
 
