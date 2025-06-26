@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/26 11:53:08 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:20:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,32 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 		return (print_error(&s->numerr, EPIPE));
 	if (s->heredoc_pid == 0)
 	{
-		if (close_fd(node) != 0 || close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
-			return (-1);
+		/////////////////////////////
+		int i = -1;
+		while (++i < s->pipe_count - 2)
+		{
+			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
+				&& s->pipe_fd[i][0] != node->data.s_exec.fd_out)
+				if (close(s->pipe_fd[i][0]) != 0)
+					return (1);
+			if (s->pipe_fd[i][1] != node->data.s_exec.fd_in
+				&& s->pipe_fd[i][1] != node->data.s_exec.fd_out)
+				if (close(s->pipe_fd[i][1]) != 0)
+					return (1);
+		}
+		//////////////////////////
+
+
+		//if (close_fd(node) != 0 || close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
+		//	return (-1);
 		setup_signals(s, HEREDOC_SIGNALS);
 		if (heredoc_loop(s, node) == -1)
 			kill_children(s);
 		clean_free(s);
+		if (close_fd(node) != 0)
+			return (-1);
+		//if (close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
+		//	return (-1);
 		if (g_sig == SIGINT)
 			exit(130);
 		exit(s->numerr);
