@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 13:25:02 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 21:09:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:53:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	heredoc_loop(t_shell *s, t_ast *node)
 				return (-1);
 		}
 		s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
+		w_free((void **)&s->line);
 		if (s->heredoc_fd < 0)
 			return (-1);
 	}
@@ -71,33 +72,17 @@ int	write_heredoc(t_shell *s, char *del, int to_expand)
 
 int	handle_heredoc(t_shell *s, t_ast *node)
 {
-	pid_t	heredoc_pid;
-
 	if (handle_termios(s, 0) != 0)
 		return (-1);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	heredoc_pid = fork();
-	if (heredoc_pid < 0)
+	s->heredoc_pid = fork();
+	if (s->heredoc_pid < 0)
 		return (print_error(&s->numerr, EPIPE));
-	if (heredoc_pid == 0)
+	if (s->heredoc_pid == 0)
 	{
-
-		////////////////////////////////
-		close_fd(node);
-		//close_pipes(s->pipe_fd, s->pipe_count); // FFFFFFFF marche pas
-		int i = -1;
-		while (++i < s->pipe_count)
-		{
-			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][0] != node->data.s_exec.fd_out)
-				close(s->pipe_fd[i][0]);
-			if (s->pipe_fd[i][1] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][1] != node->data.s_exec.fd_out)
-				close(s->pipe_fd[i][1]);
-		}
-		////////////////////////////////////
-
+		if (close_fd(node) != 0 || close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
+			return (-1);
 		setup_signals(s, HEREDOC_SIGNALS);
 		if (heredoc_loop(s, node) == -1)
 			kill_children(s);
@@ -106,10 +91,9 @@ int	handle_heredoc(t_shell *s, t_ast *node)
 			exit(130);
 		exit(s->numerr);
 	}
-	waitheredoc(&s->numerr, heredoc_pid);
+	waitheredoc(&s->numerr, s->heredoc_pid);
 	if (handle_termios(s, 1) != 0)
 		return (-1);
-	// s->heredoc_fd = redir_in(s, s->heredoc_tmp, 0);
 	s->heredoc_fd = open(HEREDOC_FILE_PATH, O_RDONLY);
 	setup_signals(s, DEFAULT_SIGNALS);
 	return (s->heredoc_fd);

@@ -6,23 +6,27 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 21:11:08 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:53:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	close_pipes(int pipe_fd[][2], int pipe_count)
+int	close_pipes(t_ast *node, int pipe_fd[][2], int pipe_count)
 {
 	int	i;
 
-	i = 0;
-	while (i < pipe_count)
+	i = -1;
+	while (++i < pipe_count)
 	{
-		if (close(pipe_fd[i][0]) != 0)
-			return (1);
-		if (close(pipe_fd[i][1]) != 0)
-			return (1);
+		if (pipe_fd[i][0] != node->data.s_exec.fd_in
+			&& pipe_fd[i][0] != node->data.s_exec.fd_out)
+			if (close(pipe_fd[i][0]) != 0)
+				return (1);
+		if (pipe_fd[i][1] != node->data.s_exec.fd_in
+			&& pipe_fd[i][1] != node->data.s_exec.fd_out)
+			if (close(pipe_fd[i][1]) != 0)
+				return (1);
 	}
 	return (0);
 }
@@ -76,10 +80,8 @@ int	setup_pipe(int fd_in, int fd_out)
 
 int	ft_external(t_shell *s, t_env *env, t_ast *node)
 {
-	int		i;
 	pid_t	pid;
 
-	i = -1;
 	pid = fork();
 	if (pid < 0)
 		return (print_error(&s->numerr, EPIPE));
@@ -87,18 +89,8 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			return (print_error(&s->numerr, errno));
-		//if (close_pipes(s->pipe_fd, s->pipe_count) != 0)	// FFFFFFFF marche pas
-		//	return (print_error(&s->numerr, errno));		// FFFFFFFF marche pas
-		// `close_pipes` c'est pour wrapper la loop qui suit
-		while (++i < s->pipe_count)
-		{
-			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][0] != node->data.s_exec.fd_out)
-				close(s->pipe_fd[i][0]);
-			if (s->pipe_fd[i][1] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][1] != node->data.s_exec.fd_out)
-				close(s->pipe_fd[i][1]);
-		}
+		if (close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
+			return (print_error(&s->numerr, errno));
 		cmd_execution(s, env, node->data.s_exec.av);
 	}
 	else
