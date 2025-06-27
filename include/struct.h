@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/27 10:40:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:44:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef union u_data
 		char	**av;
 		int		fd_in;
 		int		fd_out;
-		char	*nodes_heredoc_path;
+		int		fd_heredoc;
 		int		eof_count;
 		char	**eof_list;
 	}	s_exec;
@@ -98,6 +98,7 @@ typedef struct s_shell
 	int				pipe_fd[MAX_CMDS][2];
 	int				pipe_count;
 	char			**tmp_files_list;
+	int				tmp_index;
 	int				heredoc_count;
 	char			*heredoc_tmp;
 	int				heredoc_fd;

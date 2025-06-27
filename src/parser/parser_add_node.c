@@ -6,18 +6,48 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 12:29:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:15:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static int	check_inredir_priority(t_token *tok)
+{
+	int	priority;
+
+	priority = 0;
+	while (tok && tok->type != PIPE)
+	{
+		if (tok->type == IN_REDIR)
+			priority = 1;
+		else if (tok->type == HERE_DOC)
+			priority = 2;
+		tok = tok->next;
+	}
+	return (priority);
+}
 
 int	add_redir(t_shell *s, t_ast **node, t_token **tok)
 {
-	get_heredoc(s, &node, tok);
-	get_redir(s, &node, tok);
-	//check_priority;
+	int	priority;
+
+	get_heredoc(s, node, tok);
+	get_redir(s, node, tok);
+	priority = check_inredir_priority(*tok);
+	if (priority == 1)
+	{
+		if (close((*node)->data.s_exec.fd_heredoc))
+			return (1);
+	}
+	else if (priority == 2)
+	{
+		if ((*node)->data.s_exec.fd_in > 2)
+			if (close((*node)->data.s_exec.fd_in))
+				return (1);
+		(*node)->data.s_exec.fd_in = (*node)->data.s_exec.fd_heredoc;
+	}
+	return (0);
 }
 
 int	add_command(t_ast **node, t_token **tok)
