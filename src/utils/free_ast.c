@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 09:13:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:51:34 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	free_exec_node(t_ast *node)
 		ft_free_char_array(node->data.s_exec.eof_list,
 			node->data.s_exec.eof_count);
 		node->data.s_exec.eof_count = 0;
+		fprintf(stderr,"%sfree_exec_node | eof_list CLEANED! %s\n",B, RST);
 	}
 	node->data.s_exec.fd_in = 0;
 	node->data.s_exec.fd_out = 0;
