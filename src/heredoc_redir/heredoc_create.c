@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:07:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 14:26:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:28:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,38 +53,84 @@ static int	fork_heredoc(t_shell *s, char *path, char** eof_list, int eof_count)
 static char	*create_file(char *eof, int index)
 {
 	char	*file;
+	char	*str_index;
+	char	*tmp;
 
-	file = ft_str3join(".", ft_itoa(index), eof);
-	if (!file)
+	str_index = ft_itoa(index);
+	if (!str_index)
 		return (NULL);
-	file = ft_strjoin("./tmp/", file);
+	file = ft_str3join(".", str_index, eof);
 	if (!file)
+	{
+		w_free((void **)&str_index);
 		return (NULL);
-	printf("%screate_file | HEREDOC PATH: %s%s\n", C, file, RST);
-	return (file);
+	}
+	w_free((void **)&str_index);
+	tmp = ft_strjoin("./tmp/", file);
+	if (!tmp)
+	{
+		w_free((void **)&file);
+		return (NULL);
+	}
+	w_free((void **)&file);
+	printf("%screate_file | HEREDOC PATH: %s%s\n", C, tmp, RST);
+	return (tmp);
 }
 
+//static char	*create_file(char *eof, int index)
+//{
+//	char	*file;
+//	char	*str_index;
+
+//	str_index = ft_itoa(index);
+
+//	file = ft_str3join(".", ft_itoa(index), eof);
+//	if (!file)
+//		return (NULL);
+//	file = ft_strjoin("./tmp/", file);
+//	if (!file)
+//		return (NULL);
+//	printf("%screate_file | HEREDOC PATH: %s%s\n", C, file, RST);
+//	return (file);
+//}
+
+
+//static char	*create_tmp_file(t_shell *s, char** eof_list, int eof_count)
+//{
+//	char		*file;
+
+//	s->tmp_index++;
+//	printf("create_tmp_files | eof_count: %d | s->tmp_index: %d\n", eof_count, s->tmp_index);
+//	file = create_file(eof_list[eof_count - 1], s->tmp_index);
+//	if (!file)
+//	{
+//		ft_free_char_array(eof_list, eof_count);
+//		return (NULL);
+//	}
+//	s->tmp_files_list[s->tmp_index] = ft_strdup(file);
+//	if (!s->tmp_files_list[s->tmp_index])
+//	{
+//		w_free((void**)&file);
+//		ft_free_char_array(s->tmp_files_list, s->tmp_index - 1);
+//		ft_free_char_array(eof_list, eof_count);
+//		return (NULL);
+//	}
+//	s->tmp_index++;
+//	return (file);
+//}
 
 static char	*create_tmp_file(t_shell *s, char** eof_list, int eof_count)
 {
-	char		*file;
-
-	file = create_file(eof_list[eof_count - 1], s->tmp_index);
-	if (!file)
-	{
-		ft_free_char_array(eof_list, eof_count);
-		return (NULL);
-	}
-	s->tmp_files_list[s->tmp_index] = ft_strdup(file);
+	s->tmp_index++;
+	printf("create_tmp_files | eof_count: %d | s->tmp_index: %d\n", eof_count, s->tmp_index);
+	s->tmp_files_list[s->tmp_index] = create_file(eof_list[eof_count - 1], s->tmp_index);
 	if (!s->tmp_files_list[s->tmp_index])
 	{
-		w_free((void**)&file);
 		ft_free_char_array(s->tmp_files_list, s->tmp_index - 1);
 		ft_free_char_array(eof_list, eof_count);
 		return (NULL);
 	}
-	s->tmp_index++;
-	return (file);
+	return (s->tmp_files_list[s->tmp_index]);
 }
 
 
@@ -103,10 +149,54 @@ int	create_heredoc(t_shell *s, char** eof_list, int eof_count)
 	{
 		ft_free_char_array(s->tmp_files_list, s->heredoc_count);
 		ft_free_char_array(eof_list, eof_count);
-		w_free((void**)&tmp_file);
 		print_error(&s->numerr, errno);
 		return (-1);
 	}
-	w_free((void**)&tmp_file);
 	return (tmp_file_fd);
 }
+
+//static char	*create_tmp_file(t_shell *s, char** eof_list, int eof_count)
+//{
+//	char		*file;
+
+//	file = create_file(eof_list[eof_count - 1], s->tmp_index);
+//	if (!file)
+//	{
+//		ft_free_char_array(eof_list, eof_count);
+//		return (NULL);
+//	}
+//	s->tmp_files_list[s->tmp_index] = ft_strdup(file);
+//	if (!s->tmp_files_list[s->tmp_index])
+//	{
+//		w_free((void**)&file);
+//		ft_free_char_array(s->tmp_files_list, s->tmp_index - 1);
+//		ft_free_char_array(eof_list, eof_count);
+//		return (NULL);
+//	}
+//	s->tmp_index++;
+//	return (file);
+//}
+
+
+//int	create_heredoc(t_shell *s, char** eof_list, int eof_count)
+//{
+//	int		tmp_file_fd;
+//	char	*tmp_file;
+
+//	tmp_file = create_tmp_file(s, eof_list, eof_count);
+//	if (!tmp_file)
+//		return (-1);
+//	if (fork_heredoc(s, tmp_file, eof_list, eof_count) != 0)
+//		return (-1);
+//	tmp_file_fd = open(tmp_file, O_RDONLY);
+//	if (tmp_file_fd < 0)
+//	{
+//		ft_free_char_array(s->tmp_files_list, s->heredoc_count);
+//		ft_free_char_array(eof_list, eof_count);
+//		w_free((void**)&tmp_file);
+//		print_error(&s->numerr, errno);
+//		return (-1);
+//	}
+//	w_free((void**)&tmp_file);
+//	return (tmp_file_fd);
+//}

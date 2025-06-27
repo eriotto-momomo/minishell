@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/27 14:20:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:49:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ int	execution(t_shell *s)
 	{
 		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 		ft_free_char_array(s->tmp_files_list, s->heredoc_count);
+		fprintf(stderr,"%sexecution | s->tmp_list CLEANED! %s\n",B, RST);
 	}
-	//fprintf(stderr,"%sexecution | EXECUTION DONE %s\n",B, RST);
+	fprintf(stderr,"%sexecution | EXECUTION DONE %s\n",B, RST);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/27 13:45:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:45:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	reset(t_shell *s)
 	s->tok_pipe = 0;
 	s->tok_word = 0;
 	s->heredoc_fd = -2;
-	s->tmp_index = 0;
+	s->tmp_index = -1;
 	reset_free(s);
 }
 
