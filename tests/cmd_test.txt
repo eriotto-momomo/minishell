@@ -9,8 +9,12 @@ cat << 1 << 2
 cat < 1 | cat < 2 | cat < 3 | cat < 4 >> 5
 echo "yoyoyoyoo" > 1 lol "fcckin cmd" | echo Hello | cat << 1
 echo 1 > test | cat << EOF >> test | echo CMD_DONE
+echo << 1 | echo << 2 | echo << 3 | echo << 4 | echo << 5
+echo << 1 | echo << 2 | echo << 3 | echo << 4 | echo << 5 | echo << 6 | echo << 7 | echo << 8 | echo << 9 | echo << 10
+cat << 1 > 1 | cat << 2 > 2
 cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5
 cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10
+ cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10 | cat << 11 | cat << 12 | cat << 13 | cat << 14 | cat << 15
 
 
 

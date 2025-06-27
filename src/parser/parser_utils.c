@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 10:41:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:10:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**copy_eof_list(t_token *tok, int heredoc_count)
 			heredoc_list[i] = ft_strdup(tok->next->data);
 			if (!heredoc_list[i])
 			{
-				ft_free_char_array(heredoc_list, i);
+				ft_free_char_array(heredoc_list, heredoc_count);
 				return (NULL);
 			}
 			i++;
