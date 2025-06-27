@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 12:24:48 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/27 10:34:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+int		create_heredoc(t_shell *s, char** eof_list, int eof_count);
+int		count_all_heredocs(t_token *tok);
 
 int		add_command(t_ast **node, t_token **tok);
 int		add_redir(t_shell *s, t_ast **node, t_token **tok);
@@ -26,7 +29,7 @@ t_ast	*parse_exec(t_shell *s, t_token **tok);
 void	get_next_pipe(t_token **tok);
 int		get_next_token(t_token **tok);
 char	**copy_args(t_token *tok, int ac);
-char	**copy_heredocs(t_token *tok, int heredoc_count);
+char	**copy_eof_list(t_token *tok, int heredoc_count);
 int		redir_out(t_shell *s, int mode, char *filename, int current_redir);
 int		redir_in(t_shell *s, char *filename, int current_redir);
 t_ast	*new_ast_node(t_ast node);

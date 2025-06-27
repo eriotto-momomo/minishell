@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 20:15:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 10:30:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	init_shell(t_shell *s, char	**envp)
 	if (!s->heredoc_tmp)
 		return (print_error(&s->numerr, ENOMEM));
 	s->heredoc_fd = -2;
+	s->heredoc_count = 0;
 	s->fd = -2;
 	s->sig_mode = -1;
 	s->child_exit = 0;

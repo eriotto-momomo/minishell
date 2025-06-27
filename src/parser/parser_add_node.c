@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/26 11:47:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 10:55:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,28 @@ int	add_command(t_ast **node, t_token **tok)
 	return (0);
 }
 
-int	add_heredoc(t_ast **node, t_token **tok)
+int	add_heredoc(t_shell *s, t_ast **node, t_token **tok)
 {
-	(*node)->data.s_exec.heredoc_count = count_tokens(&(*tok), HERE_DOC);
-	if ((*node)->data.s_exec.heredoc_count == 0)
+	(*node)->data.s_exec.eof_count = count_tokens(&(*tok), HERE_DOC);
+	if ((*node)->data.s_exec.eof_count == 0)
 		return (0);
-	(*node)->data.s_exec.heredoc_list
-		= copy_heredocs(*tok, (*node)->data.s_exec.heredoc_count);
-	if (!(*node)->data.s_exec.heredoc_list)
+	if (s->heredoc_count == 0)
+	{
+		s->heredoc_count = count_all_heredocs(*tok);
+		printf("%sadd_heredoc | HEREDOC COUNT: %d%s\n", C, s->heredoc_count, RST);
+	}
+
+	(*node)->data.s_exec.eof_list
+		= copy_eof_list(*tok, (*node)->data.s_exec.eof_count);
+	if (!(*node)->data.s_exec.eof_list)
 		return (1);
+	if (create_heredoc(s, (*node)->data.s_exec.eof_list,
+		(*node)->data.s_exec.eof_count) != 0)
+	{
+		ft_free_char_array((*node)->data.s_exec.eof_list,
+			(*node)->data.s_exec.eof_count);
+		return (1);
+	}
 	return (0);
 }
 
@@ -79,7 +92,7 @@ t_ast	*add_exec_node(t_shell *s, t_token **tok)
 		w_free((void **)&node);
 		return (NULL);
 	}
-	if (add_heredoc(&node, tok) != 0)
+	if (add_heredoc(s, &node, tok) != 0)
 	{
 		ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
 		w_free((void **)&node);
@@ -88,8 +101,8 @@ t_ast	*add_exec_node(t_shell *s, t_token **tok)
 	if (add_redir(s, &node, tok) != 0)
 	{
 		ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
-		ft_free_char_array(node->data.s_exec.heredoc_list,
-			node->data.s_exec.heredoc_count);
+		ft_free_char_array(node->data.s_exec.eof_list,
+			node->data.s_exec.eof_count);
 		w_free((void **)&node);
 		return (NULL);
 	}
