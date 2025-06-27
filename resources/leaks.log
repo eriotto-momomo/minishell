@@ -1,39 +1,574 @@
-==962963== Memcheck, a memory error detector
-==962963== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==962963== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==962963== Command: ./minishell
-==962963== Parent PID: 962962
-==962963== 
-==962963== 
-==962963== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==962963== Open file descriptor 3: /home/emonacho/Documents/minishell/resources/leaks.log
-==962963==    <inherited from parent>
-==962963== 
-==962963== 
-==962963== HEAP SUMMARY:
-==962963==     in use at exit: 226,163 bytes in 225 blocks
-==962963==   total heap usage: 4,050 allocs, 3,825 frees, 358,532 bytes allocated
-==962963== 
-==962963== 3,072 bytes in 1 blocks are still reachable in loss record 37 of 66
-==962963==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==962963==    by 0x48AD491: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x48A3E49: rl_extend_line_buffer (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x48A3F8C: rl_insert_text (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x48A75F2: rl_bracketed_paste_begin (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x488AE97: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963==    by 0x488BCC9: readline_internal_char (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==962963== 
-==962963== LEAK SUMMARY:
-==962963==    definitely lost: 0 bytes in 0 blocks
-==962963==    indirectly lost: 0 bytes in 0 blocks
-==962963==      possibly lost: 0 bytes in 0 blocks
-==962963==    still reachable: 3,072 bytes in 1 blocks
-==962963==         suppressed: 223,091 bytes in 224 blocks
-==962963== 
-==962963== For lists of detected and suppressed errors, rerun with: -s
-==962963== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1032205== Memcheck, a memory error detector
+==1032205== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1032205== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1032205== Command: ./minishell
+==1032205== Parent PID: 1032204
+==1032205== 
+==1032228== 
+==1032228== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1032228== Open file descriptor 3: /home/emonacho/Documents/minishell/resources/leaks.log
+==1032228==    <inherited from parent>
+==1032228== 
+==1032228== 
+==1032228== HEAP SUMMARY:
+==1032228==     in use at exit: 208,373 bytes in 237 blocks
+==1032228==   total heap usage: 681 allocs, 444 frees, 240,249 bytes allocated
+==1032228== 
+==1032228== 2 bytes in 1 blocks are definitely lost in loss record 1 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x10FD88: ft_itoa (in /home/emonacho/Documents/minishell/minishell)
+==1032228==    by 0x10C64E: create_file (heredoc_create.c:19)
+==1032228==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032228==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032228==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032228==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228== 
+==1032228== 4 bytes in 1 blocks are still reachable in loss record 4 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032228==    by 0x10ABB6: copy_args (parser_utils.c:87)
+==1032228==    by 0x10A1B7: add_command (parser_add_node.c:21)
+==1032228==    by 0x10A59D: add_exec_node (parser_add_node.c:91)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228==    by 0x109DD6: process_input (main_loop.c:66)
+==1032228==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032228== 
+==1032228== 7 bytes in 1 blocks are definitely lost in loss record 5 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x11038C: ft_str3join (in /home/emonacho/Documents/minishell/minishell)
+==1032228==    by 0x10C66A: create_file (heredoc_create.c:19)
+==1032228==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032228==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032228==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032228==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228== 
+==1032228== 8 bytes in 1 blocks are still reachable in loss record 7 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x10A2B8: add_heredoc (parser_add_node.c:39)
+==1032228==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228==    by 0x109DD6: process_input (main_loop.c:66)
+==1032228==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032228==    by 0x1095C3: main (main.c:30)
+==1032228== 
+==1032228== 9 bytes in 3 blocks are still reachable in loss record 9 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032228==    by 0x10AAA9: copy_eof_list (parser_utils.c:60)
+==1032228==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032228==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228==    by 0x109DD6: process_input (main_loop.c:66)
+==1032228==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032228== 
+==1032228== 13 bytes in 1 blocks are still reachable in loss record 12 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x1105F6: ft_strjoin (in /home/emonacho/Documents/minishell/minishell)
+==1032228==    by 0x10C692: create_file (heredoc_create.c:22)
+==1032228==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032228==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032228==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032228==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228== 
+==1032228== 13 bytes in 1 blocks are still reachable in loss record 13 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032228==    by 0x10C766: create_tmp_file (heredoc_create.c:38)
+==1032228==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032228==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032228==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228==    by 0x109DD6: process_input (main_loop.c:66)
+==1032228== 
+==1032228== 16 bytes in 1 blocks are still reachable in loss record 18 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x10AB35: copy_args (parser_utils.c:78)
+==1032228==    by 0x10A1B7: add_command (parser_add_node.c:21)
+==1032228==    by 0x10A59D: add_exec_node (parser_add_node.c:91)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228==    by 0x109DD6: process_input (main_loop.c:66)
+==1032228==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032228==    by 0x1095C3: main (main.c:30)
+==1032228== 
+==1032228== 24 bytes in 1 blocks are still reachable in loss record 23 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x10AA56: copy_eof_list (parser_utils.c:52)
+==1032228==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032228==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228==    by 0x109DD6: process_input (main_loop.c:66)
+==1032228==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032228==    by 0x1095C3: main (main.c:30)
+==1032228== 
+==1032228== 56 bytes in 1 blocks are still reachable in loss record 28 of 76
+==1032228==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032228==    by 0x10A9DA: new_ast_node (parser_utils.c:40)
+==1032228==    by 0x10A56F: add_exec_node (parser_add_node.c:88)
+==1032228==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032228==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032228==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032228==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032228==    by 0x10ADBE: parser (parser_main.c:32)
+==1032228==    by 0x109DD6: process_input (main_loop.c:66)
+==1032228==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032228==    by 0x1095C3: main (main.c:30)
+==1032228== 
+==1032228== LEAK SUMMARY:
+==1032228==    definitely lost: 9 bytes in 2 blocks
+==1032228==    indirectly lost: 0 bytes in 0 blocks
+==1032228==      possibly lost: 0 bytes in 0 blocks
+==1032228==    still reachable: 143 bytes in 10 blocks
+==1032228==         suppressed: 208,221 bytes in 225 blocks
+==1032228== 
+==1032228== For lists of detected and suppressed errors, rerun with: -s
+==1032228== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==1032261== 
+==1032261== FILE DESCRIPTORS: 5 open (3 std) at exit.
+==1032261== Open file descriptor 4: ./tmp/.0test
+==1032261==    at 0x49DB53B: open (open64.c:41)
+==1032261==    by 0x10C897: create_heredoc (heredoc_create.c:66)
+==1032261==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261==    by 0x1095C3: main (main.c:30)
+==1032261== 
+==1032261== Open file descriptor 3: /home/emonacho/Documents/minishell/resources/leaks.log
+==1032261==    <inherited from parent>
+==1032261== 
+==1032261== 
+==1032261== HEAP SUMMARY:
+==1032261==     in use at exit: 208,549 bytes in 249 blocks
+==1032261==   total heap usage: 750 allocs, 501 frees, 241,591 bytes allocated
+==1032261== 
+==1032261== 4 bytes in 1 blocks are still reachable in loss record 4 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10ABB6: copy_args (parser_utils.c:87)
+==1032261==    by 0x10A1B7: add_command (parser_add_node.c:21)
+==1032261==    by 0x10A59D: add_exec_node (parser_add_node.c:91)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261== 
+==1032261== 4 bytes in 2 blocks are definitely lost in loss record 5 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x10FD88: ft_itoa (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10C64E: create_file (heredoc_create.c:19)
+==1032261==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032261==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032261==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261== 
+==1032261== 9 bytes in 3 blocks are still reachable in loss record 8 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10AAA9: copy_eof_list (parser_utils.c:60)
+==1032261==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261== 
+==1032261== 9 bytes in 3 blocks are indirectly lost in loss record 9 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10AAA9: copy_eof_list (parser_utils.c:60)
+==1032261==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261== 
+==1032261== 13 bytes in 1 blocks are still reachable in loss record 12 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x1105F6: ft_strjoin (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10C692: create_file (heredoc_create.c:22)
+==1032261==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032261==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032261==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261== 
+==1032261== 13 bytes in 1 blocks are still reachable in loss record 13 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10C766: create_tmp_file (heredoc_create.c:38)
+==1032261==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032261==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261== 
+==1032261== 13 bytes in 1 blocks are indirectly lost in loss record 14 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10C766: create_tmp_file (heredoc_create.c:38)
+==1032261==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032261==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261== 
+==1032261== 13 bytes in 1 blocks are definitely lost in loss record 15 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x1105F6: ft_strjoin (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10C692: create_file (heredoc_create.c:22)
+==1032261==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032261==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032261==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261== 
+==1032261== 14 bytes in 2 blocks are definitely lost in loss record 17 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x11038C: ft_str3join (in /home/emonacho/Documents/minishell/minishell)
+==1032261==    by 0x10C66A: create_file (heredoc_create.c:19)
+==1032261==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032261==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032261==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261== 
+==1032261== 16 bytes in 1 blocks are still reachable in loss record 21 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x10AB35: copy_args (parser_utils.c:78)
+==1032261==    by 0x10A1B7: add_command (parser_add_node.c:21)
+==1032261==    by 0x10A59D: add_exec_node (parser_add_node.c:91)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261==    by 0x1095C3: main (main.c:30)
+==1032261== 
+==1032261== 21 (8 direct, 13 indirect) bytes in 1 blocks are definitely lost in loss record 23 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x10A2B8: add_heredoc (parser_add_node.c:39)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261==    by 0x1095C3: main (main.c:30)
+==1032261== 
+==1032261== 24 bytes in 1 blocks are still reachable in loss record 27 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x10A2B8: add_heredoc (parser_add_node.c:39)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261==    by 0x1095C3: main (main.c:30)
+==1032261== 
+==1032261== 24 bytes in 1 blocks are still reachable in loss record 28 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x10AA56: copy_eof_list (parser_utils.c:52)
+==1032261==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261==    by 0x1095C3: main (main.c:30)
+==1032261== 
+==1032261== 33 (24 direct, 9 indirect) bytes in 1 blocks are definitely lost in loss record 31 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x10AA56: copy_eof_list (parser_utils.c:52)
+==1032261==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032261==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261==    by 0x1095C3: main (main.c:30)
+==1032261== 
+==1032261== 56 bytes in 1 blocks are still reachable in loss record 35 of 84
+==1032261==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032261==    by 0x10A9DA: new_ast_node (parser_utils.c:40)
+==1032261==    by 0x10A56F: add_exec_node (parser_add_node.c:88)
+==1032261==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032261==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032261==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032261==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032261==    by 0x10ADBE: parser (parser_main.c:32)
+==1032261==    by 0x109DD6: process_input (main_loop.c:66)
+==1032261==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032261==    by 0x1095C3: main (main.c:30)
+==1032261== 
+==1032261== LEAK SUMMARY:
+==1032261==    definitely lost: 63 bytes in 7 blocks
+==1032261==    indirectly lost: 22 bytes in 4 blocks
+==1032261==      possibly lost: 0 bytes in 0 blocks
+==1032261==    still reachable: 159 bytes in 10 blocks
+==1032261==         suppressed: 208,305 bytes in 228 blocks
+==1032261== 
+==1032261== For lists of detected and suppressed errors, rerun with: -s
+==1032261== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)
+==1032205== 
+==1032205== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==1032205== Open file descriptor 5: ./tmp/.1test
+==1032205==    at 0x49DB53B: open (open64.c:41)
+==1032205==    by 0x10C897: create_heredoc (heredoc_create.c:66)
+==1032205==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032205==    by 0x1095C3: main (main.c:30)
+==1032205== 
+==1032205== Open file descriptor 4: ./tmp/.0test
+==1032205==    at 0x49DB53B: open (open64.c:41)
+==1032205==    by 0x10C897: create_heredoc (heredoc_create.c:66)
+==1032205==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032205==    by 0x1095C3: main (main.c:30)
+==1032205== 
+==1032205== Open file descriptor 3: /home/emonacho/Documents/minishell/resources/leaks.log
+==1032205==    <inherited from parent>
+==1032205== 
+==1032205== 
+==1032205== HEAP SUMMARY:
+==1032205==     in use at exit: 208,503 bytes in 246 blocks
+==1032205==   total heap usage: 738 allocs, 492 frees, 241,488 bytes allocated
+==1032205== 
+==1032205== 4 bytes in 2 blocks are definitely lost in loss record 2 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x10FD88: ft_itoa (in /home/emonacho/Documents/minishell/minishell)
+==1032205==    by 0x10C64E: create_file (heredoc_create.c:19)
+==1032205==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032205==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032205==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205== 
+==1032205== 13 bytes in 1 blocks are still reachable in loss record 7 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032205==    by 0x10C766: create_tmp_file (heredoc_create.c:38)
+==1032205==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032205==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205== 
+==1032205== 13 bytes in 1 blocks are indirectly lost in loss record 8 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032205==    by 0x10C766: create_tmp_file (heredoc_create.c:38)
+==1032205==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032205==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205== 
+==1032205== 14 bytes in 2 blocks are definitely lost in loss record 10 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x11038C: ft_str3join (in /home/emonacho/Documents/minishell/minishell)
+==1032205==    by 0x10C66A: create_file (heredoc_create.c:19)
+==1032205==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032205==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032205==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205== 
+==1032205== 18 bytes in 6 blocks are indirectly lost in loss record 16 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x11055F: ft_strdup (in /home/emonacho/Documents/minishell/minishell)
+==1032205==    by 0x10AAA9: copy_eof_list (parser_utils.c:60)
+==1032205==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032205== 
+==1032205== 21 (8 direct, 13 indirect) bytes in 1 blocks are definitely lost in loss record 18 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x10A2B8: add_heredoc (parser_add_node.c:39)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032205==    by 0x1095C3: main (main.c:30)
+==1032205== 
+==1032205== 24 bytes in 1 blocks are still reachable in loss record 22 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x10A2B8: add_heredoc (parser_add_node.c:39)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032205==    by 0x1095C3: main (main.c:30)
+==1032205== 
+==1032205== 26 bytes in 2 blocks are definitely lost in loss record 24 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x1105F6: ft_strjoin (in /home/emonacho/Documents/minishell/minishell)
+==1032205==    by 0x10C692: create_file (heredoc_create.c:22)
+==1032205==    by 0x10C727: create_tmp_file (heredoc_create.c:35)
+==1032205==    by 0x10C827: create_heredoc (heredoc_create.c:56)
+==1032205==    by 0x10A360: add_heredoc (parser_add_node.c:49)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205== 
+==1032205== 66 (48 direct, 18 indirect) bytes in 2 blocks are definitely lost in loss record 30 of 78
+==1032205==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1032205==    by 0x10AA56: copy_eof_list (parser_utils.c:52)
+==1032205==    by 0x10A302: add_heredoc (parser_add_node.c:43)
+==1032205==    by 0x10A5CE: add_exec_node (parser_add_node.c:96)
+==1032205==    by 0x10A898: parse_exec (parser_func.c:55)
+==1032205==    by 0x10A784: parse_pipe (parser_func.c:22)
+==1032205==    by 0x10A83E: parse_line (parser_func.c:43)
+==1032205==    by 0x10AD47: build_ast (parser_main.c:19)
+==1032205==    by 0x10ADBE: parser (parser_main.c:32)
+==1032205==    by 0x109DD6: process_input (main_loop.c:66)
+==1032205==    by 0x109EEE: prompt_loop (main_loop.c:88)
+==1032205==    by 0x1095C3: main (main.c:30)
+==1032205== 
+==1032205== LEAK SUMMARY:
+==1032205==    definitely lost: 100 bytes in 9 blocks
+==1032205==    indirectly lost: 31 bytes in 7 blocks
+==1032205==      possibly lost: 0 bytes in 0 blocks
+==1032205==    still reachable: 37 bytes in 2 blocks
+==1032205==         suppressed: 208,335 bytes in 228 blocks
+==1032205== 
+==1032205== For lists of detected and suppressed errors, rerun with: -s
+==1032205== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 0 from 0)
