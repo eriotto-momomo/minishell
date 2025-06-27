@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:07:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 10:52:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:29:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,45 @@ static char	*create_file(char *eof, int index)
 }
 
 
-int	create_heredoc(t_shell *s, char** eof_list, int eof_count)
+static char	*create_tmp_file(t_shell *s, char** eof_list, int eof_count)
 {
-	(void)s;
 	static int	index = 0;
-	int			fd;
 	char		*file;
 
-	//s->tmp_files_list = create_tmp_file_list();
-	file = create_file(eof_list[eof_count - 1], index++);
+	file = create_file(eof_list[eof_count - 1], index);
 	if (!file)
-		return (1);
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (fd < 0)
+		return (NULL);
+	s->tmp_files_list[index] = ft_strdup(file);
+	if (!s->tmp_files_list[index])
 	{
 		w_free((void**)&file);
-		return (1);
+		ft_free_char_array(s->tmp_files_list, index - 1);
+		ft_free_char_array(eof_list, eof_count);
+		return (NULL);
 	}
+	index++;
+	return (file);
+}
 
-	return (1);
-	return (0);
+int	create_heredoc(t_shell *s, char** eof_list, int eof_count)
+{
+	pid_t	heredoc_pid;
+	int		tmp_file_fd;
+	char	*tmp_file;
+
+	tmp_file = create_tmp_file(s, eof_list, eof_count);
+	if (!tmp_file)
+		return (1);
+	heredoc_pid = fork();
+	if (heredoc_pid == 0)
+	{
+		setup_signals(s, DEFAULT_SIGNALS);
+		write_heredoc(s, tmp_file, eof_list, eof_count);
+		kill_children(s);
+	}
+	waitpid(heredoc_pid, NULL, 0);
+	tmp_file_fd = open(tmp_file, O_RDONLY);
+	if (tmp_file_fd < 0)
+		return (print_error(&s->numerr, errno));
+	return (tmp_file_fd);
 }

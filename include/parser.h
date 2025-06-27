@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:50:04 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 10:34:44 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:21:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 int		create_heredoc(t_shell *s, char** eof_list, int eof_count);
 int		count_all_heredocs(t_token *tok);
-
-int		add_command(t_ast **node, t_token **tok);
+int		get_redir(t_shell *s, t_ast **node, t_token **tok);
+int		get_heredoc(t_shell *s, t_ast **node, t_token **tok);
 int		add_redir(t_shell *s, t_ast **node, t_token **tok);
+int		add_command(t_ast **node, t_token **tok);
+
 t_ast	*add_exec_node(t_shell *s, t_token **tok);
 t_ast	*add_pipe_node(t_ast *left, t_ast *right);
 t_ast	*new_ast_node(t_ast node);

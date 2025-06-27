@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 09:20:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:29:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	is_eof(char *line, char *delimiter)
 
 	i = 0;
 	j = 0;
-	while (delimiter[j] && (delimiter[j] == '\'' || delimiter[j] == '\"'))
+	while (delimiter[j] && ft_isquote(delimiter[j]))
 		j++;
 	if (line[i] == delimiter[j])
 	{
@@ -74,51 +74,27 @@ static int	heredoc_loop(t_shell *s, char *eof, int index, int count)
 	return (0);
 }
 
-int	write_heredoc(t_shell *s, char** eof_list, int eof_count)
+int	write_heredoc(t_shell *s, char *path, char** eof_list, int eof_count)
 {
 	int	i;
 
 	i = 0;
 	while (i < eof_count)
 	{
-		s->heredoc_fd = open(HEREDOC_FILE_PATH, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		s->heredoc_fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 		if (s->heredoc_fd < 0)
 			return (-1);
 		reset_prompt(s, HEREDOC_PROMPT);
 		if (heredoc_loop(s, eof_list[i],
 				i, eof_count) != 0)
+		{
+			if (close(s->heredoc_fd) < 0)
+				return (-1);
 			return (-1);
+		}
 		if (close(s->heredoc_fd) < 0)
 			return (-1);
 		i++;
 	}
-	s->heredoc_fd = open(HEREDOC_FILE_PATH, O_RDONLY);
-	if (s->heredoc_fd < 0)
-		return (print_error(&s->numerr, errno));
-	return (s->heredoc_fd);
+	return (0);
 }
-
-//BACKUP V1
-//int	write_heredoc(t_shell *s, t_ast *node)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (i < node->data.s_exec.eof_count)
-//	{
-//		s->heredoc_fd = open(HEREDOC_FILE_PATH, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-//		if (s->heredoc_fd < 0)
-//			return (-1);
-//		reset_prompt(s, HEREDOC_PROMPT);
-//		if (heredoc_loop(s, node->data.s_exec.eof_list[i],
-//				i, node->data.s_exec.eof_count) != 0)
-//			return (-1);
-//		if (close(s->heredoc_fd) < 0)
-//			return (-1);
-//		i++;
-//	}
-//	s->heredoc_fd = open(HEREDOC_FILE_PATH, O_RDONLY);
-//	if (s->heredoc_fd < 0)
-//		return (print_error(&s->numerr, errno));
-//	return (s->heredoc_fd);
-//}
