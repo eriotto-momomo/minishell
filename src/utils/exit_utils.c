@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 20:17:37 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:20:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	reset_free(t_shell *s)
 		free_token_list(&(s->head));
 	if (s->root_node)
 		free_ast(&(s->root_node));
+	//if (s->heredoc_count > 0)
+	//{
+	//	unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
+	//	ft_free_char_array(s->tmp_files_list, s->heredoc_count);
+	//}
 	w_free((void **)&(s->line));
 }
 
@@ -31,6 +36,12 @@ void	clean_free(t_shell *s)
 		free_token_list(&(s->head));
 	if (s->root_node)
 		free_ast(&(s->root_node));
+	//if (s->tmp_files_list && s->tmp_files_list[0])
+	//{
+	//	if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
+	//		terminate_shell(s);
+	//	ft_free_char_array(s->tmp_files_list, s->heredoc_count);
+	//}
 	if (s->env_list)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));
