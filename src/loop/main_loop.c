@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/27 16:45:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:27:11 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	reset(t_shell *s)
 {
 	if (!s->child_exit)
 		s->numerr = 0;
+	s->tmp_files_list = NULL;
 	s->heredoc_count = 0;
 	s->pipe_count = 0;
 	s->pid_count = 0;

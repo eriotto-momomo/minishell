@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 17:26:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:37:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,16 @@
 
 int	get_heredoc(t_shell *s, t_ast **node, t_token **tok)
 {
+	// COMPTER LES HEREDOC POUR ALLOUER EOF_LIST
 	(*node)->data.s_exec.eof_count = count_tokens(&(*tok), HERE_DOC);
 	if ((*node)->data.s_exec.eof_count == 0)
-	{
-		(*node)->data.s_exec.fd_heredoc = -2;
 		return (0);
-	}
+	// COPIE LES EOF
 	(*node)->data.s_exec.eof_list
 		= copy_eof_list(*tok, (*node)->data.s_exec.eof_count);
 	if (!(*node)->data.s_exec.eof_list)
-	{
-		ft_free_char_array(s->tmp_files_list, s->heredoc_count);
 		return (1);
-	}
-	if (s->tmp_files_list == NULL)
-	{
-		if (s->heredoc_count == 0)
-		s->heredoc_count = count_all_heredocs(*tok);
-		s->tmp_files_list = malloc(sizeof(char*) * s->heredoc_count);
-		if (!s->tmp_files_list)
-		return (1);
-		fprintf(stderr, "%sget_heredoc | INITIALIZING s->tmp_files_list%s\n", Y, RST);
-	}
+	// ECRIRE LE HEREDOC
 	(*node)->data.s_exec.fd_heredoc = create_heredoc(s, (*node)->data.s_exec.eof_list,
 		(*node)->data.s_exec.eof_count);
 	if ((*node)->data.s_exec.fd_heredoc < 0)
