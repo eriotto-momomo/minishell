@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 18:33:23 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/27 10:31:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ static void	reset(t_shell *s)
 {
 	if (!s->child_exit)
 		s->numerr = 0;
+	s->heredoc_count = 0;
 	s->pipe_count = 0;
 	s->pid_count = 0;
 	s->tok_rdir = 0;
 	s->tok_pipe = 0;
 	s->tok_word = 0;
-	s->heredoc_fd = -1;
+	s->heredoc_fd = -2;
 	reset_free(s);
 }
 

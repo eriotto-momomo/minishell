@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/26 20:09:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 09:22:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <sys/wait.h>
 
 
-int		write_heredoc(t_shell *s, t_ast *node);
+//int		write_heredoc(t_shell *s, t_ast *node);
+int		write_heredoc(t_shell *s, char** eof_list, int eof_count);
+int		create_heredoc(t_shell *s, char** eof_list, int eof_count);
 
 int		close_fd(t_ast *node);
 int		execution(t_shell *s);
