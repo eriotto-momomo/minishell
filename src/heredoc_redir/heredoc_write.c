@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 19:33:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 08:16:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	heredoc_loop(t_shell *s, char *eof, int fd)
 		w_free((void **)&line);
 	}
 	w_free((void **)&line);
-	fprintf(stderr, "%sheredoc_loop | EXIT FUNCTION%s\n", G, RST);
+	//fprintf(stderr, "%sheredoc_loop | EXIT FUNCTION%s\n", G, RST);
 	return (0);
 }
 
@@ -90,18 +90,18 @@ int	write_heredoc(t_shell *s, char *path, char** eof_list, int eof_count)
 		reset_prompt(s, HEREDOC_PROMPT);
 		if (heredoc_loop(s, eof_list[i], heredoc_fd) != 0)
 		{
-			fprintf(stderr, "%swrite_heredoc | ISSUE IN HEREDOC_LOOP%s\n", R, RST);
+			//fprintf(stderr, "%swrite_heredoc | ISSUE IN HEREDOC_LOOP%s\n", R, RST);
 			if (close(heredoc_fd) < 0)
 				return (-1);
 			return (-1);
 		}
 		if (close(heredoc_fd) < 0)
 		{
-			fprintf(stderr, "%swrite_heredoc | ISSUE with CLOSING heredoc_fd%s\n", R, RST);
+			//fprintf(stderr, "%swrite_heredoc | ISSUE with CLOSING heredoc_fd%s\n", R, RST);
 			return (-1);
 		}
 		i++;
 	}
-	fprintf(stderr, "%swrite_heredoc | EXIT FUNCTION%s\n", G, RST);
+	//fprintf(stderr, "%swrite_heredoc | EXIT FUNCTION%s\n", G, RST);
 	return (0);
 }

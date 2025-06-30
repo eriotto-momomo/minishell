@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/27 19:59:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 09:06:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	s->pipe_count++;
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
-	close(s->pipe_fd[cur_pipe][0]);
-	close(s->pipe_fd[cur_pipe][1]);
+	//close(s->pipe_fd[cur_pipe][0]);
+	//close(s->pipe_fd[cur_pipe][1]);
 	return (0);
 }
 
@@ -89,31 +89,10 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, errno));
-		//if (close_pipes(node, s->pipe_fd, s->pipe_count) != 0)
-		//	return (print_error(&s->numerr, errno));
-
-		//////////////////////////////////////////////
-		int i = -1;
-		while (++i < s->pipe_count - 1)
-		{
-			if (s->pipe_fd[i][0] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][0] != node->data.s_exec.fd_out)
-				if (close(s->pipe_fd[i][0]) != 0)
-					exit(print_error(&s->numerr, errno));
-			if (s->pipe_fd[i][1] != node->data.s_exec.fd_in
-				&& s->pipe_fd[i][1] != node->data.s_exec.fd_out)
-				if (close(s->pipe_fd[i][1]) != 0)
-					exit(print_error(&s->numerr, errno));;
-		}
-		fprintf(stderr, "%sft_external | EXIT while loop %s\n", G, RST);
-		///////////////////////////////////////////////
-
 		cmd_execution(s, env, node->data.s_exec.av);
 	}
-
 	else
 		s->child_pids[s->pid_count++] = pid;
-	fprintf(stderr, "%sft_external | EXIT FUNCTION!%s\n", G, RST);
 	return (0);
 }
 

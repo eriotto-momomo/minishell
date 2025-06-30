@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/27 13:44:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 08:50:59 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ typedef struct s_shell
 	char			**tmp_files_list;
 	int				tmp_index;
 	int				heredoc_count;
-	char			*heredoc_tmp;
 	int				heredoc_fd;
 	int				child_exit;
 	int				fd;
