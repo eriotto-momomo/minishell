@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:07:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 19:55:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 09:12:01 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ static int	fork_heredoc(t_shell *s, char *path, char** eof_list, int eof_count)
 		{
 			ft_free_char_array(eof_list, eof_count);
 			w_free((void**)&path);
-			return (-1);
-			// exit(-1); en cas de probleme?
+			exit(-1); // en cas de probleme?
 		}
-		//kill_children(s);
-		exit(0);
+		kill_children(s);
 	}
 	waitpid(heredoc_pid, NULL, 0);
 	setup_signals(s, DEFAULT_SIGNALS);
@@ -117,5 +115,6 @@ int	create_heredoc(t_shell *s, char** eof_list, int eof_count)
 		print_error(&s->numerr, errno);
 		return (-1);
 	}
+	fprintf(stderr, "%screate_heredoc | tmp_file_fd: %d%s\n", Y, tmp_file_fd, RST);
 	return (tmp_file_fd);
 }

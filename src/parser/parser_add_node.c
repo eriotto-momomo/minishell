@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/27 19:27:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 09:12:00 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	add_redir(t_shell *s, t_ast **node, t_token **tok)
 				return (1);
 		(*node)->data.s_exec.fd_in = (*node)->data.s_exec.fd_heredoc;
 	}
+	else
+		(*node)->data.s_exec.fd_in = STDIN_FILENO;
 	return (0);
 }
 
@@ -90,6 +92,8 @@ t_ast	*add_exec_node(t_shell *s, t_token **tok)
 		w_free((void **)&node);
 		return (NULL);
 	}
+	fprintf(stderr, "%s%s%s\n", P, "add_exec_node", RST),
+	print_node(node);
 	return (node);
 }
 
