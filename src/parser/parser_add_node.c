@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/30 09:12:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:22:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ t_ast	*add_exec_node(t_shell *s, t_token **tok)
 		w_free((void **)&node);
 		return (NULL);
 	}
-	fprintf(stderr, "%s%s%s\n", P, "add_exec_node", RST),
-	print_node(node);
 	return (node);
 }
 

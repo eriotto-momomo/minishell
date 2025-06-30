@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/30 09:11:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:30:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,14 @@ int	preorder_exec(t_shell *s, t_ast **node)
 		if ((*node)->data.s_exec.ac > 0)
 			if (handle_exec(s, (*node)) != 0)
 				return (1);
+		if ((*node)->data.s_exec.fd_in > 2)
+			close((*node)->data.s_exec.fd_in);
+		if ((*node)->data.s_exec.fd_out > 2)
+			close((*node)->data.s_exec.fd_out);
+		if ((*node)->data.s_exec.fd_heredoc > 2)
+			close((*node)->data.s_exec.fd_heredoc);
 	}
-	close_fd((*node));
+	//close_fd((*node));
 	return (0);
 }
 
@@ -131,9 +137,9 @@ int	execution(t_shell *s)
 	free_ast(&(s->root_node));
 	if (s->heredoc_count > 0)
 	{
-		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
+		if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
+			return (print_error(&s->numerr, errno));
 		ft_free_char_array(s->tmp_files_list, s->heredoc_count);
-		fprintf(stderr,"%sexecution | s->tmp_list CLEANED! %s\n",B, RST);
 	}
 	fprintf(stderr,"%sexecution | EXECUTION DONE %s\n",B, RST);
 	return (0);

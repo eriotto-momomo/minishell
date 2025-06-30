@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:07:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/30 09:12:01 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/30 11:27:20 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ int	unlink_tmp_files(char **tmp_files_list, int heredoc_count)
 	i = 0;
 	while (i < heredoc_count)
 	{
-		printf("%sunlink_tmp_files | about to UNLINK array[%d]: %s%s\n", C, i, tmp_files_list[i], RST);
+		printf("%sunlink_tmp_files | about to UNLINK and free array[%d]: %s%s\n", C, i, tmp_files_list[i], RST);
 		if (unlink(tmp_files_list[i]) != 0)
 			return (1);
-		//w_free((void**)&tmp_files_list[i]);
 		i++;
 	}
-	//w_free((void**)&tmp_files_list);
 	return (0);
 }
 
@@ -48,7 +46,9 @@ static int	fork_heredoc(t_shell *s, char *path, char** eof_list, int eof_count)
 			w_free((void**)&path);
 			exit(-1); // en cas de probleme?
 		}
+		//close_fd(s->root_node); // BUGGY
 		kill_children(s);
+		//exit(0);
 	}
 	waitpid(heredoc_pid, NULL, 0);
 	setup_signals(s, DEFAULT_SIGNALS);
