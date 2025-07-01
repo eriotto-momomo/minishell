@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:07:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 14:14:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:33:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	unlink_tmp_files(char **tmp_files_list, int heredoc_count)
 	i = 0;
 	while (i < heredoc_count)
 	{
-		printf("%sunlink_tmp_files | about to UNLINK and free array[%d]: %s%s\n", C, i, tmp_files_list[i], RST);
 		if (unlink(tmp_files_list[i]) != 0)
 			return (1);
 		i++;
@@ -50,7 +49,6 @@ static char	*create_path(char *eof, int index)
 		return (NULL);
 	}
 	w_free((void **)&file);
-	printf("%screate_path | HEREDOC PATH: %s%s\n", C, tmp, RST);
 	return (tmp);
 }
 

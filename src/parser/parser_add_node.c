@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 14:04:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:19:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	add_redir(t_shell *s, t_ast **node, t_token **tok)
 			if (close((*node)->data.s_exec.fd_in))
 				return (1);
 	}
-	//else if ((*node)->data.s_exec.inredir_priority != HERE_DOC
-	//	|| (*node)->data.s_exec.inredir_priority != IN_REDIR)
-	//	(*node)->data.s_exec.fd_in = STDIN_FILENO;
 	return (0);
 }
 
@@ -51,18 +48,13 @@ int	add_command(t_ast **node, t_token **tok)
 	(*node)->data.s_exec.ac = count_tokens(&(*tok), WORD);
 	(*node)->data.s_exec.eof_count = 0;
 	(*node)->data.s_exec.eof_list = NULL;
-	(*node)->data.s_exec.fd_heredoc = -2; // USELESS
 	(*node)->data.s_exec.path_tmp_file = NULL;
 	(*node)->data.s_exec.inredir_priority = 0;
 	(*node)->data.s_exec.fd_in = STDIN_FILENO;
 	(*node)->data.s_exec.fd_out = STDOUT_FILENO;
+	(*node)->data.s_exec.fd_heredoc = -2;
 	if ((*node)->data.s_exec.ac < 0)
 		return (1);
-	else if ((*node)->data.s_exec.ac == 0)
-	{
-		(*node)->data.s_exec.av = NULL;
-		return (0);
-	}
 	(*node)->data.s_exec.av = copy_args(*tok, (*node)->data.s_exec.ac);
 	if (!(*node)->data.s_exec.av)
 		return (1);

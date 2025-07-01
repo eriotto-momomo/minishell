@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/01 14:25:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:30:30 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	reset_free(t_shell *s)
 {
 	if (s->head)
 		free_token_list(&(s->head));
+	if (s->tmp_files_list != NULL)
+		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
-	//if (s->heredoc_count > 0)
-	//{
-	//	unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
-	//	ft_free_char_array(s->tmp_files_list, s->heredoc_count);
-	//}
+	//w_free((void **)&(*s->tmp_files_list));
+	w_free((void **)&(s->tmp_files_list));
 	w_free((void **)&(s->line));
 }
 
@@ -34,13 +33,12 @@ void	clean_free(t_shell *s)
 		close(s->heredoc_fd);
 	if (s->head)
 		free_token_list(&(s->head));
+	if (s->tmp_files_list != NULL)
+		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
-	//if (s->tmp_files_list && s->tmp_files_list[0])
-	//{
-	//	unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
-	//	ft_free_char_array(s->tmp_files_list, s->heredoc_count);
-	//}
+	//w_free((void **)&(*s->tmp_files_list));
+	w_free((void **)&(s->tmp_files_list));
 	if (s->env_list)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/01 14:18:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:39:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,14 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
 		{
-			close((*node)->data.s_exec.fd_in);
-			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
+			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); //V.1
+			if ((*node)->data.s_exec.fd_in < 0) // V.1
+				return (1); // V.1
+			//(*node)->data.s_exec.fd_heredoc = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); // V.2
+			//if ((*node)->data.s_exec.fd_heredoc < 0) // V.2
+			//	return (1); // V.2
+			//dup2((*node)->data.s_exec.fd_heredoc, (*node)->data.s_exec.fd_in); // V.2
+
 		}
 		print_node((*node));
 		if ((*node)->data.s_exec.ac > 0)
@@ -140,13 +146,18 @@ int	execution(t_shell *s)
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
-	free_ast(&(s->root_node));
-	if (s->heredoc_count > 0)
+	//if (s->heredoc_count > 0)
+	//{
+	//	if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
+	//		return (print_error(&s->numerr, errno));s
+	//	//ft_free_char_array(s->tmp_files_list, s->heredoc_count);
+	//	//w_free((void **)&s->tmp_files_list);
+	//}
+	//free_ast(&(s->root_node));
+	if (s->tmp_files_list != NULL)
 	{
-		if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
-			return (print_error(&s->numerr, errno));
-		ft_free_char_array(s->tmp_files_list, s->heredoc_count);
+		fprintf(stderr, "%sexec.c | execution | 🐧🐧🐧🐧🐧 Salut mon ptit pingouin, si 🐧 jamais s->tmp_file est 🐧🐧🐧 free dans reset_clean 🐧🐧🐧🐧🐧🐧 mais si🐧🐧🐧  on 🐧 le fait pas ici aussi 🐧🐧🐧🐧 y'a des leaks, je comprends🐧 pas...%s\n", P, RST);
+		w_free((void **)&(s->tmp_files_list));
 	}
-	fprintf(stderr,"%sexecution | EXECUTION DONE %s\n",B, RST);
 	return (0);
 }

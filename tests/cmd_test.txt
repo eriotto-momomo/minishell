@@ -14,7 +14,9 @@ echo << 1 | echo << 2 | echo << 3 | echo << 4 | echo << 5 | echo << 6 | echo << 
 cat << 1 > 1 | cat << 2 > 2
 cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5
 cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10
- cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10 | cat << 11 | cat << 12 | cat << 13 | cat << 14 | cat << 15
+cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10 | cat << 11 | cat << 12 | cat << 13 | cat << 14 | cat << 15
+cat << 1 > TEST_1 | cat << 2 > TEST_2 | cat << 3 > TEST_3 | cat << 4 > TEST_4 | cat << 5 > TEST_5 | cat << 6 > TEST_6 | cat << 7 > TEST_7 | cat << 8 > TEST_8 | cat << 9 > TEST_9 | cat << 10 > TEST_10
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/30 09:09:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:08:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	free_exec_node(t_ast *node)
 			node->data.s_exec.eof_count);
 		node->data.s_exec.eof_count = 0;
 	}
+	w_free((void **)&node->data.s_exec.path_tmp_file);
 	node->data.s_exec.fd_in = 0;
 	node->data.s_exec.fd_out = 1;
+	node->data.s_exec.fd_heredoc = -2;
 	w_free((void **)&node);
 }
 
