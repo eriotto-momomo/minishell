@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/27 19:27:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:24:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	prompt_loop(t_shell *s)
 		{
 			add_history(s->line);
 			process_input(s);
+			fprintf(stderr, "global :%d\nsnumerr :%d\n", g_sig, s->numerr);
 		}
 		reset(s);
 	}

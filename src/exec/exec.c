@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/30 11:30:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:18:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ int	preorder_exec(t_shell *s, t_ast **node)
 		if (string_processing(s, &(*node)->data.s_exec.ac,
 				&(*node)->data.s_exec.av) != 0)
 			return (1);
+		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
+		{
+			close((*node)->data.s_exec.fd_in);
+			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
+		}
+		print_node((*node));
 		if ((*node)->data.s_exec.ac > 0)
 			if (handle_exec(s, (*node)) != 0)
 				return (1);

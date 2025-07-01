@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/30 09:01:12 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 13:42:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	parser(t_shell *s)
 		return (print_error(&s->numerr, errno));
 	}
 	s->current_node = s->root_node;
+	fill_heredocs(s);
 	free_token_list(&(s->head));
 	return (0);
 }
