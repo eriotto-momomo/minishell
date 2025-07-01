@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 14:15:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:27:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_ast	*parse_line(t_shell *s, t_token **tok)
 {
 	t_ast	*node;
 
-	// COPIER LA LISTE DE TOUS LA HEREDOC QU'ON UTILISE COMME INPUT
 	if (s->tmp_files_list == NULL)
 	{
 		s->heredoc_count = count_all_heredocs(*tok);
@@ -50,7 +49,6 @@ t_ast	*parse_line(t_shell *s, t_token **tok)
 			if (!s->tmp_files_list)
 				return (NULL);
 		}
-		fprintf(stderr, "%sget_heredoc | INITIALIZING s->tmp_files_list%s\n", Y, RST);
 	}
 	node = parse_pipe(s, tok);
 	if (!node)

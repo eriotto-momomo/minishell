@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/01 14:24:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:09:30 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	is_blank_line(char *line)
 
 void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 {
+	//fprintf(stderr, "%supdate_numerr | g_sig; %d | s->numerr: %d%s\n", P, g_sig, *numerr, RST);
 	if (mode == UPDATE_SIGNALS || mode == UPDATE_SIG_ERR)
 	{
 		if (g_sig == SIGINT)
@@ -80,7 +81,7 @@ void	prompt_loop(t_shell *s)
 		update_numerr(&s->child_exit, &s->numerr, UPDATE_SIG_ERR);
 		if (s->sig_mode != MINISHELL_SIGNALS)
 			setup_signals(s, MINISHELL_SIGNALS);
-		s->line = (readline(s->prompt));
+		s->line = readline(s->prompt);
 		update_numerr(&s->child_exit, &s->numerr, UPDATE_SIGNALS);
 		if (s->line == NULL)
 			terminate_shell(s);
@@ -88,7 +89,6 @@ void	prompt_loop(t_shell *s)
 		{
 			add_history(s->line);
 			process_input(s);
-			fprintf(stderr, "global :%d\nsnumerr :%d\n", g_sig, s->numerr);
 		}
 		reset(s);
 	}

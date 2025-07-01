@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/01 14:16:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:29:07 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,22 @@ static int	fork_heredoc(t_shell *s)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		process_heredoc(s, s->current_node);
+		//fprintf(stderr, "%sfork_heredoc | 1 | g_sig; %d | s->numerr: %d | s->line: %s%s\n", G, g_sig, s->numerr, s->line, RST);
+		close_fd(s->root_node);
+		free_ast(&s->root_node);
+		w_free((void **)&s->tmp_files_list);
 		kill_children(s);
 	}
 	waitpid(heredoc_pid, NULL, 0);
 	setup_signals(s, DEFAULT_SIGNALS);
-	fprintf(stderr, "%sfork_heredoc | EXIT FUNCTION!%s\n", G, RST);
+	//fprintf(stderr, "%sfork_heredoc | 2 | g_sig; %d | s->numerr: %d | s->line: %s%s\n", G, g_sig, s->numerr, s->line, RST);
+	//fprintf(stderr, "%sfork_heredoc | EXIT FUNCTION!%s\n", G, RST);
 	return (0);
 }
 
 int	fill_heredocs(t_shell *s)
 {
 	fork_heredoc(s);
+	//reset_prompt(s, RESET_PROMPT);
 	return (0);
 }
