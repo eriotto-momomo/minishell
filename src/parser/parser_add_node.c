@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/30 11:22:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:04:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int	check_inredir_priority(t_token *tok)
 	while (tok && tok->type != PIPE)
 	{
 		if (tok->type == IN_REDIR)
-			priority = 1;
+			priority = IN_REDIR;
 		else if (tok->type == HERE_DOC)
-			priority = 2;
+			priority = HERE_DOC;
 		tok = tok->next;
 	}
 	return (priority);
@@ -30,26 +30,18 @@ static int	check_inredir_priority(t_token *tok)
 
 int	add_redir(t_shell *s, t_ast **node, t_token **tok)
 {
-	int	priority;
-
-
 	get_heredoc(s, node, tok);
 	get_redir(s, node, tok);
-	priority = check_inredir_priority(*tok);
-	if (priority == 1)
-	{
-		if (close((*node)->data.s_exec.fd_heredoc))
-			return (1);
-	}
-	else if (priority == 2)
+	(*node)->data.s_exec.inredir_priority = check_inredir_priority(*tok);
+	if ((*node)->data.s_exec.inredir_priority == HERE_DOC)
 	{
 		if ((*node)->data.s_exec.fd_in > 2)
 			if (close((*node)->data.s_exec.fd_in))
 				return (1);
-		(*node)->data.s_exec.fd_in = (*node)->data.s_exec.fd_heredoc;
 	}
-	else
-		(*node)->data.s_exec.fd_in = STDIN_FILENO;
+	//else if ((*node)->data.s_exec.inredir_priority != HERE_DOC
+	//	|| (*node)->data.s_exec.inredir_priority != IN_REDIR)
+	//	(*node)->data.s_exec.fd_in = STDIN_FILENO;
 	return (0);
 }
 
@@ -59,7 +51,9 @@ int	add_command(t_ast **node, t_token **tok)
 	(*node)->data.s_exec.ac = count_tokens(&(*tok), WORD);
 	(*node)->data.s_exec.eof_count = 0;
 	(*node)->data.s_exec.eof_list = NULL;
-	(*node)->data.s_exec.fd_heredoc = -2;
+	(*node)->data.s_exec.fd_heredoc = -2; // USELESS
+	(*node)->data.s_exec.path_tmp_file = NULL;
+	(*node)->data.s_exec.inredir_priority = 0;
 	(*node)->data.s_exec.fd_in = STDIN_FILENO;
 	(*node)->data.s_exec.fd_out = STDOUT_FILENO;
 	if ((*node)->data.s_exec.ac < 0)

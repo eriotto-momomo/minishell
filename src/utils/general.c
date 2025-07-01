@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:34:21 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/27 09:13:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:02:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 		fprintf(stderr, "\n");
 		fprintf(stderr, "%sprint_node%s| fd_in:  %d\n", B, RST, ast->data.s_exec.fd_in);
 		fprintf(stderr, "%sprint_node%s| fd_out: %d\n", B, RST, ast->data.s_exec.fd_out);
+		fprintf(stderr, "%sprint_node%s| fd_heredoc: %d\n", B, RST, ast->data.s_exec.fd_heredoc);
+		fprintf(stderr, "%sprint_node%s| inredir_priority: %d\n", B, RST, ast->data.s_exec.inredir_priority);
+		if (ast->data.s_exec.path_tmp_file != NULL)
+			fprintf(stderr, "%sprint_node%s| path_tmp_file:  %s\n", B, RST, ast->data.s_exec.path_tmp_file);
 		if (ast->data.s_exec.eof_count == 0)
 			fprintf(stderr, "%sprint_node%s| %sNo heredoc to handle!%s\n", B, RST, R, RST);
 		else if (ast->data.s_exec.eof_count > 0)

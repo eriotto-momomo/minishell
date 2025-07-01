@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/30 08:50:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:11:17 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef union u_data
 		int		fd_in;
 		int		fd_out;
 		int		fd_heredoc;
+		char	*path_tmp_file;
+		int		inredir_priority;
 		int		eof_count;
 		char	**eof_list;
 	}	s_exec;
