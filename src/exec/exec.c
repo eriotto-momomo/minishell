@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/02 13:42:12 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/02 22:46:45 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,13 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
 		{
-			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); //V.1
-			if ((*node)->data.s_exec.fd_in < 0) // V.1
-				return (1); // V.1
-			//(*node)->data.s_exec.fd_heredoc = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); // V.2
-			//if ((*node)->data.s_exec.fd_heredoc < 0) // V.2
-			//	return (1); // V.2
-			//dup2((*node)->data.s_exec.fd_heredoc, (*node)->data.s_exec.fd_in); // V.2
-
+			// (*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); //V.1
+			// if ((*node)->data.s_exec.fd_in < 0) // V.1
+			// 	return (1); // V.1
+			(*node)->data.s_exec.fd_heredoc = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); // V.2
+			if ((*node)->data.s_exec.fd_heredoc < 0) // V.2
+				return (1); // V.2
+			dup2((*node)->data.s_exec.fd_heredoc, (*node)->data.s_exec.fd_in); // V.2
 		}
 		if ((*node)->data.s_exec.ac > 0)
 			if (handle_exec(s, (*node)) != 0)
@@ -98,7 +97,6 @@ int	preorder_exec(t_shell *s, t_ast **node)
 		if ((*node)->data.s_exec.fd_heredoc > 2)
 			close((*node)->data.s_exec.fd_heredoc);
 	}
-	//close_fd((*node));
 	return (0);
 }
 
@@ -141,18 +139,11 @@ int	execution(t_shell *s)
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
-	//if (s->heredoc_count > 0)
-	//{
-	//	if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
-	//		return (print_error(&s->numerr, errno));s
-	//	//ft_free_char_array(s->tmp_files_list, s->heredoc_count);
-	//	//w_free((void **)&s->tmp_files_list);
-	//}
-	//free_ast(&(s->root_node));
-	if (s->tmp_files_list != NULL)
-	{
-		fprintf(stderr, "%sexec.c | execution | 🐧🐧🐧🐧🐧 Salut mon ptit pingouin, si 🐧 jamais s->tmp_file est 🐧🐧🐧 free dans reset_clean 🐧🐧🐧🐧🐧🐧 mais si🐧🐧🐧  on 🐧 le fait pas ici aussi 🐧🐧🐧🐧 y'a des leaks, je comprends🐧 pas...%s\n", P, RST);
+	if (s->heredoc_count > 0)
+		if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
+			return (print_error(&s->numerr, errno));
+	free_ast(&(s->root_node));
+	if (s->tmp_files_list)
 		w_free((void **)&(s->tmp_files_list));
-	}
 	return (0);
 }
