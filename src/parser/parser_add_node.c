@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_add_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:19:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/02 10:13:01 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	check_inredir_priority(t_token *tok)
 	{
 		if (tok->type == IN_REDIR)
 			priority = IN_REDIR;
+		else if (tok->type == OUT_REDIR)
+			priority = OUT_REDIR;
 		else if (tok->type == HERE_DOC)
 			priority = HERE_DOC;
 		tok = tok->next;
