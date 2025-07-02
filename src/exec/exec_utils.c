@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/02 10:38:40 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/02 13:42:22 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,12 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 		close_pipes(node, s->pipe_fd, s->pipe_count);
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, errno));
+		fprintf(stderr, "cmd reading from %d and writing in %d\n", node->data.s_exec.fd_in, node->data.s_exec.fd_out);
 		cmd_execution(s, env, node->data.s_exec.av);
 	}
 	else
 	{
-		if (node->data.s_exec.inredir_priority == IN_REDIR || node->data.s_exec.inredir_priority == HERE_DOC)
+		if (node->data.s_exec.inredir_priority == IN_REDIR)
 			close(node->data.s_exec.fd_in);
 		if (node->data.s_exec.inredir_priority == OUT_REDIR)
 			close(node->data.s_exec.fd_out);
