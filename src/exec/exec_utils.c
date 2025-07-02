@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/01 16:23:58 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/02 09:55:09 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int	close_pipes(t_ast *node, int pipe_fd[][2], int pipe_count)
 	while (++i < pipe_count)
 	{
 		if (pipe_fd[i][0] != node->data.s_exec.fd_in
-			&& pipe_fd[i][0] != node->data.s_exec.fd_out)
+			&& pipe_fd[i][0] != node->data.s_exec.fd_out
+			&& pipe_fd[i][0] != -1)
 			if (close(pipe_fd[i][0]) != 0)
 				return (1);
 		if (pipe_fd[i][1] != node->data.s_exec.fd_in
-			&& pipe_fd[i][1] != node->data.s_exec.fd_out)
+			&& pipe_fd[i][1] != node->data.s_exec.fd_out
+			&& pipe_fd[i][1] != -1)
 			if (close(pipe_fd[i][1]) != 0)
 				return (1);
 	}
@@ -55,7 +57,9 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
 	close(s->pipe_fd[cur_pipe][0]);
+	s->pipe_fd[cur_pipe][0] = -1;
 	close(s->pipe_fd[cur_pipe][1]);
+	s->pipe_fd[cur_pipe][1] = -1;
 	return (0);
 }
 
@@ -87,15 +91,18 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 		return (print_error(&s->numerr, EPIPE));
 	if (pid == 0)
 	{
+		close_pipes(node, s->pipe_fd, s->pipe_count);
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, errno));
 		cmd_execution(s, env, node->data.s_exec.av);
 	}
 	else
 	{
+		// if (node->data.s_exec.fd_out != STDOUT_FILENO)
+		// 	close(node->data.s_exec.fd_out);
+		// if (node->data.s_exec.fd_in != STDIN_FILENO)
+		// 	close(node->data.s_exec.fd_in);
 		s->child_pids[s->pid_count++] = pid;
-		if (node->data.s_exec.fd_in != STDIN_FILENO)
-			close(node->data.s_exec.fd_in);
 	}
 	return (0);
 }
