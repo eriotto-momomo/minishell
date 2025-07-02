@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/02 10:21:06 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/02 13:44:38 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	check_inredir_priority(t_token *tok)
 	priority = 0;
 	while (tok && tok->type != PIPE)
 	{
-		if (tok->type == IN_REDIR)
+		if (tok->type == HERE_DOC)
+			priority = HERE_DOC;
+		else if (tok->type == IN_REDIR)
 			priority = IN_REDIR;
 		else if (tok->type == OUT_REDIR)
 			priority = OUT_REDIR;
-		else if (tok->type == HERE_DOC)
-			priority = HERE_DOC;
 		tok = tok->next;
 	}
 	return (priority);

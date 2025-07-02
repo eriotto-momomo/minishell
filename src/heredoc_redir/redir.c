@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 13:35:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:37:40 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	get_heredoc(t_shell *s, t_ast **node, t_token **tok)
 	(*node)->data.s_exec.eof_count = count_tokens(&(*tok), HERE_DOC);
 	if ((*node)->data.s_exec.eof_count == 0)
 		return (0);
-	// COPIE LES EOF
 	(*node)->data.s_exec.eof_list
 		= copy_eof_list(*tok, (*node)->data.s_exec.eof_count);
 	if (!(*node)->data.s_exec.eof_list)
