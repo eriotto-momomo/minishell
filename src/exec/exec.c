@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/01 18:39:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/02 09:53:05 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ int	preorder_exec(t_shell *s, t_ast **node)
 		if ((*node)->data.s_exec.ac > 0)
 			if (handle_exec(s, (*node)) != 0)
 				return (1);
-		if ((*node)->data.s_exec.fd_in > 2)
-			close((*node)->data.s_exec.fd_in);
-		if ((*node)->data.s_exec.fd_out > 2)
-			close((*node)->data.s_exec.fd_out);
+		// if ((*node)->data.s_exec.fd_in > 2)
+		// 	close((*node)->data.s_exec.fd_in);
+		// if ((*node)->data.s_exec.fd_out > 2)
+		// 	close((*node)->data.s_exec.fd_out);
 		if ((*node)->data.s_exec.fd_heredoc > 2)
 			close((*node)->data.s_exec.fd_heredoc);
 	}
