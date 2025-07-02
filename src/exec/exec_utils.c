@@ -6,7 +6,7 @@
 /*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/02 10:13:46 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/02 10:38:40 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	}
 	else
 	{
-		if (node->data.s_exec.inredir_priority == IN_REDIR)
+		if (node->data.s_exec.inredir_priority == IN_REDIR || node->data.s_exec.inredir_priority == HERE_DOC)
 			close(node->data.s_exec.fd_in);
 		if (node->data.s_exec.inredir_priority == OUT_REDIR)
 			close(node->data.s_exec.fd_out);

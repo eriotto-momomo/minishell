@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/01 18:29:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/02 10:39:49 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,5 @@ static int	fork_heredoc(t_shell *s)
 int	fill_heredocs(t_shell *s)
 {
 	fork_heredoc(s);
-	//reset_prompt(s, RESET_PROMPT);
 	return (0);
 }
