@@ -1,15 +1,16 @@
 a.out
 build
+data.s_exec.fd_in
 docs
 include
 lib
 Makefile
 minishell
+numerr,
 resources
 src
 T1
 T2
-TEST
 TEST_LS
 tests
 tmp
