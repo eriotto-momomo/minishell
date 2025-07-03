@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 12:25:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:30:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,31 @@ void	reset_free(t_shell *s)
 {
 	if (s->head)
 		free_token_list(&(s->head));
+	if (s->tmp_files_list != NULL)
+		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
+	w_free((void **)&(s->tmp_files_list));
 	w_free((void **)&(s->line));
 }
 
 void	clean_free(t_shell *s)
 {
+	if (s->fd >= 0)
+		close(s->fd);
+	if (s->heredoc_fd >= 0)
+		close(s->heredoc_fd);
 	if (s->head)
 		free_token_list(&(s->head));
+	if (s->tmp_files_list != NULL)
+		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
+	w_free((void **)&(s->tmp_files_list));
 	if (s->env_list)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
-	w_free((void **)&(s->heredoc_tmp));
 	setup_signals(s, DEFAULT_SIGNALS);
 }
 

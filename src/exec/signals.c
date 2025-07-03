@@ -6,24 +6,39 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/24 15:56:00 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:24:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+int	handle_termios(t_shell *s, int mode)
+{
+	fprintf(stderr, "%s%s%s\n", P, "handle_termios | ENTER FUNCTION", RST);
+	if (mode == 0)
+	{
+		if (tcgetattr(STDIN_FILENO, &s->term_backup) == -1)
+			return (print_error(&s->numerr, errno));
+	}
+	else if (mode == 1)
+	{
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &s->term_backup) == -1)
+			return (print_error(&s->numerr, errno));
+	}
+	return (0);
+}
+
 void	heredoc_handler(int signal)
 {
 	g_sig = signal;
-	rl_replace_line("", 0);
-	rl_done = 1;
 	close(STDIN_FILENO);
-	write(1, "\n", 1);
 }
 
 void	clean_exit_handler(int signal)
 {
 	g_sig = signal;
+	if (signal == SIGQUIT)
+		write(2, "Quit (core dumped)", 18);
 	write(1, "\n", 1);
 }
 
@@ -36,11 +51,6 @@ void	sigint_handler(int signal)
 	rl_redisplay();
 }
 
-void	sigquit_handler(int signal)
-{
-	g_sig = signal;
-}
-
 void	setup_signals(t_shell *s, int mode)
 {
 	struct sigaction	act;
@@ -50,8 +60,7 @@ void	setup_signals(t_shell *s, int mode)
 	{
 		act.sa_handler = &sigint_handler;
 		sigaction(SIGINT, &act, NULL);
-		act.sa_handler = &sigquit_handler;
-		sigaction(SIGQUIT, &act, NULL);
+		signal(SIGQUIT, SIG_IGN);
 		s->sig_mode = MINISHELL_SIGNALS;
 	}
 	else if (mode == DEFAULT_SIGNALS)
@@ -65,7 +74,7 @@ void	setup_signals(t_shell *s, int mode)
 	{
 		act.sa_handler = &heredoc_handler;
 		sigaction(SIGINT, &act, NULL);
-		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		s->sig_mode = HEREDOC_SIGNALS;
 	}
 }

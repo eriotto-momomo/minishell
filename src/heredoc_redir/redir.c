@@ -6,11 +6,60 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 12:26:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:34:41 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	get_heredoc(t_shell *s, t_ast **node, t_token **tok)
+{
+	(*node)->data.s_exec.eof_count = count_tokens(&(*tok), HERE_DOC);
+	if ((*node)->data.s_exec.eof_count == 0)
+		return (0);
+	(*node)->data.s_exec.eof_list
+		= copy_eof_list(*tok, (*node)->data.s_exec.eof_count);
+	if (!(*node)->data.s_exec.eof_list)
+		return (1);
+	(*node)->data.s_exec.path_tmp_file = create_tmp_file(s,
+			(*node)->data.s_exec.eof_list, (*node)->data.s_exec.eof_count);
+	if (!(*node)->data.s_exec.path_tmp_file)
+	{
+		ft_free_char_array((*node)->data.s_exec.eof_list,
+			(*node)->data.s_exec.eof_count);
+		return (1);
+	}
+	return (0);
+}
+
+int	get_redir(t_shell *s, t_ast **node, t_token **tok)
+{
+	t_token	*tmp;
+
+	(*node)->data.s_exec.fd_in = 0;
+	(*node)->data.s_exec.fd_out = 1;
+	tmp = *tok;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == OUT_REDIR || tmp->type == APP_OUT_REDIR)
+			(*node)->data.s_exec.fd_out
+				= redir_out(s, tmp->type, tmp->next->data,
+					(*node)->data.s_exec.fd_out);
+		else if (tmp->type == IN_REDIR)
+			(*node)->data.s_exec.fd_in
+				= redir_in(s, tmp->next->data, (*node)->data.s_exec.fd_in);
+		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
+		{
+			(*node)->data.s_exec.fd_in = 0;
+			(*node)->data.s_exec.fd_out = 1;
+		}
+		if (!get_next_token(&tmp))
+			break ;
+	}
+	if (errno)
+		ft_puterror(strerror(errno));
+	return (0);
+}
 
 int	get_final_filename(t_shell *s, char **filename)
 {

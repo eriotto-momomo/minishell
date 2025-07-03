@@ -6,32 +6,29 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 10:40:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:39:02 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	close_fd(t_ast *node)
+static int	process_exec_node(t_shell *s, t_ast **n)
 {
-	if (node->tag == EXEC_NODE)
+	if (string_processing(s, &(*n)->data.s_exec.ac,
+			&(*n)->data.s_exec.av) != 0)
+		return (1);
+	if ((*n)->data.s_exec.inredir_priority == HERE_DOC)
 	{
-		if (node->data.s_exec.fd_in > 2)
-			if (close(node->data.s_exec.fd_in) != 0)
-				return (1);
-		if (node->data.s_exec.fd_out > 2)
-			if (close(node->data.s_exec.fd_out) != 0)
-				return (1);
-	}
-	else if (node->tag == PIPE_NODE)
-	{
-		if (close_fd(node->data.s_pipe.left) != 0)
-			return (1);
-		if (close_fd(node->data.s_pipe.right) != 0)
+		(*n)->data.s_exec.fd_in
+			= open((*n)->data.s_exec.path_tmp_file, O_RDONLY);
+		if ((*n)->data.s_exec.fd_in < 0)
 			return (1);
 	}
-	node->data.s_exec.fd_in = 0;
-	node->data.s_exec.fd_out = 1;
+	if ((*n)->data.s_exec.ac > 0)
+		if (handle_exec(s, (*n)) != 0)
+			return (1);
+	if (f_close(&(*n)->data.s_exec.fd_heredoc) != 0)
+		return (1);
 	return (0);
 }
 
@@ -69,38 +66,10 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 	}
 	else if ((*node)->tag == EXEC_NODE)
-	{
-		if ((*node)->data.s_exec.heredoc_count > 0)
-			(*node)->data.s_exec.fd_in = handle_heredoc(s, (*node));
-		if (string_processing(s, &(*node)->data.s_exec.ac,
-				&(*node)->data.s_exec.av) != 0)
+		if (process_exec_node(s, node) != 0)
 			return (1);
-		if ((*node)->data.s_exec.ac > 0)
-			if (handle_exec(s, (*node)) != 0)
-				return (1);
-	}
-	close_fd((*node));
-	return (0);
-}
-
-static int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
-{
-	int	i;
-	int	status;
-	int	pid;
-
-	i = 0;
-	while (i < pid_count)
-	{
-		pid = waitpid(child_pids[i], &status, 0);
-		if (pid == -1)
-			continue ;
-		if (WIFEXITED(status))
-			*numerr = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			*numerr = WTERMSIG(status);
-		i++;
-	}
+	if (f_close(&(*node)->data.s_exec.fd_in) != 0)
+		return (1);
 	return (0);
 }
 
@@ -122,8 +91,11 @@ int	execution(t_shell *s)
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
+	if (s->heredoc_count > 0)
+		if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
+			return (print_error(&s->numerr, errno));
 	free_ast(&(s->root_node));
-	if (s->heredoc_fd > -1)
-		unlink(HEREDOC_FILE_PATH);
+	if (s->tmp_files_list)
+		w_free((void **)&(s->tmp_files_list));
 	return (0);
 }

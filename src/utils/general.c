@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:34:21 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/23 20:28:24 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:32:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,16 @@ int	perfect_match(char *s1, char *s2)
 	if ((ft_strlen(s1) == ft_strlen(s2))
 		&& ft_strncmp(s1, s2, ft_strlen(s2)) == 0)
 		return (1);
+	return (0);
+}
+
+int	f_close(int *fd)
+{
+	if (*fd > 2)
+	{
+		if (close(*fd) == -1)
+			return (-1);
+		*fd = -1;
+	}
 	return (0);
 }

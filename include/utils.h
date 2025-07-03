@@ -6,12 +6,14 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/25 12:25:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:13:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
+
+void	print_node(t_ast *ast); // 🖨️PRINT💥DEBUGING
 
 void	reset_free(t_shell *s);
 void	clean_free(t_shell *s);
@@ -31,5 +33,6 @@ char	**ltotable(t_env *env);
 t_env	*create_var(char *name, char	*value);
 void	del_var(t_env **head, t_env **target);
 int		perfect_match(char *s1, char *s2);
+int		f_close(int *fd);
 
 #endif
