@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:24:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:09:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ int	handle_termios(t_shell *s, int mode)
 
 void	heredoc_handler(int signal)
 {
+	char	c;
+
 	g_sig = signal;
-	close(STDIN_FILENO);
+	c = '\n';
+	ioctl(STDIN_FILENO, TIOCSTI, &c);
 }
 
 void	clean_exit_handler(int signal)
@@ -45,7 +48,7 @@ void	clean_exit_handler(int signal)
 void	sigint_handler(int signal)
 {
 	g_sig = signal;
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDOUT_FILENO, "^C\n", 3);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

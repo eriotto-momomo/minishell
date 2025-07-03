@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/01 18:39:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:36:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,16 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	}
 	else if ((*node)->tag == EXEC_NODE)
 	{
+		if ((*node)->data.s_exec.fd_in < 0) // ADD
+			return (print_error(&s->numerr, errno)); // ADD
 		if (string_processing(s, &(*node)->data.s_exec.ac,
 				&(*node)->data.s_exec.av) != 0)
 			return (1);
 		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
 		{
-			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); //V.1
-			if ((*node)->data.s_exec.fd_in < 0) // V.1
-				return (1); // V.1
-			//(*node)->data.s_exec.fd_heredoc = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); // V.2
-			//if ((*node)->data.s_exec.fd_heredoc < 0) // V.2
-			//	return (1); // V.2
-			//dup2((*node)->data.s_exec.fd_heredoc, (*node)->data.s_exec.fd_in); // V.2
-
+			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
+			if ((*node)->data.s_exec.fd_in < 0)
+				return (1);
 		}
 		print_node((*node));
 		if ((*node)->data.s_exec.ac > 0)
@@ -155,9 +152,6 @@ int	execution(t_shell *s)
 	//}
 	//free_ast(&(s->root_node));
 	if (s->tmp_files_list != NULL)
-	{
-		fprintf(stderr, "%sexec.c | execution | 🐧🐧🐧🐧🐧 Salut mon ptit pingouin, si 🐧 jamais s->tmp_file est 🐧🐧🐧 free dans reset_clean 🐧🐧🐧🐧🐧🐧 mais si🐧🐧🐧  on 🐧 le fait pas ici aussi 🐧🐧🐧🐧 y'a des leaks, je comprends🐧 pas...%s\n", P, RST);
 		w_free((void **)&(s->tmp_files_list));
-	}
 	return (0);
 }
