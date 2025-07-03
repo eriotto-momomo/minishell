@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/02 22:46:45 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/03 09:11:44 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	close_fd(t_ast *node)
 {
-	//if (errno == 9)
-	//{
-	//	errno = 0;
-	//	return (0);
-	//}
 	if (node->tag == EXEC_NODE)
 	{
 		if (node->data.s_exec.fd_in > 2)
@@ -27,8 +22,16 @@ int	close_fd(t_ast *node)
 		if (node->data.s_exec.fd_out > 2)
 			if (close(node->data.s_exec.fd_out) != 0)
 				return (1);
-		node->data.s_exec.fd_in = 0;
-		node->data.s_exec.fd_out = 1;
+		if (node->data.s_exec.fd_in > 2)
+		{
+			close(node->data.s_exec.fd_in);
+			node->data.s_exec.fd_in = -1;
+		}
+		if (node->data.s_exec.fd_out > 2)
+		{
+			close(node->data.s_exec.fd_out);
+			node->data.s_exec.fd_out = -1;
+		}
 		return (0);
 	}
 	else if (node->tag == PIPE_NODE)
@@ -43,8 +46,6 @@ int	close_fd(t_ast *node)
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
-	//fprintf(stderr, "%s%s%s\n", P, "handle_exec node:", RST);
-	//print_node(node);
 	if (perfect_match(node->data.s_exec.av[0], "exit"))
 		return (ft_exit(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
 	if (perfect_match(node->data.s_exec.av[0], CD))
@@ -83,19 +84,17 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
 		{
-			// (*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); //V.1
-			// if ((*node)->data.s_exec.fd_in < 0) // V.1
-			// 	return (1); // V.1
-			(*node)->data.s_exec.fd_heredoc = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); // V.2
-			if ((*node)->data.s_exec.fd_heredoc < 0) // V.2
-				return (1); // V.2
-			dup2((*node)->data.s_exec.fd_heredoc, (*node)->data.s_exec.fd_in); // V.2
+			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY); //V.1
+			if ((*node)->data.s_exec.fd_in < 0) // V.1
+				return (1); // V.1
 		}
 		if ((*node)->data.s_exec.ac > 0)
 			if (handle_exec(s, (*node)) != 0)
 				return (1);
 		if ((*node)->data.s_exec.fd_heredoc > 2)
 			close((*node)->data.s_exec.fd_heredoc);
+		if ((*node)->data.s_exec.fd_in > 2)
+			close((*node)->data.s_exec.fd_in);
 	}
 	return (0);
 }
