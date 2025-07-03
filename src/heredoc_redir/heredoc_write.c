@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 10:34:03 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 17:02:13 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ static int	heredoc_loop(t_shell *s, char *eof, int fd)
 		if (g_sig != 0)
 			break ;
 		line = readline("> ");
+		if (g_sig == SIGINT)
+		{
+			w_free((void **)&line);
+			close(fd);
+			return (130);
+		}
 		if (line == NULL)
 			break ;
 		if (is_eof(line, eof))

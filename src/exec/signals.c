@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:24:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:01:26 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_termios(t_shell *s, int mode)
 void	heredoc_handler(int signal)
 {
 	g_sig = signal;
-	close(STDIN_FILENO);
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 }
 
 void	clean_exit_handler(int signal)

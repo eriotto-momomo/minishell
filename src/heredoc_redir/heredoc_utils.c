@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 10:33:40 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 17:02:55 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ static int	fork_heredoc(t_shell *s)
 	heredoc_pid = fork();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+	rl_catch_signals = 1;
 	if (heredoc_pid == 0)
 	{
 		g_sig = 0;
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		setup_signals(s, HEREDOC_SIGNALS);
 		process_heredoc(s, s->current_node);
 		close_fd(s->root_node);
 		free_ast(&s->root_node);
