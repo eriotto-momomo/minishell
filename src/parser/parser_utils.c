@@ -6,11 +6,32 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 17:26:29 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 22:56:53 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:10:24 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	count_all_heredocs(t_token *tok)
+{
+	int	is_a_new_pipe;
+	int	heredoc_count;
+
+	is_a_new_pipe = 1;
+	heredoc_count = 0;
+	while (tok)
+	{
+		if (tok->type == HERE_DOC && is_a_new_pipe == 1)
+		{
+			heredoc_count++;
+			is_a_new_pipe = 0;
+		}
+		else if (tok->type == PIPE)
+			is_a_new_pipe = 1;
+		tok = tok->next;
+	}
+	return (heredoc_count);
+}
 
 t_ast	*new_ast_node(t_ast node)
 {
@@ -23,7 +44,7 @@ t_ast	*new_ast_node(t_ast node)
 	return (ptr);
 }
 
-char	**copy_heredocs(t_token *tok, int heredoc_count)
+char	**copy_eof_list(t_token *tok, int heredoc_count)
 {
 	char	**heredoc_list;
 	int		i;
@@ -39,7 +60,7 @@ char	**copy_heredocs(t_token *tok, int heredoc_count)
 			heredoc_list[i] = ft_strdup(tok->next->data);
 			if (!heredoc_list[i])
 			{
-				ft_free_char_array(heredoc_list, i);
+				ft_free_char_array(heredoc_list, heredoc_count);
 				return (NULL);
 			}
 			i++;

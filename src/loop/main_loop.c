@@ -6,22 +6,33 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 10:43:46 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:29:18 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static int	is_blank_line(char *line)
+{
+	while (*line)
+	{
+		if (!isspace((unsigned char)*line))
+			return (0);
+		line++;
+	}
+	return (1);
+}
+
 void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 {
-	if (mode == UPDATE_SIGNALS)
+	if (mode == UPDATE_SIGNALS || mode == UPDATE_SIG_ERR)
 	{
 		if (g_sig == SIGINT)
 			*numerr = 130;
 		else if (g_sig == SIGQUIT)
 			*numerr = 131;
 	}
-	else if (mode == UPDATE_ERRNO)
+	if (mode == UPDATE_ERRNO || mode == UPDATE_SIG_ERR)
 	{
 		if (*child_exit == 1)
 		{
@@ -36,13 +47,17 @@ void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 
 static void	reset(t_shell *s)
 {
-	s->numerr = 0;
+	if (!s->child_exit)
+		s->numerr = 0;
+	s->tmp_files_list = NULL;
+	s->heredoc_count = 0;
 	s->pipe_count = 0;
 	s->pid_count = 0;
 	s->tok_rdir = 0;
 	s->tok_pipe = 0;
 	s->tok_word = 0;
-	s->heredoc_fd = -1;
+	s->heredoc_fd = -2;
+	s->tmp_index = -1;
 	reset_free(s);
 }
 
@@ -62,14 +77,14 @@ void	prompt_loop(t_shell *s)
 	reset(s);
 	while (1)
 	{
-		update_numerr(&s->child_exit, &s->numerr, UPDATE_ERRNO);
+		update_numerr(&s->child_exit, &s->numerr, UPDATE_SIG_ERR);
 		if (s->sig_mode != MINISHELL_SIGNALS)
 			setup_signals(s, MINISHELL_SIGNALS);
-		s->line = (readline(s->prompt));
+		s->line = readline(s->prompt);
 		update_numerr(&s->child_exit, &s->numerr, UPDATE_SIGNALS);
 		if (s->line == NULL)
 			terminate_shell(s);
-		if (s->line && *s->line)
+		if (s->line && !is_blank_line(s->line))
 		{
 			add_history(s->line);
 			process_input(s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 10:45:52 by timmi            ###   ########.fr       */
+/*   Updated: 2025/06/30 08:51:07 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ int	init_shell(t_shell *s, char	**envp)
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
 		return (-1);
-	s->heredoc_tmp = ft_strdup(HEREDOC_FILE_PATH);
-	if (!s->heredoc_tmp)
-		return (print_error(&s->numerr, ENOMEM));
-	s->heredoc_fd = -1;
+	s->heredoc_fd = -2;
+	s->heredoc_count = 0;
+	s->tmp_index = -1;
+	s->tmp_files_list = NULL;
+	s->fd = -2;
 	s->sig_mode = -1;
 	s->child_exit = 0;
 	s->ret_value = 0;

@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/25 11:20:57 by timmi            ###   ########.fr        #
+#    Updated: 2025/07/03 10:16:59 by timmi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,24 +27,26 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/lexer/lexer.c\
 			$(CFILES_PATH)/lexer/token_list.c\
 			$(CFILES_PATH)/loop/main_loop.c \
+			$(CFILES_PATH)/loop/prompt.c\
 			$(CFILES_PATH)/parser/parser_add_node.c\
 			$(CFILES_PATH)/parser/parser_func.c\
 			$(CFILES_PATH)/parser/parser_utils.c\
 			$(CFILES_PATH)/parser/parser_main.c\
-			$(CFILES_PATH)/parser/redir.c\
 			$(CFILES_PATH)/parser/syntax_analysis.c\
-			$(CFILES_PATH)/prompt/prompt.c\
-			$(CFILES_PATH)/signals/signals.c\
 			$(CFILES_PATH)/utils/exit_utils.c\
 			$(CFILES_PATH)/utils/free_ast.c\
 			$(CFILES_PATH)/utils/general.c\
 			$(CFILES_PATH)/utils/env_utils.c\
 			$(CFILES_PATH)/utils/identifier.c\
+			$(CFILES_PATH)/heredoc_redir/redir.c\
+			$(CFILES_PATH)/heredoc_redir/heredoc_write.c\
+			$(CFILES_PATH)/heredoc_redir/heredoc_utils.c\
+			$(CFILES_PATH)/heredoc_redir/heredoc_create.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/exec_utils.c\
-			$(CFILES_PATH)/exec/heredoc.c\
-			$(CFILES_PATH)/exec/heredoc_utils.c\
 			$(CFILES_PATH)/exec/pathfinder.c\
+			$(CFILES_PATH)/exec/pipe_utils.c\
+			$(CFILES_PATH)/exec/signals.c\
 			$(CFILES_PATH)/errors/print_error.c\
 			$(CFILES_PATH)/builtin/ft_echo.c\
 			$(CFILES_PATH)/builtin/ft_cd.c\

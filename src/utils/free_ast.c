@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 14:37:22 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/23 11:14:57 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:08:14 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ void	free_exec_node(t_ast *node)
 {
 	ft_free_char_array(node->data.s_exec.av, node->data.s_exec.ac);
 	node->data.s_exec.ac = 0;
-	if (node->data.s_exec.heredoc_count > 0)
+	if (node->data.s_exec.eof_count > 0)
 	{
-		ft_free_char_array(node->data.s_exec.heredoc_list,
-			node->data.s_exec.heredoc_count);
-		node->data.s_exec.heredoc_count = 0;
+		ft_free_char_array(node->data.s_exec.eof_list,
+			node->data.s_exec.eof_count);
+		node->data.s_exec.eof_count = 0;
 	}
+	w_free((void **)&node->data.s_exec.path_tmp_file);
 	node->data.s_exec.fd_in = 0;
-	node->data.s_exec.fd_out = 0;
+	node->data.s_exec.fd_out = 1;
+	node->data.s_exec.fd_heredoc = -2;
 	w_free((void **)&node);
 }
 

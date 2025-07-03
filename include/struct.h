@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/24 17:06:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:11:17 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ typedef union u_data
 		char	**av;
 		int		fd_in;
 		int		fd_out;
-		int		heredoc_count;
-		char	**heredoc_list;
+		int		fd_heredoc;
+		char	*path_tmp_file;
+		int		inredir_priority;
+		int		eof_count;
+		char	**eof_list;
 	}	s_exec;
 }	t_data;
 
@@ -80,29 +83,33 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	t_env	*env_list;
-	int		ret_value;
-	char	*prompt;
-	char	*line;
-	t_env	*old_pwd;
-	t_env	*pwd;
-	t_env	*home;
-	t_ast	*current_node;
-	t_ast	*root_node;
-	t_token	*head;
-	pid_t	child_pids[MAX_CMDS];
-	int		pid_count;
-	int		pipe_fd[MAX_CMDS][2];
-	int		pipe_count;
-	char	*heredoc_tmp;
-	int		heredoc_fd;
-	int		child_exit;
-	int		fd;
-	int		sig_mode;
-	uint8_t	numerr;
-	int		tok_rdir;
-	int		tok_pipe;
-	int		tok_word;
+	t_env			*env_list;
+	int				ret_value;
+	char			*prompt;
+	char			*line;
+	t_env			*old_pwd;
+	t_env			*pwd;
+	t_env			*home;
+	t_ast			*current_node;
+	t_ast			*root_node;
+	t_token			*head;
+	pid_t			child_pids[MAX_CMDS];
+	pid_t			heredoc_pid;
+	struct termios	term_backup;
+	int				pid_count;
+	int				pipe_fd[MAX_CMDS][2];
+	int				pipe_count;
+	char			**tmp_files_list;
+	int				tmp_index;
+	int				heredoc_count;
+	int				heredoc_fd;
+	int				child_exit;
+	int				fd;
+	int				sig_mode;
+	uint8_t			numerr;
+	int				tok_rdir;
+	int				tok_pipe;
+	int				tok_word;
 }			t_shell;
 
 #endif
