@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/01 18:30:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:37:30 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	clean_free(t_shell *s)
 		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
-	//w_free((void **)&(*s->tmp_files_list));
 	w_free((void **)&(s->tmp_files_list));
 	if (s->env_list)
 		free_env(&(s->env_list));
@@ -59,6 +58,9 @@ void	kill_children(t_shell *s)
 {
 	clean_free(s);
 	if (s->numerr)
-		exit(s->numerr);
+	{
+		fprintf(stderr, "%skill_children | s->numerr: %d%s\n", R, s->numerr, RST);
+		exit((uint8_t)s->numerr);
+	}
 	exit(EXIT_SUCCESS);
 }
