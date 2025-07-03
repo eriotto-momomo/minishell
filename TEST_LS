@@ -1,4 +1,3 @@
-1
 a.out
 build
 docs
@@ -8,6 +7,9 @@ Makefile
 minishell
 resources
 src
+T1
+T2
+TEST
 TEST_LS
 tests
 tmp
