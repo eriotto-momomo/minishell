@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:29:45 by emonacho          #+#    #+#             */
-/*   Updated: 2025/06/26 15:12:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:13:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ char	**ltotable(t_env *env);
 t_env	*create_var(char *name, char	*value);
 void	del_var(t_env **head, t_env **target);
 int		perfect_match(char *s1, char *s2);
+int		f_close(int *fd);
 
 #endif

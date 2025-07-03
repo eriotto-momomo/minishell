@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_write.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/02 13:39:21 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:34:03 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	heredoc_loop(t_shell *s, char *eof, int fd)
 	return (0);
 }
 
-int	write_heredoc(t_shell *s, char *path, char** eof_list, int eof_count)
+int	write_heredoc(t_shell *s, char *path, char **eof_list, int eof_count)
 {
 	int	i;
 	int	heredoc_fd;

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_create.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:07:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:33:16 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:33:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
 int	unlink_tmp_files(char **tmp_files_list, int heredoc_count)
 {
@@ -52,10 +52,11 @@ static char	*create_path(char *eof, int index)
 	return (tmp);
 }
 
-char	*create_tmp_file(t_shell *s, char** eof_list, int eof_count)
+char	*create_tmp_file(t_shell *s, char **eof_list, int eof_count)
 {
 	s->tmp_index++;
-	s->tmp_files_list[s->tmp_index] = create_path(eof_list[eof_count - 1], s->tmp_index);
+	s->tmp_files_list[s->tmp_index]
+		= create_path(eof_list[eof_count - 1], s->tmp_index);
 	if (!s->tmp_files_list[s->tmp_index])
 	{
 		ft_free_char_array(s->tmp_files_list, s->heredoc_count);

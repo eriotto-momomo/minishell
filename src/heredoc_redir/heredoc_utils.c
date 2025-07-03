@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/02 10:39:49 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/03 10:33:40 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	process_heredoc(t_shell *s, t_ast *node)
 	if (node->tag == EXEC_NODE)
 	{
 		if (node->data.s_exec.path_tmp_file)
-			write_heredoc(s, node->data.s_exec.path_tmp_file, node->data.s_exec.eof_list, node->data.s_exec.eof_count);
+			write_heredoc(s, node->data.s_exec.path_tmp_file,
+				node->data.s_exec.eof_list, node->data.s_exec.eof_count);
 	}
 	else if (node->tag == PIPE_NODE)
 	{
@@ -42,7 +43,6 @@ static int	fork_heredoc(t_shell *s)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		process_heredoc(s, s->current_node);
-		//fprintf(stderr, "%sfork_heredoc | 1 | g_sig; %d | s->numerr: %d | s->line: %s%s\n", G, g_sig, s->numerr, s->line, RST);
 		close_fd(s->root_node);
 		free_ast(&s->root_node);
 		w_free((void **)&s->tmp_files_list);
@@ -50,8 +50,6 @@ static int	fork_heredoc(t_shell *s)
 	}
 	waitpid(heredoc_pid, NULL, 0);
 	setup_signals(s, DEFAULT_SIGNALS);
-	//fprintf(stderr, "%sfork_heredoc | 2 | g_sig; %d | s->numerr: %d | s->line: %s%s\n", G, g_sig, s->numerr, s->line, RST);
-	//fprintf(stderr, "%sfork_heredoc | EXIT FUNCTION!%s\n", G, RST);
 	return (0);
 }
 

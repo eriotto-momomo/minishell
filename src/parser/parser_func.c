@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:27:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:29:48 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_ast	*parse_line(t_shell *s, t_token **tok)
 		s->heredoc_count = count_all_heredocs(*tok);
 		if (s->heredoc_count > 0)
 		{
-			s->tmp_files_list = malloc(sizeof(char*) * s->heredoc_count);
+			s->tmp_files_list = malloc(sizeof(char *) * s->heredoc_count);
 			if (!s->tmp_files_list)
 				return (NULL);
 		}
