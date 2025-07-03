@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:24:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 01:42:34 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ int	handle_termios(t_shell *s, int mode)
 
 void	heredoc_handler(int signal)
 {
+	char	c;
+
 	g_sig = signal;
-	close(STDIN_FILENO);
+	c = '\n';
+	ioctl(STDIN_FILENO, TIOCSTI, &c);
 }
 
 void	clean_exit_handler(int signal)

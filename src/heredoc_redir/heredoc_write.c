@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_write.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:24:26 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 01:41:28 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <signal.h>
 
 static int	put_in_heredoc(char *line, int fd)
 {
@@ -57,8 +58,11 @@ static int	heredoc_loop(t_shell *s, char *eof, int fd)
 
 	while (1)
 	{
-		if (g_sig != 0)
+		if (g_sig == SIGINT)
+		{
+			s->numerr = 130;
 			break ;
+		}
 		line = readline("> ");
 		if (line == NULL)
 			break ;
