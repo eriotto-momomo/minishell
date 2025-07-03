@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 18:04:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:43:45 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	close_fd(t_ast *node)
 {
-	//if (errno == 9)
-	//{
-	//	errno = 0;
-	//	return (0);
-	//}
 	if (node->tag == EXEC_NODE)
 	{
 		if (node->data.s_exec.fd_in > 2)
@@ -69,11 +64,8 @@ int	handle_exec(t_shell *s, t_ast *node)
 
 static int	process_exec_node(t_shell *s, t_ast **n)
 {
-	if ((*n)->data.s_exec.fd_in < 0)
-	{
-		fprintf(stderr, "process_exec | %d\n", s->numerr);
-		return (print_error(&s->numerr, errno));
-	}
+	// if ((*n)->data.s_exec.fd_in < 0)
+	// 	return (print_error(&s->numerr, errno));
 	if (string_processing(s, &(*n)->data.s_exec.ac,
 			&(*n)->data.s_exec.av) != 0)
 		return (1);
