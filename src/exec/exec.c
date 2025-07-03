@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 17:36:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:52:09 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,30 @@ int	handle_exec(t_shell *s, t_ast *node)
 	}
 }
 
+static int	process_exec_node(t_shell *s, t_ast **n)
+{
+	if (string_processing(s, &(*n)->data.s_exec.ac,
+			&(*n)->data.s_exec.av) != 0)
+		return (1);
+	if ((*n)->data.s_exec.inredir_priority == HERE_DOC)
+	{
+		(*n)->data.s_exec.fd_in
+			= open((*n)->data.s_exec.path_tmp_file, O_RDONLY);
+		if ((*n)->data.s_exec.fd_in < 0)
+			return (1);
+	}
+	if ((*n)->data.s_exec.ac > 0)
+		if (handle_exec(s, (*n)) != 0)
+			return (1);
+	if ((*n)->data.s_exec.fd_heredoc > 2)
+		if (close((*n)->data.s_exec.fd_heredoc) != 0)
+			return (1);
+	if ((*n)->data.s_exec.fd_out > 2)
+		if (close((*n)->data.s_exec.fd_out) != 0)
+			return (1);
+	return (0);
+}
+
 int	preorder_exec(t_shell *s, t_ast **node)
 {
 	if (!(*node))
@@ -77,32 +101,49 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 	}
 	else if ((*node)->tag == EXEC_NODE)
-	{
-		if ((*node)->data.s_exec.fd_in < 0) // ADD
-			return (print_error(&s->numerr, errno)); // ADD
-		if (string_processing(s, &(*node)->data.s_exec.ac,
-				&(*node)->data.s_exec.av) != 0)
-			return (1);
-		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
-		{
-			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
-			if ((*node)->data.s_exec.fd_in < 0)
-				return (1);
-		}
-		print_node((*node));
-		if ((*node)->data.s_exec.ac > 0)
-			if (handle_exec(s, (*node)) != 0)
-				return (1);
-		if ((*node)->data.s_exec.fd_in > 2)
-			close((*node)->data.s_exec.fd_in);
-		if ((*node)->data.s_exec.fd_out > 2)
-			close((*node)->data.s_exec.fd_out);
-		if ((*node)->data.s_exec.fd_heredoc > 2)
-			close((*node)->data.s_exec.fd_heredoc);
-	}
-	//close_fd((*node));
+		process_exec_node(s, node);
+	close_fd((*node));
 	return (0);
 }
+
+
+// BACKUP
+//int	preorder_exec(t_shell *s, t_ast **node)
+//{
+//	if (!(*node))
+//		return (0);
+//	if ((*node)->tag == PIPE_NODE)
+//	{
+//		if (handle_pipe(s, &(*node)) != 0)
+//			return (1);
+//	}
+//	else if ((*node)->tag == EXEC_NODE)
+//	{
+//		if ((*node)->data.s_exec.fd_in < 0) // ADD
+//			return (print_error(&s->numerr, errno)); // ADD
+//		if (string_processing(s, &(*node)->data.s_exec.ac,
+//				&(*node)->data.s_exec.av) != 0)
+//			return (1);
+//		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
+//		{
+//			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
+//			if ((*node)->data.s_exec.fd_in < 0)
+//				return (1);
+//		}
+//		print_node((*node));
+//		if ((*node)->data.s_exec.ac > 0)
+//			if (handle_exec(s, (*node)) != 0)
+//				return (1);
+//		if ((*node)->data.s_exec.fd_in > 2)
+//			close((*node)->data.s_exec.fd_in);
+//		if ((*node)->data.s_exec.fd_out > 2)
+//			close((*node)->data.s_exec.fd_out);
+//		if ((*node)->data.s_exec.fd_heredoc > 2)
+//			close((*node)->data.s_exec.fd_heredoc);
+//	}
+//	//close_fd((*node));
+//	return (0);
+//}
 
 static int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
 {
@@ -151,6 +192,7 @@ int	execution(t_shell *s)
 	//	//w_free((void **)&s->tmp_files_list);
 	//}
 	//free_ast(&(s->root_node));
+	close_fd(s->root_node);
 	if (s->tmp_files_list != NULL)
 		w_free((void **)&(s->tmp_files_list));
 	return (0);

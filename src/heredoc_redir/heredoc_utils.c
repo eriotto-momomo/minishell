@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 17:26:41 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:53:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	fork_heredoc(t_shell *s)
 	pid_t	heredoc_pid;
 	int		status;
 
+	status = 0;
 	heredoc_pid = fork();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
@@ -46,13 +47,12 @@ static int	fork_heredoc(t_shell *s)
 		close_fd(s->root_node);
 		kill_children(s);
 	}
-	waitpid(heredoc_pid, NULL, 0);
+	waitpid(heredoc_pid, &status, 0);
 	if (WIFEXITED(status))
 		s->numerr = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		s->numerr = WTERMSIG(status);
 	setup_signals(s, DEFAULT_SIGNALS);
-	fprintf(stderr, "%sfork_heredoc | g_sig; %d | s->numerr: %d | errno: %d%s\n", G, g_sig, s->numerr, errno, RST);
 	return (0);
 }
 
