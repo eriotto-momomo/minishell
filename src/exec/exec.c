@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 17:52:09 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:04:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ int	handle_exec(t_shell *s, t_ast *node)
 
 static int	process_exec_node(t_shell *s, t_ast **n)
 {
+	if ((*n)->data.s_exec.fd_in < 0)
+	{
+		fprintf(stderr, "process_exec | %d\n", s->numerr);
+		return (print_error(&s->numerr, errno));
+	}
 	if (string_processing(s, &(*n)->data.s_exec.ac,
 			&(*n)->data.s_exec.av) != 0)
 		return (1);

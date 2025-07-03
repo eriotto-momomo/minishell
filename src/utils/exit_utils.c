@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/03 17:37:30 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:02:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ void	kill_children(t_shell *s)
 {
 	clean_free(s);
 	if (s->numerr)
-	{
-		fprintf(stderr, "%skill_children | s->numerr: %d%s\n", R, s->numerr, RST);
 		exit((uint8_t)s->numerr);
-	}
 	exit(EXIT_SUCCESS);
 }
