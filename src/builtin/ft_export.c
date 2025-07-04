@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 12:35:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 10:43:51 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ int	ft_export(t_shell *s, t_env **env, t_ast *node)
 		if (exporter(env, args[i]) != 0)
 			return (print_error(&s->numerr, ENOMEM));
 	}
-	return (0);
+	return (s->numerr = 0);
 }

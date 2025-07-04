@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/24 16:35:34 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:43:14 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,5 @@ int	ft_echo(t_shell *s, t_ast **current_node, int fd_out)
 	}
 	if (!offset)
 		ft_putstr_fd("\n", fd_out);
-	return (0);
+	return (s->numerr = 0);
 }

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 09:42:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 10:43:33 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int	ft_cd(t_shell *s, int ac, char **av)
 	if (updatepath(&s->pwd, &s->old_pwd, new_pwd) != 0)
 	{
 		w_free((void **)&new_pwd);
-		return (1);
+		return (print_error(&s->numerr, ENOMEM));
 	}
 	free(new_pwd);
-	return (0);
+	return (s->numerr = 0);
 }
