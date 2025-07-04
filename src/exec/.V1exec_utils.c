@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   .V1exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/04 21:23:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:43:58 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,57 @@ int	close_pipes(t_ast *node, int pipe_fd[][2], int pipe_count)
 	return (0);
 }
 
+//V2
+//int	handle_pipe(t_shell *s, t_ast **node)
+//{
+//	int		cur_pipe;
+//	t_ast	*right;
+
+//	cur_pipe = s->pipe_count;
+//	if (pipe(s->pipe_fd[cur_pipe]) < 0)
+//		return (print_error(&s->numerr, errno));
+//	fprintf(stderr, "%shandle_pipe | pipe_in[1]: %d | pipe_out[0]: %d%s\n", Y, s->pipe_fd[s->pipe_count][1], s->pipe_fd[s->pipe_count][0], RST);
+//	if ((*node)->data.s_pipe.right->data.s_exec.fd_in == STDIN_FILENO)
+//		(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
+//	else if ((*node)->data.s_pipe.right->data.s_exec.fd_in != STDIN_FILENO)
+//	{
+//		dup2((*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0]);
+//		fprintf(stderr, "%sdup2! fd_in\n%s", Y, RST);
+//	}
+//	if ((*node)->data.s_pipe.left->tag == PIPE_NODE)
+//	{
+//		right = (*node)->data.s_pipe.left->data.s_pipe.right;
+//		if (right->tag == EXEC_NODE)
+//		{
+//			if (right->data.s_exec.fd_out == STDOUT_FILENO)
+//				right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
+//			else if (right->data.s_exec.fd_out != STDOUT_FILENO)
+//			{
+//				dup2(right->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
+//				fprintf(stderr, "%sdup2! fd_out - exec\n%s", Y, RST);
+//			}
+//		}
+//	}
+//	else if ((*node)->data.s_pipe.left->tag == EXEC_NODE)
+//	{
+//		if ((*node)->data.s_pipe.left->data.s_exec.fd_out == STDOUT_FILENO)
+//			(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
+//		else if ((*node)->data.s_pipe.left->data.s_exec.fd_out != STDOUT_FILENO)
+//		{
+//			dup2((*node)->data.s_pipe.left->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
+//			fprintf(stderr, "%sdup2! fd_out - pipe_exec\n%s", Y, RST);
+//		}
+//	}
+//	s->pipe_count++;
+//	preorder_exec(s, &((*node)->data.s_pipe.left));
+//	preorder_exec(s, &((*node)->data.s_pipe.right));
+//	close(s->pipe_fd[cur_pipe][0]);
+//	close(s->pipe_fd[cur_pipe][1]);
+//	return (0);
+//}
+
+
+//BACKUP V1
 int	handle_pipe(t_shell *s, t_ast **node)
 {
 	int		cur_pipe;
@@ -39,43 +90,18 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	cur_pipe = s->pipe_count;
 	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (print_error(&s->numerr, errno));
-	fprintf(stderr, "%shandle_pipe | pipe_in[1]: %d | pipe_out[0]: %d%s\n", Y, s->pipe_fd[s->pipe_count][1], s->pipe_fd[s->pipe_count][0], RST);
-	fprintf(stderr, "handle_pipe | CURRENT NODE:\n");
-	print_node((*node));
-	if ((*node)->data.s_pipe.right->data.s_exec.fd_in == STDIN_FILENO)
-		(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
-	else if ((*node)->data.s_pipe.right->data.s_exec.fd_in != STDIN_FILENO)
-	{
-		dup2((*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0]);
-		//close((*node)->data.s_pipe.right->data.s_exec.fd_in); // MARCHE PAS
-		fprintf(stderr, "%sdup2! fd_in\n%s", Y, RST);
-	}
 	if ((*node)->data.s_pipe.left->tag == PIPE_NODE)
 	{
 		right = (*node)->data.s_pipe.left->data.s_pipe.right;
-		if (right->tag == EXEC_NODE)
-		{
-			if (right->data.s_exec.fd_out == STDOUT_FILENO)
-				right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-			else if (right->data.s_exec.fd_out != STDOUT_FILENO)
-			{
-				dup2(right->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
-				//close(right->data.s_exec.fd_out); // MARCHE PAS
-				fprintf(stderr, "%sdup2! fd_out - exec\n%s", Y, RST);
-			}
-		}
+		if (right->tag == EXEC_NODE
+			&& right->data.s_exec.fd_out == STDOUT_FILENO)
+			right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
 	}
-	else if ((*node)->data.s_pipe.left->tag == EXEC_NODE)
-	{
-		if ((*node)->data.s_pipe.left->data.s_exec.fd_out == STDOUT_FILENO)
-			(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-		else if ((*node)->data.s_pipe.left->data.s_exec.fd_out != STDOUT_FILENO)
-		{
-			dup2((*node)->data.s_pipe.left->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
-			//close((*node)->data.s_pipe.left->data.s_exec.fd_out); // MARCHE PAS
-			fprintf(stderr, "%sdup2! fd_out - pipe_exec\n%s", Y, RST);
-		}
-	}
+	else if ((*node)->data.s_pipe.left->tag == EXEC_NODE
+		&& (*node)->data.s_pipe.left->data.s_exec.fd_out == STDOUT_FILENO)
+		(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
+	(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
+	(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
 	s->pipe_count++;
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
@@ -88,14 +114,14 @@ int	setup_pipe(int fd_in, int fd_out)
 {
 	if (fd_in != STDIN_FILENO)
 	{
-		if (dup2(fd_in, STDIN_FILENO) < 0) //V1
+		if (dup2(fd_in, STDIN_FILENO) < 0)
 			return (1);
 		if (close(fd_in) < 0)
 			return (1);
 	}
 	if (fd_out != STDOUT_FILENO)
 	{
-		if (dup2(fd_out, STDOUT_FILENO) < 0) //V1
+		if (dup2(fd_out, STDOUT_FILENO) < 0)
 			return (1);
 		if (close(fd_out) < 0)
 			return (1);
@@ -107,7 +133,6 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 {
 	pid_t	pid;
 
-
 	pid = fork();
 	if (pid < 0)
 		return (print_error(&s->numerr, EPIPE));
@@ -115,12 +140,6 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, errno));
-		////////////////////////////////////////////////////
-		//if (node->data.s_exec.fd_in != STDIN_FILENO)	//🚨
-		//	close(node->data.s_exec.fd_in);				//🚨
-		//if (node->data.s_exec.fd_out != STDOUT_FILENO)	//🚨
-		//	close(node->data.s_exec.fd_out); 			//🚨
-		////////////////////////////////////////////////////
 		cmd_execution(s, env, node->data.s_exec.av);
 	}
 	else
@@ -128,8 +147,6 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 		s->child_pids[s->pid_count++] = pid;
 		if (node->data.s_exec.fd_in != STDIN_FILENO)
 			close(node->data.s_exec.fd_in);
-		//if (node->data.s_exec.fd_out != STDOUT_FILENO)
-		//	close(node->data.s_exec.fd_out);
 	}
 	return (0);
 }
@@ -138,20 +155,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
 	char	**env_table;
 	char	*path;
-	int		i;
 
-	close_fd(s->root_node);
-	i = -1;
-	while (++i < s->pipe_count)
-	{
-		close(s->pipe_fd[i][0]);
-		close(s->pipe_fd[i][1]);
-		fprintf(stderr, "%scmd_execution | close | pipe_fd[%d][0]): %d | pipe_fd[%d][1]): %d%s\n", Y, i, s->pipe_fd[i][0], i, s->pipe_fd[i][1], RST);
-		//if (close(s->pipe_fd[i][1]) != 0)
-		//	fprintf(stderr, "%scmd_execution | closing_loop | error while trying to: close(s->pipe_fd[%d][1]): %d%s\n", Y, i, s->pipe_fd[i][1], RST);
-		//if (close(s->pipe_fd[i][0]) != 0)
-		//	fprintf(stderr, "%scmd_execution | closing_loop | error while trying to: close(s->pipe_fd[%d][0]): %d%s\n", Y, i, s->pipe_fd[i][0], RST);
-	}
 	path = path_making(env, argv[0]);
 	if (!path)
 	{

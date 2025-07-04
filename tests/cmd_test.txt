@@ -16,8 +16,15 @@ cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5
 cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10
 cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10 | cat << 11 | cat << 12 | cat << 13 | cat << 14 | cat << 15
 cat << 1 > TEST_1 | cat << 2 > TEST_2 | cat << 3 > TEST_3 | cat << 4 > TEST_4 | cat << 5 > TEST_5 | cat << 6 > TEST_6 | cat << 7 > TEST_7 | cat << 8 > TEST_8 | cat << 9 > TEST_9 | cat << 10 > TEST_10
-
-
+ls > TEST | INVALID_COMMAND | cat << EOF > HEREDOC_TEST1 > HEREDOC_TEST2 | cat TEST | grep e
+ls > TEST | sadasda | echo Hello | cat TEST
+cat < TEST > COPY_TEST
+INVALID_COMMAND | cat << EOF > HEREDOC_TEST1 > HEREDOC_TEST2
+< T1 | < T2 | < T3 | < T4 | < T5 | cat < T1 |cat < T2 |cat < T3 |cat < T4 |cat < T5 | echo CMD_DONE!
+echo "Hello" > T1 | echo "World" > T2 | echo "How you doin' people?" > T3 | echo "YU GUD?!" > T4 | echo "Fine!" > T5 | cat < T1 |cat < T2 |cat < T3 |cat < T4 |cat < T5 | echo CMD_DONE!
+echo "Hello" > T1 | echo "World" > T2 | echo "How are you doing people?" > T3 | echo "YU GUD?!" > T4 | echo "Fine!" > T5 | cat < T1 |cat < T2 |cat < T3 |cat < T4 |cat < T5 | echo CMD_DONE!
+echo "Hello" > T1 | cat < T1 > COPYOF_T1 | INVALID_CMD
+INVALID_CMD | echo "Hello" > T1 | cat < T1 > COPYOF_T1
 
 
 
