@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 01:49:28 by c4v3d            ###   ########.fr       */
+/*   Updated: 2025/07/04 09:49:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static int	fork_heredoc(t_shell *s)
 	int		status;
 
 	heredoc_pid = fork();
-	status = 0;
-
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	g_sig = 0;
@@ -47,8 +45,7 @@ static int	fork_heredoc(t_shell *s)
 		setup_signals(s, HEREDOC_SIGNALS);
 		process_heredoc(s, s->current_node);
 		close_fd(s->root_node);
-		// free_ast(&s->root_node);
-		w_free((void **)&s->tmp_files_list);
+		w_free((void **)&s->tmp_files_list); // Mystic
 		kill_children(s);
 	}
 	waitpid(heredoc_pid, &status, 0);
