@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 09:27:35 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 09:37:27 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 16:13:25 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	int		cur_pipe;
 	t_ast	*right;
 
+	
 	cur_pipe = s->pipe_count;
 	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (print_error(&s->numerr, errno));
+	fprintf(stderr, "pipe in : %d\n pipe out : %d\n", s->pipe_fd[cur_pipe][0], s->pipe_fd[cur_pipe][1]);
 	if ((*node)->data.s_pipe.left->tag == PIPE_NODE)
 	{
 		right = (*node)->data.s_pipe.left->data.s_pipe.right;

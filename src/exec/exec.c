@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 10:58:18 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 16:19:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,28 @@ static int	process_exec_node(t_shell *s, t_ast **node)
 	return (0);
 }
 
+// int	preorder_exec(t_shell *s, t_ast **node)
+// {
+// 	print_node((*node));
+// 	if ((*node)->data.s_exec.fd_in < 0)
+// 		return (print_error(&s->numerr, errno));
+// 	if (!(*node))
+// 		return (0);
+// 	if ((*node)->tag == PIPE_NODE)
+// 	{
+// 		if (handle_pipe(s, &(*node)) != 0)
+// 			return (1);
+// 	}
+// 	else if ((*node)->tag == EXEC_NODE)
+// 		if (process_exec_node(s, node) != 0)
+// 			return (1);
+// 	close_fd((*node));
+// 	return (0);
+// }
+
 int	preorder_exec(t_shell *s, t_ast **node)
 {
+	print_node((*node));
 	if ((*node)->data.s_exec.fd_in < 0)
 		return (print_error(&s->numerr, errno));
 	if (!(*node))
@@ -93,11 +113,11 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	if ((*node)->tag == PIPE_NODE)
 	{
 		if (handle_pipe(s, &(*node)) != 0)
-			return (1);
+			fprintf(stderr, "CONNARD\n");
 	}
 	else if ((*node)->tag == EXEC_NODE)
 		if (process_exec_node(s, node) != 0)
-			return (1);
+			fprintf(stderr, "CONNARD\n");
 	close_fd((*node));
 	return (0);
 }
