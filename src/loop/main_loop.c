@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/04 09:49:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 10:57:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	is_blank_line(char *line)
 
 void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 {
-	fprintf(stderr, "%supdate_numerr | g_sig; %d | s->numerr: %d%s\n", P, g_sig, *numerr, RST);
 	if (mode == UPDATE_SIGNALS || mode == UPDATE_SIG_ERR)
 	{
 		if (g_sig == SIGINT)

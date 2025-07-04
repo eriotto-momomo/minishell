@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 09:49:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 10:55:54 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	process_heredoc(t_shell *s, t_ast *node)
 	if (node->tag == EXEC_NODE)
 	{
 		if (node->data.s_exec.path_tmp_file)
-			write_heredoc(s, node->data.s_exec.path_tmp_file, node->data.s_exec.eof_list, node->data.s_exec.eof_count);
+			write_heredoc(s, node->data.s_exec.path_tmp_file,
+				node->data.s_exec.eof_list, node->data.s_exec.eof_count);
 	}
 	else if (node->tag == PIPE_NODE)
 	{
@@ -45,7 +46,7 @@ static int	fork_heredoc(t_shell *s)
 		setup_signals(s, HEREDOC_SIGNALS);
 		process_heredoc(s, s->current_node);
 		close_fd(s->root_node);
-		w_free((void **)&s->tmp_files_list); // Mystic
+		w_free((void **)&s->tmp_files_list);
 		kill_children(s);
 	}
 	waitpid(heredoc_pid, &status, 0);

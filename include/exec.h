@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 09:36:08 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 10:51:25 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-int		write_heredoc(t_shell *s, char *path, char** eof_list, int eof_count);
+int		write_heredoc(t_shell *s, char *path, char **eof_list, int eof_count);
 int		unlink_tmp_files(char **tmp_files_list, int heredoc_count);
 int		waiton(uint8_t *numerr, int *child_pids, int pid_count);
 int		close_fd(t_ast *node);

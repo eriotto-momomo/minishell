@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 13:35:59 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:56:48 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,23 @@
 
 int	get_heredoc(t_shell *s, t_ast **node, t_token **tok)
 {
-	// COMPTER LES HEREDOC POUR ALLOUER EOF_LIST
 	(*node)->data.s_exec.eof_count = count_tokens(&(*tok), HERE_DOC);
 	if ((*node)->data.s_exec.eof_count == 0)
 		return (0);
-	// COPIE LES EOF
 	(*node)->data.s_exec.eof_list
 		= copy_eof_list(*tok, (*node)->data.s_exec.eof_count);
 	if (!(*node)->data.s_exec.eof_list)
 		return (1);
 	(*node)->data.s_exec.path_tmp_file = create_tmp_file(s,
-		(*node)->data.s_exec.eof_list, (*node)->data.s_exec.eof_count);
+			(*node)->data.s_exec.eof_list, (*node)->data.s_exec.eof_count);
 	if (!(*node)->data.s_exec.path_tmp_file)
 	{
 		ft_free_char_array((*node)->data.s_exec.eof_list,
-				(*node)->data.s_exec.eof_count);
+			(*node)->data.s_exec.eof_count);
 		return (1);
 	}
 	return (0);
 }
-
-//int	get_heredoc(t_shell *s, t_ast **node, t_token **tok)
-//{
-//	// COMPTER LES HEREDOC POUR ALLOUER EOF_LIST
-//	(*node)->data.s_exec.eof_count = count_tokens(&(*tok), HERE_DOC);
-//	if ((*node)->data.s_exec.eof_count == 0)
-//		return (0);
-//	// COPIE LES EOF
-//	(*node)->data.s_exec.eof_list
-//		= copy_eof_list(*tok, (*node)->data.s_exec.eof_count);
-//	if (!(*node)->data.s_exec.eof_list)
-//		return (1);
-//	// ECRIRE LE HEREDOC
-//	(*node)->data.s_exec.fd_heredoc = create_heredoc(s, (*node)->data.s_exec.eof_list,
-//		(*node)->data.s_exec.eof_count);
-//	if ((*node)->data.s_exec.fd_heredoc < 0)
-//		return (1);
-//	return (0);
-//}
 
 int	get_redir(t_shell *s, t_ast **node, t_token **tok)
 {

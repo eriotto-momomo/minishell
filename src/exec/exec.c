@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 09:36:23 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 10:58:18 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ static int	process_exec_node(t_shell *s, t_ast **node)
 	if (string_processing(s, &(*node)->data.s_exec.ac,
 			&(*node)->data.s_exec.av) != 0)
 		return (1);
-	if((*node)->data.s_exec.inredir_priority == HERE_DOC)
+	if ((*node)->data.s_exec.inredir_priority == HERE_DOC)
 	{
-		(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
-		if ((*node)->data.s_exec.fd_in < 0) // V.1
+		(*node)->data.s_exec.fd_in
+			= open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
+		if ((*node)->data.s_exec.fd_in < 0)
 			return (1);
 	}
 	if ((*node)->data.s_exec.ac > 0)
@@ -85,6 +86,8 @@ static int	process_exec_node(t_shell *s, t_ast **node)
 
 int	preorder_exec(t_shell *s, t_ast **node)
 {
+	if ((*node)->data.s_exec.fd_in < 0)
+		return (print_error(&s->numerr, errno));
 	if (!(*node))
 		return (0);
 	if ((*node)->tag == PIPE_NODE)

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:19:19 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 10:46:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/04 10:52:58 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	ft_unset(t_shell *s, int ac, char **av)
 	if (s->current_node->data.s_exec.fd_in != STDIN_FILENO)
 		return (0);
 	if (ac == 1)
-		return (print_custom_error(&s->numerr, 1, "unset: not enough arguments"));
+		return (print_custom_error(&s->numerr, 1,
+				"unset: not enough arguments"));
 	i = 1;
 	while (i < ac)
 	{
