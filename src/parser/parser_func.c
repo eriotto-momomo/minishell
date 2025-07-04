@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: c4v3d <c4v3d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:27:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 01:44:46 by c4v3d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_ast	*parse_exec(t_shell *s, t_token **tok)
 		if (!exec_node)
 			return (NULL);
 		errno = 0;
-		s->numerr = 0;
 		get_next_pipe(tok);
 	}
 	return (exec_node);
