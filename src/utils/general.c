@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:34:21 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/01 16:51:36 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:23:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 	t_ast	*right;
 	int i = 0;
 
-	fprintf(stderr, "%s======== 🖨️PRINT 💥DEBUGING ========%s\n", G, RST);
 	if (ast->tag == EXEC_NODE)
 	{
+		fprintf(stderr, "%s====================================%s\n", G, RST);
 		fprintf(stderr, "%sprint_node%s| %sEXEC NODE%s\n", B, RST, G, RST);
 		fprintf(stderr, "%s....................................%s\n", G, RST);
 		fprintf(stderr, "%sprint_node%s| argc: %d\n", B, RST, ast->data.s_exec.ac);
@@ -53,13 +53,16 @@ void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 			}
 			fprintf(stderr, "\n");
 		}
+		fprintf(stderr, "%s====================================%s\n", G, RST);
+
 	}
 	else if (ast->tag == PIPE_NODE)
 	{
 		left = ast->data.s_pipe.left;
 		right = ast->data.s_pipe.right;
-		fprintf(stderr, "%sprint_node%s| %sPIPE NODE%s\n", B, RST, G, RST);
-		fprintf(stderr, "%s....................................%s\n", G, RST);
+		fprintf(stderr, "%s====================================%s\n", P, RST);
+		fprintf(stderr, "%sprint_node%s| %sPIPE NODE%s\n", B, RST, P, RST);
+		fprintf(stderr, "%s....................................%s\n", P, RST);
 		if (left->tag == EXEC_NODE)
 		{
 			fprintf(stderr, "%sprint_node%s| L. BRANCH:\n", B, RST);
@@ -67,7 +70,7 @@ void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 		}
 		else if (left->tag == PIPE_NODE)
 			fprintf(stderr, "%sprint_node%s| L. BRANCH: [%spipe%s]\n", B, RST, P, RST);
-		fprintf(stderr, "%s------------------------------------%s\n", G, RST);
+		fprintf(stderr, "%s------------------------------------%s\n", P, RST);
 		if (right->tag == EXEC_NODE)
 		{
 			fprintf(stderr, "%sprint_node%s| R. BRANCH:\n", B, RST);
@@ -75,8 +78,8 @@ void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 		}
 		else if (right->tag == PIPE_NODE)
 			fprintf(stderr, "%sprint_node%s| R. BRANCH: [%spipe%s]\n", B, RST, P, RST);
+		fprintf(stderr, "%s====================================%s\n", P, RST);
 	}
-	fprintf(stderr, "%s====================================%s\n", G, RST);
 } // 🖨️PRINT💥DEBUGING  // 🖨️PRINT💥DEBUGING  // 🖨️PRINT💥DEBUGING // 🖨️PRINT💥DEBUGING
 
 void	v_switch(char **s, char *new_s)

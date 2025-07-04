@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   .V1exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 21:08:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:50:49 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	close_fd(t_ast *node)
 
 int	handle_exec(t_shell *s, t_ast *node)
 {
+	//fprintf(stderr, "%s%s%s\n", P, "handle_exec node:", RST);
+	//print_node(node);
 	if (perfect_match(node->data.s_exec.av[0], "exit"))
 		return (ft_exit(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
 	if (perfect_match(node->data.s_exec.av[0], CD))
@@ -68,7 +70,10 @@ int	handle_exec(t_shell *s, t_ast *node)
 static int	process_exec_node(t_shell *s, t_ast **n)
 {
 	if ((*n)->data.s_exec.fd_in < 0)
+	{
+		fprintf(stderr, "process_exec | %d\n", s->numerr);
 		return (print_error(&s->numerr, errno));
+	}
 	if (string_processing(s, &(*n)->data.s_exec.ac,
 			&(*n)->data.s_exec.av) != 0)
 		return (1);
@@ -88,16 +93,11 @@ static int	process_exec_node(t_shell *s, t_ast **n)
 	if ((*n)->data.s_exec.fd_out > 2)
 		if (close((*n)->data.s_exec.fd_out) != 0)
 			return (1);
-	if ((*n)->data.s_exec.fd_in > 2)
-		if (close((*n)->data.s_exec.fd_in) != 0)
-			return (1);
 	return (0);
 }
 
 int	preorder_exec(t_shell *s, t_ast **node)
 {
-	//fprintf(stderr, "preorder_exec | CURRENT NODE:\n");
-	//print_node((*node));
 	if (!(*node))
 		return (0);
 	if ((*node)->tag == PIPE_NODE)
@@ -110,6 +110,45 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	close_fd((*node));
 	return (0);
 }
+
+
+// BACKUP
+//int	preorder_exec(t_shell *s, t_ast **node)
+//{
+//	if (!(*node))
+//		return (0);
+//	if ((*node)->tag == PIPE_NODE)
+//	{
+//		if (handle_pipe(s, &(*node)) != 0)
+//			return (1);
+//	}
+//	else if ((*node)->tag == EXEC_NODE)
+//	{
+//		if ((*node)->data.s_exec.fd_in < 0) // ADD
+//			return (print_error(&s->numerr, errno)); // ADD
+//		if (string_processing(s, &(*node)->data.s_exec.ac,
+//				&(*node)->data.s_exec.av) != 0)
+//			return (1);
+//		if((*node)->data.s_exec.inredir_priority == HERE_DOC)
+//		{
+//			(*node)->data.s_exec.fd_in = open((*node)->data.s_exec.path_tmp_file, O_RDONLY);
+//			if ((*node)->data.s_exec.fd_in < 0)
+//				return (1);
+//		}
+//		print_node((*node));
+//		if ((*node)->data.s_exec.ac > 0)
+//			if (handle_exec(s, (*node)) != 0)
+//				return (1);
+//		if ((*node)->data.s_exec.fd_in > 2)
+//			close((*node)->data.s_exec.fd_in);
+//		if ((*node)->data.s_exec.fd_out > 2)
+//			close((*node)->data.s_exec.fd_out);
+//		if ((*node)->data.s_exec.fd_heredoc > 2)
+//			close((*node)->data.s_exec.fd_heredoc);
+//	}
+//	//close_fd((*node));
+//	return (0);
+//}
 
 static int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
 {
@@ -150,8 +189,16 @@ int	execution(t_shell *s)
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
-	close_fd(s->root_node); // NORMALEMENT USELESS
+	//if (s->heredoc_count > 0)
+	//{
+	//	if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
+	//		return (print_error(&s->numerr, errno));s
+	//	//ft_free_char_array(s->tmp_files_list, s->heredoc_count);
+	//	//w_free((void **)&s->tmp_files_list);
+	//}
+	//free_ast(&(s->root_node));
+	close_fd(s->root_node);
 	if (s->tmp_files_list != NULL)
-		w_free((void **)&(s->tmp_files_list)); // BIZARRE: possible de faire dans `reset`?
+		w_free((void **)&(s->tmp_files_list));
 	return (0);
 }
