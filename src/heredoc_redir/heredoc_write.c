@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 17:27:10 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 18:08:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	heredoc_loop(t_shell *s, char *eof, int fd)
 {
 	char	*line;
 
+	line = NULL;
 	while (1)
 	{
 		if (g_sig == SIGINT)
@@ -83,6 +84,7 @@ int	write_heredoc(t_shell *s, char *path, char** eof_list, int eof_count)
 	int	i;
 	int	heredoc_fd;
 
+	heredoc_fd = -1;
 	i = 0;
 	while (i < eof_count)
 	{
