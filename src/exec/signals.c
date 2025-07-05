@@ -6,27 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 12:24:32 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 17:09:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:17:19 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	handle_termios(t_shell *s, int mode)
-{
-	fprintf(stderr, "%s%s%s\n", P, "handle_termios | ENTER FUNCTION", RST);
-	if (mode == 0)
-	{
-		if (tcgetattr(STDIN_FILENO, &s->term_backup) == -1)
-			return (print_error(&s->numerr, errno));
-	}
-	else if (mode == 1)
-	{
-		if (tcsetattr(STDIN_FILENO, TCSANOW, &s->term_backup) == -1)
-			return (print_error(&s->numerr, errno));
-	}
-	return (0);
-}
 
 void	heredoc_handler(int signal)
 {

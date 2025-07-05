@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/05 16:27:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:33:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ static int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, errno));
+		//close_pipes(s->pipe_count, s->pipe_fd);
+		//close_fds(s->root_node);
 		cmd_execution(s, env, node->data.s_exec.av);
-		kill_children(s); //🚨
+		//kill_children(s); //🚨 Ca marche aussi ici plutot que dans `cmd_execution`?
 	}
 	else
 	{
@@ -120,10 +122,10 @@ int	execution(t_shell *s)
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
-	close_fds(s->root_node); //🚨 NORMALEMENT USELESS
+	close_fds(s->root_node);					//🚨 USELESS ?
 	if (s->tmp_files_list != NULL)
 		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->tmp_files_list != NULL)
-		w_free((void **)&(s->tmp_files_list)); //🚨 BIZARRE: possible de faire dans `reset`?
+		w_free((void **)&(s->tmp_files_list));	//🚨 BIZARRE: possible de faire dans `reset`?
 	return (0);
 }
