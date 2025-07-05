@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:08:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/05 16:32:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:55:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,25 @@ void	close_pipes(int count, int pipe_fd[][2])
 	}
 }
 
-//int	dupto_pipeline(int old_fd, int new_fd, int pipe_fd[][2])
-//{
+static void	add_to_pipeline(int *old_fd, int new_fd, int mode)
+{
+	int	fd;
 
-//}
+	if (mode == IN_REDIR)
+		fd = STDIN_FILENO;
+	else if (mode == OUT_REDIR)
+		fd = STDOUT_FILENO;
+	if (*old_fd == fd)
+		*old_fd = new_fd;
+	else if(*old_fd != fd)
+	{
+		dup2(*old_fd, new_fd);
+		if (*old_fd > 2 && is_open(*old_fd))
+			close(*old_fd);
+		*old_fd = new_fd;
+	}
+}
 
-// V2.2
 int	handle_pipe(t_shell *s, t_ast **node)
 {
 	int		cur_pipe;
@@ -40,57 +53,23 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	cur_pipe = s->pipe_count;
 	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (print_error(&s->numerr, errno));
-	//fprintf(stderr, "%shandle_pipe | pipe_in[1]: %d | pipe_out[0]: %d%s\n", Y, s->pipe_fd[s->pipe_count][1], s->pipe_fd[s->pipe_count][0], RST);
-	//fprintf(stderr, "handle_pipe | CURRENT NODE(before):\n");
-	//print_node((*node));
-	if ((*node)->data.s_pipe.right->data.s_exec.fd_in == STDIN_FILENO)
-		(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
-	else if ((*node)->data.s_pipe.right->data.s_exec.fd_in != STDIN_FILENO)
-	{
-		dup2((*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0]);
-		if ((*node)->data.s_pipe.right->data.s_exec.fd_in > 2)
-			close((*node)->data.s_pipe.right->data.s_exec.fd_in);
-		(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
-		//fprintf(stderr, "%sdup2! fd_in\n%s", Y, RST);
-	}
+	add_to_pipeline(&(*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0], IN_REDIR);
 	if ((*node)->data.s_pipe.left->tag == EXEC_NODE)
-	{
-		if ((*node)->data.s_pipe.left->data.s_exec.fd_out == STDOUT_FILENO)
-			(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-		else if ((*node)->data.s_pipe.left->data.s_exec.fd_out != STDOUT_FILENO)
-		{
-			dup2((*node)->data.s_pipe.left->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
-			if ((*node)->data.s_pipe.left->data.s_exec.fd_out > 2)
-				close((*node)->data.s_pipe.left->data.s_exec.fd_out);
-			(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-			//fprintf(stderr, "%sdup2! fd_out - pipe_exec\n%s", Y, RST);
-		}
-	}
+		add_to_pipeline(&(*node)->data.s_pipe.left->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1], OUT_REDIR);
 	else if ((*node)->data.s_pipe.left->tag == PIPE_NODE)
 	{
 		right = (*node)->data.s_pipe.left->data.s_pipe.right;
-		if (right->data.s_exec.fd_out == STDOUT_FILENO)
-			right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-		else if (right->data.s_exec.fd_out != STDOUT_FILENO)
-		{
-			dup2(right->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
-			if (right->data.s_exec.fd_out > 2)
-				close(right->data.s_exec.fd_out);
-			right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-			//fprintf(stderr, "%sdup2! fd_out - exec\n%s", Y, RST);
-		}
+		add_to_pipeline(&right->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1], OUT_REDIR);
 	}
-	//fprintf(stderr, "%shandle_pipe | CURRENT NODE(after):%s\n", C, RST);
-	//print_node((*node));
 	s->pipe_count++;
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
 	close(s->pipe_fd[cur_pipe][0]);
 	close(s->pipe_fd[cur_pipe][1]);
 	return (0);
-}
+} //🚨
 
-//V2.1
+// BACKUP V1
 //int	handle_pipe(t_shell *s, t_ast **node)
 //{
 //	int		cur_pipe;

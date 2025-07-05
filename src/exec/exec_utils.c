@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/05 16:27:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:40:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 //	char	**env_table;
 //	char	*path;
 
-//	close_pipes(s->pipe_count, s->pipe_fd);
-//	close_fds(s->root_node);
 //	path = path_making(env, argv[0]);
 //	if (!path)
 //		print_custom_error(&s->numerr, 127, "Command not found");
@@ -32,22 +30,25 @@
 //			print_error(&s->numerr, ENOMEM);
 //		}
 //	}
-//	if (execve(path, argv, env_table) == -1)
+//	if (path && env_table)
 //	{
-//		w_free((void **)&path);
-//		ft_free_char_array(env_table, count_var(env));
-//		print_custom_error(&s->numerr, 126, strerror(errno));
+//		if (execve(path, argv, env_table) == -1)
+//		{
+//			w_free((void **)&path);
+//			ft_free_char_array(env_table, count_var(env));
+//			print_custom_error(&s->numerr, 126, strerror(errno));
+//		}
 //	}
-//	kill_children(s);
+//	//kill_children(s); //🚨 Fais apres la fonction
 //	return (0);
 //}
 
-int	cmd_execution(t_shell *s, t_env *env, char **argv) //🚨
+int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
 	char	**env_table;
 	char	*path;
 
-	close_pipes(s->pipe_count, s->pipe_fd);
+	//close_pipes(s->pipe_count, s->pipe_fd);	//🚨
 	path = path_making(env, argv[0]);
 	if (!path)
 	{
