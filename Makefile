@@ -6,7 +6,7 @@
 #    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/06/27 09:38:22 by emonacho         ###   ########.fr        #
+#    Updated: 2025/07/05 16:20:24 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/heredoc_redir/heredoc_create.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/exec_utils.c\
+			$(CFILES_PATH)/exec/pipes.c\
 			$(CFILES_PATH)/exec/pathfinder.c\
 			$(CFILES_PATH)/exec/signals.c\
 			$(CFILES_PATH)/errors/print_error.c\

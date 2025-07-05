@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/01 16:19:19 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:22:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	add_command(t_ast **node, t_token **tok)
 	(*node)->data.s_exec.inredir_priority = 0;
 	(*node)->data.s_exec.fd_in = STDIN_FILENO;
 	(*node)->data.s_exec.fd_out = STDOUT_FILENO;
-	(*node)->data.s_exec.fd_heredoc = -2;
 	if ((*node)->data.s_exec.ac < 0)
 		return (1);
 	(*node)->data.s_exec.av = copy_args(*tok, (*node)->data.s_exec.ac);

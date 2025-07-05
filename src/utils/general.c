@@ -6,12 +6,11 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:34:21 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/04 20:23:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:55:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
 
 void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 {
@@ -35,8 +34,6 @@ void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 		fprintf(stderr, "\n");
 		fprintf(stderr, "%sprint_node%s| fd_in:  %s%d%s\n", B, RST, C, ast->data.s_exec.fd_in, RST);
 		fprintf(stderr, "%sprint_node%s| fd_out: %s%d%s\n", B, RST, C, ast->data.s_exec.fd_out, RST);
-		if (ast->data.s_exec.fd_heredoc > 2)
-			fprintf(stderr, "%sprint_node%s| fd_heredoc: %s%d%s\n", B, RST, C, ast->data.s_exec.fd_heredoc, RST);
 		fprintf(stderr, "%sprint_node%s| inredir_priority: %d\n", B, RST, ast->data.s_exec.inredir_priority);
 		if (ast->data.s_exec.path_tmp_file != NULL)
 			fprintf(stderr, "%sprint_node%s| path_tmp_file:  %s%s%s\n", B, RST, C, ast->data.s_exec.path_tmp_file, RST);
@@ -81,6 +78,16 @@ void	print_node(t_ast *ast) // 🖨️PRINT💥DEBUGING
 		fprintf(stderr, "%s====================================%s\n", P, RST);
 	}
 } // 🖨️PRINT💥DEBUGING  // 🖨️PRINT💥DEBUGING  // 🖨️PRINT💥DEBUGING // 🖨️PRINT💥DEBUGING
+
+int	is_open(int fd)
+{
+	struct stat buf;
+
+	if (fstat(fd, &buf) == 0)
+		return 1;
+	else
+		return 0;
+}
 
 void	v_switch(char **s, char *new_s)
 {

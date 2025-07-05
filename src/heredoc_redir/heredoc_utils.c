@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 17:53:03 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:22:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	fork_heredoc(t_shell *s)
 	{
 		setup_signals(s, HEREDOC_SIGNALS);
 		process_heredoc(s, s->current_node);
-		close_fd(s->root_node);
+		close_fds(s->root_node);
 		kill_children(s);
 	}
 	waitpid(heredoc_pid, &status, 0);
