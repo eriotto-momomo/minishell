@@ -6,174 +6,113 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/05 11:52:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:27:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	close_pipes(t_ast *node, int pipe_fd[][2], int pipe_count)
-{
-	int	i;
+//🚨 V2 Work in progress
+//int	cmd_execution(t_shell *s, t_env *env, char **argv)
+//{
+//	char	**env_table;
+//	char	*path;
 
-	i = -1;
-	while (++i < pipe_count)
-	{
-		if (pipe_fd[i][0] != node->data.s_exec.fd_in
-			&& pipe_fd[i][0] != node->data.s_exec.fd_out)
-			if (close(pipe_fd[i][0]) != 0)
-				return (1);
-		if (pipe_fd[i][1] != node->data.s_exec.fd_in
-			&& pipe_fd[i][1] != node->data.s_exec.fd_out)
-			if (close(pipe_fd[i][1]) != 0)
-				return (1);
-	}
-	return (0);
-}
+//	close_pipes(s->pipe_count, s->pipe_fd);
+//	close_fds(s->root_node);
+//	path = path_making(env, argv[0]);
+//	if (!path)
+//		print_custom_error(&s->numerr, 127, "Command not found");
+//	if (path)
+//	{
+//		env_table = ltotable(env);
+//		if (!env_table)
+//		{
+//			w_free((void **)&path);
+//			print_error(&s->numerr, ENOMEM);
+//		}
+//	}
+//	if (execve(path, argv, env_table) == -1)
+//	{
+//		w_free((void **)&path);
+//		ft_free_char_array(env_table, count_var(env));
+//		print_custom_error(&s->numerr, 126, strerror(errno));
+//	}
+//	kill_children(s);
+//	return (0);
+//}
 
-int	handle_pipe(t_shell *s, t_ast **node)
-{
-	int		cur_pipe;
-	t_ast	*right;
-
-	cur_pipe = s->pipe_count;
-	if (pipe(s->pipe_fd[cur_pipe]) < 0)
-		return (print_error(&s->numerr, errno));
-	fprintf(stderr, "%shandle_pipe | pipe_in[1]: %d | pipe_out[0]: %d%s\n", Y, s->pipe_fd[s->pipe_count][1], s->pipe_fd[s->pipe_count][0], RST);
-	fprintf(stderr, "handle_pipe | CURRENT NODE(before):\n");
-	print_node((*node));
-	if ((*node)->data.s_pipe.right->data.s_exec.fd_in == STDIN_FILENO)
-		(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
-	else if ((*node)->data.s_pipe.right->data.s_exec.fd_in != STDIN_FILENO)
-	{
-		dup2((*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0]);
-		close((*node)->data.s_pipe.right->data.s_exec.fd_in); // MARCHE PAS
-		(*node)->data.s_pipe.right->data.s_exec.fd_in = s->pipe_fd[cur_pipe][0];
-		fprintf(stderr, "%sdup2! fd_in\n%s", Y, RST);
-	}
-	if ((*node)->data.s_pipe.left->tag == EXEC_NODE)
-	{
-		if ((*node)->data.s_pipe.left->data.s_exec.fd_out == STDOUT_FILENO)
-			(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-		else if ((*node)->data.s_pipe.left->data.s_exec.fd_out != STDOUT_FILENO)
-		{
-			dup2((*node)->data.s_pipe.left->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
-			close((*node)->data.s_pipe.left->data.s_exec.fd_out); // MARCHE PAS
-			(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-			fprintf(stderr, "%sdup2! fd_out - pipe_exec\n%s", Y, RST);
-		}
-	}
-	else if ((*node)->data.s_pipe.left->tag == PIPE_NODE)
-	{
-		right = (*node)->data.s_pipe.left->data.s_pipe.right;
-		if (right->data.s_exec.fd_out == STDOUT_FILENO)
-			right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-		else if (right->data.s_exec.fd_out != STDOUT_FILENO)
-		{
-			dup2(right->data.s_exec.fd_out, s->pipe_fd[cur_pipe][1]);
-			close(right->data.s_exec.fd_out); // MARCHE PAS
-			right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-			fprintf(stderr, "%sdup2! fd_out - exec\n%s", Y, RST);
-		}
-	}
-	//fprintf(stderr, "%shandle_pipe | CURRENT NODE(after):%s\n", C, RST);
-	//print_node((*node));
-	s->pipe_count++;
-	preorder_exec(s, &((*node)->data.s_pipe.left));
-	preorder_exec(s, &((*node)->data.s_pipe.right));
-	close(s->pipe_fd[cur_pipe][0]);
-	close(s->pipe_fd[cur_pipe][1]);
-	return (0);
-}
-
-int	setup_pipe(int fd_in, int fd_out)
-{
-	if (fd_in != STDIN_FILENO)
-	{
-		if (dup2(fd_in, STDIN_FILENO) < 0) //V1
-			return (1);
-		if (close(fd_in) < 0)
-			return (1);
-	}
-	if (fd_out != STDOUT_FILENO)
-	{
-		if (dup2(fd_out, STDOUT_FILENO) < 0) //V1
-			return (1);
-		if (close(fd_out) < 0)
-			return (1);
-	}
-	return (0);
-}
-
-int	ft_external(t_shell *s, t_env *env, t_ast *node)
-{
-	pid_t	pid;
-
-
-	pid = fork();
-	if (pid < 0)
-		return (print_error(&s->numerr, EPIPE));
-	if (pid == 0)
-	{
-		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
-			exit(print_error(&s->numerr, errno));
-		////////////////////////////////////////////////////
-		//if (node->data.s_exec.fd_in != STDIN_FILENO)	//🚨
-		//	close(node->data.s_exec.fd_in);				//🚨
-		//if (node->data.s_exec.fd_out != STDOUT_FILENO)	//🚨
-		//	close(node->data.s_exec.fd_out); 			//🚨
-		////////////////////////////////////////////////////
-		cmd_execution(s, env, node->data.s_exec.av);
-	}
-	else
-	{
-		s->child_pids[s->pid_count++] = pid;
-		if (node->data.s_exec.fd_in != STDIN_FILENO)
-			close(node->data.s_exec.fd_in);
-		//if (node->data.s_exec.fd_out != STDOUT_FILENO)
-		//	close(node->data.s_exec.fd_out);
-	}
-	return (0);
-}
-
-int	cmd_execution(t_shell *s, t_env *env, char **argv)
+int	cmd_execution(t_shell *s, t_env *env, char **argv) //🚨
 {
 	char	**env_table;
 	char	*path;
-	int		i;
 
-	close_fd(s->root_node);
-	i = -1;
-	while (++i < s->pipe_count)
-	{
-		close(s->pipe_fd[i][0]);
-		close(s->pipe_fd[i][1]);
-		fprintf(stderr, "%scmd_execution | close | pipe_fd[%d][0]): %d | pipe_fd[%d][1]): %d%s\n", Y, i, s->pipe_fd[i][0], i, s->pipe_fd[i][1], RST);
-		//if (close(s->pipe_fd[i][1]) != 0)
-		//	fprintf(stderr, "%scmd_execution | closing_loop | error while trying to: close(s->pipe_fd[%d][1]): %d%s\n", Y, i, s->pipe_fd[i][1], RST);
-		//if (close(s->pipe_fd[i][0]) != 0)
-		//	fprintf(stderr, "%scmd_execution | closing_loop | error while trying to: close(s->pipe_fd[%d][0]): %d%s\n", Y, i, s->pipe_fd[i][0], RST);
-	}
+	close_pipes(s->pipe_count, s->pipe_fd);
 	path = path_making(env, argv[0]);
 	if (!path)
 	{
-		w_free((void **)&path);
+		close_fds(s->root_node);
 		print_custom_error(&s->numerr, 127, "Command not found");
 		kill_children(s);
 	}
 	env_table = ltotable(env);
 	if (!env_table)
 	{
+		close_fds(s->root_node);
 		w_free((void **)&path);
 		print_error(&s->numerr, ENOMEM);
 		kill_children(s);
 	}
 	if (execve(path, argv, env_table) == -1)
 	{
+		close_fds(s->root_node);
 		w_free((void **)&path);
 		ft_free_char_array(env_table, count_var(env));
 		print_custom_error(&s->numerr, 126, strerror(errno));
 		kill_children(s);
+	}
+	return (0);
+}
+
+int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
+{
+	int	i;
+	int	status;
+	int	pid;
+
+	i = 0;
+	while (i < pid_count)
+	{
+		pid = waitpid(child_pids[i], &status, 0);
+		if (pid == -1)
+			continue ;
+		if (WIFEXITED(status))
+			*numerr = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			*numerr = WTERMSIG(status);
+		i++;
+	}
+	return (0);
+}
+
+int	close_fds(t_ast *node)
+{
+	if (node->tag == EXEC_NODE)
+	{
+		if (node->data.s_exec.fd_in > 2 && is_open(node->data.s_exec.fd_in))
+			close(node->data.s_exec.fd_in);
+		if (node->data.s_exec.fd_out > 2 && is_open(node->data.s_exec.fd_out))
+			close(node->data.s_exec.fd_out);
+		node->data.s_exec.fd_in = STDIN_FILENO;
+		node->data.s_exec.fd_out = STDOUT_FILENO;
+		return (0);
+	}
+	else if (node->tag == PIPE_NODE)
+	{
+		if (close_fds(node->data.s_pipe.left) != 0)
+			return (1);
+		if (close_fds(node->data.s_pipe.right) != 0)
+			return (1);
 	}
 	return (0);
 }

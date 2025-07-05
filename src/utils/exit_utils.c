@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/03 18:02:47 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 16:21:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ void	reset_free(t_shell *s)
 {
 	if (s->head)
 		free_token_list(&(s->head));
-	if (s->tmp_files_list != NULL)
-		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
-	//w_free((void **)&(*s->tmp_files_list));
-	w_free((void **)&(s->tmp_files_list));
 	w_free((void **)&(s->line));
 }
 
@@ -33,8 +29,6 @@ void	clean_free(t_shell *s)
 		close(s->heredoc_fd);
 	if (s->head)
 		free_token_list(&(s->head));
-	if (s->tmp_files_list != NULL)
-		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
 	w_free((void **)&(s->tmp_files_list));
@@ -48,6 +42,9 @@ void	clean_free(t_shell *s)
 void	terminate_shell(t_shell *s)
 {
 	clean_free(s);
+	if (s->tmp_files_list != NULL)
+		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
+	w_free((void **)&(*s->tmp_files_list));
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (s->numerr)
 		exit(s->numerr);
