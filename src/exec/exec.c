@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/05 17:33:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 19:18:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,19 @@ static int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, errno));
-		//close_pipes(s->pipe_count, s->pipe_fd);
-		//close_fds(s->root_node);
+		close_pipes(s->pipe_count, s->pipe_fd);
+		close_fds(s->root_node);
+		//system("ls -l /proc/self/fd >&2"); //🚨DEBUG
 		cmd_execution(s, env, node->data.s_exec.av);
-		//kill_children(s); //🚨 Ca marche aussi ici plutot que dans `cmd_execution`?
+		kill_children(s); //🚨 Ca marche aussi ici plutot que dans `cmd_execution`?
 	}
 	else
 	{
 		s->child_pids[s->pid_count++] = pid;
-		if (node->data.s_exec.fd_in != STDIN_FILENO)
-			close(node->data.s_exec.fd_in);
+		if (node->data.s_exec.fd_in != STDIN_FILENO && is_open(node->data.s_exec.fd_in))
+			close(node->data.s_exec.fd_in); //🚨
+		//if (node->data.s_exec.fd_out != STDIN_FILENO && is_open(node->data.s_exec.fd_out))
+		//	close(node->data.s_exec.fd_out); //🚨
 	}
 	return (0);
 }
@@ -92,6 +95,8 @@ static int	process_exec_node(t_shell *s, t_ast **n)
 
 int	preorder_exec(t_shell *s, t_ast **node)
 {
+	fprintf(stderr, "%spreorder_exec | current_node:%s\n", B, RST);
+	print_node((*node));
 	if (!(*node))
 		return (0);
 	if ((*node)->tag == PIPE_NODE)
@@ -123,6 +128,7 @@ int	execution(t_shell *s)
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
 	close_fds(s->root_node);					//🚨 USELESS ?
+	close_pipes(s->pipe_count, s->pipe_fd);		//🚨 USELESS ?
 	if (s->tmp_files_list != NULL)
 		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->tmp_files_list != NULL)

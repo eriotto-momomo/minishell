@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:08:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/05 17:55:42 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 19:18:30 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	close_pipes(int count, int pipe_fd[][2])
 	i = -1;
 	while (++i < count)
 	{
+		//fprintf(stderr, "%sclose_pipes | pipe_fd[%d][0]: %d | pipe_fd[%d][1]: %d%s\n", C, i, pipe_fd[i][0], i, pipe_fd[i][1], RST);
 		if (is_open(pipe_fd[i][0]))
 			close(pipe_fd[i][0]);
 		if (is_open(pipe_fd[i][1]))
@@ -38,7 +39,11 @@ static void	add_to_pipeline(int *old_fd, int new_fd, int mode)
 		*old_fd = new_fd;
 	else if(*old_fd != fd)
 	{
-		dup2(*old_fd, new_fd);
+		if (dup2(*old_fd, new_fd) == -1)
+		{
+			fprintf(stderr, "%sadd_to_pipeline | dup2 failed!%s\n", R, RST);
+			perror("dup2 failed"); //🚨DEBUG
+		}
 		if (*old_fd > 2 && is_open(*old_fd))
 			close(*old_fd);
 		*old_fd = new_fd;
@@ -51,6 +56,8 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	t_ast	*right;
 
 	cur_pipe = s->pipe_count;
+	//fprintf(stderr, "%shandle_pipe| current_node BEFORE DUPS:%s\n", B, RST);
+	//print_node((*node));
 	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (print_error(&s->numerr, errno));
 	add_to_pipeline(&(*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0], IN_REDIR);
@@ -64,6 +71,8 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	s->pipe_count++;
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
+	//fprintf(stderr, "%shandle_pipe| current_node AFTER DUPS:%s\n", B, RST);
+	//print_node((*node));
 	close(s->pipe_fd[cur_pipe][0]);
 	close(s->pipe_fd[cur_pipe][1]);
 	return (0);
