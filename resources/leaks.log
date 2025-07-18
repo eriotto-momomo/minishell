@@ -1,208 +1,78 @@
-==2080323== Memcheck, a memory error detector
-==2080323== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2080323== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2080323== Command: ./minishell
-==2080323== Parent PID: 2080322
-==2080323== 
-==2080323== 
-==2080323== Process terminating with default action of signal 13 (SIGPIPE)
-==2080323==    at 0x49DB887: write (write.c:26)
-==2080323==    by 0x1104D8: ft_putstr_fd (in /home/emonacho/Documents/minishell_2.0/minishell)
-==2080323==    by 0x10E321: ft_echo (ft_echo.c:101)
-==2080323==    by 0x10CEDF: handle_exec (exec.c:51)
-==2080323==    by 0x10D12E: process_exec_node (exec.c:85)
-==2080323==    by 0x10D248: preorder_exec (exec.c:108)
-==2080323==    by 0x10D97F: handle_pipe (pipes.c:72)
-==2080323==    by 0x10D21C: preorder_exec (exec.c:104)
-==2080323==    by 0x10D28E: execution (exec.c:118)
-==2080323==    by 0x109E03: process_input (main_loop.c:71)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==2080323== Open file descriptor 6:
-==2080323==    at 0x49DC07D: pipe (pipe.c:29)
-==2080323==    by 0x10D867: handle_pipe (pipes.c:61)
-==2080323==    by 0x10D21C: preorder_exec (exec.c:104)
-==2080323==    by 0x10D28E: execution (exec.c:118)
-==2080323==    by 0x109E03: process_input (main_loop.c:71)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== Open file descriptor 5: /home/emonacho/Documents/minishell_2.0/TEST_1
-==2080323==    at 0x49DC01B: dup2 (syscall-template.S:120)
-==2080323==    by 0x10D7AB: add_to_pipeline (pipes.c:42)
-==2080323==    by 0x10D8BF: handle_pipe (pipes.c:63)
-==2080323==    by 0x10D21C: preorder_exec (exec.c:104)
-==2080323==    by 0x10D28E: execution (exec.c:118)
-==2080323==    by 0x109E03: process_input (main_loop.c:71)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== Open file descriptor 3: /home/emonacho/Documents/minishell_2.0/resources/leaks.log
-==2080323==    <inherited from parent>
-==2080323== 
-==2080323== 
-==2080323== HEAP SUMMARY:
-==2080323==     in use at exit: 219,658 bytes in 433 blocks
-==2080323==   total heap usage: 639 allocs, 206 frees, 239,934 bytes allocated
-==2080323== 
-==2080323== 4 bytes in 1 blocks are still reachable in loss record 1 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x110A30: ft_strdup (in /home/emonacho/Documents/minishell_2.0/minishell)
-==2080323==    by 0x10AA0B: copy_args (parser_utils.c:87)
-==2080323==    by 0x10A330: add_command (parser_add_node.c:57)
-==2080323==    by 0x10A401: add_exec_node (parser_add_node.c:70)
-==2080323==    by 0x10A6FB: parse_exec (parser_func.c:65)
-==2080323==    by 0x10A5AE: parse_pipe (parser_func.c:29)
-==2080323==    by 0x10A6A1: parse_line (parser_func.c:53)
-==2080323==    by 0x10AB9C: build_ast (parser_main.c:19)
-==2080323==    by 0x10AC13: parser (parser_main.c:32)
-==2080323==    by 0x109DF3: process_input (main_loop.c:69)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323== 
-==2080323== 5 bytes in 1 blocks are still reachable in loss record 2 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x110A30: ft_strdup (in /home/emonacho/Documents/minishell_2.0/minishell)
-==2080323==    by 0x10AA0B: copy_args (parser_utils.c:87)
-==2080323==    by 0x10A330: add_command (parser_add_node.c:57)
-==2080323==    by 0x10A401: add_exec_node (parser_add_node.c:70)
-==2080323==    by 0x10A6FB: parse_exec (parser_func.c:65)
-==2080323==    by 0x10A573: parse_pipe (parser_func.c:22)
-==2080323==    by 0x10A6A1: parse_line (parser_func.c:53)
-==2080323==    by 0x10AB9C: build_ast (parser_main.c:19)
-==2080323==    by 0x10AC13: parser (parser_main.c:32)
-==2080323==    by 0x109DF3: process_input (main_loop.c:69)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323== 
-==2080323== 16 bytes in 1 blocks are still reachable in loss record 15 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10A98A: copy_args (parser_utils.c:78)
-==2080323==    by 0x10A330: add_command (parser_add_node.c:57)
-==2080323==    by 0x10A401: add_exec_node (parser_add_node.c:70)
-==2080323==    by 0x10A6FB: parse_exec (parser_func.c:65)
-==2080323==    by 0x10A5AE: parse_pipe (parser_func.c:29)
-==2080323==    by 0x10A6A1: parse_line (parser_func.c:53)
-==2080323==    by 0x10AB9C: build_ast (parser_main.c:19)
-==2080323==    by 0x10AC13: parser (parser_main.c:32)
-==2080323==    by 0x109DF3: process_input (main_loop.c:69)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== 18 bytes in 1 blocks are still reachable in loss record 16 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x110AC7: ft_strjoin (in /home/emonacho/Documents/minishell_2.0/minishell)
-==2080323==    by 0x10A062: join_prompt (prompt.c:47)
-==2080323==    by 0x10A126: create_prompt (prompt.c:68)
-==2080323==    by 0x109586: main (main.c:25)
-==2080323== 
-==2080323== 21 bytes in 1 blocks are still reachable in loss record 20 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10F5EC: trim_quote (word_processing.c:46)
-==2080323==    by 0x10F99E: string_processing (word_processing.c:118)
-==2080323==    by 0x10D079: process_exec_node (exec.c:72)
-==2080323==    by 0x10D248: preorder_exec (exec.c:108)
-==2080323==    by 0x10D97F: handle_pipe (pipes.c:72)
-==2080323==    by 0x10D21C: preorder_exec (exec.c:104)
-==2080323==    by 0x10D28E: execution (exec.c:118)
-==2080323==    by 0x109E03: process_input (main_loop.c:71)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== 21 bytes in 1 blocks are still reachable in loss record 21 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10E11E: tab_to_string (ft_echo.c:50)
-==2080323==    by 0x10E2EC: ft_echo (ft_echo.c:98)
-==2080323==    by 0x10CEDF: handle_exec (exec.c:51)
-==2080323==    by 0x10D12E: process_exec_node (exec.c:85)
-==2080323==    by 0x10D248: preorder_exec (exec.c:108)
-==2080323==    by 0x10D97F: handle_pipe (pipes.c:72)
-==2080323==    by 0x10D21C: preorder_exec (exec.c:104)
-==2080323==    by 0x10D28E: execution (exec.c:118)
-==2080323==    by 0x109E03: process_input (main_loop.c:71)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== 24 bytes in 1 blocks are still reachable in loss record 26 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10A98A: copy_args (parser_utils.c:78)
-==2080323==    by 0x10A330: add_command (parser_add_node.c:57)
-==2080323==    by 0x10A401: add_exec_node (parser_add_node.c:70)
-==2080323==    by 0x10A6FB: parse_exec (parser_func.c:65)
-==2080323==    by 0x10A573: parse_pipe (parser_func.c:22)
-==2080323==    by 0x10A6A1: parse_line (parser_func.c:53)
-==2080323==    by 0x10AB9C: build_ast (parser_main.c:19)
-==2080323==    by 0x10AC13: parser (parser_main.c:32)
-==2080323==    by 0x109DF3: process_input (main_loop.c:69)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== 64 bytes in 1 blocks are still reachable in loss record 37 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10A827: new_ast_node (parser_utils.c:40)
-==2080323==    by 0x10A3D6: add_exec_node (parser_add_node.c:67)
-==2080323==    by 0x10A6FB: parse_exec (parser_func.c:65)
-==2080323==    by 0x10A573: parse_pipe (parser_func.c:22)
-==2080323==    by 0x10A6A1: parse_line (parser_func.c:53)
-==2080323==    by 0x10AB9C: build_ast (parser_main.c:19)
-==2080323==    by 0x10AC13: parser (parser_main.c:32)
-==2080323==    by 0x109DF3: process_input (main_loop.c:69)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== 64 bytes in 1 blocks are still reachable in loss record 38 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10A827: new_ast_node (parser_utils.c:40)
-==2080323==    by 0x10A3D6: add_exec_node (parser_add_node.c:67)
-==2080323==    by 0x10A6FB: parse_exec (parser_func.c:65)
-==2080323==    by 0x10A5AE: parse_pipe (parser_func.c:29)
-==2080323==    by 0x10A6A1: parse_line (parser_func.c:53)
-==2080323==    by 0x10AB9C: build_ast (parser_main.c:19)
-==2080323==    by 0x10AC13: parser (parser_main.c:32)
-==2080323==    by 0x109DF3: process_input (main_loop.c:69)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== 64 bytes in 1 blocks are still reachable in loss record 39 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10A827: new_ast_node (parser_utils.c:40)
-==2080323==    by 0x10A4E9: add_pipe_node (parser_add_node.c:89)
-==2080323==    by 0x10A5D3: parse_pipe (parser_func.c:32)
-==2080323==    by 0x10A6A1: parse_line (parser_func.c:53)
-==2080323==    by 0x10AB9C: build_ast (parser_main.c:19)
-==2080323==    by 0x10AC13: parser (parser_main.c:32)
-==2080323==    by 0x109DF3: process_input (main_loop.c:69)
-==2080323==    by 0x109F0B: prompt_loop (main_loop.c:91)
-==2080323==    by 0x1095C3: main (main.c:30)
-==2080323== 
-==2080323== 766 bytes in 58 blocks are still reachable in loss record 57 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10F1A8: get_name (init_env.c:43)
-==2080323==    by 0x10F2B7: table_to_ll (init_env.c:75)
-==2080323==    by 0x10F39A: init_shell (init_shell.c:18)
-==2080323==    by 0x109573: main (main.c:23)
-==2080323== 
-==2080323== 1,352 bytes in 58 blocks are still reachable in loss record 69 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10F116: get_value (init_env.c:28)
-==2080323==    by 0x10F2DA: table_to_ll (init_env.c:76)
-==2080323==    by 0x10F39A: init_shell (init_shell.c:18)
-==2080323==    by 0x109573: main (main.c:23)
-==2080323== 
-==2080323== 1,856 bytes in 58 blocks are still reachable in loss record 73 of 101
-==2080323==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2080323==    by 0x10BE37: create_var (env_utils.c:53)
-==2080323==    by 0x10BEA9: add_var_back (env_utils.c:68)
-==2080323==    by 0x10F332: table_to_ll (init_env.c:84)
-==2080323==    by 0x10F39A: init_shell (init_shell.c:18)
-==2080323==    by 0x109573: main (main.c:23)
-==2080323== 
-==2080323== LEAK SUMMARY:
-==2080323==    definitely lost: 0 bytes in 0 blocks
-==2080323==    indirectly lost: 0 bytes in 0 blocks
-==2080323==      possibly lost: 0 bytes in 0 blocks
-==2080323==    still reachable: 4,275 bytes in 184 blocks
-==2080323==         suppressed: 215,383 bytes in 249 blocks
-==2080323== 
-==2080323== For lists of detected and suppressed errors, rerun with: -s
-==2080323== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==2089571== Memcheck, a memory error detector
+==2089571== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2089571== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2089571== Command: ./minishell
+==2089571== Parent PID: 2089570
+==2089571== 
+==2089571== 
+==2089571== Process terminating with default action of signal 1 (SIGHUP)
+==2089571==    at 0x49E2744: pselect64_syscall (pselect.c:34)
+==2089571==    by 0x49E2744: pselect (pselect.c:56)
+==2089571==    by 0x48A7B4A: rl_getc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x48A7460: rl_read_key (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488BC86: readline_internal_char (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x4894D14: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x109EA8: prompt_loop (main_loop.c:84)
+==2089571==    by 0x1095E3: main (main.c:30)
+==2089571== 
+==2089571== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==2089571== Open file descriptor 3: /home/emonacho/Documents/minishell_2.0/resources/leaks.log
+==2089571==    <inherited from parent>
+==2089571== 
+==2089571== 
+==2089571== HEAP SUMMARY:
+==2089571==     in use at exit: 220,279 bytes in 438 blocks
+==2089571==   total heap usage: 919 allocs, 481 frees, 248,142 bytes allocated
+==2089571== 
+==2089571== 18 bytes in 1 blocks are still reachable in loss record 12 of 91
+==2089571==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2089571==    by 0x110CDD: ft_strjoin (in /home/emonacho/Documents/minishell_2.0/minishell)
+==2089571==    by 0x10A082: join_prompt (prompt.c:47)
+==2089571==    by 0x10A146: create_prompt (prompt.c:68)
+==2089571==    by 0x1095A6: main (main.c:25)
+==2089571== 
+==2089571== 512 bytes in 1 blocks are still reachable in loss record 42 of 91
+==2089571==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2089571==    by 0x48AD491: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x48A3E49: rl_extend_line_buffer (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x48A3F8C: rl_insert_text (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x48A75F2: rl_bracketed_paste_begin (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488AE97: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488AFF3: _rl_dispatch_subseq (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571==    by 0x488BCC9: readline_internal_char (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==2089571== 
+==2089571== 766 bytes in 58 blocks are still reachable in loss record 47 of 91
+==2089571==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2089571==    by 0x10F3BE: get_name (init_env.c:43)
+==2089571==    by 0x10F4CD: table_to_ll (init_env.c:75)
+==2089571==    by 0x10F5B0: init_shell (init_shell.c:18)
+==2089571==    by 0x109593: main (main.c:23)
+==2089571== 
+==2089571== 1,372 bytes in 58 blocks are still reachable in loss record 59 of 91
+==2089571==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2089571==    by 0x10F32C: get_value (init_env.c:28)
+==2089571==    by 0x10F4F0: table_to_ll (init_env.c:76)
+==2089571==    by 0x10F5B0: init_shell (init_shell.c:18)
+==2089571==    by 0x109593: main (main.c:23)
+==2089571== 
+==2089571== 1,856 bytes in 58 blocks are still reachable in loss record 63 of 91
+==2089571==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2089571==    by 0x10BE57: create_var (env_utils.c:53)
+==2089571==    by 0x10BEC9: add_var_back (env_utils.c:68)
+==2089571==    by 0x10F548: table_to_ll (init_env.c:84)
+==2089571==    by 0x10F5B0: init_shell (init_shell.c:18)
+==2089571==    by 0x109593: main (main.c:23)
+==2089571== 
+==2089571== LEAK SUMMARY:
+==2089571==    definitely lost: 0 bytes in 0 blocks
+==2089571==    indirectly lost: 0 bytes in 0 blocks
+==2089571==      possibly lost: 0 bytes in 0 blocks
+==2089571==    still reachable: 4,524 bytes in 176 blocks
+==2089571==         suppressed: 215,755 bytes in 262 blocks
+==2089571== 
+==2089571== For lists of detected and suppressed errors, rerun with: -s
+==2089571== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/05 19:18:29 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/05 19:53:48 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ static int	process_exec_node(t_shell *s, t_ast **n)
 
 int	preorder_exec(t_shell *s, t_ast **node)
 {
-	fprintf(stderr, "%spreorder_exec | current_node:%s\n", B, RST);
-	print_node((*node));
+	//fprintf(stderr, "%spreorder_exec | current_node:%s\n", B, RST);
+	//print_node((*node));
 	if (!(*node))
 		return (0);
 	if ((*node)->tag == PIPE_NODE)
