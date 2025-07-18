@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 20:39:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 17:01:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:36:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parser(t_shell *s)
 	{
 		if (errno == 0)
 			errno = ENOMEM;
-		return (print_error(&s->numerr, errno));
+		return (print_error(&s->numerr, NULL, errno));
 	}
 	s->current_node = s->root_node;
 	if (s->heredoc_count > 0)

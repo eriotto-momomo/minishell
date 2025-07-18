@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 17:09:20 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:38:56 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	get_final_filename(t_shell *s, char **filename)
 	if (expand(s->numerr, s->env_list, filename) != 0)
 	{
 		w_free((void **)&filename);
-		return (print_error(&s->numerr, ENOMEM));
+		return (print_error(&s->numerr, NULL, ENOMEM));
 	}
 	if (*filename && (ft_strchr(*filename, '\'')
 			|| ft_strchr(*filename, '\"')))
@@ -74,7 +74,7 @@ int	get_final_filename(t_shell *s, char **filename)
 		if (trim_quote(filename, 0, 0) != 0)
 		{
 			w_free((void **)&filename);
-			return (print_error(&s->numerr, errno));
+			return (print_error(&s->numerr, NULL, errno));
 		}
 	}
 	return (0);
@@ -115,6 +115,13 @@ int	redir_in(t_shell *s, char *filename, int current_redir)
 			return (-1);
 	}
 	fd_in = open(tmp, O_RDONLY);
+	if (fd_in < 0)
+	{
+		//ft_putstr_fd("minishell: ", 2);
+		//ft_putstr_fd(tmp, 2);
+		//ft_putstr_fd(": ", 2);
+		print_error(&s->numerr, tmp, errno);
+	}
 	w_free((void **)&tmp);
 	return (fd_in);
 }

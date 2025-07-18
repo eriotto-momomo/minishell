@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/18 09:20:15 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:33:35 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,14 @@ int	ft_echo(t_shell *s, t_ast **current_node, int fd_out)
 	offset = 0;
 	args = get_args(*current_node);
 	if (!args)
-		return (print_error(&s->numerr, ENOMEM));
+		return (print_error(&s->numerr, NULL, ENOMEM));
 	if (args[1])
 	{
 		if (flag_check(args[1]))
 			offset = 1;
 		str = tab_to_string((*current_node)->data.s_exec.ac, args, offset);
 		if (!str)
-			return (print_error(&s->numerr, ENOMEM));
+			return (print_error(&s->numerr, NULL, ENOMEM));
 		ft_putstr_fd(str, fd_out);
 		free(str);
 	}
