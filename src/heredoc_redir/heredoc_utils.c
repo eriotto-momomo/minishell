@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/05 18:08:21 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:14:13 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	process_heredoc(t_shell *s, t_ast *node)
 	if (node->tag == EXEC_NODE)
 	{
 		if (node->data.s_exec.path_tmp_file)
-			write_heredoc(s, node->data.s_exec.path_tmp_file, node->data.s_exec.eof_list, node->data.s_exec.eof_count);
+			write_heredoc(s, node->data.s_exec.path_tmp_file,
+				node->data.s_exec.eof_list, node->data.s_exec.eof_count);
 	}
 	else if (node->tag == PIPE_NODE)
 	{

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/18 13:40:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:14:28 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	get_heredoc(t_shell *s, t_ast **node, t_token **tok)
 	if (!(*node)->data.s_exec.eof_list)
 		return (1);
 	(*node)->data.s_exec.path_tmp_file = create_tmp_file(s,
-		(*node)->data.s_exec.eof_list, (*node)->data.s_exec.eof_count);
+			(*node)->data.s_exec.eof_list, (*node)->data.s_exec.eof_count);
 	if (!(*node)->data.s_exec.path_tmp_file)
 	{
 		ft_free_char_array((*node)->data.s_exec.eof_list,
-				(*node)->data.s_exec.eof_count);
+			(*node)->data.s_exec.eof_count);
 		return (1);
 	}
 	return (0);
