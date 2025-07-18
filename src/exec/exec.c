@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/18 11:39:23 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:38:52 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int	ft_external(t_shell *s, t_env *env, t_ast *node)
 
 	pid = fork();
 	if (pid < 0)
-		return (print_error(&s->numerr, EPIPE));
+		return (print_error(&s->numerr, NULL, EPIPE));
 	if (pid == 0)
 	{
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
-			exit(print_error(&s->numerr, errno));
+			exit(print_error(&s->numerr, NULL, errno));
 		close_pipes(s->pipe_count, s->pipe_fd);
 		close_fds(s->root_node);
 		//system("ls -l /proc/self/fd >&2"); //🚨DEBUG
@@ -68,7 +68,7 @@ static int	handle_exec(t_shell *s, t_ast *node)
 static int	process_exec_node(t_shell *s, t_ast **n)
 {
 	if ((*n)->data.s_exec.fd_in < 0)
-		return (print_error(&s->numerr, errno));
+		return (print_error(&s->numerr, NULL, errno));
 	if (string_processing(s, &(*n)->data.s_exec.ac,
 			&(*n)->data.s_exec.av) != 0)
 		return (1);
@@ -106,6 +106,11 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	{
 		fprintf(stderr, "%spreorder_exec | current_node:%s\n", B, RST);
 		print_node((*node));
+		if ((*node)->data.s_exec.fd_in < 0 || (*node)->data.s_exec.fd_out < 0)
+		{
+			fprintf(stderr, "%spreorder_exec | invalid fds for exec | return (0);%s\n", R, RST);
+			return (0);
+		}
 		process_exec_node(s, node);
 	}
 	return (0);
@@ -124,7 +129,7 @@ int	execution(t_shell *s)
 		while (i < s->pid_count)
 		{
 			if (kill(s->child_pids[i], SIGKILL) != 0)
-				return (print_error(&s->numerr, errno));
+				return (print_error(&s->numerr, NULL, errno));
 			i++;
 		}
 	}

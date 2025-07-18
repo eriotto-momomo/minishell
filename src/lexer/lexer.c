@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 09:53:56 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 09:18:35 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:36:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int	lexer(t_shell *s)
 	token = NULL;
 	s->head = token;
 	if (!tokenize(&(s->head), s->line))
-		return (print_error(&s->numerr, ENOMEM));
+		return (print_error(&s->numerr, NULL, ENOMEM));
 	return (0);
 }

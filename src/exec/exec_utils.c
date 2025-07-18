@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/05 19:18:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:34:53 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 		if (!env_table)
 		{
 			w_free((void **)&path);
-			print_error(&s->numerr, ENOMEM);
+			print_error(&s->numerr, NULL, ENOMEM);
 		}
 	}
 	if (path && env_table)
@@ -61,7 +61,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 //	{
 //		close_fds(s->root_node);
 //		w_free((void **)&path);
-//		print_error(&s->numerr, ENOMEM);
+//		print_error(&s->numerr, NULL, ENOMEM);
 //		kill_children(s);
 //	}
 //	if (execve(path, argv, env_table) == -1)
