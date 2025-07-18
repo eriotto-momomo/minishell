@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/05 19:53:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 11:39:23 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int	ft_external(t_shell *s, t_env *env, t_ast *node)
 	else
 	{
 		s->child_pids[s->pid_count++] = pid;
-		if (node->data.s_exec.fd_in != STDIN_FILENO && is_open(node->data.s_exec.fd_in))
-			close(node->data.s_exec.fd_in); //🚨
+		//if (node->data.s_exec.fd_in != STDIN_FILENO && is_open(node->data.s_exec.fd_in))
+		//	close(node->data.s_exec.fd_in); //🚨
 		//if (node->data.s_exec.fd_out != STDIN_FILENO && is_open(node->data.s_exec.fd_out))
 		//	close(node->data.s_exec.fd_out); //🚨
 	}
@@ -84,19 +84,17 @@ static int	process_exec_node(t_shell *s, t_ast **n)
 	if ((*n)->data.s_exec.ac > 0)
 		if (handle_exec(s, (*n)) != 0)
 			return (1);
-	if ((*n)->data.s_exec.fd_out > 2)
-		if (close((*n)->data.s_exec.fd_out) != 0)
-			return (1);
-	if ((*n)->data.s_exec.fd_in > 2)
-		if (close((*n)->data.s_exec.fd_in) != 0)
-			return (1);
+	//if ((*n)->data.s_exec.fd_out > 2)
+	//	if (close((*n)->data.s_exec.fd_out) != 0)
+	//		return (1);
+	//if ((*n)->data.s_exec.fd_in > 2)
+	//	if (close((*n)->data.s_exec.fd_in) != 0)
+	//		return (1);
 	return (0);
 }
 
 int	preorder_exec(t_shell *s, t_ast **node)
 {
-	//fprintf(stderr, "%spreorder_exec | current_node:%s\n", B, RST);
-	//print_node((*node));
 	if (!(*node))
 		return (0);
 	if ((*node)->tag == PIPE_NODE)
@@ -105,7 +103,11 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 	}
 	else if ((*node)->tag == EXEC_NODE)
+	{
+		fprintf(stderr, "%spreorder_exec | current_node:%s\n", B, RST);
+		print_node((*node));
 		process_exec_node(s, node);
+	}
 	return (0);
 }
 

@@ -7,3 +7,4 @@ A priori pas d'autres moyen de quitter proprement 'readline'
 
 COMMANDES PASSEES
 cat << 1 > TEST_HEREDOC1
+cat << 1 > TEST_1 | << 2 cat > TEST_2
