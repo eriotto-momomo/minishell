@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/18 13:38:56 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:40:27 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,9 @@ int	get_redir(t_shell *s, t_ast **node, t_token **tok)
 		else if (tmp->type == IN_REDIR)
 			(*node)->data.s_exec.fd_in
 				= redir_in(s, tmp->next->data, (*node)->data.s_exec.fd_in);
-		//if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
-		//{
-		//	(*node)->data.s_exec.fd_in = 0;
-		//	(*node)->data.s_exec.fd_out = 1;
-		//}
 		if (!get_next_token(&tmp))
 			break ;
 	}
-	//if (errno)
-	//	ft_puterror(strerror(errno));
 	return (0);
 }
 
@@ -116,12 +109,7 @@ int	redir_in(t_shell *s, char *filename, int current_redir)
 	}
 	fd_in = open(tmp, O_RDONLY);
 	if (fd_in < 0)
-	{
-		//ft_putstr_fd("minishell: ", 2);
-		//ft_putstr_fd(tmp, 2);
-		//ft_putstr_fd(": ", 2);
 		print_error(&s->numerr, tmp, errno);
-	}
 	w_free((void **)&tmp);
 	return (fd_in);
 }

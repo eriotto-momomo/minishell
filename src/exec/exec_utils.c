@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/18 13:34:53 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:28:21 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 
 	path = path_making(env, argv[0]);
 	if (!path)
-		print_custom_error(&s->numerr, 127, "Command not found");
+		print_custom_error(&s->numerr, 127, "minishell: Command not found");
 	if (path)
 	{
 		env_table = ltotable(env);
