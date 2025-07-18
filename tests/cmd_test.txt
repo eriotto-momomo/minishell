@@ -4,8 +4,7 @@ valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 🔍PARSER
 echo Hello > 1.txt > 2.txt > 3.txt > 4.txt
 cat << 1 << 2 << 3 << 4
-cat < 1 | cat < 2 | cat < 3 | cat < 4
-cat < 1 | cat < 2 | cat < 3 | cat < 4 | echo Hello ❌
+cat < 1 | cat < 2 | cat < 3 | cat < 4 | echo Hello
 echo "TXT" > 1 TXT "MOOOORE TXT" | echo Hello | cat 1
 echo TXT > TEST_1 | cat << EOF >> TEST_1 | echo CMD_DONE
 echo << 1 | echo << 2 | echo << 3 | echo << 4 | echo << 5 | echo << 6 | echo << 7 | echo << 8 | echo << 9 | echo << 10
@@ -18,11 +17,16 @@ cat < TEST > COPY_TEST
 INVALID_COMMAND | cat << EOF > HEREDOC_TEST1 > HEREDOC_TEST2
 < T1 | < T2 | < T3 | < T4 | < T5 | cat < T1 |cat < T2 |cat < T3 |cat < T4 |cat < T5 | echo CMD_DONE!
 echo "Hello" > T1 | echo "World" > T2 | echo "How you doin' people?" > T3 | echo "YU GUD?!" > T4 | echo "Fine!" > T5 | cat < T1 |cat < T2 |cat < T3 |cat < T4 |cat < T5 | echo CMD_DONE!
-echo "Hello" > T1 | echo "World" > T2 | echo "How are you doing people?" > T3 | echo "YU GUD?!" > T4 | echo "Fine!" > T5 | cat < T1 |cat < T2 |cat < T3 |cat < T4 |cat < T5 | echo CMD_DONE!
+echo "Hello" > T1 | echo "World" > T2 | echo "How are you doing people?" > T3 | echo "YU GUD?!" > T4 | echo "Fine!" > T5 | cat < T1 >> Tfinal |cat < T2 >> Tfinal |cat < T3 >> Tfinal |cat < T4 >> Tfinal |cat < T5 >> Tfinal | echo CMD_DONE! | cat Tfinal
 echo "Hello" > T1 | cat < T1 > COPYOF_T1 | INVALID_CMD
-INVALID_CMD | echo "Hello" > T1 | cat < T1 > COPYOF_T1
-echo "Hello" > T1 | INVALID_CMD |  cat < T1 > COPYOF_T1
+INVALID_CMD | echo "World" > T1 | cat < T1 > COPYOF_T1
+echo "Hello World" > T1 | INVALID_CMD |  cat < T1 > COPYOF_T1
 cat << EOF > TEST_HEREDOC
+
+Dans un heredoc:
+❌ l;sdkjf' f
+❌ '
+
 
 
 ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | ls > test1 | wc test1 | echo Hello | echo "🔥last PIPE  before segfault🔥"
@@ -39,9 +43,9 @@ SERIE DE COMMANDE POUR TOUT TESTER
 [1]-------------------------------
 cat << 1 > TEST_1 | << 2 cat > TEST_2 | > TEST_3 cat << 3 | << 4 > TEST_4 cat | cat << 5 > TEST_5
 [2]-------------------------------
-INVALID_IN_REDIR < INVALID_CMD > INVALID_OUT_REDIR "some arguments" "more" | echo "echoing in TEST_1" >> TEST_10 >> TEST_1 | echo "echoing in TEST_2" >> TEST_20 >> TEST_2 | echo "echoing in TEST_3" >> TEST_30 >> TEST_3 | echo "echoing in TEST_4" >> TEST_40 >> TEST_4 |echo "echoing in TEST_5" >> TEST_50 >> TEST_5
+< INVALID_IN_REDIR INVALID_CMD > INVALID_OUT_REDIR "some arguments" "more" | echo "echoing in TEST_1" >> TEST_10 >> TEST_1 | echo "echoing in TEST_2" >> TEST_20 >> TEST_2 | echo "echoing in TEST_3" >> TEST_30 >> TEST_3 | echo "echoing in TEST_4" >> TEST_40 >> TEST_4 |echo "echoing in TEST_5" >> TEST_50 >> TEST_5
 [3.3]-------------------------------
-rm TEST_10 | rm TEST_20 | rm TEST_30 | rm TEST_40 | rm TEST_50 | echo "Removed TEST_10" TEST_20 "TEST_30" 'TEST_40 TEST_50' | cat >> TEST_FINAL < TEST_1 | cat >> TEST_FINAL < TEST_2 | cat >> TEST_FINAL < TEST_3 | cat >> TEST_FINAL < TEST_4 | cat >> TEST_FINAL < TEST_5
+rm TEST_10 | rm TEST_20 | rm TEST_30 | rm TEST_40 | rm TEST_50 | echo "Removed TEST_10" TEST_20 "TEST_30" 'TEST_40 TEST_50' | cat >> TEST_FINAL < TEST_1 | cat >> TEST_FINAL < TEST_2 | cat >> TEST_FINAL < TEST_3 | cat >> TEST_FINAL < TEST_4 | cat >> TEST_FINAL < TEST_5 | rm TEST_1 | rm TEST_2 | rm TEST_3 | rm TEST_4 | rm TEST_5
 ✅ --------------------------------------
 
 ✅ ----------------------------------
@@ -49,9 +53,9 @@ SERIE DE COMMANDE POUR TOUT TESTER
 [1]-------------------------------
 cat << 1 > TEST_1 | << 2 cat > TEST_2
 [2]-------------------------------
-INVALID_IN_REDIR < INVALID_CMD > INVALID_OUT_REDIR "some arguments" "more" | echo "echoing in TEST_1" >> TEST_10 >> TEST_1 | echo "echoing in TEST_2" >> TEST_20 >> TEST_2
+< INVALID_IN_REDIR INVALID_CMD > INVALID_OUT_REDIR "some arguments" "more" | echo "echoing in TEST_1" >> TEST_10 >> TEST_1 | echo "echoing in TEST_2" >> TEST_20 >> TEST_2
 [3.3]-------------------------------
-rm TEST_10 | rm TEST_20 echo "Removed TEST_10" TEST_20 | cat >> TEST_FINAL < TEST_1 | cat >> TEST_FINAL < TEST_2
+rm TEST_10 | rm TEST_20 | echo "Removed TEST_10" TEST_20 | cat >> TEST_FINAL < TEST_1 | cat >> TEST_FINAL < TEST_2 | rm TEST_1 | rm TEST_2
 ✅ --------------------------------------
 
 💥CRASH💥:

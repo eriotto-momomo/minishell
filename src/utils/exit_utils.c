@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/05 16:21:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 14:50:29 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	reset_free(t_shell *s)
 	if (s->root_node)
 		free_ast(&(s->root_node));
 	w_free((void **)&(s->line));
+	setup_signals(s, MINISHELL_SIGNALS);
 }
 
 void	clean_free(t_shell *s)
@@ -36,7 +37,7 @@ void	clean_free(t_shell *s)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
-	setup_signals(s, DEFAULT_SIGNALS);
+	setup_signals(s, MINISHELL_SIGNALS);
 }
 
 void	terminate_shell(t_shell *s)

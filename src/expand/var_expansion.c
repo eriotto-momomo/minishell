@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 09:38:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/18 15:08:42 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	expand(uint8_t numerr, t_env *env, char **str)
 	int		i;
 
 	i = 0;
+	if ((*str) == NULL || !(*str)[i])
+		return (0);
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '\'' && !is_in_double_quote((*str), i))
