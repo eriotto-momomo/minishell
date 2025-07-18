@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/05 19:53:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/18 09:20:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	ft_echo(t_shell *s, t_ast **current_node, int fd_out)
 	char	*str;
 	int		offset;
 
-	fprintf(stderr, "ft_echo | fd_out: %d\n", fd_out);
 	offset = 0;
 	args = get_args(*current_node);
 	if (!args)
