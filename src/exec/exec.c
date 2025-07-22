@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/18 15:13:27 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:59:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_external(t_shell *s, t_env *env, t_ast *node)
 		close_pipes(s->pipe_count, s->pipe_fd);
 		close_fds(s->root_node);
 		cmd_execution(s, env, node->data.s_exec.av);
-		kill_children(s); //🚨 Ca marche aussi ici plutot que dans `cmd_execution`?
+		kill_children(s);
 	}
 	else
 	{
@@ -81,14 +81,16 @@ static int	process_exec_node(t_shell *s, t_ast **n)
 			return (1);
 	}
 	if ((*n)->data.s_exec.ac > 0)
+	{
 		if (handle_exec(s, (*n)) != 0)
 			return (1);
+	}
 	//if ((*n)->data.s_exec.fd_out > 2&& is_open((*n)->data.s_exec.fd_out))
 	//	if (close((*n)->data.s_exec.fd_out) != 0)
 	//		return (1);
 	//if ((*n)->data.s_exec.fd_in > 2 && is_open((*n)->data.s_exec.fd_in))
 	//	if (close((*n)->data.s_exec.fd_in) != 0)
-			return (1);
+			//return (1);
 	return (0);
 }
 
@@ -104,11 +106,12 @@ int	preorder_exec(t_shell *s, t_ast **node)
 	else if ((*node)->tag == EXEC_NODE)
 	{
 		if ((*node)->data.s_exec.fd_in < 0 || (*node)->data.s_exec.fd_out < 0)
-		{
-			//fprintf(stderr, "%spreorder_exec | invalid fds for exec | return (0);%s\n", R, RST);
 			return (0);
-		}
 		process_exec_node(s, node);
+		if (((*node)->data.s_exec.fd_in >= 0 && (*node)->data.s_exec.fd_out >= 0)
+			&& errno == 2)
+				errno = 0;
+		//fprintf(stderr, "%spreoreder_exec | g_sig; %d | s->numerr: %d | errno: %d%s\n", P, g_sig, s->numerr, errno, RST);
 	}
 	return (0);
 }
@@ -131,6 +134,7 @@ int	execution(t_shell *s)
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
+	fprintf(stderr, "%s3 execution | g_sig; %d | s->numerr: %d | errno: %d%s\n", P, g_sig, s->numerr, errno, RST);
 	close_fds(s->root_node);					//🚨 USELESS ?
 	close_pipes(s->pipe_count, s->pipe_fd);		//🚨 USELESS ?
 	if (s->tmp_files_list != NULL)
