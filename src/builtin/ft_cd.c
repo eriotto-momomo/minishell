@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/18 13:33:28 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:50:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ int	ft_cd(t_shell *s, int ac, char **av)
 		return (1);
 	}
 	free(new_pwd);
-	return (0);
+	return (s->numerr = 0);
 }

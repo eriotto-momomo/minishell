@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:20:28 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/18 13:33:51 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:50:12 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ int	ft_env(t_shell *s, t_env *env, int fd_out)
 	}
 	ft_putstr_fd(to_print, fd_out);
 	free(to_print);
-	return (0);
+	return (s->numerr = 0);
 }
