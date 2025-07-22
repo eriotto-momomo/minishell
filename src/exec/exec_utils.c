@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/18 15:13:06 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:59:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
 			*numerr = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			*numerr = WTERMSIG(status);
+		fprintf(stderr, "%swaiton | g_sig; %d | s->numerr: %d | errno: %d%s\n", P, g_sig, *numerr, errno, RST);
 		i++;
 	}
 	return (0);
@@ -98,6 +99,9 @@ int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
 
 int	close_fds(t_ast *node)
 {
+	int	tmp;
+
+	tmp = errno;
 	if (node->tag == EXEC_NODE)
 	{
 		if (node->data.s_exec.fd_in > 2 && is_open(node->data.s_exec.fd_in))
@@ -115,5 +119,7 @@ int	close_fds(t_ast *node)
 		if (close_fds(node->data.s_pipe.right) != 0)
 			return (1);
 	}
+	if (errno != tmp)
+		errno = tmp;
 	return (0);
 }

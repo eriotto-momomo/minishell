@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/18 15:14:43 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:22:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static int	is_blank_line(char *line)
 
 void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 {
-	//fprintf(stderr, "%supdate_numerr | g_sig; %d | s->numerr: %d | errno: %d%s\n", G, g_sig, *numerr, errno, RST);
 	if (mode == UPDATE_SIGNALS || mode == UPDATE_SIG_ERR)
 	{
+		fprintf(stderr, "%supdate_numerr | UDATE_SIGNALS | g_sig; %d | s->numerr: %d | errno: %d%s\n", G, g_sig, *numerr, errno, RST);
 		if (g_sig == SIGINT)
 			*numerr = 130;
 		else if (g_sig == SIGQUIT)
@@ -35,6 +35,7 @@ void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 	}
 	if (mode == UPDATE_ERRNO || mode == UPDATE_SIG_ERR)
 	{
+		fprintf(stderr, "%supdate_numerr | UDATE_ERRNO   | g_sig; %d | s->numerr: %d | errno: %d%s\n", G, g_sig, *numerr, errno, RST);
 		if (*child_exit == 1)
 		{
 			errno = *numerr;

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:08:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/18 14:59:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:08:46 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	close_pipes(int count, int pipe_fd[][2])
 {
 	int	i;
+	int	tmp;
 
+	tmp = errno;
 	i = -1;
 	while (++i < count)
 	{
@@ -25,6 +27,8 @@ void	close_pipes(int count, int pipe_fd[][2])
 		if (is_open(pipe_fd[i][1]))
 			close(pipe_fd[i][1]);
 	}
+	if (errno != tmp)
+		errno = tmp;
 }
 
 // V3
