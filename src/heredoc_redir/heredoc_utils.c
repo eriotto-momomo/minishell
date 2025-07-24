@@ -6,11 +6,28 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/18 15:14:13 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/24 20:53:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+//V2
+void	expand_heredoc(uint8_t numerr, t_env *env, char **str)
+{
+	//char	*copy;
+	//int		i;
+
+	//i = ft_strlen(*str);
+	//fprintf(stderr, "%sexpand_heredoc | *str: [%s] | i = %d%s\n", Y, *str, i, RST);
+	//copy = malloc(sizeof(char) * i + 1);
+	//copy[i] = '\0';
+	//while (i-- > 0)
+	//	copy[i] = (*str)[i];
+	//fprintf(stderr, "%sexpand_heredoc | copy: [%s] | i = %d%s\n", Y, copy, i, RST);
+	//expand(numerr, env, &copy);
+	expand(numerr, env, str);
+}
 
 int	process_heredoc(t_shell *s, t_ast *node)
 {

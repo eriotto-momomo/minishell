@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/18 15:11:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:40:37 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		close_fds(t_ast *node);
 int		write_heredoc(t_shell *s, char *path, char** eof_list, int eof_count);
 int		create_heredoc(t_shell *s, char** eof_list, int eof_count);
 int		unlink_tmp_files(char **tmp_files_list, int heredoc_count);
+void	expand_heredoc(uint8_t numerr, t_env *env, char **str);
 
 char	*pathfinder(t_env *env, char *cmd);
 char	*path_making(t_env *env, char *cmd);

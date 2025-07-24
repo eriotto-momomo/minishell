@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 18:29:53 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/18 15:14:18 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/24 20:52:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,23 @@ static int	heredoc_loop(t_shell *s, char *eof, int fd)
 			break ;
 		if (is_eof(line, eof))
 			break ;
+		// 🚩 A tester: '"
+		// 🚩 A tester: '''''"
+		// 🚩 A tester: '"""
+		// 🚩 A tester: a chaque fois qu'on a un nombre impair de '\'' suivi d'un '\"' ->> invalid read of 1
+
+		// V1
+		//if ((eof[0] != '\'' && eof[ft_strlen(eof) - 1] != '\'')
+		//	&& (eof[0] != '\"' && eof[ft_strlen(eof) - 1] != '\"'))
+		//	expand(s->numerr, s->env_list, &(line));
+		////////
+
+		// V2
 		if ((eof[0] != '\'' && eof[ft_strlen(eof) - 1] != '\'')
 			&& (eof[0] != '\"' && eof[ft_strlen(eof) - 1] != '\"'))
-			expand(s->numerr, s->env_list, &(line));
+			expand_heredoc(s->numerr, s->env_list, &(line));
+		/////////////
+
 		if (put_in_heredoc(line, fd) != 0)
 			return (-1);
 		w_free((void **)&line);
