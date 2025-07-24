@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:08:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/22 17:08:46 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:23:39 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,20 @@ static void	add_to_pipeline(int *node_fd, int pipe_fd, int mode)
 	//			close(*node_fd); //🚨
 	//		*node_fd = pipe_fd;
 	//	}
-	//	else if (mode == IN_REDIR)
-	//	{
-	//		return ;
-	//		//fprintf(stderr, "%sadd_to_pipeline | IN_REDIR%s\n", Y, RST);
-	//		// 🚧 dup et close pas necessaires?
-	//		//if (dup2(pipe_fd, *node_fd) == -1)
-	//		//{
-	//		//	fprintf(stderr, "%sadd_to_pipeline | dup2 failed!%s\n", R, RST);
-	//		//	perror("dup2 failed"); //🚨DEBUG
-	//		//}
-	//		//if (pipe_fd > 2 && is_open(pipe_fd))
-	//		//	close(pipe_fd);
-	//		//pipe_fd = *node_fd;
-	//	}
+	//	//else if (mode == IN_REDIR)
+	//	//{
+	//	//	//return ;
+	//	//	fprintf(stderr, "%sadd_to_pipeline | IN_REDIR%s\n", Y, RST);
+	//	//	 🚧 dup et close pas necessaires?
+	//	//	if (dup2(pipe_fd, *node_fd) == -1)
+	//	//	{
+	//	//		fprintf(stderr, "%sadd_to_pipeline | dup2 failed!%s\n", R, RST);
+	//	//		perror("dup2 failed"); //🚨DEBUG
+	//	//	}
+	//	//	if (pipe_fd > 2 && is_open(pipe_fd))
+	//	//		close(pipe_fd);
+	//	//	pipe_fd = *node_fd;
+	//	//}
 	//}
 }
 

@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:25:11 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/18 15:14:49 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:23:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static int	check_inredir_priority(t_token *tok)
 			priority = HERE_DOC;
 		else if (tok->type == IN_REDIR)
 			priority = IN_REDIR;
-		else if (tok->type == OUT_REDIR)
-			priority = OUT_REDIR;
 		tok = tok->next;
 	}
 	return (priority);
