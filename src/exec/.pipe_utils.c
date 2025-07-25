@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes_utils.c                                      :+:      :+:    :+:   */
+/*   .pipe_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 10:16:08 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/25 14:51:32 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:42:04 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,30 @@ int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
 	return (0);
 }
 
-void	close_pipes(int count, int pipe_fd[][2])
+int	close_pipes(t_ast *node, int pipe_fd[][2], int pipe_count)
 {
 	int	i;
-	int	tmp;
 
-	tmp = errno;
-	i = -1;
-	while (++i < count)
+	i = 0;
+	while (i < pipe_count)
 	{
-		//fprintf(stderr, "%sclose_pipes | pipe_fd[%d][0]: %d | pipe_fd[%d][1]: %d%s\n", C, i, pipe_fd[i][0], i, pipe_fd[i][1], RST);
-		if (is_open(pipe_fd[i][0]))
+		if (pipe_fd[i][0] != -1
+			&& pipe_fd[i][0] != node->data.s_exec.fd_in
+			&& pipe_fd[i][0] != node->data.s_exec.fd_out)
+		{
 			close(pipe_fd[i][0]);
-		if (is_open(pipe_fd[i][1]))
+			pipe_fd[i][0] = -1;
+		}
+		if (pipe_fd[i][1] != -1
+			&& pipe_fd[i][1] != node->data.s_exec.fd_in
+			&& pipe_fd[i][1] != node->data.s_exec.fd_out)
+		{
 			close(pipe_fd[i][1]);
+			pipe_fd[i][1] = -1;
+		}
+		i++;
 	}
-	if (errno != tmp)
-		errno = tmp;
+	return (0);
 }
 
 int	setup_pipe(int fd_in, int fd_out)
