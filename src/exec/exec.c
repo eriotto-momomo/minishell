@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/24 18:24:55 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:53:47 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ static int	ft_external(t_shell *s, t_env *env, t_ast *node)
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, NULL, errno));
 		cmd_execution(s, env, node->data.s_exec.av);
-		close_pipes(s->pipe_count, s->pipe_fd);
-		close_fds(s->root_node);
+		//close_pipes(s->pipe_count, s->pipe_fd);
+		//close_fds(s->root_node);
+
 		kill_children(s);
 	}
 	else

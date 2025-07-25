@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:08:40 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/24 18:23:39 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:50:18 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,36 +43,36 @@ static void	add_to_pipeline(int *node_fd, int pipe_fd, int mode)
 		fd = STDOUT_FILENO;
 	if (*node_fd == fd)
 		*node_fd = pipe_fd;
-	//else if(*node_fd != fd)
-	//{
-	//	if (mode == OUT_REDIR)
-	//	{
-	//		// 🚧 dup et close pas necessaires?
-	//		//fprintf(stderr, "%sadd_to_pipeline | OUT_REDIR%s\n", Y, RST);
-	//		if (dup2(*node_fd, pipe_fd) == -1)
-	//		{
-	//			fprintf(stderr, "%sadd_to_pipeline | dup2 failed!%s\n", R, RST);
-	//			perror("dup2 failed"); //🚨DEBUG
-	//		}
-	//		if (*node_fd > 2 && is_open(*node_fd))
-	//			close(*node_fd); //🚨
-	//		*node_fd = pipe_fd;
-	//	}
-	//	//else if (mode == IN_REDIR)
-	//	//{
-	//	//	//return ;
-	//	//	fprintf(stderr, "%sadd_to_pipeline | IN_REDIR%s\n", Y, RST);
-	//	//	 🚧 dup et close pas necessaires?
-	//	//	if (dup2(pipe_fd, *node_fd) == -1)
-	//	//	{
-	//	//		fprintf(stderr, "%sadd_to_pipeline | dup2 failed!%s\n", R, RST);
-	//	//		perror("dup2 failed"); //🚨DEBUG
-	//	//	}
-	//	//	if (pipe_fd > 2 && is_open(pipe_fd))
-	//	//		close(pipe_fd);
-	//	//	pipe_fd = *node_fd;
-	//	//}
-	//}
+	else if(*node_fd != fd)
+	{
+		if (mode == OUT_REDIR)
+		{
+			// 🚧 dup et close pas necessaires?
+			//fprintf(stderr, "%sadd_to_pipeline | OUT_REDIR%s\n", Y, RST);
+			if (dup2(*node_fd, pipe_fd) == -1)
+			{
+				fprintf(stderr, "%sadd_to_pipeline | dup2 failed!%s\n", R, RST);
+				perror("dup2 failed"); //🚨DEBUG
+			}
+			if (*node_fd > 2 && is_open(*node_fd))
+				close(*node_fd); //🚨
+			*node_fd = pipe_fd;
+		}
+		else if (mode == IN_REDIR)
+		{
+			//return ;
+			fprintf(stderr, "%sadd_to_pipeline | IN_REDIR%s\n", Y, RST);
+			 //🚧 dup et close pas necessaires?
+			if (dup2(pipe_fd, *node_fd) == -1)
+			{
+				fprintf(stderr, "%sadd_to_pipeline | dup2 failed!%s\n", R, RST);
+				perror("dup2 failed"); //🚨DEBUG
+			}
+			if (pipe_fd > 2 && is_open(pipe_fd))
+				close(pipe_fd);
+			pipe_fd = *node_fd;
+		}
+	}
 }
 
 // BACKUP V2
@@ -172,8 +172,8 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	int		cur_pipe;
 	t_ast	*right;
 
-	//fprintf(stderr, "%shandle_pipe| current_node BEFORE DUPS:%s\n", B, RST);
-	//print_node((*node));
+	fprintf(stderr, "%shandle_pipe| current_node BEFORE DUPS:%s\n", B, RST);
+	print_node((*node));
 	//if (is_valid_fd(&(*node)) != 0)
 	//{
 	//	fprintf(stderr, "%shandle_pipe | is_valid_fd != 0%s\n", R, RST);
@@ -182,7 +182,7 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	cur_pipe = s->pipe_count;
 	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (print_error(&s->numerr, NULL, errno));
-	//fprintf(stderr, "%shandle_pipe | s->pipe_fd[cur_pipe][0]: %d | s->pipe_fd[cur_pipe][1]: %d%s\n", G, s->pipe_fd[cur_pipe][0], s->pipe_fd[cur_pipe][1], RST);
+	fprintf(stderr, "%shandle_pipe | s->pipe_fd[cur_pipe][0]: %d | s->pipe_fd[cur_pipe][1]: %d%s\n", G, s->pipe_fd[cur_pipe][0], s->pipe_fd[cur_pipe][1], RST);
 	if ((*node)->data.s_pipe.right->tag == EXEC_NODE)
 		add_to_pipeline(&(*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0], IN_REDIR);
 	if ((*node)->data.s_pipe.left->tag == EXEC_NODE)
@@ -195,8 +195,8 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	s->pipe_count++;
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
-	//fprintf(stderr, "%shandle_pipe| current_node AFTER DUPS:%s\n", B, RST);
-	//print_node((*node));
+	fprintf(stderr, "%shandle_pipe| current_node AFTER DUPS:%s\n", B, RST);
+	print_node((*node));
 	close(s->pipe_fd[cur_pipe][0]);
 	close(s->pipe_fd[cur_pipe][1]);
 	return (0);
