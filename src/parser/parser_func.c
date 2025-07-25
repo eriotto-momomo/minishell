@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 18:23:15 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 10:29:48 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 15:24:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ t_ast	*parse_exec(t_shell *s, t_token **tok)
 		exec_node = add_exec_node(s, tok);
 		if (!exec_node)
 			return (NULL);
-		errno = 0;
-		s->numerr = 0;
+		//errno = 0;
+		//s->numerr = 0;
 		get_next_pipe(tok);
 	}
 	return (exec_node);
