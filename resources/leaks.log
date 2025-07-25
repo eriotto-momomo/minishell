@@ -1,134 +1,39 @@
-==2104428== Memcheck, a memory error detector
-==2104428== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2104428== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2104428== Command: ./minishell
-==2104428== Parent PID: 2104427
-==2104428== 
-==2104432== 
-==2104432== FILE DESCRIPTORS: 9 open (3 std) at exit.
-==2104432== Open file descriptor 12:
-==2104432==    at 0x49DCFEB: dup (syscall-template.S:120)
-==2104432==    by 0x10D4BC: handle_pipe (exec_utils.c:38)
-==2104432==    by 0x10D19B: preorder_exec (exec.c:92)
-==2104432==    by 0x10D56F: handle_pipe (exec_utils.c:50)
-==2104432==    by 0x10D19B: preorder_exec (exec.c:92)
-==2104432==    by 0x10D236: execution (exec.c:109)
-==2104432==    by 0x109E32: process_input (main_loop.c:70)
-==2104432==    by 0x109F3A: prompt_loop (main_loop.c:90)
-==2104432==    by 0x1095E8: main (main.c:30)
-==2104432== 
-==2104432== Open file descriptor 9:
-==2104432==    at 0x49DCFEB: dup (syscall-template.S:120)
-==2104432==    by 0x10D4BC: handle_pipe (exec_utils.c:38)
-==2104432==    by 0x10D19B: preorder_exec (exec.c:92)
-==2104432==    by 0x10D236: execution (exec.c:109)
-==2104432==    by 0x109E32: process_input (main_loop.c:70)
-==2104432==    by 0x109F3A: prompt_loop (main_loop.c:90)
-==2104432==    by 0x1095E8: main (main.c:30)
-==2104432== 
-==2104432== Open file descriptor 6: TEST_2
-==2104432==    at 0x49DC53B: open (open64.c:41)
-==2104432==    by 0x10C46A: redir_out (redir.c:94)
-==2104432==    by 0x10C231: get_redir (redir.c:46)
-==2104432==    by 0x10A237: add_redir (parser_add_node.c:34)
-==2104432==    by 0x10A461: add_exec_node (parser_add_node.c:75)
-==2104432==    by 0x10A738: parse_exec (parser_func.c:65)
-==2104432==    by 0x10A5EB: parse_pipe (parser_func.c:29)
-==2104432==    by 0x10A6DE: parse_line (parser_func.c:53)
-==2104432==    by 0x10ABD9: build_ast (parser_main.c:19)
-==2104432==    by 0x10AC50: parser (parser_main.c:32)
-==2104432==    by 0x109E22: process_input (main_loop.c:68)
-==2104432==    by 0x109F3A: prompt_loop (main_loop.c:90)
-==2104432== 
-==2104432== Open file descriptor 5: TEST_1
-==2104432==    at 0x49DC53B: open (open64.c:41)
-==2104432==    by 0x10C46A: redir_out (redir.c:94)
-==2104432==    by 0x10C231: get_redir (redir.c:46)
-==2104432==    by 0x10A237: add_redir (parser_add_node.c:34)
-==2104432==    by 0x10A461: add_exec_node (parser_add_node.c:75)
-==2104432==    by 0x10A738: parse_exec (parser_func.c:65)
-==2104432==    by 0x10A5EB: parse_pipe (parser_func.c:29)
-==2104432==    by 0x10A6DE: parse_line (parser_func.c:53)
-==2104432==    by 0x10ABD9: build_ast (parser_main.c:19)
-==2104432==    by 0x10AC50: parser (parser_main.c:32)
-==2104432==    by 0x109E22: process_input (main_loop.c:68)
-==2104432==    by 0x109F3A: prompt_loop (main_loop.c:90)
-==2104432== 
-==2104432== Open file descriptor 4: INVALID_OUT_REDIR
-==2104432==    at 0x49DC53B: open (open64.c:41)
-==2104432==    by 0x10C444: redir_out (redir.c:92)
-==2104432==    by 0x10C231: get_redir (redir.c:46)
-==2104432==    by 0x10A237: add_redir (parser_add_node.c:34)
-==2104432==    by 0x10A461: add_exec_node (parser_add_node.c:75)
-==2104432==    by 0x10A738: parse_exec (parser_func.c:65)
-==2104432==    by 0x10A5B0: parse_pipe (parser_func.c:22)
-==2104432==    by 0x10A6DE: parse_line (parser_func.c:53)
-==2104432==    by 0x10ABD9: build_ast (parser_main.c:19)
-==2104432==    by 0x10AC50: parser (parser_main.c:32)
-==2104432==    by 0x109E22: process_input (main_loop.c:68)
-==2104432==    by 0x109F3A: prompt_loop (main_loop.c:90)
-==2104432== 
-==2104432== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
-==2104432==    <inherited from parent>
-==2104432== 
-==2104432== 
-==2104432== HEAP SUMMARY:
-==2104432==     in use at exit: 207,467 bytes in 225 blocks
-==2104432==   total heap usage: 711 allocs, 486 frees, 236,073 bytes allocated
-==2104432== 
-==2104432== LEAK SUMMARY:
-==2104432==    definitely lost: 0 bytes in 0 blocks
-==2104432==    indirectly lost: 0 bytes in 0 blocks
-==2104432==      possibly lost: 0 bytes in 0 blocks
-==2104432==    still reachable: 0 bytes in 0 blocks
-==2104432==         suppressed: 207,467 bytes in 225 blocks
-==2104432== 
-==2104432== For lists of detected and suppressed errors, rerun with: -s
-==2104432== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==2104428== 
-==2104428== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==2104428== Open file descriptor 6: TEST_2
-==2104428==    at 0x49DC53B: open (open64.c:41)
-==2104428==    by 0x10C46A: redir_out (redir.c:94)
-==2104428==    by 0x10C231: get_redir (redir.c:46)
-==2104428==    by 0x10A237: add_redir (parser_add_node.c:34)
-==2104428==    by 0x10A461: add_exec_node (parser_add_node.c:75)
-==2104428==    by 0x10A738: parse_exec (parser_func.c:65)
-==2104428==    by 0x10A5EB: parse_pipe (parser_func.c:29)
-==2104428==    by 0x10A6DE: parse_line (parser_func.c:53)
-==2104428==    by 0x10ABD9: build_ast (parser_main.c:19)
-==2104428==    by 0x10AC50: parser (parser_main.c:32)
-==2104428==    by 0x109E22: process_input (main_loop.c:68)
-==2104428==    by 0x109F3A: prompt_loop (main_loop.c:90)
-==2104428== 
-==2104428== Open file descriptor 5: TEST_1
-==2104428==    at 0x49DC53B: open (open64.c:41)
-==2104428==    by 0x10C46A: redir_out (redir.c:94)
-==2104428==    by 0x10C231: get_redir (redir.c:46)
-==2104428==    by 0x10A237: add_redir (parser_add_node.c:34)
-==2104428==    by 0x10A461: add_exec_node (parser_add_node.c:75)
-==2104428==    by 0x10A738: parse_exec (parser_func.c:65)
-==2104428==    by 0x10A5EB: parse_pipe (parser_func.c:29)
-==2104428==    by 0x10A6DE: parse_line (parser_func.c:53)
-==2104428==    by 0x10ABD9: build_ast (parser_main.c:19)
-==2104428==    by 0x10AC50: parser (parser_main.c:32)
-==2104428==    by 0x109E22: process_input (main_loop.c:68)
-==2104428==    by 0x109F3A: prompt_loop (main_loop.c:90)
-==2104428== 
-==2104428== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
-==2104428==    <inherited from parent>
-==2104428== 
-==2104428== 
-==2104428== HEAP SUMMARY:
-==2104428==     in use at exit: 207,467 bytes in 225 blocks
-==2104428==   total heap usage: 718 allocs, 493 frees, 236,183 bytes allocated
-==2104428== 
-==2104428== LEAK SUMMARY:
-==2104428==    definitely lost: 0 bytes in 0 blocks
-==2104428==    indirectly lost: 0 bytes in 0 blocks
-==2104428==      possibly lost: 0 bytes in 0 blocks
-==2104428==    still reachable: 0 bytes in 0 blocks
-==2104428==         suppressed: 207,467 bytes in 225 blocks
-==2104428== 
-==2104428== For lists of detected and suppressed errors, rerun with: -s
-==2104428== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==2105348== Memcheck, a memory error detector
+==2105348== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2105348== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2105348== Command: ./minishell
+==2105348== Parent PID: 2105347
+==2105348== 
+==2105348== 
+==2105348== FILE DESCRIPTORS: 5 open (3 std) at exit.
+==2105348== Open file descriptor 4: 1
+==2105348==    at 0x49DC53B: open (open64.c:41)
+==2105348==    by 0x10C444: redir_out (redir.c:92)
+==2105348==    by 0x10C231: get_redir (redir.c:46)
+==2105348==    by 0x10A237: add_redir (parser_add_node.c:34)
+==2105348==    by 0x10A461: add_exec_node (parser_add_node.c:75)
+==2105348==    by 0x10A738: parse_exec (parser_func.c:65)
+==2105348==    by 0x10A5B0: parse_pipe (parser_func.c:22)
+==2105348==    by 0x10A6DE: parse_line (parser_func.c:53)
+==2105348==    by 0x10ABD9: build_ast (parser_main.c:19)
+==2105348==    by 0x10AC50: parser (parser_main.c:32)
+==2105348==    by 0x109E22: process_input (main_loop.c:68)
+==2105348==    by 0x109F3A: prompt_loop (main_loop.c:90)
+==2105348== 
+==2105348== Open file descriptor 3: /home/timmi/Documents/common-core/projects/minishell/resources/leaks.log
+==2105348==    <inherited from parent>
+==2105348== 
+==2105348== 
+==2105348== HEAP SUMMARY:
+==2105348==     in use at exit: 207,369 bytes in 228 blocks
+==2105348==   total heap usage: 721 allocs, 493 frees, 235,345 bytes allocated
+==2105348== 
+==2105348== LEAK SUMMARY:
+==2105348==    definitely lost: 0 bytes in 0 blocks
+==2105348==    indirectly lost: 0 bytes in 0 blocks
+==2105348==      possibly lost: 0 bytes in 0 blocks
+==2105348==    still reachable: 0 bytes in 0 blocks
+==2105348==         suppressed: 207,369 bytes in 228 blocks
+==2105348== 
+==2105348== For lists of detected and suppressed errors, rerun with: -s
+==2105348== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
