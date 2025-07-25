@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/25 17:13:46 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 18:22:01 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	ft_echo(t_shell *s, t_ast **current_node, int fd_out)
 
 	offset = 0;
 	args = get_args(*current_node);
-	fprintf(stderr, "%d\n", fd_out);
 	if (!args)
 		return (print_error(&s->numerr, NULL, ENOMEM));
 	if (args[1])

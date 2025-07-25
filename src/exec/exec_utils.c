@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/25 18:16:28 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 18:29:19 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,9 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 		return (print_error(&s->numerr, NULL, EPIPE));
 	if (pid == 0)
 	{
-		printf("input :%d\n", node->data.s_exec.fd_in);
-		printf("output :%d\n", node->data.s_exec.fd_out);
 		close_pipes(node, s->pipe_fd, s->pipe_count);
-		// if (node->data.s_exec.fd_in == -1)
-		// 	kill_children(s);
+		if (node->data.s_exec.fd_in == -1)
+			kill_children(s);
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, NULL, errno));
 		cmd_execution(s, env, node->data.s_exec.av);
