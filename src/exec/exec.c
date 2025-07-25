@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/25 15:59:02 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:30:16 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ int	execution(t_shell *s)
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
+	close_fds(s->root_node);
+	close_pipes(s->pipe_count, s->pipe_fd);
 	if (s->heredoc_count > 0)
 		if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
 			return (print_error(&s->numerr, NULL, errno));

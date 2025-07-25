@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/25 16:05:35 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:38:03 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	int		cur_pipe;
 	t_ast	*right;
 
-	fprintf(stderr, "%shandle_pipe| current_node BEFORE DUPS:%s\n", B, RST);
-	print_node((*node));
+	//fprintf(stderr, "%shandle_pipe| current_node BEFORE DUPS:%s\n", B, RST);
+	//print_node((*node));
 	//if (is_valid_fd(&(*node)) != 0)
 	//{
 	//	fprintf(stderr, "%shandle_pipe | is_valid_fd != 0%s\n", R, RST);
@@ -72,7 +72,7 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	cur_pipe = s->pipe_count;
 	if (pipe(s->pipe_fd[cur_pipe]) < 0)
 		return (print_error(&s->numerr, NULL, errno));
-	fprintf(stderr, "%shandle_pipe | s->pipe_fd[cur_pipe][0]: %d | s->pipe_fd[cur_pipe][1]: %d%s\n", G, s->pipe_fd[cur_pipe][0], s->pipe_fd[cur_pipe][1], RST);
+	//fprintf(stderr, "%shandle_pipe | s->pipe_fd[cur_pipe][0]: %d | s->pipe_fd[cur_pipe][1]: %d%s\n", G, s->pipe_fd[cur_pipe][0], s->pipe_fd[cur_pipe][1], RST);
 	if ((*node)->data.s_pipe.right->tag == EXEC_NODE)
 		add_to_pipeline(&(*node)->data.s_pipe.right->data.s_exec.fd_in, s->pipe_fd[cur_pipe][0], IN_REDIR);
 	if ((*node)->data.s_pipe.left->tag == EXEC_NODE)
@@ -85,8 +85,8 @@ int	handle_pipe(t_shell *s, t_ast **node)
 	s->pipe_count++;
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
-	fprintf(stderr, "%shandle_pipe| current_node AFTER DUPS:%s\n", B, RST);
-	print_node((*node));
+	//fprintf(stderr, "%shandle_pipe| current_node AFTER DUPS:%s\n", B, RST);
+	//print_node((*node));
 	close(s->pipe_fd[cur_pipe][0]);
 	close(s->pipe_fd[cur_pipe][1]);
 	return (0);
@@ -140,17 +140,17 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 		return (print_error(&s->numerr, NULL, EPIPE));
 	if (pid == 0)
 	{
-		close_pipes(node, s->pipe_fd, s->pipe_count);
+		close_pipes(s->pipe_count, s->pipe_fd);
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, NULL, errno));
 		cmd_execution(s, env, node->data.s_exec.av);
 	}
 	else
 	{
-		if (f_close(&node->data.s_exec.fd_heredoc) != 0)
-			return (1);
-		if (f_close(&node->data.s_exec.fd_out) != 0)
-			return (1);
+		//if (f_close(&node->data.s_exec.fd_heredoc) != 0)
+		//	return (1);
+		//if (f_close(&node->data.s_exec.fd_out) != 0)
+		//	return (1);
 		s->child_pids[s->pid_count++] = pid;
 	}
 	return (0);
