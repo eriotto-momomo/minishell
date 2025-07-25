@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/25 15:07:54 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:56:20 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int	get_redir(t_shell *s, t_ast **node, t_token **tok)
 				= redir_out(s, tmp->type, tmp->next->data,
 					(*node)->data.s_exec.fd_out);
 		else if (tmp->type == IN_REDIR)
+		{
 			(*node)->data.s_exec.fd_in
 				= redir_in(s, tmp->next->data, (*node)->data.s_exec.fd_in);
+		}
 		if (!get_next_token(&tmp))
 			break ;
 	}

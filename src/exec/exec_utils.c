@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/25 15:12:55 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:02:46 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,15 @@ int	handle_pipe(t_shell *s, t_ast **node)
 		(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
 	dup_read = dup(s->pipe_fd[cur_pipe][0]);
 	if (dup_read < 0)
-		return (print_error(&s->numerr, NULL, errno));
-	(*node)->data.s_pipe.right->data.s_exec.fd_in = dup_read;
+    	return (print_error(&s->numerr, NULL, errno));
+	if ((*node)->data.s_pipe.right->data.s_exec.fd_in == STDIN_FILENO)
+    	(*node)->data.s_pipe.right->data.s_exec.fd_in = dup_read;
+	else
+	{
+		printf("fd : %d\n", (*node)->data.s_pipe.right->data.s_exec.fd_in);
+    	close(dup_read);
+	}
+	// (*node)->data.s_pipe.right->data.s_exec.fd_in = dup_read;
 	s->pipe_count++;
 	preorder_exec(s, &((*node)->data.s_pipe.left));
 	preorder_exec(s, &((*node)->data.s_pipe.right));
@@ -53,15 +60,19 @@ int	ft_external(t_shell *s, t_env *env, t_ast *node)
 {
 	pid_t	pid;
 
+	(void)env;
 	pid = fork();
 	if (pid < 0)
 		return (print_error(&s->numerr, NULL, EPIPE));
 	if (pid == 0)
 	{
+		printf("input :%d\n", node->data.s_exec.fd_in);
+		printf("output :%d\n", node->data.s_exec.fd_out);
 		close_pipes(node, s->pipe_fd, s->pipe_count);
 		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
 			exit(print_error(&s->numerr, NULL, errno));
 		cmd_execution(s, env, node->data.s_exec.av);
+		kill_children(s);
 	}
 	else
 	{
