@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/25 15:15:25 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:59:02 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,15 @@ int	close_fds(t_ast *node)
 
 static int	process_exec_node(t_shell *s, t_ast **n)
 {
+	if ((*n)->data.s_exec.fd_in < 0)
+		return (print_error(&s->numerr, NULL, errno));
 	if (string_processing(s, &(*n)->data.s_exec.ac,
 			&(*n)->data.s_exec.av) != 0)
 		return (1);
 	if ((*n)->data.s_exec.inredir_priority == HERE_DOC)
 	{
+		if ((*n)->data.s_exec.fd_in > 2 && is_open((*n)->data.s_exec.fd_in))
+			close((*n)->data.s_exec.fd_in);
 		(*n)->data.s_exec.fd_in
 			= open((*n)->data.s_exec.path_tmp_file, O_RDONLY);
 		if ((*n)->data.s_exec.fd_in < 0)
@@ -54,8 +58,12 @@ static int	process_exec_node(t_shell *s, t_ast **n)
 	if ((*n)->data.s_exec.ac > 0)
 		if (handle_exec(s, (*n)) != 0)
 			return (1);
-	if (f_close(&(*n)->data.s_exec.fd_heredoc) != 0)
-		return (1);
+	//if ((*n)->data.s_exec.fd_out > 2&& is_open((*n)->data.s_exec.fd_out))
+	//	if (close((*n)->data.s_exec.fd_out) != 0)
+	//		return (1);
+	//if ((*n)->data.s_exec.fd_in > 2 && is_open((*n)->data.s_exec.fd_in))
+	//	if (close((*n)->data.s_exec.fd_in) != 0)
+	//		return (1);
 	return (0);
 }
 
@@ -93,10 +101,19 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 	}
 	else if ((*node)->tag == EXEC_NODE)
+	{
+		if ((*node)->data.s_exec.fd_in < 0 || (*node)->data.s_exec.fd_out < 0)
+			return (0);
 		if (process_exec_node(s, node) != 0)
 			return (1);
-	if (f_close(&(*node)->data.s_exec.fd_in) != 0)
-		return (1);
+		if (((*node)->data.s_exec.fd_in >= 0 && (*node)->data.s_exec.fd_out >= 0)
+			&& errno == 2)
+				errno = 0;
+		//if ((*node)->data.s_exec.fd_in > 2 && is_open((*node)->data.s_exec.fd_in))
+		//	if (close((*node)->data.s_exec.fd_in) != 0)
+		//		return (1);
+		//fprintf(stderr, "%spreoreder_exec | g_sig; %d | s->numerr: %d | errno: %d%s\n", P, g_sig, s->numerr, errno, RST);
+	}
 	return (0);
 }
 

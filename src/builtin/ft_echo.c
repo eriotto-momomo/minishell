@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:08:35 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/25 15:12:11 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:07:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,5 @@ int	ft_echo(t_shell *s, t_ast **current_node, int fd_out)
 	}
 	if (!offset)
 		ft_putstr_fd("\n", fd_out);
-	return (0);
+	return (s->numerr = 0);
 }

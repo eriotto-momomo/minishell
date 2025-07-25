@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/25 15:12:24 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:07:43 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ int	ft_export(t_shell *s, t_env **env, t_ast *node)
 		if (exporter(env, args[i]) != 0)
 			return (print_error(&s->numerr, NULL, ENOMEM));
 	}
-	return (0);
+	return (s->numerr = 0);
 }
