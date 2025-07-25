@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 09:38:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 15:03:15 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	expand(uint8_t numerr, t_env *env, char **str)
 			i++;
 			while ((*str)[i] && ((*str)[i] != '\''))
 				i++;
+			if (!(*str)[i])
+				break ;
 		}
 		if ((*str)[i] == '$' && is_valid_var_start((*str)[i + 1]))
 		{
