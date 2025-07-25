@@ -3,14 +3,15 @@ valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 
 🔍PARSER
 echo Hello > 1.txt > 2.txt > 3.txt > 4.txt
+rm 1.txt | rm 2.txt | rm 3.txt | rm 4.txt
 cat << 1 << 2 << 3 << 4
 cat < 1 | cat < 2 | cat < 3 | cat < 4 | echo Hello
 echo "TXT" > 1 TXT "MOOOORE TXT" | echo Hello | cat 1
 echo TXT > TEST_1 | cat << EOF >> TEST_1 | echo CMD_DONE
 echo << 1 | echo << 2 | echo << 3 | echo << 4 | echo << 5 | echo << 6 | echo << 7 | echo << 8 | echo << 9 | echo << 10
-cat << 1 > 1 | cat << 2 > 2
+> 1 << 1 cat | << 2 cat > 2
 cat << 1 | cat << 2 | cat << 3 | cat << 4 | cat << 5 | cat << 6 | cat << 7 | cat << 8 | cat << 9 | cat << 10
-cat << 1 > TEST_1 | cat << 2 > TEST_2 | cat << 3 > TEST_3 | cat << 4 > TEST_4 | cat << 5 > TEST_5 | cat << 6 > TEST_6 | cat << 7 > TEST_7 | cat << 8 > TEST_8 | cat << 9 > TEST_9 | cat << 10 > TEST_10
+❌ cat << 1 > TEST_1 | cat << 2 > TEST_2 | cat << 3 > TEST_3 | cat << 4 > TEST_4 | cat << 5 > TEST_5 | cat << 6 > TEST_6 | cat << 7 > TEST_7 | cat << 8 > TEST_8 | cat << 9 > TEST_9 | cat << 10 > TEST_10
 ls > TEST | INVALID_COMMAND | cat << EOF > HEREDOC_TEST1 > HEREDOC_TEST2 | cat TEST | grep e
 ls > TEST | sadasda | echo Hello | cat TEST
 cat < TEST > COPY_TEST
