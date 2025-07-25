@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:10:23 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 10:34:41 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 15:07:54 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,9 @@ int	get_redir(t_shell *s, t_ast **node, t_token **tok)
 		else if (tmp->type == IN_REDIR)
 			(*node)->data.s_exec.fd_in
 				= redir_in(s, tmp->next->data, (*node)->data.s_exec.fd_in);
-		if ((*node)->data.s_exec.fd_out < 0 || (*node)->data.s_exec.fd_in < 0)
-		{
-			(*node)->data.s_exec.fd_in = 0;
-			(*node)->data.s_exec.fd_out = 1;
-		}
 		if (!get_next_token(&tmp))
 			break ;
 	}
-	if (errno)
-		ft_puterror(strerror(errno));
 	return (0);
 }
 
@@ -66,7 +59,7 @@ int	get_final_filename(t_shell *s, char **filename)
 	if (expand(s->numerr, s->env_list, filename) != 0)
 	{
 		w_free((void **)&filename);
-		return (print_error(&s->numerr, ENOMEM));
+		return (print_error(&s->numerr, NULL, ENOMEM));
 	}
 	if (*filename && (ft_strchr(*filename, '\'')
 			|| ft_strchr(*filename, '\"')))
@@ -74,7 +67,7 @@ int	get_final_filename(t_shell *s, char **filename)
 		if (trim_quote(filename, 0, 0) != 0)
 		{
 			w_free((void **)&filename);
-			return (print_error(&s->numerr, errno));
+			return (print_error(&s->numerr, NULL, errno));
 		}
 	}
 	return (0);
@@ -115,6 +108,8 @@ int	redir_in(t_shell *s, char *filename, int current_redir)
 			return (-1);
 	}
 	fd_in = open(tmp, O_RDONLY);
+	if (fd_in < 0)
+		print_error(&s->numerr, tmp, errno);
 	w_free((void **)&tmp);
 	return (fd_in);
 }

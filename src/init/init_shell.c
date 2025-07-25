@@ -6,7 +6,7 @@
 /*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:03:30 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/30 08:51:07 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:05:36 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	init_shell(t_shell *s, char	**envp)
 	s->env_list = table_to_ll(envp);
 	if (!s->env_list)
 		return (-1);
+	s->child_exit = 0;
 	s->heredoc_fd = -2;
 	s->heredoc_count = 0;
 	s->tmp_index = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_create.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 09:07:12 by emonacho          #+#    #+#             */
-/*   Updated: 2025/07/03 10:33:10 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 15:07:05 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static char	*create_path(char *eof, int index)
 		return (NULL);
 	}
 	w_free((void **)&str_index);
-	tmp = ft_strjoin("./tmp/", file);
+	//tmp = ft_strjoin("../../tmp/", file); //V2
+	tmp = ft_strjoin("./tmp/", file); //V1
 	if (!tmp)
 	{
 		w_free((void **)&file);

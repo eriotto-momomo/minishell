@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 10:39:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 15:15:25 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	close_fds(t_ast *node)
+{
+	int	tmp;
+
+	tmp = errno;
+	if (node->tag == EXEC_NODE)
+	{
+		if (node->data.s_exec.fd_in > 2 && is_open(node->data.s_exec.fd_in))
+			close(node->data.s_exec.fd_in);
+		if (node->data.s_exec.fd_out > 2 && is_open(node->data.s_exec.fd_out))
+			close(node->data.s_exec.fd_out);
+		node->data.s_exec.fd_in = STDIN_FILENO;
+		node->data.s_exec.fd_out = STDOUT_FILENO;
+		return (0);
+	}
+	else if (node->tag == PIPE_NODE)
+	{
+		if (close_fds(node->data.s_pipe.left) != 0)
+			return (1);
+		if (close_fds(node->data.s_pipe.right) != 0)
+			return (1);
+	}
+	if (errno != tmp)
+		errno = tmp;
+	return (0);
+}
 
 static int	process_exec_node(t_shell *s, t_ast **n)
 {
@@ -86,14 +113,14 @@ int	execution(t_shell *s)
 		while (i < s->pid_count)
 		{
 			if (kill(s->child_pids[i], SIGKILL) != 0)
-				return (print_error(&s->numerr, errno));
+				return (print_error(&s->numerr, NULL, errno));
 			i++;
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
 	if (s->heredoc_count > 0)
 		if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
-			return (print_error(&s->numerr, errno));
+			return (print_error(&s->numerr, NULL, errno));
 	free_ast(&(s->root_node));
 	if (s->tmp_files_list)
 		w_free((void **)&(s->tmp_files_list));

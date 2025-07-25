@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 10:24:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 15:14:51 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int		write_heredoc(t_shell *s, char *path, char **eof_list, int eof_count);
 int		unlink_tmp_files(char **tmp_files_list, int heredoc_count);
 int		waiton(uint8_t *numerr, int *child_pids, int pid_count);
-int		close_fd(t_ast *node);
+int		close_fds(t_ast *node);
 int		execution(t_shell *s);
 int		ft_external(t_shell *s, t_env *env, t_ast *current_node);
 int		preorder_exec(t_shell *s, t_ast **current_node);
