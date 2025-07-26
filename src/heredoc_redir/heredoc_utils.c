@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 14:46:53 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 10:33:40 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/25 10:22:44 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,34 @@ int	process_heredoc(t_shell *s, t_ast *node)
 static int	fork_heredoc(t_shell *s)
 {
 	pid_t	heredoc_pid;
+	int		status;
 
+	status = 0;
 	heredoc_pid = fork();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (heredoc_pid == 0)
 	{
 		g_sig = 0;
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		s->child_exit = 1;
+		setup_signals(s, HEREDOC_SIGNALS);
 		process_heredoc(s, s->current_node);
-		close_fd(s->root_node);
-		free_ast(&s->root_node);
-		w_free((void **)&s->tmp_files_list);
+		close_fds(s->root_node);
 		kill_children(s);
 	}
-	waitpid(heredoc_pid, NULL, 0);
+	waitpid(heredoc_pid, &status, 0);
+	if (WIFEXITED(status))
+		s->numerr = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		s->numerr = WTERMSIG(status);
 	setup_signals(s, DEFAULT_SIGNALS);
 	return (0);
 }
 
 int	fill_heredocs(t_shell *s)
 {
+	g_sig = 0;
+	s->child_exit = 1;
 	fork_heredoc(s);
 	return (0);
 }

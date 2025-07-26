@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: timmi <timmi@student.42.fr>                +#+  +:+       +#+         #
+#    By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2025/07/03 10:16:59 by timmi            ###   ########.fr        #
+#    Updated: 2025/07/18 15:22:12 by emonacho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,8 @@ CFILES =	$(CFILES_PATH)/main.c\
 			$(CFILES_PATH)/heredoc_redir/heredoc_create.c\
 			$(CFILES_PATH)/exec/exec.c\
 			$(CFILES_PATH)/exec/exec_utils.c\
+			$(CFILES_PATH)/exec/pipes.c\
 			$(CFILES_PATH)/exec/pathfinder.c\
-			$(CFILES_PATH)/exec/pipe_utils.c\
 			$(CFILES_PATH)/exec/signals.c\
 			$(CFILES_PATH)/errors/print_error.c\
 			$(CFILES_PATH)/builtin/ft_echo.c\

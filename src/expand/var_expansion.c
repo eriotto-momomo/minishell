@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:11:17 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 09:38:12 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/26 16:56:51 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ int	expand(uint8_t numerr, t_env *env, char **str)
 	i = 0;
 	while ((*str)[i])
 	{
-		if ((*str)[i] == '\'' && !is_in_double_quote((*str), i))
+		if ((*str)[i] == '\''
+		&& (*str)[i + 1] && !is_in_double_quote((*str), i))
 		{
 			i++;
 			while ((*str)[i] && ((*str)[i] != '\''))
 				i++;
+			if (!(*str)[i])
+				break ;
 		}
 		if ((*str)[i] == '$' && is_valid_var_start((*str)[i + 1]))
 		{

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/03 10:30:04 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/26 15:32:26 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ void	reset_free(t_shell *s)
 {
 	if (s->head)
 		free_token_list(&(s->head));
-	if (s->tmp_files_list != NULL)
-		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
-	w_free((void **)&(s->tmp_files_list));
 	w_free((void **)&(s->line));
+	setup_signals(s, MINISHELL_SIGNALS);
 }
 
 void	clean_free(t_shell *s)
@@ -32,8 +30,6 @@ void	clean_free(t_shell *s)
 		close(s->heredoc_fd);
 	if (s->head)
 		free_token_list(&(s->head));
-	if (s->tmp_files_list != NULL)
-		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
 	if (s->root_node)
 		free_ast(&(s->root_node));
 	w_free((void **)&(s->tmp_files_list));
@@ -41,12 +37,15 @@ void	clean_free(t_shell *s)
 		free_env(&(s->env_list));
 	w_free((void **)&(s->line));
 	w_free((void **)&(s->prompt));
-	setup_signals(s, DEFAULT_SIGNALS);
+	setup_signals(s, MINISHELL_SIGNALS);
 }
 
 void	terminate_shell(t_shell *s)
 {
 	clean_free(s);
+	if (s->tmp_files_list != NULL)
+		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
+	w_free((void **)&(*s->tmp_files_list));
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (s->numerr)
 		exit(s->numerr);

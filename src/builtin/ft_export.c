@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 17:41:13 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 12:35:19 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/22 16:50:08 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ int	ft_export(t_shell *s, t_env **env, t_ast *node)
 	{
 		if (!is_valid(args[i]) || ft_strncmp(args[i], "=", 2) == 0)
 		{
-			print_error(&s->numerr, EINVAL);
+			print_error(&s->numerr, NULL, EINVAL);
 			continue ;
 		}
 		if (!ft_strchr(args[i], '='))
 			continue ;
 		if (exporter(env, args[i]) != 0)
-			return (print_error(&s->numerr, ENOMEM));
+			return (print_error(&s->numerr, NULL, ENOMEM));
 	}
-	return (0);
+	return (s->numerr = 0);
 }

@@ -6,7 +6,7 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:20:33 by timmi             #+#    #+#             */
-/*   Updated: 2025/06/25 09:45:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/26 15:12:48 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	check_limits(t_shell *s, t_token *tok)
 	else if (tok->type == OUT_REDIR || tok->type == APP_OUT_REDIR
 		|| tok->type == IN_REDIR || tok->type == HERE_DOC)
 		s->tok_rdir++;
-	if (s->tok_rdir > 1024 || s->tok_pipe > 256 || s->tok_word > ARG_MAX)
+	if (s->tok_rdir >= 1024 || s->tok_pipe >= 256 || s->tok_word >= ARG_MAX)
 	{
-		if (s->tok_rdir > 1024)
+		if (s->tok_rdir >= 1024)
 			errno = EMFILE;
-		if (s->tok_pipe > 256)
+		if (s->tok_pipe >= 256)
 			errno = EAGAIN;
-		if (s->tok_word > ARG_MAX)
+		if (s->tok_word >= ARG_MAX)
 			errno = E2BIG;
 		return (1);
 	}
@@ -105,7 +105,7 @@ int	syntax_analysis(t_shell *s, t_token *current_tok)
 				s->numerr = 2;
 			}
 			else if (err == 4)
-				print_error(&s->numerr, errno);
+				print_error(&s->numerr, NULL, errno);
 			return (1);
 		}
 		current_tok = current_tok->next;

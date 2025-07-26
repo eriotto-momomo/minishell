@@ -6,73 +6,11 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 08:16:23 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/03 10:50:31 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/26 16:56:04 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	process_pipe_node(t_shell *s, t_ast **node, int cur_pipe)
-{
-	t_ast	*right;
-
-	right = (*node)->data.s_pipe.left->data.s_pipe.right;
-	if (right->tag == EXEC_NODE
-		&& right->data.s_exec.fd_out == STDOUT_FILENO)
-		right->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-}
-
-int	handle_pipe(t_shell *s, t_ast **node)
-{
-	int		cur_pipe;	
-	int		dup_read;
-
-	cur_pipe = s->pipe_count;
-	if (pipe(s->pipe_fd[cur_pipe]) < 0)
-		return (print_error(&s->numerr, errno));
-	if ((*node)->data.s_pipe.left->tag == PIPE_NODE)
-		process_pipe_node(s, node, cur_pipe);
-	else if ((*node)->data.s_pipe.left->tag == EXEC_NODE
-		&& (*node)->data.s_pipe.left->data.s_exec.fd_out == STDOUT_FILENO)
-		(*node)->data.s_pipe.left->data.s_exec.fd_out = s->pipe_fd[cur_pipe][1];
-	dup_read = dup(s->pipe_fd[cur_pipe][0]);
-	if (dup_read < 0)
-		return (print_error(&s->numerr, errno));
-	(*node)->data.s_pipe.right->data.s_exec.fd_in = dup_read;
-	s->pipe_count++;
-	preorder_exec(s, &((*node)->data.s_pipe.left));
-	preorder_exec(s, &((*node)->data.s_pipe.right));
-	if (dup_read > 2)
-		close(dup_read);
-	(*node)->data.s_pipe.right->data.s_exec.fd_in = -1;
-	close_pipes((*node), s->pipe_fd, s->pipe_count);
-	return (0);
-}
-
-int	ft_external(t_shell *s, t_env *env, t_ast *node)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		return (print_error(&s->numerr, EPIPE));
-	if (pid == 0)
-	{
-		close_pipes(node, s->pipe_fd, s->pipe_count);
-		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
-			exit(print_error(&s->numerr, errno));
-		cmd_execution(s, env, node->data.s_exec.av);
-	}
-	else
-	{
-		if (f_close(&node->data.s_exec.fd_heredoc) != 0)
-			return (1);
-		if (f_close(&node->data.s_exec.fd_out) != 0)
-			return (1);
-		s->child_pids[s->pid_count++] = pid;
-	}
-	return (0);
-}
 
 int	cmd_execution(t_shell *s, t_env *env, char **argv)
 {
@@ -81,24 +19,72 @@ int	cmd_execution(t_shell *s, t_env *env, char **argv)
 
 	path = path_making(env, argv[0]);
 	if (!path)
+		print_custom_error(&s->numerr, 127, "minishell: Command not found");
+	if (path)
 	{
-		w_free((void **)&path);
-		print_custom_error(&s->numerr, 127, "Command not found");
-		kill_children(s);
+		env_table = ltotable(env);
+		if (!env_table)
+		{
+			w_free((void **)&path);
+			print_error(&s->numerr, NULL, ENOMEM);
+		}
 	}
-	env_table = ltotable(env);
-	if (!env_table)
+	if (path && env_table)
 	{
-		w_free((void **)&path);
-		print_error(&s->numerr, ENOMEM);
-		kill_children(s);
+		if (execve(path, argv, env_table) == -1)
+		{
+			w_free((void **)&path);
+			ft_free_char_array(env_table, count_var(env));
+			print_custom_error(&s->numerr, 126, strerror(errno));
+		}
 	}
-	if (execve(path, argv, env_table) == -1)
+	return (0);
+}
+
+int	waiton(uint8_t *numerr, int *child_pids, int pid_count)
+{
+	int	i;
+	int	status;
+	int	pid;
+
+	i = 0;
+	while (i < pid_count)
 	{
-		w_free((void **)&path);
-		ft_free_char_array(env_table, count_var(env));
-		print_custom_error(&s->numerr, 126, strerror(errno));
-		kill_children(s);
+		pid = waitpid(child_pids[i], &status, 0);
+		if (pid == -1)
+			continue ;
+		if (WIFEXITED(status))
+			*numerr = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			*numerr = WTERMSIG(status);
+		i++;
 	}
+	return (0);
+}
+
+int	close_fds(t_ast *node)
+{
+	int	tmp;
+
+	tmp = errno;
+	if (node->tag == EXEC_NODE)
+	{
+		if (node->data.s_exec.fd_in > 2 && is_open(node->data.s_exec.fd_in))
+			close(node->data.s_exec.fd_in);
+		if (node->data.s_exec.fd_out > 2 && is_open(node->data.s_exec.fd_out))
+			close(node->data.s_exec.fd_out);
+		node->data.s_exec.fd_in = STDIN_FILENO;
+		node->data.s_exec.fd_out = STDOUT_FILENO;
+		return (0);
+	}
+	else if (node->tag == PIPE_NODE)
+	{
+		if (close_fds(node->data.s_pipe.left) != 0)
+			return (1);
+		if (close_fds(node->data.s_pipe.right) != 0)
+			return (1);
+	}
+	if (errno != tmp)
+		errno = tmp;
 	return (0);
 }

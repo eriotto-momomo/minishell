@@ -6,33 +6,34 @@
 /*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:54:04 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/03 10:39:02 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/26 16:49:35 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	process_exec_node(t_shell *s, t_ast **n)
+static int	ft_external(t_shell *s, t_env *env, t_ast *node)
 {
-	if (string_processing(s, &(*n)->data.s_exec.ac,
-			&(*n)->data.s_exec.av) != 0)
-		return (1);
-	if ((*n)->data.s_exec.inredir_priority == HERE_DOC)
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+		return (print_error(&s->numerr, NULL, EPIPE));
+	if (pid == 0)
 	{
-		(*n)->data.s_exec.fd_in
-			= open((*n)->data.s_exec.path_tmp_file, O_RDONLY);
-		if ((*n)->data.s_exec.fd_in < 0)
-			return (1);
+		close_pipes(node, s->pipe_fd, s->pipe_count);
+		if (setup_pipe(node->data.s_exec.fd_in, node->data.s_exec.fd_out) == -1)
+			exit(print_error(&s->numerr, NULL, errno));
+		cmd_execution(s, env, node->data.s_exec.av);
+		close_fds(node);
+		kill_children(s);
 	}
-	if ((*n)->data.s_exec.ac > 0)
-		if (handle_exec(s, (*n)) != 0)
-			return (1);
-	if (f_close(&(*n)->data.s_exec.fd_heredoc) != 0)
-		return (1);
+	else
+		s->child_pids[s->pid_count++] = pid;
 	return (0);
 }
 
-int	handle_exec(t_shell *s, t_ast *node)
+static int	handle_exec(t_shell *s, t_ast *node)
 {
 	if (perfect_match(node->data.s_exec.av[0], "exit"))
 		return (ft_exit(s, (*node).data.s_exec.ac, (*node).data.s_exec.av));
@@ -56,6 +57,34 @@ int	handle_exec(t_shell *s, t_ast *node)
 	}
 }
 
+static int	process_exec_node(t_shell *s, t_ast **n)
+{
+	if ((*n)->data.s_exec.fd_in < 0)
+		return (print_error(&s->numerr, NULL, errno));
+	if (string_processing(s, &(*n)->data.s_exec.ac,
+			&(*n)->data.s_exec.av) != 0)
+		return (1);
+	if ((*n)->data.s_exec.inredir_priority == HERE_DOC)
+	{
+		if ((*n)->data.s_exec.fd_in > 2 && is_open((*n)->data.s_exec.fd_in))
+			close((*n)->data.s_exec.fd_in);
+		(*n)->data.s_exec.fd_in
+			= open((*n)->data.s_exec.path_tmp_file, O_RDONLY);
+		if ((*n)->data.s_exec.fd_in < 0)
+			return (1);
+	}
+	if ((*n)->data.s_exec.ac > 0)
+		if (handle_exec(s, (*n)) != 0)
+			return (1);
+	if ((*n)->data.s_exec.fd_out > 2 && is_open((*n)->data.s_exec.fd_out))
+		if (close((*n)->data.s_exec.fd_out) != 0)
+			return (1);
+	if ((*n)->data.s_exec.fd_in > 2 && is_open((*n)->data.s_exec.fd_in))
+		if (close((*n)->data.s_exec.fd_in) != 0)
+			return (1);
+	return (0);
+}
+
 int	preorder_exec(t_shell *s, t_ast **node)
 {
 	if (!(*node))
@@ -66,10 +95,15 @@ int	preorder_exec(t_shell *s, t_ast **node)
 			return (1);
 	}
 	else if ((*node)->tag == EXEC_NODE)
-		if (process_exec_node(s, node) != 0)
-			return (1);
-	if (f_close(&(*node)->data.s_exec.fd_in) != 0)
-		return (1);
+	{
+		if ((*node)->data.s_exec.fd_in < 0 || (*node)->data.s_exec.fd_out < 0)
+			return (0);
+		process_exec_node(s, node);
+		if (((*node)->data.s_exec.fd_in >= 0
+				&& (*node)->data.s_exec.fd_out >= 0)
+			&& errno == 2)
+			errno = 0;
+	}
 	return (0);
 }
 
@@ -86,16 +120,16 @@ int	execution(t_shell *s)
 		while (i < s->pid_count)
 		{
 			if (kill(s->child_pids[i], SIGKILL) != 0)
-				return (print_error(&s->numerr, errno));
+				return (print_error(&s->numerr, NULL, errno));
 			i++;
 		}
 	}
 	waiton(&s->numerr, s->child_pids, s->pid_count);
-	if (s->heredoc_count > 0)
-		if (unlink_tmp_files(s->tmp_files_list, s->heredoc_count) != 0)
-			return (print_error(&s->numerr, errno));
-	free_ast(&(s->root_node));
-	if (s->tmp_files_list)
+	close_fds(s->root_node);
+	close_pipes(s->root_node, s->pipe_fd, s->pipe_count);
+	if (s->tmp_files_list != NULL)
+		unlink_tmp_files(s->tmp_files_list, s->heredoc_count);
+	if (s->tmp_files_list != NULL)
 		w_free((void **)&(s->tmp_files_list));
 	return (0);
 }

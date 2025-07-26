@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:59:30 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/06/25 09:42:16 by timmi            ###   ########.fr       */
+/*   Updated: 2025/07/22 16:50:22 by emonacho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	ft_cd(t_shell *s, int ac, char **av)
 	char	*new_pwd;
 
 	if (ac > 2)
-		return (print_error(&s->numerr, E2BIG));
+		return (print_error(&s->numerr, NULL, E2BIG));
 	curpath = make_curpath(s, av[1]);
 	if (!curpath)
-		return (print_error(&s->numerr, ENOMEM));
+		return (print_error(&s->numerr, NULL, ENOMEM));
 	if (chdir(curpath) == -1)
 	{
 		free(curpath);
@@ -97,5 +97,5 @@ int	ft_cd(t_shell *s, int ac, char **av)
 		return (1);
 	}
 	free(new_pwd);
-	return (0);
+	return (s->numerr = 0);
 }
