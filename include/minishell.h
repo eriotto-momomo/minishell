@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:19:48 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/05 14:34:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:01:59 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@
 
 extern volatile sig_atomic_t	g_sig;
 
-// ENV
 t_env	*create_var(char *name, char	*value);
 void	del_var(t_env **head, t_env **target);
 
