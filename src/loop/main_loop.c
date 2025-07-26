@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 10:22:45 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/24 18:49:48 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/26 16:57:56 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 {
 	if (mode == UPDATE_SIGNALS || mode == UPDATE_SIG_ERR)
 	{
-		fprintf(stderr, "%supdate_numerr | UPDATE_SIGNALS | g_sig; %d | s->numerr: %d | errno: %d%s\n", G, g_sig, *numerr, errno, RST);
 		if (g_sig == SIGINT)
 			*numerr = 130;
 		else if (g_sig == SIGQUIT)
@@ -35,7 +34,6 @@ void	update_numerr(int *child_exit, uint8_t *numerr, int mode)
 	}
 	if (mode == UPDATE_ERRNO || mode == UPDATE_SIG_ERR)
 	{
-		fprintf(stderr, "%supdate_numerr | UPDATE_ERRNO   | g_sig; %d | s->numerr: %d | errno: %d%s\n", G, g_sig, *numerr, errno, RST);
 		if (*child_exit == 1)
 		{
 			errno = *numerr;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:41:49 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/05 17:17:14 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:02:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef enum e_tag
 	EXEC_NODE
 }	t_tag;
 
-// FORWARD DECLARATION (dis au compilateur que "t_ast" existe)
 typedef struct s_ast	t_ast;
 
 typedef union u_data
