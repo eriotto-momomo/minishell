@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 10:02:33 by c4v3d             #+#    #+#             */
-/*   Updated: 2025/07/18 15:15:04 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/26 15:32:26 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	kill_children(t_shell *s)
 {
 	clean_free(s);
 	if (s->numerr)
-		exit((uint8_t)s->numerr);
+		exit(s->numerr);
 	exit(EXIT_SUCCESS);
 }
