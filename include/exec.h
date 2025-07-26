@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emonacho <emonacho@student.42.fr>          +#+  +:+       +#+        */
+/*   By: timmi <timmi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:02:47 by timmi             #+#    #+#             */
-/*   Updated: 2025/07/25 10:22:17 by emonacho         ###   ########.fr       */
+/*   Updated: 2025/07/26 15:24:10 by timmi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <sys/wait.h>
 
 //pipes.c
-void	close_pipes(int count, int pipe_fd[][2]);
+//void	close_pipes(int count, int pipe_fd[][2]);
+int		close_pipes(t_ast *node, int pipe_fd[][2], int pipe_count);
+
 int		handle_pipe(t_shell *s, t_ast **node);
 int		setup_pipe(int fd_in, int fd_out);
 
